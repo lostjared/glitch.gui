@@ -6,6 +6,7 @@
 
 MainWindow::MainWindow()  {
 
+    ac::init();
     toolbox_window = new ToolboxWindow(this);
     toolbox_window->setGeometry(100,100,250,400);
     toolbox_window->show();
