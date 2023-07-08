@@ -32,14 +32,15 @@ void MainWindow::openFile() {
     filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
     if(filename != "") {
         image = QImage(filename);
-    }
+        QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
+        setFixedSize(scaled.width(), scaled.height());
+     }
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
-    if(image.width() > 0) {
-        /*
+    if(image.width() > 0) {        
         QPainter paint(this);
-        QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
-        paint.drawImage(0, 0, scaled);*/
+        QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);     
+        paint.drawImage(0, 0, scaled);
     }
 }
