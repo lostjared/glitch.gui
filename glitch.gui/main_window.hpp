@@ -6,6 +6,7 @@
 #include<QAction>
 
 class ToolboxWindow;
+class DisplayWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -16,6 +17,7 @@ private:
     QMenu *file_menu;
     QAction *file_open;
     ToolboxWindow *toolbox_window;
+    DisplayWindow *display_window;
 public slots:
     void openFile();
 

@@ -1,12 +1,17 @@
 #include "main_window.hpp"
 #include<QMenuBar>
 #include"toolbox_window.hpp"
+#include"display_window.hpp"
 
 MainWindow::MainWindow()  {
 
     toolbox_window = new ToolboxWindow(this);
     toolbox_window->setGeometry(100,100,250,400);
     toolbox_window->show();
+
+    display_window = new DisplayWindow(this);
+    display_window->setGeometry(100, 600, 640, 480);
+    display_window->hide();    
 
     setFixedSize(640, 480);
     setWindowTitle("glitch.gui");
