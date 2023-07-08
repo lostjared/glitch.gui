@@ -2,12 +2,23 @@
 #define _MAIN_WINDOW_H_
 
 #include<QMainWindow>
+#include<QMenu>
+#include<QAction>
+
+class ToolboxWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
     MainWindow();
+private:
+    QMenu *file_menu;
+    QAction *file_open;
+    ToolboxWindow *toolbox_window;
+public slots:
+    void openFile();
+
 
 };
 
