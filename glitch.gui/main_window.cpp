@@ -1,5 +1,7 @@
 #include "main_window.hpp"
 #include<QMenuBar>
+#include<QFileDialog>
+#include<QPainter>
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
 #include"acidcam/ac.h"
@@ -26,5 +28,18 @@ MainWindow::MainWindow()  {
 }
 
 void MainWindow::openFile() {
+    QString filename;
+    filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    if(filename != "") {
+        image = QImage(filename);
+    }
+}
 
+void MainWindow::paintEvent(QPaintEvent *) {
+    if(image.width() > 0) {
+        /*
+        QPainter paint(this);
+        QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
+        paint.drawImage(0, 0, scaled);*/
+    }
 }
