@@ -4,6 +4,10 @@
 #include<QMainWindow>
 #include<QMenu>
 #include<QAction>
+#include"acidcam/ac.h"
+
+cv::Mat QImage2Mat(QImage const& src);
+QImage Mat2QImage(cv::Mat const& src);
 
 class ToolboxWindow;
 class DisplayWindow;

@@ -4,7 +4,23 @@
 #include<QPainter>
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
-#include"acidcam/ac.h"
+
+cv::Mat QImage2Mat(QImage const& src)
+{
+    cv::Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
+    cv::Mat result;
+    cvtColor(tmp, result,cv::COLOR_BGR2RGB);
+    return result;
+}
+
+QImage Mat2QImage(cv::Mat const& src)
+{
+    cv::Mat temp;
+    cvtColor(src, temp,cv::COLOR_BGR2RGB);
+    QImage dest((const uchar *) temp.data, static_cast<int>(temp.cols), static_cast<int>(temp.rows), static_cast<int>(temp.step), QImage::Format_RGB888);
+    dest.bits();
+    return dest;
+}
 
 MainWindow::MainWindow()  {
 
