@@ -31,9 +31,10 @@ void MainWindow::openFile() {
     QString filename;
     filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
     if(filename != "") {
-        image = QImage(filename);
-        QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
-        setFixedSize(scaled.width(), scaled.height());
+        if(image.load(filename)) {
+            QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
+            setFixedSize(scaled.width(), scaled.height());
+        }
      }
 }
 
