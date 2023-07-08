@@ -2,6 +2,7 @@
 #include<QMenuBar>
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
+#include"acidcam/ac.h"
 
 MainWindow::MainWindow()  {
 
