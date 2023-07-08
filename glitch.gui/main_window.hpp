@@ -1,6 +1,6 @@
 #ifndef _MAIN_WINDOW_H_
 #define _MAIN_WINDOW_H_
-
+#include"version_info.hpp"
 #include<QMainWindow>
 #include<QMenu>
 #include<QAction>
