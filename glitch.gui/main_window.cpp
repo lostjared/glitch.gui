@@ -54,6 +54,7 @@ void MainWindow::openFile() {
             display_window->setGeometry(0, 0, 800, 600);
             display_window->setSourceImage(src);
             display_window->show();
+            display_window->startAnimation();
         }
      }
 }

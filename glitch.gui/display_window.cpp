@@ -3,7 +3,6 @@
 #include<QPainter>
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
-
     setGeometry(0, 0, 640, 480);
     setWindowTitle("Display Window");
     image_label = new QLabel(this);
@@ -36,4 +35,19 @@ void DisplayWindow::display(QImage &image) {
 void DisplayWindow::display(const cv::Mat &src) {
        QImage image = Mat2QImage(src);
        display(image);
+}
+
+void DisplayWindow::startAnimation() {
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
+    timer->start(1000 / 60);
+}
+
+void DisplayWindow::stopAnimation() {
+    timer->stop();
+}
+
+void DisplayWindow::timeoutFunc() {
+    display(source_image);
+    update();
 }

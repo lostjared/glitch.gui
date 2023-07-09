@@ -4,6 +4,7 @@
 #include<QDialog>
 #include<QPaintEvent>
 #include<QLabel>
+#include<QTimer>
 
 #include"acidcam/ac.h"
 
@@ -18,11 +19,17 @@ public:
     void display(QImage &image);
     void display(const cv::Mat &src);
 
+    void startAnimation();
+    void stopAnimation();
+
+public slots:
+    void timeoutFunc();
+
 
 private:
     cv::Mat source_image;
     QLabel *image_label;
-    
+    QTimer *timer; 
 };
 
 
