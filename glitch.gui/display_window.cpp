@@ -4,23 +4,36 @@
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
 
-    setFixedSize(640, 480);
+    setGeometry(0, 0, 640, 480);
     setWindowTitle("Display Window");
+    image_label = new QLabel(this);
+    image_label->setGeometry(0, 0, 640, 480);
+
 }
 
 void DisplayWindow::setSourceImage(const cv::Mat &src) {
     source_image = src.clone();
+    display(source_image);
 }
 
 void DisplayWindow::paintEvent(QPaintEvent *) {
     if(!source_image.empty()) {
         QPainter paint(this);
-        QImage image = Mat2QImage(source_image);
-        paint.drawImage(0, 0, image);   
+        paint.fillRect(QRect(QPoint(0, 0), size()), QColor(0,0,0));
     }
 }
 
 
-void DisplayWindow::display(QImage &/*image*/) {
+void DisplayWindow::display(QImage &image) {
+        QRect src(QPoint(0, 0), size());
+        QPixmap p = QPixmap::fromImage(image).scaled(size(),Qt::KeepAspectRatio, Qt::FastTransformation);
+        QRect dst(QPoint(0,0),p.size());
+        dst.moveCenter(src.center());
+        image_label->setGeometry(dst);
+        image_label->setPixmap(p);
+}
 
+void DisplayWindow::display(const cv::Mat &src) {
+       QImage image = Mat2QImage(src);
+       display(image);
 }

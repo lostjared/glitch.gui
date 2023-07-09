@@ -3,6 +3,7 @@
 
 #include<QDialog>
 #include<QPaintEvent>
+#include<QLabel>
 
 #include"acidcam/ac.h"
 
@@ -15,10 +16,12 @@ public:
     void paintEvent(QPaintEvent *e);
 
     void display(QImage &image);
+    void display(const cv::Mat &src);
 
 
 private:
     cv::Mat source_image;
+    QLabel *image_label;
     
 };
 
