@@ -50,6 +50,10 @@ void MainWindow::openFile() {
         if(image.load(filename)) {
             QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
             setFixedSize(scaled.width(), scaled.height());
+            cv::Mat src = cv::imread(filename.toStdString());
+            display_window->setSourceImage(src);
+            display_window->setGeometry(0, 0, src.cols, src.rows);
+            display_window->show();
         }
      }
 }
