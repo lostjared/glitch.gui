@@ -4,6 +4,7 @@
 #include<QMainWindow>
 #include<QMenu>
 #include<QAction>
+#include<QComboBox>
 #include"acidcam/ac.h"
 
 cv::Mat QImage2Mat(QImage const& src);
@@ -24,6 +25,7 @@ private:
     ToolboxWindow *toolbox_window;
     DisplayWindow *display_window;
     QImage image;
+    QComboBox *filter_list;
 public slots:
     void openFile();
 

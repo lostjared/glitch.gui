@@ -21,6 +21,7 @@ public:
 
     void startAnimation();
     void stopAnimation();
+    void setCurrentFilter(const int &f);
 
 public slots:
     void timeoutFunc();
@@ -30,6 +31,7 @@ private:
     cv::Mat source_image;
     QLabel *image_label;
     QTimer *timer; 
+    int current_filter;
 };
 
 

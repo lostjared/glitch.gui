@@ -41,16 +41,23 @@ MainWindow::MainWindow()  {
     file_menu->addAction(file_open);
 
     setGeometry(375,100,640,480);
+
+    filter_list = new QComboBox(this);
+    filter_list->setGeometry(15, 15, 300, 25);
+    for(auto it = ac::solo_filter.begin(); it != ac::solo_filter.end(); it++) {
+        std::string s = *it;
+        filter_list->addItem(s.c_str());
+    }
+    filter_list->setCurrentIndex(0);
+    display_window->setCurrentFilter(0);
 }
 
 void MainWindow::openFile() {
     QString filename;
     filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
     if(filename != "") {
-        if(image.load(filename)) {
-            QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);
-            setFixedSize(scaled.width(), scaled.height());
-            cv::Mat src = cv::imread(filename.toStdString());
+        cv::Mat src = cv::imread(filename.toStdString());
+        if(!src.empty()) {
             display_window->setGeometry(0, 0, 800, 600);
             display_window->setSourceImage(src);
             display_window->show();
@@ -60,9 +67,5 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
-    if(image.width() > 0) {        
-        QPainter paint(this);
-        QImage scaled = image.scaled(QSize(640, 480), Qt::KeepAspectRatio);     
-        paint.drawImage(0, 0, scaled);
-    }
+
 }

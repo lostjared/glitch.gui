@@ -47,11 +47,15 @@ void DisplayWindow::stopAnimation() {
     timer->stop();
 }
 
+void DisplayWindow::setCurrentFilter(const int &f) {
+    current_filter = f;
+    /// release objects
+}
+
+
 void DisplayWindow::timeoutFunc() {
     cv::Mat image = source_image.clone();
-//    ac::SelfAlphaBlend(image); 
-// perform filter
-
+    ac::CallFilter(current_filter, image);
     display(image);
     update();
 }
