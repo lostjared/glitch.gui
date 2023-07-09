@@ -28,6 +28,7 @@ private:
     QComboBox *filter_list;
 public slots:
     void openFile();
+    void indexChanged(int index);
 
 
 };

@@ -49,7 +49,9 @@ MainWindow::MainWindow()  {
         filter_list->addItem(s.c_str());
     }
     filter_list->setCurrentIndex(0);
-    display_window->setCurrentFilter(0);
+    display_window->setCurrentFilter(ac::solo_filter[0]);
+
+    connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 }
 
 void MainWindow::openFile() {
@@ -65,6 +67,12 @@ void MainWindow::openFile() {
         }
      }
 }
+
+void MainWindow::indexChanged(int index) {
+    std::string s = ac::solo_filter[filter_list->currentIndex()];
+    display_window->setCurrentFilter(s);
+}
+
 
 void MainWindow::paintEvent(QPaintEvent *) {
 

@@ -47,7 +47,7 @@ void DisplayWindow::stopAnimation() {
     timer->stop();
 }
 
-void DisplayWindow::setCurrentFilter(const int &f) {
+void DisplayWindow::setCurrentFilter(const std::string &f) {
     current_filter = f;
     /// release objects
 }
