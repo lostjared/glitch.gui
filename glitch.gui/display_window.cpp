@@ -48,6 +48,10 @@ void DisplayWindow::stopAnimation() {
 }
 
 void DisplayWindow::timeoutFunc() {
-    display(source_image);
+    cv::Mat image = source_image.clone();
+//    ac::SelfAlphaBlend(image); 
+// perform filter
+
+    display(image);
     update();
 }
