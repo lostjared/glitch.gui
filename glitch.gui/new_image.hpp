@@ -22,6 +22,8 @@ private:
     QLineEdit *video_fps;
     QPushButton *video_start;
 
+    bool filename_set = false, outdir_set = false;
+
 public slots:
     void openFile();
     void selectDir();
