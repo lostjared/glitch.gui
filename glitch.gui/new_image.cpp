@@ -37,10 +37,22 @@ void NewImageWindow::openFile() {
     if(filename != "") {
         input_file->setText(filename);
         filename_set = true;
+        if(outdir_set == true && filename_set == true) {
+            video_start->setEnabled(true);
+        }
     }
 }
 
 void NewImageWindow::selectDir() {
+    QString dir;
+    dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), "");
+    if(dir != "") {
+        output_location->setText(dir);
+        outdir_set = true;
+        if(outdir_set == true && filename_set == true) {
+            video_start->setEnabled(true);
+        }
+    }
 
 }
 
@@ -50,5 +62,6 @@ void NewImageWindow::videoStart() {
         QString filename = input_file->text();
         QString outdir = output_location->text();
         main_window->startNewAnimation(filename, outdir, fps);
+        hide();
     }
 }

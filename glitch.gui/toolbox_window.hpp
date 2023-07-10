@@ -7,6 +7,9 @@ class ToolboxWindow : public QDialog {
     Q_OBJECT
 public:
     ToolboxWindow(QWidget *parent = 0);
+    void setOutputDirectory(const QString &odir);
+private:
+    QString outdir;
 
 };
 

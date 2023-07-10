@@ -65,6 +65,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
        if(filename != "") {
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
+            toolbox_window->setOutputDirectory(outdir);
             display_window->setGeometry(0, 0, 800, 600);
             display_window->setSourceImage(src);
             display_window->show();
