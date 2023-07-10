@@ -23,12 +23,14 @@ public:
     void stopAnimation();
     void setCurrentFilter(const std::string &f);
 
+    void takeSnapshot(const QString &text);
+
 public slots:
     void timeoutFunc();
 
 
 private:
-    cv::Mat source_image;
+    cv::Mat source_image, image;
     QLabel *image_label;
     QTimer *timer; 
     std::string current_filter;

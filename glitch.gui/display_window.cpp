@@ -52,9 +52,12 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     /// release objects
 }
 
+void DisplayWindow::takeSnapshot(const QString &filename) {
+    cv::imwrite(filename.toStdString(), image);
+}
 
 void DisplayWindow::timeoutFunc() {
-    cv::Mat image = source_image.clone();
+    image = source_image.clone();
     ac::CallFilter(current_filter, image);
     display(image);
     update();

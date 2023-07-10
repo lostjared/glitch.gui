@@ -32,7 +32,9 @@ MainWindow::MainWindow()  {
 
     display_window = new DisplayWindow(this);
     display_window->setGeometry(100, 600, 640, 480);
-    display_window->hide();    
+    display_window->hide();  
+
+    toolbox_window->setDisplayWindow(display_window);  
 
     newimage_window = new NewImageWindow(this);
     newimage_window->setGeometry(100, 100, 320, 240);

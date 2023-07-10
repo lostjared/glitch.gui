@@ -1,9 +1,29 @@
 #include"toolbox_window.hpp"
+#include"display_window.hpp"
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Toolbox");
+    save_snapshot = new QPushButton(tr("Save"), this);
+    save_snapshot->setGeometry(10, 10, 100, 25);
+    connect(save_snapshot, SIGNAL(clicked()), this, SLOT(saveSnapshot()));
 }
 
 void ToolboxWindow::setOutputDirectory(const QString &odir) {
     outdir = odir;
+}
+
+void ToolboxWindow::setDisplayWindow(DisplayWindow *disp) {
+    display_window = disp;
+}
+
+void ToolboxWindow::saveSnapshot() {
+
+    if(outdir != "") {
+
+        QString text;
+        QTextStream stream(&text);
+        stream << outdir << "/" << "glitch.gui.snapshot-" << ++snap_index << ".png";
+        display_window->takeSnapshot(text);
+    }
+
 }
