@@ -17,13 +17,10 @@ void ToolboxWindow::setDisplayWindow(DisplayWindow *disp) {
 }
 
 void ToolboxWindow::saveSnapshot() {
-
     if(outdir != "") {
-
         QString text;
         QTextStream stream(&text);
         stream << outdir << "/" << "glitch.gui.snapshot-" << ++snap_index << ".png";
         display_window->takeSnapshot(text);
     }
-
 }

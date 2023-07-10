@@ -5,6 +5,7 @@
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
 #include"new_image.hpp"
+#include"debug_window.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -40,6 +41,9 @@ MainWindow::MainWindow()  {
     newimage_window->setGeometry(100, 100, 320, 240);
     newimage_window->setMainWindow(this);
     newimage_window->hide();
+
+    debug_window = new DebugWindow(this);
+    debug_window->show();
 
     setFixedSize(640, 480);
     setWindowTitle("glitch.gui");

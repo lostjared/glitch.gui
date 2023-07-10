@@ -13,6 +13,7 @@ QImage Mat2QImage(cv::Mat const& src);
 class ToolboxWindow;
 class DisplayWindow;
 class NewImageWindow;
+class DebugWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -27,6 +28,7 @@ private:
     ToolboxWindow *toolbox_window;
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
+    DebugWindow *debug_window;
     QImage image;
     QComboBox *filter_list;
 public slots:
