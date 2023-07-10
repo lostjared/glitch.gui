@@ -64,6 +64,8 @@ MainWindow::MainWindow()  {
     display_window->setCurrentFilter(ac::solo_filter[0]);
 
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+
+    debug_window->Log("gui: successfully initalized");
 }
 
 
