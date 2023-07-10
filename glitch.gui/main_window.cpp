@@ -60,6 +60,20 @@ MainWindow::MainWindow()  {
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 }
 
+
+void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, float fps) {
+       if(filename != "") {
+        cv::Mat src = cv::imread(filename.toStdString());
+        if(!src.empty()) {
+            display_window->setGeometry(0, 0, 800, 600);
+            display_window->setSourceImage(src);
+            display_window->show();
+            display_window->startAnimation(fps);
+        }
+     } 
+}
+
+
 void MainWindow::openFile() {
     /*
     QString filename;

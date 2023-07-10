@@ -37,10 +37,10 @@ void DisplayWindow::display(const cv::Mat &src) {
        display(image);
 }
 
-void DisplayWindow::startAnimation() {
+void DisplayWindow::startAnimation(float fps) {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
-    timer->start(1000 / 60);
+    timer->start(static_cast<int>((double)1000 / fps));
 }
 
 void DisplayWindow::stopAnimation() {

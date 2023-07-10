@@ -19,7 +19,7 @@ public:
     void display(QImage &image);
     void display(const cv::Mat &src);
 
-    void startAnimation();
+    void startAnimation(float fps);
     void stopAnimation();
     void setCurrentFilter(const std::string &f);
 

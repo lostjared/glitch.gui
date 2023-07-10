@@ -21,6 +21,7 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     video_start = new QPushButton(tr("Start"), this);
     video_start->setGeometry(320-100-10, 240-35, 100, 30);   
     connect(video_start, SIGNAL(clicked()), this, SLOT(videoStart())); 
+    video_start->setEnabled(false);
 }
 
 void NewImageWindow::setMainWindow(MainWindow *main_w) {
@@ -36,5 +37,10 @@ void NewImageWindow::selectDir() {
 }
 
 void NewImageWindow::videoStart() {
-    
+    float fps = video_fps->text().toFloat();
+    if(fps > 0) {
+        QString filename = input_file->text();
+        QString outdir = output_location->text();
+        main_window->startNewAnimation(filename, outdir, fps);
+    }
 }

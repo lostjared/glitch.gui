@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
     void paintEvent(QPaintEvent *event) override;
+    void startNewAnimation(const QString &filename, const QString &outdir, float fps);
 private:
     QMenu *file_menu;
     QAction *file_open;
