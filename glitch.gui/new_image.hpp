@@ -25,6 +25,7 @@ private:
 public slots:
     void openFile();
     void selectDir();
+    void videoStart();
 };
 
 #endif

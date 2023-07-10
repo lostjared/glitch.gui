@@ -2,6 +2,7 @@
 #include"main_window.hpp"
 
 NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
+    setWindowTitle("Start new Animation");
     setFixedSize(320, 240);
     input_file = new QLabel(tr("Select File Location"), this);
     input_file->setGeometry(10, 10, 250, 25);
@@ -13,8 +14,13 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     output_location_select = new QPushButton("...", this);
     output_location_select->setGeometry(260, 35, 50, 25);
     connect(output_location_select, SIGNAL(clicked()), this, SLOT(selectDir()));
-
-
+    QLabel *cap = new QLabel(tr("FPS"), this);
+    cap->setGeometry(10, 75, 50, 25);
+    video_fps = new QLineEdit("24", this);
+    video_fps->setGeometry(65, 75, 100, 25);
+    video_start = new QPushButton(tr("Start"), this);
+    video_start->setGeometry(320-100-10, 240-35, 100, 30);   
+    connect(video_start, SIGNAL(clicked()), this, SLOT(videoStart())); 
 }
 
 void NewImageWindow::setMainWindow(MainWindow *main_w) {
@@ -27,4 +33,8 @@ void NewImageWindow::openFile() {
 
 void NewImageWindow::selectDir() {
 
+}
+
+void NewImageWindow::videoStart() {
+    
 }
