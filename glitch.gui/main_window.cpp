@@ -4,6 +4,7 @@
 #include<QPainter>
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
+#include"new_image.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -32,6 +33,11 @@ MainWindow::MainWindow()  {
     display_window = new DisplayWindow(this);
     display_window->setGeometry(100, 600, 640, 480);
     display_window->hide();    
+
+    newimage_window = new NewImageWindow(this);
+    newimage_window->setGeometry(100, 100, 320, 240);
+    newimage_window->setMainWindow(this);
+    newimage_window->hide();
 
     setFixedSize(640, 480);
     setWindowTitle("glitch.gui");
@@ -68,7 +74,7 @@ void MainWindow::openFile() {
      }
 }
 
-void MainWindow::indexChanged(int index) {
+void MainWindow::indexChanged(int) {
     std::string s = ac::solo_filter[filter_list->currentIndex()];
     display_window->setCurrentFilter(s);
 }
