@@ -42,7 +42,7 @@ MainWindow::MainWindow()  {
     setFixedSize(640, 480);
     setWindowTitle("glitch.gui");
     file_menu = menuBar()->addMenu("&File");
-    file_open = new QAction(tr("&Open"), this);
+    file_open = new QAction(tr("&Create New Image"), this);
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
 
@@ -61,6 +61,7 @@ MainWindow::MainWindow()  {
 }
 
 void MainWindow::openFile() {
+    /*
     QString filename;
     filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
     if(filename != "") {
@@ -71,7 +72,8 @@ void MainWindow::openFile() {
             display_window->show();
             display_window->startAnimation();
         }
-     }
+     }*/
+     newimage_window->show();
 }
 
 void MainWindow::indexChanged(int) {
