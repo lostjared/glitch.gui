@@ -5,7 +5,7 @@
 #include<QPainter>
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
-    setGeometry(0, 0, 640, 480);
+    setGeometry(700, 0, 640, 480);
     setWindowTitle("Display Window");
     image_label = new QLabel(this);
     image_label->setGeometry(0, 0, 640, 480);
@@ -59,6 +59,10 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     current_filter = f;
     /// release objects
     ac::release_all_objects();
+    QString text;
+    QTextStream stream(&text);
+    stream << "glitch: Current filter set to: " << f.c_str() << "\n";
+    debug_window->Log(text);
 }
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {

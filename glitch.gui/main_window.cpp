@@ -32,7 +32,7 @@ MainWindow::MainWindow()  {
     toolbox_window->show();
 
     display_window = new DisplayWindow(this);
-    display_window->setGeometry(100, 600, 640, 480);
+    display_window->setGeometry(700, 600, 640, 480);
     display_window->hide();  
 
     toolbox_window->setDisplayWindow(display_window);  
@@ -64,9 +64,8 @@ MainWindow::MainWindow()  {
     }
     filter_list->setCurrentIndex(0);
     display_window->setCurrentFilter(ac::solo_filter[0]);
-
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
-
+    filter_list->setEnabled(false);
     debug_window->Log("gui: successfully initalized\n");
 }
 
@@ -76,10 +75,15 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
             toolbox_window->setOutputDirectory(outdir);
-            display_window->setGeometry(0, 0, 800, 600);
+            display_window->setGeometry(700, 0, 800, 600);
             display_window->setSourceImage(src);
             display_window->show();
             display_window->startAnimation(fps);
+            QString text;
+            QTextStream stream(&text);
+            stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS\n";
+            debug_window->Log(text);
+            filter_list->setEnabled(true);
         }
      } 
 }
