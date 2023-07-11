@@ -58,6 +58,7 @@ void DisplayWindow::stopAnimation() {
 void DisplayWindow::setCurrentFilter(const std::string &f) {
     current_filter = f;
     /// release objects
+    ac::release_all_objects();
 }
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
