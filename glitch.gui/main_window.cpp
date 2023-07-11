@@ -27,6 +27,9 @@ QImage Mat2QImage(cv::Mat const& src)
 MainWindow::MainWindow()  {
 
     ac::init();
+    debug_window = new DebugWindow(this);
+    debug_window->show();
+
     toolbox_window = new ToolboxWindow(this);
     toolbox_window->setGeometry(100,100,250,400);
     toolbox_window->show();
@@ -34,6 +37,7 @@ MainWindow::MainWindow()  {
     display_window = new DisplayWindow(this);
     display_window->setGeometry(700, 600, 640, 480);
     display_window->hide();  
+    display_window->setDebugWindow(debug_window);
 
     toolbox_window->setDisplayWindow(display_window);  
 
@@ -41,11 +45,6 @@ MainWindow::MainWindow()  {
     newimage_window->setGeometry(100, 100, 320, 240);
     newimage_window->setMainWindow(this);
     newimage_window->hide();
-
-    debug_window = new DebugWindow(this);
-    debug_window->show();
-
-    display_window->setDebugWindow(debug_window);
 
     setFixedSize(640, 480);
     setWindowTitle("glitch.gui");
