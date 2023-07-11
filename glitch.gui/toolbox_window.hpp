@@ -15,12 +15,13 @@ public:
     void setDisplayWindow(DisplayWindow *disp);
 public slots:
     void saveSnapshot();
+    void setSource();
 
 private:
     QString outdir;
     DisplayWindow *display_window;
     int snap_index = 0;
-    QPushButton *save_snapshot;
+    QPushButton *save_snapshot, *setsource_action;
 
 };
 

@@ -27,6 +27,7 @@ public:
     void setCurrentFilter(const std::string &f);
 
     void takeSnapshot(const QString &text, const QString &file_type);
+    void setSource();
 public slots:
     void timeoutFunc();
 

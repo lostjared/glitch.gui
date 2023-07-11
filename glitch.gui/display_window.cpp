@@ -76,6 +76,14 @@ void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_ty
     debug_window->Log(textx);
 }
 
+void DisplayWindow::setSource() {
+    source_image = image.clone();
+    QString text;
+    QTextStream stream(&text);
+    stream << "glitch: Set current frame as Source image\n";
+    debug_window->Log(text);
+}
+
 void DisplayWindow::timeoutFunc() {
     image = source_image.clone();
     ac::CallFilter(current_filter, image);
