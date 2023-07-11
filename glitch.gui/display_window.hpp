@@ -26,7 +26,7 @@ public:
     void stopAnimation();
     void setCurrentFilter(const std::string &f);
 
-    void takeSnapshot(const QString &text);
+    void takeSnapshot(const QString &text, const QString &file_type);
 public slots:
     void timeoutFunc();
 

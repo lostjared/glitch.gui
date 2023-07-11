@@ -9,6 +9,7 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Display Window");
     image_label = new QLabel(this);
     image_label->setGeometry(0, 0, 640, 480);
+    // don't use debug_window not initalized yet
 
 }
 
@@ -59,12 +60,15 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     /// release objects
 }
 
-void DisplayWindow::takeSnapshot(const QString &filename) {
-    cv::imwrite(filename.toStdString(), image);
+void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
     QTextStream stream(&text);
-    stream << "glitch: Took snapshot: " << filename << "\n";
-    debug_window->Log(text);
+    stream << filename << image.cols << "x" << image.rows << "." << file_type;
+    cv::imwrite(text.toStdString(), image);
+    QString textx;
+    QTextStream streamx(&textx);
+    streamx << "glitch: Took snapshot: " << text << "\n";
+    debug_window->Log(textx);
 }
 
 void DisplayWindow::timeoutFunc() {
