@@ -22,13 +22,14 @@ public:
     MainWindow();
     void paintEvent(QPaintEvent *event) override;
     void startNewAnimation(const QString &filename, const QString &outdir, float fps);
+
+     DebugWindow *debug_window;
 private:
     QMenu *file_menu;
     QAction *file_open;
     ToolboxWindow *toolbox_window;
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
-    DebugWindow *debug_window;
     QImage image;
     QComboBox *filter_list;
 public slots:

@@ -1,5 +1,7 @@
 #include"display_window.hpp"
 #include"main_window.hpp"
+#include"debug_window.hpp"
+
 #include<QPainter>
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
@@ -9,6 +11,11 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     image_label->setGeometry(0, 0, 640, 480);
 
 }
+
+void DisplayWindow::setDebugWindow(DebugWindow *d) {
+    debug_window = d;
+}
+
 
 void DisplayWindow::setSourceImage(const cv::Mat &src) {
     source_image = src.clone();
@@ -54,6 +61,10 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
 
 void DisplayWindow::takeSnapshot(const QString &filename) {
     cv::imwrite(filename.toStdString(), image);
+    QString text;
+    QTextStream stream(&text);
+    stream << "glitch: Took snapshot: " << filename << "\n";
+    debug_window->Log(text);
 }
 
 void DisplayWindow::timeoutFunc() {

@@ -45,6 +45,8 @@ MainWindow::MainWindow()  {
     debug_window = new DebugWindow(this);
     debug_window->show();
 
+    display_window->setDebugWindow(debug_window);
+
     setFixedSize(640, 480);
     setWindowTitle("glitch.gui");
     file_menu = menuBar()->addMenu("&File");
@@ -65,7 +67,7 @@ MainWindow::MainWindow()  {
 
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 
-    debug_window->Log("gui: successfully initalized");
+    debug_window->Log("gui: successfully initalized\n");
 }
 
 

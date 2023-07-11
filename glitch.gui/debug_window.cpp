@@ -20,8 +20,8 @@ void DebugWindow::Log(const QString &text) {
    QString current;
    current = text_view->toPlainText();
    current += text;
-   current.replace("gui: ", "<span style=\"color: red;\">editor: </span>");
-   current.replace("glitch: ", "<span style=\"color: green;\">game: </span>");
+   current.replace("gui: ", "<span style=\"color: red;\">gui: </span>");
+   current.replace("glitch: ", "<span style=\"color: green;\">glitch: </span>");
    current.replace("\n", "<br>");
    text_view->setHtml(current);
    QTextCursor tmpCursor = text_view->textCursor();

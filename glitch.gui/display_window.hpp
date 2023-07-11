@@ -8,11 +8,14 @@
 
 #include"acidcam/ac.h"
 
+class DebugWindow;
+
 class DisplayWindow : public QDialog {
     Q_OBJECT
 public:
     DisplayWindow(QWidget *parent = 0);
-    
+
+    void setDebugWindow(DebugWindow *d);    
     void setSourceImage(const cv::Mat &src);
     void paintEvent(QPaintEvent *e);
 
@@ -24,7 +27,6 @@ public:
     void setCurrentFilter(const std::string &f);
 
     void takeSnapshot(const QString &text);
-
 public slots:
     void timeoutFunc();
 
@@ -34,6 +36,8 @@ private:
     QLabel *image_label;
     QTimer *timer; 
     std::string current_filter;
+    DebugWindow *debug_window;
+
 };
 
 
