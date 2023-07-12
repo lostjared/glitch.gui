@@ -48,6 +48,7 @@ void DisplayWindow::display(const cv::Mat &src) {
 
 void DisplayWindow::startAnimation() {
     timer->start(static_cast<int>((double)1000 / this->fps));
+    debug_window->Log("gui: Animation restarted.\n");
 }
 
 void DisplayWindow::startAnimation(float fps) {
