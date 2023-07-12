@@ -10,6 +10,15 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     setsource_action = new QPushButton(tr("Set"), this);
     setsource_action->setGeometry(120, 10, 100, 25);
     connect(setsource_action, SIGNAL(clicked()), this, SLOT(setSource()));
+
+    stop_action = new QPushButton(tr("Stop"), this);
+    stop_action->setGeometry(10, 40, 100, 25);
+    connect(stop_action, SIGNAL(clicked()), this, SLOT(stopAction()));
+
+    step_action = new QPushButton(tr("Step"), this);
+    step_action->setGeometry(120, 40, 100, 25);
+    connect(step_action, SIGNAL(clicked()), this, SLOT(stepAction()));
+
 }
 
 void ToolboxWindow::setOutputDirectory(const QString &odir) {
@@ -31,4 +40,12 @@ void ToolboxWindow::saveSnapshot() {
 
 void ToolboxWindow::setSource() {
     display_window->setSource();    
+}
+
+void ToolboxWindow::stopAction() {
+
+}
+
+void ToolboxWindow::stepAction() {
+
 }

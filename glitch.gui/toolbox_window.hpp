@@ -16,12 +16,14 @@ public:
 public slots:
     void saveSnapshot();
     void setSource();
-
+    void stopAction();
+    void stepAction();
+    
 private:
     QString outdir;
     DisplayWindow *display_window;
     int snap_index = 0;
-    QPushButton *save_snapshot, *setsource_action;
+    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action;
 
 };
 
