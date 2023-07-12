@@ -56,7 +56,7 @@ MainWindow::MainWindow()  {
     setGeometry(375,100,640,480);
 
     filter_list = new QComboBox(this);
-    filter_list->setGeometry(15, 15, 300, 25);
+    filter_list->setGeometry(15, 35, 300, 25);
     for(auto it = ac::solo_filter.begin(); it != ac::solo_filter.end(); it++) {
         std::string s = *it;
         filter_list->addItem(s.c_str());
