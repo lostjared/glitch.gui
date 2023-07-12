@@ -10,7 +10,8 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     image_label = new QLabel(this);
     image_label->setGeometry(0, 0, 640, 480);
     // don't use debug_window not initalized yet
-
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
 }
 
 void DisplayWindow::setDebugWindow(DebugWindow *d) {
@@ -45,9 +46,12 @@ void DisplayWindow::display(const cv::Mat &src) {
        display(image);
 }
 
+void DisplayWindow::startAnimation() {
+    timer->start(static_cast<int>((double)1000 / this->fps));
+}
+
 void DisplayWindow::startAnimation(float fps) {
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
+    this->fps = fps;
     timer->start(static_cast<int>((double)1000 / fps));
 }
 
@@ -82,6 +86,10 @@ void DisplayWindow::setSource() {
     QTextStream stream(&text);
     stream << "glitch: Set current frame as Source image\n";
     debug_window->Log(text);
+}
+
+void DisplayWindow::step() {
+    timeoutFunc();    
 }
 
 void DisplayWindow::timeoutFunc() {

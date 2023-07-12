@@ -22,12 +22,16 @@ public:
     void display(QImage &image);
     void display(const cv::Mat &src);
 
+    void startAnimation();
     void startAnimation(float fps);
     void stopAnimation();
     void setCurrentFilter(const std::string &f);
 
     void takeSnapshot(const QString &text, const QString &file_type);
     void setSource();
+
+    void step();
+
 public slots:
     void timeoutFunc();
 
@@ -38,7 +42,7 @@ private:
     QTimer *timer; 
     std::string current_filter;
     DebugWindow *debug_window;
-
+    float fps = 24.0;
 };
 
 

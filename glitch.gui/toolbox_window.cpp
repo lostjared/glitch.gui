@@ -39,13 +39,25 @@ void ToolboxWindow::saveSnapshot() {
 }
 
 void ToolboxWindow::setSource() {
-    display_window->setSource();    
+    if(display_window != nullptr)
+        display_window->setSource();    
 }
 
 void ToolboxWindow::stopAction() {
 
+    if(stop_action->text() == "Stop") {
+        if(display_window != nullptr)
+            display_window->stopAnimation();
+            stop_action->setText("Start");
+    } else {
+        stop_action->setText("Stop");
+        if(display_window != nullptr)
+            display_window->startAnimation();
+    }
 }
 
 void ToolboxWindow::stepAction() {
+    if(display_window != nullptr) 
+        display_window->step();
 
 }
