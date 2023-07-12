@@ -57,6 +57,7 @@ void DisplayWindow::startAnimation(float fps) {
 
 void DisplayWindow::stopAnimation() {
     timer->stop();
+    debug_window->Log("gui: Animation stopped\n");
 }
 
 void DisplayWindow::setCurrentFilter(const std::string &f) {
@@ -89,7 +90,11 @@ void DisplayWindow::setSource() {
 }
 
 void DisplayWindow::step() {
-    timeoutFunc();    
+    timeoutFunc();
+    QString text;
+    QTextStream stream(&text);
+    stream << "glitch: Took step.\n";
+    debug_window->Log(text);    
 }
 
 void DisplayWindow::timeoutFunc() {
