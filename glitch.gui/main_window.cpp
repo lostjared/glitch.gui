@@ -77,6 +77,10 @@ MainWindow::MainWindow()  {
 
     connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
 
+    filter_list_view->setEnabled(false);
+    filter_search->setEnabled(false);
+    filter_search_button->setEnabled(false);
+
     debug_window->Log("gui: successfully initalized\n");
 }
 
@@ -95,6 +99,9 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS\n";
             debug_window->Log(text);
             filter_list->setEnabled(true);
+            filter_list_view->setEnabled(true);
+            filter_search->setEnabled(true);
+            filter_search_button->setEnabled(true);
         }
      } 
 }
