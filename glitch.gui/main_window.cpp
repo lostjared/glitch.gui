@@ -66,7 +66,7 @@ MainWindow::MainWindow()  {
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     filter_list->setEnabled(false);
 
-    filter_list_view = new QListView(this);
+    filter_list_view = new QListWidget(this);
     filter_list_view->setGeometry(15, 35+25+10, 300, 200);
 
     filter_search = new QLineEdit(this);
@@ -122,7 +122,15 @@ void MainWindow::indexChanged(int) {
 }
 
 void MainWindow::searchFilter() {
-
+    QString search = filter_search->text();
+    if(search == "") return;
+    filter_list_view->clear();
+    for(int i = 0; i < filter_list->count(); ++i) {
+        QString text = filter_list->itemText(i);
+        if(text.contains(search)) {
+            filter_list_view->addItem(text);
+        }
+    }
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {

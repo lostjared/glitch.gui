@@ -5,7 +5,7 @@
 #include<QMenu>
 #include<QAction>
 #include<QComboBox>
-#include<QListView>
+#include<QListWidget>
 #include<QLineEdit>
 #include<QPushButton>
 #include"acidcam/ac.h"
@@ -35,7 +35,7 @@ private:
     NewImageWindow *newimage_window;
     QImage image;
     QComboBox *filter_list;
-    QListView *filter_list_view;
+    QListWidget *filter_list_view;
     QLineEdit *filter_search;
     QPushButton *filter_search_button;
 public slots:
