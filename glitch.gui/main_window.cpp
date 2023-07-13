@@ -77,9 +77,15 @@ MainWindow::MainWindow()  {
 
     connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
 
+    filter_search_set = new QPushButton(tr("Set"), this);
+    filter_search_set->setGeometry(15, 35+25+10+200+10, 70, 30);
+
+    connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
+    
     filter_list_view->setEnabled(false);
     filter_search->setEnabled(false);
     filter_search_button->setEnabled(false);
+    filter_search_set->setEnabled(false);
 
     debug_window->Log("gui: successfully initalized\n");
 }
@@ -102,6 +108,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             filter_list_view->setEnabled(true);
             filter_search->setEnabled(true);
             filter_search_button->setEnabled(true);
+            filter_search_set->setEnabled(true);
         }
      } 
 }
@@ -136,6 +143,20 @@ void MainWindow::searchFilter() {
         QString text = filter_list->itemText(i);
         if(text.contains(search)) {
             filter_list_view->addItem(text);
+        }
+    }
+    filter_list_view->setCurrentRow(0);
+
+}
+
+void MainWindow::setSearch() {
+    auto text = filter_list_view->currentItem();
+    QString text_value = text->text();
+    for(int i = 0; i < filter_list->count(); ++i) {
+        QString compare = filter_list->itemText(i);
+        if(compare == text_value) {
+            filter_list->setCurrentIndex(i);
+            break;
         }
     }
 }

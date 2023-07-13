@@ -37,13 +37,12 @@ private:
     QComboBox *filter_list;
     QListWidget *filter_list_view;
     QLineEdit *filter_search;
-    QPushButton *filter_search_button;
+    QPushButton *filter_search_button, *filter_search_set;
 public slots:
     void openFile();
     void indexChanged(int index);
     void searchFilter();
-
-
+    void setSearch();
 };
 
 
