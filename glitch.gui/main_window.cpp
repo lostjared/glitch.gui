@@ -72,6 +72,11 @@ MainWindow::MainWindow()  {
     filter_search = new QLineEdit(this);
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
 
+    filter_search_button = new QPushButton(tr("Search"), this);
+    filter_search_button->setGeometry(300+15+10+225+10, 35, 70, 30);
+
+    connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
+
     debug_window->Log("gui: successfully initalized\n");
 }
 
@@ -116,6 +121,9 @@ void MainWindow::indexChanged(int) {
     display_window->setCurrentFilter(s);
 }
 
+void MainWindow::searchFilter() {
+
+}
 
 void MainWindow::paintEvent(QPaintEvent *) {
 

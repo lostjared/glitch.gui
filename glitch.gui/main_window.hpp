@@ -7,6 +7,7 @@
 #include<QComboBox>
 #include<QListView>
 #include<QLineEdit>
+#include<QPushButton>
 #include"acidcam/ac.h"
 
 cv::Mat QImage2Mat(QImage const& src);
@@ -36,9 +37,11 @@ private:
     QComboBox *filter_list;
     QListView *filter_list_view;
     QLineEdit *filter_search;
+    QPushButton *filter_search_button;
 public slots:
     void openFile();
     void indexChanged(int index);
+    void searchFilter();
 
 
 };
