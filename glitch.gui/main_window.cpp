@@ -65,6 +65,13 @@ MainWindow::MainWindow()  {
     display_window->setCurrentFilter(ac::solo_filter[0]);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     filter_list->setEnabled(false);
+
+    filter_list_view = new QListView(this);
+    filter_list_view->setGeometry(15, 35+25+10, 300, 200);
+
+    filter_search = new QLineEdit(this);
+    filter_search->setGeometry(300+15+10, 35, 300-75, 30);
+
     debug_window->Log("gui: successfully initalized\n");
 }
 
