@@ -93,6 +93,8 @@ MainWindow::MainWindow()  {
     filter_search_button->setEnabled(false);
     filter_search_set->setEnabled(false);
 
+    setWindowIcon(QIcon(":/images/icon.png"));
+
     debug_window->Log("gui: successfully initalized\n");
 }
 
@@ -171,8 +173,8 @@ void MainWindow::helpAbout() {
     QMessageBox box;
     box.setWindowTitle(tr("About glitch.gui"));
     box.setText(tr("(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n"));
-    //box.setWindowIcon()
-    //box.setIcon()
+    box.setWindowIcon(QIcon(":/images/icon.png"));
+    box.setIcon(QMessageBox::Icon::Information);
     box.exec();
 }
 
