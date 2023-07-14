@@ -170,9 +170,12 @@ void MainWindow::setSearch() {
 }
 
 void MainWindow::helpAbout() {
+    QString text;
+    QTextStream stream(&text);
+    stream << "Version: " << APP_VERSION << "\n" << "(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n";
     QMessageBox box;
     box.setWindowTitle(tr("About glitch.gui"));
-    box.setText(tr("(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n"));
+    box.setText(text);
     box.setWindowIcon(QIcon(":/images/icon.png"));
     box.setIcon(QMessageBox::Icon::Information);
     box.exec();
