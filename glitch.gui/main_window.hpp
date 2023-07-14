@@ -28,8 +28,9 @@ public:
 
      DebugWindow *debug_window;
 private:
-    QMenu *file_menu;
+    QMenu *file_menu, *help_menu;
     QAction *file_open;
+    QAction *help_about;
     ToolboxWindow *toolbox_window;
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
@@ -43,6 +44,7 @@ public slots:
     void indexChanged(int index);
     void searchFilter();
     void setSearch();
+    void helpAbout();
 };
 
 

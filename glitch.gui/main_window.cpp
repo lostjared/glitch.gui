@@ -2,6 +2,7 @@
 #include<QMenuBar>
 #include<QFileDialog>
 #include<QPainter>
+#include<QMessageBox>
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
 #include"new_image.hpp"
@@ -47,11 +48,16 @@ MainWindow::MainWindow()  {
     newimage_window->hide();
 
     setFixedSize(640, 480);
-    setWindowTitle("glitch.gui");
-    file_menu = menuBar()->addMenu("&File");
+    setWindowTitle(tr("glitch.gui"));
+    file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Image"), this);
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
+
+    help_menu = menuBar()->addMenu(tr("&Help"));
+    help_about = new QAction(tr("&About"), this);
+    connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
+    help_menu->addAction(help_about);
 
     setGeometry(375,100,640,480);
 
@@ -159,6 +165,15 @@ void MainWindow::setSearch() {
             break;
         }
     }
+}
+
+void MainWindow::helpAbout() {
+    QMessageBox box;
+    box.setWindowTitle(tr("About glitch.gui"));
+    box.setText("(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n");
+    //box.setWindowIcon()
+    //box.setIcon()
+    box.exec();
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
