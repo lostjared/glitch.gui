@@ -3,10 +3,14 @@
 #include"debug_window.hpp"
 
 #include<QPainter>
+#include<QIcon>
+
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
     setWindowTitle("Display Window");
+    setWindowIcon(QIcon(":/images/icon.png"));
+
     image_label = new QLabel(this);
     image_label->setGeometry(0, 0, 640, 480);
     // don't use debug_window not initalized yet

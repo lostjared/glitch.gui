@@ -1,9 +1,11 @@
 #include"new_image.hpp"
 #include"main_window.hpp"
 #include<QFileDialog>
+#include<QIcon>
 
 NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Start new Animation");
+    setWindowIcon(QIcon(":/images/icon.png"));
     setFixedSize(320, 240);
     input_file = new QLabel(tr("Select File Location"), this);
     input_file->setGeometry(10, 10, 240, 25);

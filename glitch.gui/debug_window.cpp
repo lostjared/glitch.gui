@@ -1,10 +1,12 @@
 #include"debug_window.hpp"
+#include<QIcon>
 // Debug Window constructor - (init)
 DebugWindow::DebugWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(10, 600, 1280, 320);
     setFixedSize(1280, 320);
     setWindowFlag(Qt::Tool);
     setWindowTitle(tr("Debug Console"));
+    setWindowIcon(QIcon(":/images/icon.png"));
     text_view = new QTextEdit(this);
     text_view->setGeometry(10, 10, 1280-20, 320-20);
     text_view->setReadOnly(true);

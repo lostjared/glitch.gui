@@ -3,6 +3,7 @@
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Toolbox");
+    setWindowFlags(Qt::WindowType::Tool);
     save_snapshot = new QPushButton(tr("Save"), this);
     save_snapshot->setGeometry(10, 10, 100, 25);
     connect(save_snapshot, SIGNAL(clicked()), this, SLOT(saveSnapshot()));
