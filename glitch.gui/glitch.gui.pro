@@ -16,5 +16,6 @@ QT += widgets
 LIBS += `pkg-config acidcam opencv4 --libs`
 QMAKE_CXXFLAGS += `pkg-config acidcam opencv4 --cflags`
 # Input
+RESOURCES += resources.qrc
 HEADERS += main_window.hpp toolbox_window.hpp display_window.hpp version_info.hpp new_image.hpp debug_window.hpp
 SOURCES += main.cpp main_window.cpp toolbox_window.cpp display_window.cpp new_image.cpp debug_window.cpp
