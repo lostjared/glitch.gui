@@ -7,7 +7,7 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     save_snapshot->setGeometry(10, 10, 100, 25);
     connect(save_snapshot, SIGNAL(clicked()), this, SLOT(saveSnapshot()));
 
-    setsource_action = new QPushButton(tr("Set"), this);
+    setsource_action = new QPushButton(tr("Source"), this);
     setsource_action->setGeometry(120, 10, 100, 25);
     connect(setsource_action, SIGNAL(clicked()), this, SLOT(setSource()));
 

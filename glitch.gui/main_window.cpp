@@ -77,7 +77,7 @@ MainWindow::MainWindow()  {
 
     connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
 
-    filter_search_set = new QPushButton(tr("Set"), this);
+    filter_search_set = new QPushButton(tr("Select"), this);
     filter_search_set->setGeometry(15, 35+25+10+200+10, 70, 30);
 
     connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
