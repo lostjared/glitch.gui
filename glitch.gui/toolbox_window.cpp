@@ -34,8 +34,9 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
 }
 
-void ToolboxWindow::setOutputDirectory(const QString &odir) {
+void ToolboxWindow::setOutputDirectory(const QString &odir, const QString &p) {
     outdir = odir;
+    prefix = p;
 }
 
 void ToolboxWindow::setDisplayWindow(DisplayWindow *disp) {
@@ -47,7 +48,7 @@ void ToolboxWindow::saveSnapshot() {
     if(outdir != "") {
         QString text;
         QTextStream stream(&text);
-        stream << outdir << "/" << "glitch.gui.snapshot-" << ++snap_index << "-";
+        stream << outdir << "/" << prefix << "-" << ++snap_index << "-";
         display_window->takeSnapshot(text, "png");
     }
 }

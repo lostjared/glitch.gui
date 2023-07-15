@@ -14,7 +14,7 @@ class ToolboxWindow : public QDialog {
     Q_OBJECT
 public:
     ToolboxWindow(QWidget *parent = 0);
-    void setOutputDirectory(const QString &odir);
+    void setOutputDirectory(const QString &odir, const QString &prefix);
     void setDisplayWindow(DisplayWindow *disp);
 public slots:
     void saveSnapshot();
@@ -32,6 +32,7 @@ private:
     QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color;
     QCheckBox *use_color;
     cv::Vec3b color_value;
+    QString prefix;
 };
 
 #endif

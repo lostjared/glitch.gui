@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
     void paintEvent(QPaintEvent *event) override;
-    void startNewAnimation(const QString &filename, const QString &outdir, float fps);
+    void startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps);
 
      DebugWindow *debug_window;
 private:

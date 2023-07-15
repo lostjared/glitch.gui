@@ -99,11 +99,11 @@ MainWindow::MainWindow()  {
 }
 
 
-void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, float fps) {
+void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
        if(filename != "") {
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
-            toolbox_window->setOutputDirectory(outdir);
+            toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setGeometry(700, 0, 800, 600);
             display_window->setSourceImage(src);
             display_window->show();

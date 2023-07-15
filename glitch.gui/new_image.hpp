@@ -19,7 +19,7 @@ private:
     QPushButton *input_file_select;
     QLabel *output_location;
     QPushButton *output_location_select;
-    QLineEdit *video_fps;
+    QLineEdit *video_fps, *video_filename;
     QPushButton *video_start;
 
     bool filename_set = false, outdir_set = false;

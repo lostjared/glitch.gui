@@ -27,6 +27,11 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     video_start->setEnabled(false);
     filename_set = false;
     outdir_set = false;
+    QLabel *prefix = new QLabel(tr("Filename Prefix:"), this);
+    prefix->setGeometry(10, 110, 100, 30);
+    video_filename = new QLineEdit(this);
+    video_filename->setText(tr("glitch.gui.file1"));
+    video_filename->setGeometry(110, 110, 195, 30);
 }
 
 void NewImageWindow::setMainWindow(MainWindow *main_w) {
@@ -60,10 +65,12 @@ void NewImageWindow::selectDir() {
 
 void NewImageWindow::videoStart() {
     float fps = video_fps->text().toFloat();
-    if(fps > 0 && filename_set == true && outdir_set == true) {
+    QString prefix = video_filename->text();
+
+    if(fps > 0 && prefix.length() > 0 && filename_set == true && outdir_set == true) {
         QString filename = input_file->text();
         QString outdir = output_location->text();
-        main_window->startNewAnimation(filename, outdir, fps);
+        main_window->startNewAnimation(filename, outdir, prefix, fps);
         hide();
     }
 }
