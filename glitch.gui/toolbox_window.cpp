@@ -31,6 +31,7 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     sel_color = new QPushButton("...", this);
     sel_color->setGeometry(10+75, 40+25+10, 25, 25);
     connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
+    connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
 }
 
 void ToolboxWindow::setOutputDirectory(const QString &odir) {
@@ -39,6 +40,7 @@ void ToolboxWindow::setOutputDirectory(const QString &odir) {
 
 void ToolboxWindow::setDisplayWindow(DisplayWindow *disp) {
     display_window = disp;
+    display_window->setColorOffset(cv::Vec3b(0, 0, 0));
 }
 
 void ToolboxWindow::saveSnapshot() {
@@ -84,4 +86,12 @@ void ToolboxWindow::selectColor() {
     color_value[1] = color.green();
     color_value[2] = color.blue();
     color_lbl->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
+}
+
+void ToolboxWindow::clickOffset(bool) {
+    if(use_color->isChecked()) {
+        display_window->setColorOffset(color_value);
+    } else {
+        display_window->setColorOffset(cv::Vec3b(0, 0, 0));
+    }
 }

@@ -105,6 +105,24 @@ void DisplayWindow::step() {
 void DisplayWindow::timeoutFunc() {
     image = source_image.clone();
     ac::CallFilter(current_filter, image);
+    setColorOffset(image);
     display(image);
     update();
+}
+
+void DisplayWindow::setColorOffset(const cv::Vec3b &color) {
+    color_offset = color;
+    debug_window->Log("glitch: color offset toggled.\n");
+}
+
+void DisplayWindow::setColorOffset(cv::Mat &frame) {
+    for(int z = 0; z < frame.rows; ++z) {
+        for(int i = 0; i < frame.cols; ++i) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            // wrapping add
+            pixel[0] += color_offset[0];
+            pixel[1] += color_offset[1];
+            pixel[2] += color_offset[2];
+        }
+    }
 }

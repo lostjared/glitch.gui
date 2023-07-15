@@ -22,6 +22,7 @@ public slots:
     void stopAction();
     void stepAction();
     void selectColor();
+    void clickOffset(bool);
 
 private:
     QLabel *color_lbl;
