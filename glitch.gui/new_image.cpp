@@ -2,6 +2,7 @@
 #include"main_window.hpp"
 #include<QFileDialog>
 #include<QIcon>
+#include<QMessageBox>
 
 NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Start new Animation");
@@ -72,5 +73,11 @@ void NewImageWindow::videoStart() {
         QString outdir = output_location->text();
         main_window->startNewAnimation(filename, outdir, prefix, fps);
         hide();
+    } else {
+        QMessageBox box;
+        box.setWindowTitle("Error invalid input information");
+        box.setText("Invalid input information fill out form correctly");
+        box.setIcon(QMessageBox::Icon::Warning);
+        box.exec();
     }
 }
