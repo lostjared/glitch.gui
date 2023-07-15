@@ -63,7 +63,7 @@ void ToolboxWindow::stopAction() {
     if(stop_action->text() == "Stop") {
         if(display_window != nullptr)
             display_window->stopAnimation();
-            stop_action->setText("Start");
+        stop_action->setText("Start");
     } else {
         stop_action->setText("Stop");
         if(display_window != nullptr)
