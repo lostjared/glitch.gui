@@ -5,6 +5,7 @@
 #include<QPushButton>
 #include<QLabel>
 #include<QCheckBox>
+#include"acidcam/ac.h"
 
 class DisplayWindow;
 
@@ -27,9 +28,9 @@ private:
     QString outdir;
     DisplayWindow *display_window = nullptr;
     int snap_index = 0;
-    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action;
+    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color;
     QCheckBox *use_color;
-
+    cv::Vec3b color_value;
 };
 
 #endif

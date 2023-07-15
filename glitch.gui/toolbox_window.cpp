@@ -1,5 +1,6 @@
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
+#include<QColorDialog>
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Toolbox");
@@ -21,14 +22,15 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     connect(step_action, SIGNAL(clicked()), this, SLOT(stepAction()));
 
     color_lbl = new QLabel(this);
-    color_lbl->setGeometry(10, 40+25+10, 100, 25);
+    color_lbl->setGeometry(10, 40+25+10, 75, 25);
     QString color_var = "#000000";
     color_lbl->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
     use_color = new QCheckBox(tr("Offset Color"), this);
     use_color->setGeometry(120,40+25+10, 100, 25);
     use_color->setChecked(false);
-    connect(color_lbl, SIGNAL(clicked()), this, SLOT(selectColor()));
-
+    sel_color = new QPushButton("...", this);
+    sel_color->setGeometry(10+75, 40+25+10, 25, 25);
+    connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
 }
 
 void ToolboxWindow::setOutputDirectory(const QString &odir) {
@@ -73,5 +75,13 @@ void ToolboxWindow::stepAction() {
 }
 
 void ToolboxWindow::selectColor() {
-    
+    QColorDialog *dialog = new QColorDialog(this);
+    QColor color=  dialog->getColor();
+    QVariant variant = color;
+    QString color_var = variant.toString();
+    //set_low_color = color;
+    color_value[0] = color.blue();
+    color_value[1] = color.green();
+    color_value[2] = color.blue();
+    color_lbl->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
 }
