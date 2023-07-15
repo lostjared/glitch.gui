@@ -3,6 +3,8 @@
 
 #include<QDialog>
 #include<QPushButton>
+#include<QLabel>
+#include<QCheckBox>
 
 class DisplayWindow;
 
@@ -18,12 +20,15 @@ public slots:
     void setSource();
     void stopAction();
     void stepAction();
+    void selectColor();
 
 private:
+    QLabel *color_lbl;
     QString outdir;
     DisplayWindow *display_window = nullptr;
     int snap_index = 0;
     QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action;
+    QCheckBox *use_color;
 
 };
 

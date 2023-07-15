@@ -20,6 +20,15 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     step_action->setGeometry(120, 40, 100, 25);
     connect(step_action, SIGNAL(clicked()), this, SLOT(stepAction()));
 
+    color_lbl = new QLabel(this);
+    color_lbl->setGeometry(10, 40+25+10, 100, 25);
+    QString color_var = "#000000";
+    color_lbl->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
+    use_color = new QCheckBox(tr("Offset Color"), this);
+    use_color->setGeometry(120,40+25+10, 100, 25);
+    use_color->setChecked(false);
+    connect(color_lbl, SIGNAL(clicked()), this, SLOT(selectColor()));
+
 }
 
 void ToolboxWindow::setOutputDirectory(const QString &odir) {
@@ -61,4 +70,8 @@ void ToolboxWindow::stepAction() {
     if(display_window != nullptr) 
         display_window->step();
 
+}
+
+void ToolboxWindow::selectColor() {
+    
 }
