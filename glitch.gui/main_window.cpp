@@ -173,7 +173,7 @@ void MainWindow::setSearch() {
 void MainWindow::helpAbout() {
     QString text;
     QTextStream stream(&text);
-    stream << "Version: " << APP_VERSION << "\n" << "(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n";
+    stream << "Version: " << APP_VERSION << "\n" << "(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni. https://lostsidedead.biz\n";
     QMessageBox box;
     box.setWindowTitle(tr("About glitch.gui"));
     box.setText(text);
