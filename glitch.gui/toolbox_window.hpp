@@ -16,6 +16,8 @@ public:
     ToolboxWindow(QWidget *parent = 0);
     void setOutputDirectory(const QString &odir, const QString &prefix);
     void setDisplayWindow(DisplayWindow *disp);
+    void enableButtons();
+    void disableButtons();
 public slots:
     void saveSnapshot();
     void setSource();

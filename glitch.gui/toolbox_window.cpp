@@ -32,7 +32,28 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     sel_color->setGeometry(10+75, 40+25+10, 25, 25);
     connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
     connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
+    disableButtons();
 }
+
+void ToolboxWindow::enableButtons() {
+    sel_color->setEnabled(true);
+    use_color->setEnabled(true);
+    save_snapshot->setEnabled(true);
+    setsource_action->setEnabled(true);
+    stop_action->setEnabled(true);
+    stop_action->setText(tr("Stop"));
+    step_action->setEnabled(true);
+}
+ 
+void ToolboxWindow::disableButtons() {
+    sel_color->setEnabled(false);
+    use_color->setEnabled(false);
+    save_snapshot->setEnabled(false);
+    setsource_action->setEnabled(false);
+    stop_action->setEnabled(false);
+    step_action->setEnabled(false);
+}
+
 
 void ToolboxWindow::setOutputDirectory(const QString &odir, const QString &p) {
     outdir = odir;

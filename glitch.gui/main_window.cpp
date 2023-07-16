@@ -117,6 +117,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             filter_search->setEnabled(true);
             filter_search_button->setEnabled(true);
             filter_search_set->setEnabled(true);
+            toolbox_window->enableButtons();
         }
      } 
 }
