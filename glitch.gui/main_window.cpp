@@ -92,15 +92,31 @@ MainWindow::MainWindow()  {
     filter_search_set->setGeometry(15, 35+25+10+200+10+35, 70, 30);
 
     connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
-    
+
+    filter_first_set = new QPushButton(tr("&First"), this);
+    filter_first_set->setGeometry(15+70+10, 35+25+10+200+10+35, 70, 30);
+
+    connect(filter_first_set, SIGNAL(clicked()), this, SLOT(firstSet()));
+
+    filter_first_clear = new QPushButton(tr("&Clear"), this);
+    filter_first_clear->setGeometry(15+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+
+    connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
+
     filter_list_view->setEnabled(false);
     filter_search->setEnabled(false);
     filter_search_button->setEnabled(false);
     filter_search_set->setEnabled(false);
     filter_cat->setEnabled(false);
+    filter_first_set->setEnabled(false);
+    filter_first_clear->setEnabled(false);
+
+    filter_first = new QLabel(tr("First: None"), this);
+    filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
+
     loadCategory(0);
     setWindowIcon(QIcon(":/images/icon.png"));
-
+    display_window->setFilterFirst("None");
     debug_window->Log("gui: successfully initalized\n");
 }
 
@@ -133,6 +149,8 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             filter_search_button->setEnabled(true);
             filter_search_set->setEnabled(true);
             filter_cat->setEnabled(true);
+            filter_first_set->setEnabled(true);
+            filter_first_clear->setEnabled(true);
             toolbox_window->enableButtons();
         }
      } 
@@ -201,6 +219,22 @@ void MainWindow::helpAbout() {
     box.setWindowIcon(QIcon(":/images/icon.png"));
     box.setIcon(QMessageBox::Icon::Information);
     box.exec();
+}
+
+void MainWindow::firstSet() {
+    QString text;
+    QString fname = filter_list->currentText();
+    QTextStream stream(&text);
+    stream << "First: " << fname;
+    filter_first->setText(text);
+    first_filter = fname.toStdString();
+    display_window->setFilterFirst(first_filter);
+}
+
+void MainWindow::firstClear() {
+    filter_first->setText("First: None");
+    first_filter = "None";
+    display_window->setFilterFirst(first_filter);
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {

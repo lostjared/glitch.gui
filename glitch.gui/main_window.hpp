@@ -8,6 +8,7 @@
 #include<QListWidget>
 #include<QLineEdit>
 #include<QPushButton>
+#include<QLabel>
 #include"acidcam/ac.h"
 
 cv::Mat QImage2Mat(QImage const& src);
@@ -38,7 +39,9 @@ private:
     QComboBox *filter_list, *filter_cat;
     QListWidget *filter_list_view;
     QLineEdit *filter_search;
-    QPushButton *filter_search_button, *filter_search_set;
+    QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear;
+    QLabel *filter_first;
+    std::string first_filter = "None";
 public slots:
     void openFile();
     void indexChanged(int index);
@@ -46,6 +49,8 @@ public slots:
     void searchFilter();
     void setSearch();
     void helpAbout();
+    void firstSet();
+    void firstClear();
 };
 
 

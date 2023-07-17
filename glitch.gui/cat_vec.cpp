@@ -533,8 +533,6 @@ std::vector<std::string> cat_fast {
 "DetectEdges"
 };
 
-
-
 std::vector<std::string> *vec_cat[] = { &cat_in_order, &cat_sorted, &cat_fast, 0 };
 
 void build_lists() {

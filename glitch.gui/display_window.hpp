@@ -33,6 +33,7 @@ public:
     void step();
 
     void setColorOffset(const cv::Vec3b &color);
+    void setFilterFirst(const std::string &first);
 
 public slots:
     void timeoutFunc();
@@ -46,7 +47,7 @@ private:
     DebugWindow *debug_window;
     float fps = 24.0;
     cv::Vec3b color_offset;
-
+    std::string first_filter;
     void setColorOffset(cv::Mat &frame);
 };
 

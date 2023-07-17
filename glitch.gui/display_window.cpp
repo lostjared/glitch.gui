@@ -104,6 +104,9 @@ void DisplayWindow::step() {
 
 void DisplayWindow::timeoutFunc() {
     image = source_image.clone();
+    if(first_filter != "None")
+        ac::CallFilter(first_filter, image);
+
     ac::CallFilter(current_filter, image);
     setColorOffset(image);
     display(image);
@@ -125,4 +128,8 @@ void DisplayWindow::setColorOffset(cv::Mat &frame) {
             pixel[2] += color_offset[2];
         }
     }
+}
+
+void DisplayWindow::setFilterFirst(const std::string &first) {
+    first_filter = first;
 }
