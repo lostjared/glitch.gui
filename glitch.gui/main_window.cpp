@@ -67,7 +67,8 @@ MainWindow::MainWindow()  {
     filter_cat->setGeometry(15, 35, 300, 25);
 
     filter_cat->addItem(tr("In order"));
-    filter_cat->addItem(tr("Sorted"));    
+    filter_cat->addItem(tr("Sorted"));
+    filter_cat->addItem(tr("Fast")); 
 
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
     
