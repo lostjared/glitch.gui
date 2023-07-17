@@ -61,8 +61,14 @@ MainWindow::MainWindow()  {
 
     setGeometry(375,100,640,480);
 
+    filter_cat = new QComboBox(this);
+    filter_cat->setGeometry(15, 35, 300, 25);
+
+    filter_cat->addItem(tr("In order"));
+    filter_cat->addItem(tr("Sorted"));    
+
     filter_list = new QComboBox(this);
-    filter_list->setGeometry(15, 35, 300, 25);
+    filter_list->setGeometry(15, 35+35, 300, 25);
     for(auto it = ac::solo_filter.begin(); it != ac::solo_filter.end(); it++) {
         std::string s = *it;
         filter_list->addItem(s.c_str());
@@ -73,7 +79,7 @@ MainWindow::MainWindow()  {
     filter_list->setEnabled(false);
 
     filter_list_view = new QListWidget(this);
-    filter_list_view->setGeometry(15, 35+25+10, 300, 200);
+    filter_list_view->setGeometry(15, 35+25+10+35, 300, 200);
 
     filter_search = new QLineEdit(this);
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
@@ -84,7 +90,7 @@ MainWindow::MainWindow()  {
     connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
 
     filter_search_set = new QPushButton(tr("Select"), this);
-    filter_search_set->setGeometry(15, 35+25+10+200+10, 70, 30);
+    filter_search_set->setGeometry(15, 35+25+10+200+10+35, 70, 30);
 
     connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
     
@@ -92,6 +98,7 @@ MainWindow::MainWindow()  {
     filter_search->setEnabled(false);
     filter_search_button->setEnabled(false);
     filter_search_set->setEnabled(false);
+    filter_cat->setEnabled(false);
 
     setWindowIcon(QIcon(":/images/icon.png"));
 
@@ -117,6 +124,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             filter_search->setEnabled(true);
             filter_search_button->setEnabled(true);
             filter_search_set->setEnabled(true);
+            filter_cat->setEnabled(true);
             toolbox_window->enableButtons();
         }
      } 

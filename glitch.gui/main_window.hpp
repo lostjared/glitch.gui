@@ -35,7 +35,7 @@ private:
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
     QImage image;
-    QComboBox *filter_list;
+    QComboBox *filter_list, *filter_cat;
     QListWidget *filter_list_view;
     QLineEdit *filter_search;
     QPushButton *filter_search_button, *filter_search_set;
