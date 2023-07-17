@@ -42,6 +42,7 @@ private:
 public slots:
     void openFile();
     void indexChanged(int index);
+    void catIndexChanged(int index);
     void searchFilter();
     void setSearch();
     void helpAbout();

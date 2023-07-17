@@ -69,10 +69,10 @@ MainWindow::MainWindow()  {
     filter_cat->addItem(tr("In order"));
     filter_cat->addItem(tr("Sorted"));    
 
+    connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
+    
     filter_list = new QComboBox(this);
     filter_list->setGeometry(15, 35+35, 300, 25);
-    filter_list->setCurrentIndex(0);
-    display_window->setCurrentFilter(ac::solo_filter[0]);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     filter_list->setEnabled(false);
 
@@ -110,6 +110,7 @@ void MainWindow::loadCategory(int index) {
         filter_list->addItem(v->at(i).c_str());
     }
     filter_list_view->clear();
+    filter_list->setCurrentIndex(0);
 }
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
@@ -154,8 +155,13 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::indexChanged(int) {
-    std::string s = ac::solo_filter[filter_list->currentIndex()];
+    std::string s = filter_list->currentText().toStdString();
     display_window->setCurrentFilter(s);
+}
+
+void MainWindow::catIndexChanged(int) {
+    int index = filter_cat->currentIndex();
+    loadCategory(index);
 }
 
 void MainWindow::searchFilter() {
