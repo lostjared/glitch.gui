@@ -71,7 +71,6 @@ MainWindow::MainWindow()  {
 
     filter_list = new QComboBox(this);
     filter_list->setGeometry(15, 35+35, 300, 25);
-    loadCategory(0);
     filter_list->setCurrentIndex(0);
     display_window->setCurrentFilter(ac::solo_filter[0]);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
@@ -98,7 +97,7 @@ MainWindow::MainWindow()  {
     filter_search_button->setEnabled(false);
     filter_search_set->setEnabled(false);
     filter_cat->setEnabled(false);
-
+    loadCategory(0);
     setWindowIcon(QIcon(":/images/icon.png"));
 
     debug_window->Log("gui: successfully initalized\n");
@@ -110,6 +109,7 @@ void MainWindow::loadCategory(int index) {
     for(int i = 0; i < static_cast<int>(v->size()); ++i) {
         filter_list->addItem(v->at(i).c_str());
     }
+    filter_list_view->clear();
 }
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
