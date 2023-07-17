@@ -530,7 +530,7 @@ std::vector<std::string> cat_fast {
 "StretchB_Down",
 "Diag_Line_InOut",
 "XorSumStrobe",
-"DetectEdges",
+"DetectEdges"
 };
 
 
