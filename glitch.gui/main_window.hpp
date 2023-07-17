@@ -25,7 +25,7 @@ public:
     MainWindow();
     void paintEvent(QPaintEvent *event) override;
     void startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps);
-
+    void loadCategory(int index);
      DebugWindow *debug_window;
 private:
     QMenu *file_menu, *help_menu;

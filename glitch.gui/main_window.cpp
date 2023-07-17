@@ -7,6 +7,7 @@
 #include"display_window.hpp"
 #include"new_image.hpp"
 #include"debug_window.hpp"
+#include"cat_vec.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -26,8 +27,9 @@ QImage Mat2QImage(cv::Mat const& src)
 }
 
 MainWindow::MainWindow()  {
-
     ac::init();
+    build_lists();
+
     debug_window = new DebugWindow(this);
     debug_window->show();
 
@@ -69,10 +71,7 @@ MainWindow::MainWindow()  {
 
     filter_list = new QComboBox(this);
     filter_list->setGeometry(15, 35+35, 300, 25);
-    for(auto it = ac::solo_filter.begin(); it != ac::solo_filter.end(); it++) {
-        std::string s = *it;
-        filter_list->addItem(s.c_str());
-    }
+    loadCategory(0);
     filter_list->setCurrentIndex(0);
     display_window->setCurrentFilter(ac::solo_filter[0]);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
@@ -105,6 +104,13 @@ MainWindow::MainWindow()  {
     debug_window->Log("gui: successfully initalized\n");
 }
 
+void MainWindow::loadCategory(int index) {
+    filter_list->clear();
+    std::vector<std::string> *v = vec_cat[index];
+    for(int i = 0; i < static_cast<int>(v->size()); ++i) {
+        filter_list->addItem(v->at(i).c_str());
+    }
+}
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
        if(filename != "") {
