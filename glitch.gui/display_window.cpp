@@ -4,6 +4,7 @@
 
 #include<QPainter>
 #include<QIcon>
+#include<QDateTime>
 
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
@@ -78,7 +79,12 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
     QTextStream stream(&text);
-    stream << filename << image.cols << "x" << image.rows << "." << file_type;
+    QDateTime now = QDateTime::currentDateTime();
+    QString time_data = now.toString();
+    for(int i = 0; i < time_data.length(); ++i) {
+        if(time_data[i] == '/' || time_data[i] == ' ' || time_data[i] == ':') time_data[i] = '.';
+    }
+    stream << filename << time_data << "-" << image.cols << "x" << image.rows << "." << file_type;
     cv::imwrite(text.toStdString(), image);
     QString textx;
     QTextStream streamx(&textx);
