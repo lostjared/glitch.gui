@@ -70,6 +70,7 @@ MainWindow::MainWindow()  {
     filter_cat->addItem(tr("Sorted"));
     filter_cat->addItem(tr("Fast")); 
     filter_cat->addItem(tr("Glitch"));
+    filter_cat->addItem(tr("Mirror"));
     
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
     
