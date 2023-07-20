@@ -19,6 +19,8 @@ struct FilterList {
 
 extern std::vector<FilterList> new_filter_list;
 void init_filter_list();
+void add_new_filter(const FilterList &lst);
+void update_new_filter_map();
 void New_CallFilter(std::string name, cv::Mat &frame);
 
 #endif

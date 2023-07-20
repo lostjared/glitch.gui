@@ -21,9 +21,17 @@ public:
 void init_filter_list() {
     static ColorXor1 color_xor1;
     new_filter_list.push_back( {"New_ColorXor1", &color_xor1});
-    for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
+   
+}
+
+void update_new_filter_map() {
+     for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
         new_filter_map[new_filter_list[i].name] = &new_filter_list[i];
     }
+}
+
+void add_new_filter(const FilterList &lst) {
+    new_filter_list.push_back(lst);
 }
 
 void New_CallFilter(std::string name, cv::Mat &frame) {

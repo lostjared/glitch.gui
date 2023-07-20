@@ -119,7 +119,7 @@ MainWindow::MainWindow()  {
     filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
 
     init_filter_list();
-
+    update_new_filter_map();
     loadCategory(0);
     setWindowIcon(QIcon(":/images/icon.png"));
     display_window->setFilterFirst("None");
