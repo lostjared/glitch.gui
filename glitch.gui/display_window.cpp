@@ -5,7 +5,7 @@
 #include<QPainter>
 #include<QIcon>
 #include<QDateTime>
-
+#include"new_filter.hpp"
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
@@ -111,9 +111,9 @@ void DisplayWindow::step() {
 void DisplayWindow::timeoutFunc() {
     image = source_image.clone();
     if(first_filter != "None")
-        ac::CallFilter(first_filter, image);
+        New_CallFilter(first_filter, image);
 
-    ac::CallFilter(current_filter, image);
+    New_CallFilter(current_filter, image);
     setColorOffset(image);
     display(image);
     update();

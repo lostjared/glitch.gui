@@ -8,8 +8,8 @@ class FilterFunc {
     public:
     virtual ~FilterFunc() = default;
     virtual void init() = 0;
-    virtual void free() = 0;
     virtual void proc(cv::Mat &frame) = 0;
+    bool init_ = false;
 };
 
 struct FilterList {
@@ -19,5 +19,6 @@ struct FilterList {
 
 extern std::vector<FilterList> new_filter_list;
 void init_filter_list();
+void New_CallFilter(std::string name, cv::Mat &frame);
 
 #endif
