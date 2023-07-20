@@ -8,6 +8,7 @@
 #include"new_image.hpp"
 #include"debug_window.hpp"
 #include"cat_vec.hpp"
+#include"new_filter.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -71,6 +72,7 @@ MainWindow::MainWindow()  {
     filter_cat->addItem(tr("Fast")); 
     filter_cat->addItem(tr("Glitch"));
     filter_cat->addItem(tr("Mirror"));
+    filter_cat->addItem(tr("New Filter"));
     
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
     
@@ -116,6 +118,8 @@ MainWindow::MainWindow()  {
     filter_first = new QLabel(tr("First: None"), this);
     filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
 
+    init_filter_list();
+
     loadCategory(0);
     setWindowIcon(QIcon(":/images/icon.png"));
     display_window->setFilterFirst("None");
@@ -124,9 +128,16 @@ MainWindow::MainWindow()  {
 
 void MainWindow::loadCategory(int index) {
     filter_list->clear();
-    std::vector<std::string> *v = vec_cat[index];
-    for(int i = 0; i < static_cast<int>(v->size()); ++i) {
-        filter_list->addItem(v->at(i).c_str());
+    if(index == 5) {
+        auto *a = &new_filter_list;
+        for(int i = 0; i < static_cast<int>(a->size()); ++i) {
+            filter_list->addItem(a->at(i).name);
+        }
+    } else {
+        std::vector<std::string> *v = vec_cat[index];
+        for(int i = 0; i < static_cast<int>(v->size()); ++i) {
+            filter_list->addItem(v->at(i).c_str());
+        }
     }
     filter_list_view->clear();
     filter_list->setCurrentIndex(0);
