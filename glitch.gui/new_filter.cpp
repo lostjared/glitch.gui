@@ -1,7 +1,6 @@
 #include"new_filter.hpp"
 #include<unordered_map>
 
-
 std::vector<FilterList> new_filter_list;
 std::unordered_map<std::string, FilterList*> new_filter_map;
 

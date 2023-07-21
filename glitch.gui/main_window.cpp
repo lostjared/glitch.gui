@@ -9,6 +9,7 @@
 #include"debug_window.hpp"
 #include"cat_vec.hpp"
 #include"new_filter.hpp"
+#include"filters/filters.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -119,6 +120,7 @@ MainWindow::MainWindow()  {
     filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
 
     init_filter_list();
+    init_filters_local();
     update_new_filter_map();
     loadCategory(0);
     setWindowIcon(QIcon(":/images/icon.png"));
