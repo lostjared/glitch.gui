@@ -52,8 +52,7 @@ public:
 };
 
 void init_filter_list() {
-    static ColorXor1 color_xor1;
-    new_filter_list.push_back( {"New_ColorXor1", &color_xor1});
+    new_filter_list.push_back({"New_ColorXor1", new ColorXor1()});
    
 }
 
@@ -68,7 +67,6 @@ void add_new_filter(const FilterList &lst) {
 }
 
 void New_CallFilter(std::string name, cv::Mat &frame) {
-
     if(name.find("New_") == std::string::npos) {
         ac::CallFilter(name, frame);
     } else {
