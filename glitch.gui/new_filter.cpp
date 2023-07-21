@@ -56,6 +56,14 @@ void init_filter_list() {
    
 }
 
+// if need to be released
+void release_filter_list() {
+    for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
+        delete new_filter_list[i].filter;
+    }
+}
+
+
 void update_new_filter_map() {
      for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
         new_filter_map[new_filter_list[i].name] = &new_filter_list[i];
