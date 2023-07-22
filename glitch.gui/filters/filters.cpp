@@ -6,4 +6,5 @@
 void init_filters_local() {
    new_filter_list.push_back({"New_ColorXor2", new ColorXor2()});
    new_filter_list.push_back({"New_ColorXor3", new ColorXor3()});
+   new_filter_list.push_back({"New_ColorXor4", new ColorXor4()});
 }

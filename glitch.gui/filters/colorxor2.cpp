@@ -111,3 +111,59 @@ void ColorXor3::proc(cv::Mat &frame) {
 ColorXor3::~ColorXor3() {
 
 }
+
+void ColorXor4::init() {
+    srand(static_cast<unsigned int>(time(0)));
+    alpha[0] = static_cast<double>(rand()%4);
+    alpha[1] = static_cast<double>(rand()%4);
+    alpha[2] = static_cast<double>(rand()%4);
+    dir[0] = rand()%2;
+    dir[1] = rand()%2;
+    dir[2] = rand()%2;
+    max_x = 1.0;
+    min_x = 1.0;
+}
+
+
+void ColorXor4::proc(cv::Mat &frame) {
+    for(int z = 0; z < frame.rows; z++) {
+        for(int i = 0; i < frame.cols; i++) {
+            cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+            unsigned char value[3];
+            for(int q = 0; q < 3; ++q) {
+                value[q] = ac::wrap_cast(alpha[q] * pixel[q]);
+                pixel[q] = pixel[q]^value[q];
+            }
+        }
+    }
+        for(int q = 0; q < 3; ++q) {
+        double r = static_cast<double>(rand()%10);
+        if(dir[q] == 1) {
+            alpha[q] += 0.01*r;
+            if(alpha[q] >= max_x) {
+                alpha[q] = max_x;
+                dir[q] = rand()%2;
+                double r2 = static_cast<double>(rand()%10);
+                double rv = 0.01*r2;
+                max_x += rv;
+                if(max_x >= 3.0)
+                    max_x = 3.0;
+            }
+        } else {
+            alpha[q] -= 0.01*r;
+            if(alpha[q] <= min_x) {
+                alpha[q] = min_x;
+                dir[q] = rand()%2;
+                double r2 = static_cast<double>(rand()%10);
+                double rv = 0.01*r2;
+                min_x -= rv;
+                if(min_x <= 1)
+                    min_x = 1;
+            }
+        }
+    }
+}
+
+ColorXor4::~ColorXor4() {
+
+}
