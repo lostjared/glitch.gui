@@ -169,13 +169,43 @@ ColorXor4::~ColorXor4() {
 }
 
 void ColorXor5::init() {
-
+    alpha[0] = 1.0;
+    alpha[1] = 3.0;
+    alpha[2] = 1.0;
+    dir[0] = 1;
+    dir[1] = 0;
+    dir[2] = 1;
 }
  
 void ColorXor5::proc(cv::Mat &frame) {
-
+   for(int z = 0; z < frame.rows; z++) {
+        for(int i = 0; i < frame.cols; i++) {
+            cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+            unsigned char value[3];
+            for(int q = 0; q < 3; ++q) {
+                value[q] = ac::wrap_cast(alpha[q] * pixel[q]);
+                pixel[q] = pixel[q]^value[q];
+            }
+           
+        }
+    }
+     for(int q = 0; q < 3; ++q) {
+        if(dir[q] == 1) {
+            alpha[q] += 0.01;
+            if(alpha[q] >= 3.0) {
+                alpha[q] = 3.0;
+                dir[q] = 0;
+            }
+        } else {
+            alpha[q] -= 0.01;
+            if(alpha[q] <= 1) {
+                alpha[q] = 1.0;
+                dir[q] = 1;
+            }
+        }
+    }
 }
  
 ColorXor5::~ColorXor5() {
-    
+
 }
