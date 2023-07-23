@@ -167,3 +167,15 @@ void ColorXor4::proc(cv::Mat &frame) {
 ColorXor4::~ColorXor4() {
 
 }
+
+void ColorXor5::init() {
+
+}
+ 
+void ColorXor5::proc(cv::Mat &frame) {
+
+}
+ 
+ColorXor5::~ColorXor5() {
+    
+}
