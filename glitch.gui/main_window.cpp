@@ -48,7 +48,7 @@ MainWindow::MainWindow()  {
     toolbox_window->setDisplayWindow(display_window);  
 
     newimage_window = new NewImageWindow(this);
-    newimage_window->setGeometry(700, 100, 320, 240);
+    newimage_window->setGeometry(1000, 100, 320, 240);
     newimage_window->setMainWindow(this);
     newimage_window->hide();
 
