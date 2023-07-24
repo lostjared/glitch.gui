@@ -255,3 +255,26 @@ void MainWindow::firstClear() {
 void MainWindow::paintEvent(QPaintEvent *) {
 
 }
+
+// keypress event
+void MainWindow::keyPressEvent(QKeyEvent *e)  {
+    if(filter_list->isEnabled()) {
+        switch(e->key()) {
+            case Qt::Key_Up: {
+                int pos = filter_list->currentIndex();
+                if(pos-1 > 0) {
+                    filter_list->setCurrentIndex(pos-1);
+                }
+            }
+            break;
+            case Qt::Key_Down: {
+                int pos = filter_list->currentIndex();
+                if(pos + 1 < filter_list->count()) {
+                    filter_list->setCurrentIndex(pos+1);
+                }
+            }
+            break;
+        }
+    }
+
+}
