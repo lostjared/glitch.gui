@@ -40,6 +40,7 @@ MainWindow::MainWindow()  {
     toolbox_window->show();
 
     display_window = new DisplayWindow(this);
+    display_window->setMainWindow(this);
     display_window->setGeometry(700, 600, 640, 480);
     display_window->hide();  
     display_window->setDebugWindow(debug_window);
@@ -278,3 +279,22 @@ void MainWindow::keyPressEvent(QKeyEvent *e)  {
     }
 
 }
+
+void MainWindow::keyShiftUp() {
+    if(filter_list->isEnabled()) {
+        int pos = filter_list->currentIndex();
+        if(pos-1 > 0) {
+            filter_list->setCurrentIndex(pos-1);
+        }
+    }
+}
+
+void MainWindow::keyShiftDown() {
+    if(filter_list->isEnabled()) {
+        int pos = filter_list->currentIndex();
+        if(pos + 1 < filter_list->count()) {
+            filter_list->setCurrentIndex(pos+1);
+        }
+    }
+}
+

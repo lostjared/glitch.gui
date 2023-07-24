@@ -28,6 +28,8 @@ public:
     MainWindow();
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *e) override;
+    void keyShiftUp();
+    void keyShiftDown();
     void startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps);
     void loadCategory(int index);
      DebugWindow *debug_window;

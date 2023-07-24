@@ -9,15 +9,17 @@
 #include"acidcam/ac.h"
 
 class DebugWindow;
+class MainWindow;
 
 class DisplayWindow : public QDialog {
     Q_OBJECT
 public:
     DisplayWindow(QWidget *parent = 0);
-
+    void setMainWindow(MainWindow *m);
     void setDebugWindow(DebugWindow *d);    
     void setSourceImage(const cv::Mat &src);
-    void paintEvent(QPaintEvent *e);
+    void paintEvent(QPaintEvent *e) override;
+    void keyPressEvent(QKeyEvent *e) override;
 
     void display(QImage &image);
     void display(const cv::Mat &src);
@@ -44,7 +46,8 @@ private:
     QLabel *image_label;
     QTimer *timer; 
     std::string current_filter;
-    DebugWindow *debug_window;
+    DebugWindow *debug_window = nullptr;
+    MainWindow *main_window = nullptr;
     float fps = 24.0;
     cv::Vec3b color_offset;
     std::string first_filter;

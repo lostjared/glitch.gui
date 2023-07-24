@@ -19,6 +19,10 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
 }
 
+void DisplayWindow::setMainWindow(MainWindow *m) {
+    main_window = m;
+}
+
 void DisplayWindow::setDebugWindow(DebugWindow *d) {
     debug_window = d;
 }
@@ -138,4 +142,20 @@ void DisplayWindow::setColorOffset(cv::Mat &frame) {
 
 void DisplayWindow::setFilterFirst(const std::string &first) {
     first_filter = first;
+}
+
+void DisplayWindow::keyPressEvent(QKeyEvent *e) {
+    switch(e->key()) {
+        case Qt::Key_Up:
+
+        if(main_window != nullptr)
+            main_window->keyShiftUp();
+
+        break;
+        case Qt::Key_Down:
+        if(main_window != nullptr)
+            main_window->keyShiftDown();
+            
+        break;
+    }
 }
