@@ -147,7 +147,6 @@ void DisplayWindow::setFilterFirst(const std::string &first) {
 void DisplayWindow::keyPressEvent(QKeyEvent *e) {
     switch(e->key()) {
         case Qt::Key_Up:
-
         if(main_window != nullptr)
             main_window->keyShiftUp();
 
@@ -160,7 +159,6 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
         case Qt::Key_S: {
             if(outdir != "") {
                 static int snap_index = 0;
-
                 QString text;
                 QTextStream stream(&text);
                 stream << outdir << "/" << prefix << "-snap-" << ++snap_index << "-";
@@ -168,7 +166,7 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
             }
         }
         break;
-        }
+    }
 }
 
 void DisplayWindow::setPrefix(const QString &dir, const QString &p) {

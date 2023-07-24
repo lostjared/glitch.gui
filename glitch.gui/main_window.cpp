@@ -264,7 +264,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)  {
         switch(e->key()) {
             case Qt::Key_Up: {
                 int pos = filter_list->currentIndex();
-                if(pos-1 > 0) {
+                if(pos-1 >= 0) {
                     filter_list->setCurrentIndex(pos-1);
                 }
             }
@@ -284,7 +284,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)  {
 void MainWindow::keyShiftUp() {
     if(filter_list->isEnabled()) {
         int pos = filter_list->currentIndex();
-        if(pos-1 > 0) {
+        if(pos-1 >= 0) {
             filter_list->setCurrentIndex(pos-1);
         }
     }
