@@ -153,6 +153,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setGeometry(700, 0, 800, 600);
             display_window->setSourceImage(src);
+            display_window->setPrefix(outdir, prefix);
             display_window->show();
             display_window->startAnimation(fps);
             QString text;

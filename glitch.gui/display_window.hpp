@@ -33,7 +33,7 @@ public:
     void setSource();
 
     void step();
-
+    void setPrefix(const QString &dir, const QString &p);
     void setColorOffset(const cv::Vec3b &color);
     void setFilterFirst(const std::string &first);
 
@@ -51,6 +51,7 @@ private:
     float fps = 24.0;
     cv::Vec3b color_offset;
     std::string first_filter;
+    QString outdir, prefix;
     void setColorOffset(cv::Mat &frame);
 };
 

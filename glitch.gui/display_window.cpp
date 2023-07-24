@@ -157,5 +157,21 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
             main_window->keyShiftDown();
             
         break;
-    }
+        case Qt::Key_S: {
+            if(outdir != "") {
+                static int snap_index = 0;
+
+                QString text;
+                QTextStream stream(&text);
+                stream << outdir << "/" << prefix << "-snap-" << ++snap_index << "-";
+                takeSnapshot(text, "png");
+            }
+        }
+        break;
+        }
+}
+
+void DisplayWindow::setPrefix(const QString &dir, const QString &p) {
+    outdir = dir;
+    prefix = p;
 }
