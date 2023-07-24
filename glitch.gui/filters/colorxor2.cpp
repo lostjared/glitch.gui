@@ -209,3 +209,15 @@ void ColorXor5::proc(cv::Mat &frame) {
 ColorXor5::~ColorXor5() {
 
 }
+
+void ColorXor6::init() {
+
+}
+
+void ColorXor6::proc(cv::Mat &frame) {
+
+}
+
+ColorXor6::~ColorXor6() {
+    
+}

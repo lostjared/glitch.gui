@@ -47,4 +47,15 @@ private:
     int dir[3];
 };
 
+class ColorXor6 : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    ~ColorXor6();
+private:
+    double alpha[3];
+    int dir[3];
+    
+};
+
 #endif
