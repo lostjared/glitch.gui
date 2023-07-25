@@ -32,12 +32,12 @@ public:
     void keyShiftDown();
     void startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps);
     void loadCategory(int index);
-     DebugWindow *debug_window;
+    DebugWindow *debug_window;
+    ToolboxWindow *toolbox_window;
 private:
     QMenu *file_menu, *help_menu;
     QAction *file_open;
-    QAction *help_about;
-    ToolboxWindow *toolbox_window;
+    QAction *help_about; 
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
     QImage image;

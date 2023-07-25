@@ -1,7 +1,7 @@
 #include"display_window.hpp"
 #include"main_window.hpp"
 #include"debug_window.hpp"
-
+#include"toolbox_window.hpp"
 #include<QPainter>
 #include<QIcon>
 #include<QDateTime>
@@ -164,6 +164,12 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
                 stream << outdir << "/" << prefix << "-snap-" << ++snap_index << "-";
                 takeSnapshot(text, "png");
             }
+        }
+        break;
+        case Qt::Key_A: {
+            if(main_window != nullptr)
+                main_window->toolbox_window->setSource();
+
         }
         break;
     }
