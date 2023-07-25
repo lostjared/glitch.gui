@@ -172,6 +172,18 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
 
         }
         break;
+        case Qt::Key_E: {
+            if(main_window != nullptr) {
+                main_window->toolbox_window->stepAction();
+            }
+        }
+        break;
+        case Qt::Key_D: {
+            if(main_window != nullptr) {
+                main_window->toolbox_window->stopAction();
+            }           
+        }
+        break;
     }
 }
 
