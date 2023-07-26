@@ -212,7 +212,7 @@ void DisplayWindow::redo() {
     if(!redo_list.empty()) {
         QString text;
         QTextStream stream(&text);
-        stream << "gui: Popped from redo list of size: " << redo_list.size() << "\n";
+        stream << "gui: Redo list of size: " << redo_list.size() << " popped.\n";
         source_image = redo_list.back().clone();
         display(source_image);
         redo_list.pop_back();
