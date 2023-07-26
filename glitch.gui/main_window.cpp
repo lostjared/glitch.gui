@@ -64,7 +64,7 @@ MainWindow::MainWindow()  {
     edit_undo->setShortcut(tr("Ctrl+Z"));
     edit_undo->setEnabled(false);
 
-    connect(edit_undo, SIGNAL(clicked()), this, SLOT(editUndo()));
+    connect(edit_undo, SIGNAL(triggered()), this, SLOT(editUndo()));
 
     edit_menu->addAction(edit_undo);
 
@@ -72,7 +72,7 @@ MainWindow::MainWindow()  {
     edit_redo->setShortcut(tr("Shift+Ctrl+Z"));
     edit_redo->setEnabled(false);
 
-    connect(edit_redo, SIGNAL(clicked()), this, SLOT(editRedo()));
+    connect(edit_redo, SIGNAL(triggered()), this, SLOT(editRedo()));
 
     edit_menu->addAction(edit_redo);
 
@@ -185,6 +185,8 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             filter_cat->setEnabled(true);
             filter_first_set->setEnabled(true);
             filter_first_clear->setEnabled(true);
+            edit_undo->setEnabled(true);
+            edit_redo->setEnabled(true);
             toolbox_window->enableButtons();
         }
      } 
@@ -317,8 +319,8 @@ void MainWindow::keyShiftDown() {
 }
 
 void MainWindow::editUndo() {
-
+    display_window->undo();
 }
 void MainWindow::editRedo() {
-
+    display_window->redo();
 }

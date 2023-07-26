@@ -98,6 +98,9 @@ void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_ty
 
 void DisplayWindow::setSource() {
     source_image = image.clone();
+    if(undo_list.size() < 25)
+        undo_list.push_back(source_image.clone());
+    display(source_image);
     QString text;
     QTextStream stream(&text);
     stream << "glitch: Set current frame as Source image\n";
@@ -190,4 +193,29 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
 void DisplayWindow::setPrefix(const QString &dir, const QString &p) {
     outdir = dir;
     prefix = p;
+}
+void DisplayWindow::undo() {
+
+    if(!undo_list.empty()) {
+        QString text;
+        QTextStream stream(&text);
+        stream << "gui: Undo list of size: " << undo_list.size() << " popped.\n";
+        redo_list.push_back(undo_list.back().clone());
+        source_image = undo_list.back().clone();
+        display(source_image);
+        undo_list.pop_back();
+        debug_window->Log(text);
+    }
+}
+
+void DisplayWindow::redo() {
+    if(!redo_list.empty()) {
+        QString text;
+        QTextStream stream(&text);
+        stream << "gui: Popped from redo list of size: " << redo_list.size() << "\n";
+        source_image = redo_list.back().clone();
+        display(source_image);
+        redo_list.pop_back();
+        debug_window->Log(text);
+    }
 }

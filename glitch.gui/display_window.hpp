@@ -36,6 +36,8 @@ public:
     void setPrefix(const QString &dir, const QString &p);
     void setColorOffset(const cv::Vec3b &color);
     void setFilterFirst(const std::string &first);
+    void undo();
+    void redo();
 
 public slots:
     void timeoutFunc();
@@ -52,6 +54,8 @@ private:
     cv::Vec3b color_offset;
     std::string first_filter;
     QString outdir, prefix;
+    std::vector<cv::Mat> undo_list;
+    std::vector<cv::Mat> redo_list;
     void setColorOffset(cv::Mat &frame);
 };
 
