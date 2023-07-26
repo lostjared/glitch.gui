@@ -59,6 +59,15 @@ MainWindow::MainWindow()  {
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
 
+    edit_menu = menuBar()->addMenu(tr("&Edit"));
+    edit_undo = new QAction(tr("Undo"), this);
+    edit_undo->setShortcut(tr("Ctrl+Z"));
+    edit_undo->setEnabled(false);
+
+    connect(edit_undo, SIGNAL(clicked()), this, SLOT(editUndo()));
+
+    edit_menu->addAction(edit_undo);
+
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
@@ -299,3 +308,9 @@ void MainWindow::keyShiftDown() {
     }
 }
 
+void MainWindow::editUndo() {
+
+}
+void MainWindow::editRedo() {
+    
+}

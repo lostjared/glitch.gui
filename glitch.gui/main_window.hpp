@@ -35,8 +35,9 @@ public:
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
 private:
-    QMenu *file_menu, *help_menu;
+    QMenu *file_menu, *edit_menu, *help_menu;
     QAction *file_open;
+    QAction *edit_undo, *edit_redo;
     QAction *help_about; 
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
@@ -56,6 +57,8 @@ public slots:
     void helpAbout();
     void firstSet();
     void firstClear();
+    void editUndo();
+    void editRedo();
 };
 
 
