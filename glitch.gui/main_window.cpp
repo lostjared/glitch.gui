@@ -68,6 +68,14 @@ MainWindow::MainWindow()  {
 
     edit_menu->addAction(edit_undo);
 
+    edit_redo = new QAction(tr("Redo"), this);
+    edit_redo->setShortcut(tr("Shift+Ctrl+Z"));
+    edit_redo->setEnabled(false);
+
+    connect(edit_redo, SIGNAL(clicked()), this, SLOT(editRedo()));
+
+    edit_menu->addAction(edit_redo);
+
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
@@ -312,5 +320,5 @@ void MainWindow::editUndo() {
 
 }
 void MainWindow::editRedo() {
-    
+
 }
