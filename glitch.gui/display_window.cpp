@@ -7,6 +7,8 @@
 #include<QDateTime>
 #include"new_filter.hpp"
 
+
+
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
     setWindowTitle("Display Window");
@@ -100,6 +102,10 @@ void DisplayWindow::setSource() {
     source_image = image.clone();
     if(undo_list.size() < 25)
         undo_list.push_back(source_image.clone());
+    else {
+        undo_list.push_back(source_image.clone());
+        undo_list.pop_front();
+    }
     display(source_image);
     QString text;
     QTextStream stream(&text);

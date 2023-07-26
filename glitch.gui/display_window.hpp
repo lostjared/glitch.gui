@@ -5,7 +5,7 @@
 #include<QPaintEvent>
 #include<QLabel>
 #include<QTimer>
-
+#include<deque>
 #include"acidcam/ac.h"
 
 class DebugWindow;
@@ -54,8 +54,8 @@ private:
     cv::Vec3b color_offset;
     std::string first_filter;
     QString outdir, prefix;
-    std::vector<cv::Mat> undo_list;
-    std::vector<cv::Mat> redo_list;
+    std::deque<cv::Mat> undo_list;
+    std::deque<cv::Mat> redo_list;
     void setColorOffset(cv::Mat &frame);
 };
 
