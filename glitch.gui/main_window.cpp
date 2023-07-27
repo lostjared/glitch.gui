@@ -52,7 +52,7 @@ MainWindow::MainWindow()  {
     newimage_window->setMainWindow(this);
     newimage_window->hide();
 
-    setFixedSize(640, 480);
+    setFixedSize(640, 360);
     setWindowTitle(tr("glitch.gui"));
     file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Image"), this);
