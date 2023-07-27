@@ -5,6 +5,7 @@
 #include<QPainter>
 #include<QIcon>
 #include<QDateTime>
+#include<QMessageBox>
 #include"new_filter.hpp"
 
 
@@ -133,6 +134,12 @@ void DisplayWindow::timeoutFunc() {
             cap.open(input_filename);
             if(!cap.isOpened()) {
                 // error message
+                QMessageBox box;
+                box.setWindowTitle("Error opening video file");
+                box.setText("Error opening video file...\n");
+                box.setIcon(QMessageBox::Icon::Warning);
+                box.exec();
+                stopAnimation();
             }   
         }
     }
@@ -247,6 +254,13 @@ void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
         cap.open(source_file);
         if(!cap.isOpened()) {
             // error message
+                QMessageBox box;
+                box.setWindowTitle("Error opening video file");
+                box.setText("Error opening video file...\n");
+                box.setIcon(QMessageBox::Icon::Warning);
+                box.exec();
+                stopAnimation();
+                return;         
         }
         input_filename = source_file;
     }
