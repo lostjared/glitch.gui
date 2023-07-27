@@ -36,7 +36,7 @@ void DisplayWindow::setSourceImage(const cv::Mat &src) {
 }
 
 void DisplayWindow::paintEvent(QPaintEvent *) {
-    if(!source_image.empty()) {
+    if(!source_image.empty() || cap.isOpened() == true) {
         QPainter paint(this);
         paint.fillRect(QRect(QPoint(0, 0), size()), QColor(0,0,0));
     }
@@ -246,7 +246,7 @@ void DisplayWindow::redo() {
     }
 }
 
-void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) {
+bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) {
     mode = m;
     input_filename = source_file;
     if(mode == InputMode::IMAGE) {
@@ -257,20 +257,22 @@ void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
            box.setIcon(QMessageBox::Icon::Warning);
            box.setText("Could not load image");
            box.exec(); 
+           return false;
         }        
     } else if(mode == InputMode::VIDEO) {
         main_window->disableUndo();
         cap.open(source_file);
         if(!cap.isOpened()) {
             // error message
-                QMessageBox box;
-                box.setWindowTitle("Error opening video file");
-                box.setText("Error opening video file...\n");
-                box.setIcon(QMessageBox::Icon::Warning);
-                box.exec();
-                stopAnimation();
-                return;         
+            QMessageBox box;
+            box.setWindowTitle("Error opening video file");
+            box.setText("Error opening video file...\n");
+            box.setIcon(QMessageBox::Icon::Warning);
+            box.exec();
+            stopAnimation();
+            return false;         
         }
     }
+    return true;
 }
 

@@ -181,26 +181,27 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setGeometry(700, 0, 800, 600);
-            display_window->resetInputMode(InputMode::VIDEO,filename_chk);
-            display_window->setPrefix(outdir, prefix);
-            display_window->show();
-            display_window->startAnimation(fps);
-            QString text;
-            QTextStream stream(&text);
-            stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS\n";
-            debug_window->Log(text);
-            filter_list->setEnabled(true);
-            filter_list_view->setEnabled(true);
-            filter_search->setEnabled(true);
-            filter_search_button->setEnabled(true);
-            filter_search_set->setEnabled(true);
-            filter_cat->setEnabled(true);
-            filter_first_set->setEnabled(true);
-            filter_first_clear->setEnabled(true);
-            edit_undo->setEnabled(true);
-            edit_redo->setEnabled(true);
-            toolbox_window->enableButtons();
-            return;    
+            if(display_window->resetInputMode(InputMode::VIDEO,filename_chk)) {
+                display_window->setPrefix(outdir, prefix);
+                display_window->show();
+                display_window->startAnimation(fps);
+                QString text;
+                QTextStream stream(&text);
+                stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS\n";
+                debug_window->Log(text);
+                filter_list->setEnabled(true);
+                filter_list_view->setEnabled(true);
+                filter_search->setEnabled(true);
+                filter_search_button->setEnabled(true);
+                filter_search_set->setEnabled(true);
+                filter_cat->setEnabled(true);
+                filter_first_set->setEnabled(true);
+                filter_first_clear->setEnabled(true);
+                edit_undo->setEnabled(true);
+                edit_redo->setEnabled(true);
+                toolbox_window->enableButtons();
+                return;    
+            }
         }
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
