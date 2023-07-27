@@ -32,6 +32,8 @@ public:
     void keyShiftDown();
     void startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps);
     void loadCategory(int index);
+    void disableUndo();
+    void enableUndo();
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
 private:

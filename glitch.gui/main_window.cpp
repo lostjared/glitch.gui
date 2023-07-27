@@ -361,3 +361,14 @@ void MainWindow::editUndo() {
 void MainWindow::editRedo() {
     display_window->redo();
 }
+
+void MainWindow::disableUndo() {
+    edit_undo->setEnabled(false);
+    edit_redo->setEnabled(false);
+}
+
+void MainWindow::enableUndo() {
+    edit_undo->setEnabled(true);
+    edit_redo->setEnabled(true);
+}
+

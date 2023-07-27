@@ -9,7 +9,6 @@
 #include"new_filter.hpp"
 
 
-
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
     setWindowTitle("Display Window");
@@ -140,6 +139,7 @@ void DisplayWindow::timeoutFunc() {
                 box.setIcon(QMessageBox::Icon::Warning);
                 box.exec();
                 stopAnimation();
+                main_window->disableUndo();
             }   
         }
     }
@@ -248,9 +248,18 @@ void DisplayWindow::redo() {
 
 void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) {
     mode = m;
+    input_filename = source_file;
     if(mode == InputMode::IMAGE) {
-
+        source_image = cv::imread(input_filename);
+        if(source_image.empty()) {
+           QMessageBox box;
+           box.setWindowTitle("Error could not load image");
+           box.setIcon(QMessageBox::Icon::Warning);
+           box.setText("Could not load image");
+           box.exec(); 
+        }        
     } else if(mode == InputMode::VIDEO) {
+        main_window->disableUndo();
         cap.open(source_file);
         if(!cap.isOpened()) {
             // error message
@@ -262,7 +271,6 @@ void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
                 stopAnimation();
                 return;         
         }
-        input_filename = source_file;
     }
 }
 

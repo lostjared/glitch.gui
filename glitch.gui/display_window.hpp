@@ -46,7 +46,6 @@ public:
 public slots:
     void timeoutFunc();
 
-
 private:
     cv::Mat source_image, image;
     QLabel *image_label;
