@@ -41,7 +41,7 @@ void NewImageWindow::setMainWindow(MainWindow *main_w) {
 
 void NewImageWindow::openFile() {
     QString filename;
-    filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), "", tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
         input_file->setText(filename);
         filename_set = true;
