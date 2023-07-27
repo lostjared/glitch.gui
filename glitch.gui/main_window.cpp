@@ -225,6 +225,12 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             edit_undo->setEnabled(true);
             edit_redo->setEnabled(true);
             toolbox_window->enableButtons();
+        } else {
+           QMessageBox box;
+           box.setWindowTitle("Error could not load image");
+           box.setIcon(QMessageBox::Icon::Warning);
+           box.setText("Could not load image");
+           box.exec(); 
         }
      } 
 }
