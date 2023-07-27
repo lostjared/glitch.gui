@@ -53,7 +53,7 @@ MainWindow::MainWindow()  {
     newimage_window->hide();
 
     setFixedSize(640, 360);
-    setWindowTitle(tr("glitch.gui"));
+    setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Image"), this);
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
@@ -250,7 +250,7 @@ void MainWindow::helpAbout() {
     QTextStream stream(&text);
     stream << "Version: " << APP_VERSION << "\n" << "(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n https://lostsidedead.biz\n";
     QMessageBox box;
-    box.setWindowTitle(tr("About glitch.gui"));
+    box.setWindowTitle(tr(APP_NAME));
     box.setText(text);
     box.setWindowIcon(QIcon(":/images/icon.png"));
     box.setIcon(QMessageBox::Icon::Information);
