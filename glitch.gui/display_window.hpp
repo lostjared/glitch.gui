@@ -11,6 +11,8 @@
 class DebugWindow;
 class MainWindow;
 
+enum class InputMode { IMAGE, VIDEO };
+
 class DisplayWindow : public QDialog {
     Q_OBJECT
 public:
@@ -39,6 +41,8 @@ public:
     void undo();
     void redo();
 
+    void resetInputMode(const InputMode &m, std::string source_file);
+
 public slots:
     void timeoutFunc();
 
@@ -57,6 +61,8 @@ private:
     std::deque<cv::Mat> undo_list;
     std::deque<cv::Mat> redo_list;
     void setColorOffset(cv::Mat &frame);
+    InputMode mode = InputMode::IMAGE;
+    cv::VideoCapture cap;
 };
 
 #endif

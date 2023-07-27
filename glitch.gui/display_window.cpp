@@ -122,7 +122,17 @@ void DisplayWindow::step() {
 }
 
 void DisplayWindow::timeoutFunc() {
-    image = source_image.clone();
+    if(mode == InputMode::IMAGE)
+        image = source_image.clone();
+    else if(mode == InputMode::VIDEO) {
+        cv::Mat m;
+        if(cap.read(m)) {
+            image = m;
+        } else {
+            // rewind
+            
+        }
+    }
     if(first_filter != "None")
         New_CallFilter(first_filter, image);
 
@@ -225,3 +235,16 @@ void DisplayWindow::redo() {
         debug_window->Log(text);
     }
 }
+
+void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) {
+    mode = m;
+    if(mode == InputMode::IMAGE) {
+
+    } else if(mode == InputMode::VIDEO) {
+        cap.open(source_file);
+        if(!cap.isOpened()) {
+            // error message
+        }
+    }
+}
+
