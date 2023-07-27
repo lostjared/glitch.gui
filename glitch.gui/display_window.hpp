@@ -63,6 +63,7 @@ private:
     void setColorOffset(cv::Mat &frame);
     InputMode mode = InputMode::IMAGE;
     cv::VideoCapture cap;
+    std::string input_filename;
 };
 
 #endif

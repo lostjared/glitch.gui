@@ -130,7 +130,10 @@ void DisplayWindow::timeoutFunc() {
             image = m;
         } else {
             // rewind
-            
+            cap.open(input_filename);
+            if(!cap.isOpened()) {
+                // error message
+            }   
         }
     }
     if(first_filter != "None")
@@ -245,6 +248,7 @@ void DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
         if(!cap.isOpened()) {
             // error message
         }
+        input_filename = source_file;
     }
 }
 
