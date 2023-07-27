@@ -42,7 +42,6 @@ void DisplayWindow::paintEvent(QPaintEvent *) {
     }
 }
 
-
 void DisplayWindow::display(QImage &image) {
         QRect src(QPoint(0, 0), size());
         QPixmap p = QPixmap::fromImage(image).scaled(size(),Qt::KeepAspectRatio, Qt::FastTransformation);
