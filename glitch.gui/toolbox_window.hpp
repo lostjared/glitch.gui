@@ -18,6 +18,8 @@ public:
     void setDisplayWindow(DisplayWindow *disp);
     void enableButtons();
     void disableButtons();
+    void enableSource();
+    void disableSource();
 public slots:
     void saveSnapshot();
     void setSource();

@@ -117,3 +117,12 @@ void ToolboxWindow::clickOffset(bool) {
         display_window->setColorOffset(cv::Vec3b(0, 0, 0));
     }
 }
+
+void ToolboxWindow::enableSource() {
+    setsource_action->setEnabled(true);
+
+}
+
+void ToolboxWindow::disableSource() {
+    setsource_action->setEnabled(false);
+}
