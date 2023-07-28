@@ -206,6 +206,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
             toolbox_window->setOutputDirectory(outdir, prefix);
+            display_window->setInputMode(InputMode::IMAGE);
             display_window->setGeometry(700, 0, 800, 600);
             display_window->setSourceImage(src);
             display_window->setPrefix(outdir, prefix);

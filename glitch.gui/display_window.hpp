@@ -42,6 +42,7 @@ public:
     void redo();
 
     bool resetInputMode(const InputMode &m, std::string source_file);
+    void setInputMode(const InputMode &m);
 
 public slots:
     void timeoutFunc();

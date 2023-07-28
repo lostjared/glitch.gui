@@ -275,3 +275,6 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
     return true;
 }
 
+void DisplayWindow::setInputMode(const InputMode &m) {
+    mode = m;
+}
