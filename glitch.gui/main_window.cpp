@@ -187,7 +187,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 display_window->startAnimation(fps);
                 QString text;
                 QTextStream stream(&text);
-                stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS\n";
+                stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS / mode: VIDEO\n";
                 debug_window->Log(text);
                 filter_list->setEnabled(true);
                 filter_list_view->setEnabled(true);
@@ -214,7 +214,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             display_window->startAnimation(fps);
             QString text;
             QTextStream stream(&text);
-            stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS\n";
+            stream << "gui: " << " opened: " << filename << " @ " << fps << " FPS / mode: IMAGE\n";
             debug_window->Log(text);
             filter_list->setEnabled(true);
             filter_list_view->setEnabled(true);
