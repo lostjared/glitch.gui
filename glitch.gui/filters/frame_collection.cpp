@@ -14,6 +14,7 @@ void FrameCollection::shiftFrames(cv::Mat &frame) {
             frames.push_back(frame);
         }
         return;
+       
     }
     frames.push_back(frame);
     frames.pop_front();

@@ -10,5 +10,5 @@ void init_filters_local() {
    new_filter_list.push_back({"New_ColorXor5", new ColorXor5()});
    new_filter_list.push_back({"New_ColorXor6", new ColorXor6()});
 
-   //new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
+   new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
 }
