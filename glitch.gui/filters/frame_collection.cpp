@@ -1,5 +1,9 @@
 #include"frame_collection.hpp"
 
+FrameCollection::FrameCollection() {
+    setMaxFrames(8);
+}
+
 FrameCollection::FrameCollection(size_t max) {
     setMaxFrames(max);
 }

@@ -6,6 +6,7 @@
 
 class FrameCollection {
 public:
+    FrameCollection();
     FrameCollection(size_t max);
     void shiftFrames(cv::Mat &frame);
     const cv::Mat &operator[](size_t pos) const;
