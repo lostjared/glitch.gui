@@ -26,6 +26,10 @@ void FrameCollection::clear() {
     }
 }
 
+size_t FrameCollection::count() const {
+    return frames.size();
+}
+
 const cv::Mat &FrameCollection::operator[](size_t pos) const {
     return frames[pos];
 }
