@@ -295,7 +295,7 @@ void MainWindow::setSearch() {
 void MainWindow::helpAbout() {
     QString text;
     QTextStream stream(&text);
-    stream << "Version: " << APP_VERSION << "\n" << "(C) 2023 LostSideDead Software\nProgrammed by Jared Bruni.\n https://lostsidedead.biz\n";
+    stream << "Version: " << APP_VERSION << "\n" << "(C) 2023 LostSideDead Software\nProgrammed by " << AUTHOR_NAME << ".\n https://lostsidedead.biz\n";
     QMessageBox box;
     box.setWindowTitle(tr(APP_NAME));
     box.setText(text);
