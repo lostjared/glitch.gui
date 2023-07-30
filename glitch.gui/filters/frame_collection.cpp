@@ -20,6 +20,12 @@ void FrameCollection::shiftFrames(cv::Mat &frame) {
     frames.pop_front();
 }
 
+void FrameCollection::clear() {
+    if(!frames.empty()) {
+        frames.erase(frames.begin(), frames.end());
+    }
+}
+
 const cv::Mat &FrameCollection::operator[](size_t pos) const {
     return frames[pos];
 }
