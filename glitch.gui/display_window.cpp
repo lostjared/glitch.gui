@@ -72,6 +72,9 @@ void DisplayWindow::stopAnimation() {
 }
 
 void DisplayWindow::setCurrentFilter(const std::string &f) {
+    if(current_filter.find("New_") != std::string::npos) {
+        New_CallFilterClear(current_filter);
+    }
     current_filter = f;
     /// release objects
     ac::release_all_objects();

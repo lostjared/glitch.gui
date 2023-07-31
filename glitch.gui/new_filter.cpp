@@ -89,3 +89,15 @@ void New_CallFilter(std::string name, cv::Mat &frame) {
         }
     }
 }
+
+void New_CallFilterClear(std::string name) {
+    if(name.find("New_") == std::string::npos) {
+        return;
+    } else {
+        auto pos = new_filter_map.find(name);
+        if(pos != new_filter_map.end()) {
+            FilterList *l = pos->second;
+            l->filter->clear();
+        }
+    }
+}

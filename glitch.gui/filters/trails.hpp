@@ -7,6 +7,7 @@ class SimpleTrails : public FilterFunc {
 public:
     void init() override;
     void proc(cv::Mat &frame) override;
+    void clear() override;
     ~SimpleTrails();
 private:
     FrameCollection collection;
