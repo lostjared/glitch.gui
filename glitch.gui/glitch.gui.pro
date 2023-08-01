@@ -17,5 +17,5 @@ LIBS += `pkg-config acidcam opencv4 --libs`
 QMAKE_CXXFLAGS += -O3 `pkg-config acidcam opencv4 --cflags`
 # Input
 RESOURCES += resources.qrc
-HEADERS += main_window.hpp toolbox_window.hpp display_window.hpp version_info.hpp new_image.hpp debug_window.hpp cat_vec.hpp new_filter.hpp filters/filters.hpp filters/colorxor2.hpp filters/frame_collection.hpp filters/trails.hpp
-SOURCES += main.cpp main_window.cpp toolbox_window.cpp display_window.cpp new_image.cpp debug_window.cpp cat_vec.cpp new_filter.cpp filters/filters.cpp filters/colorxor2.cpp filters/frame_collection.cpp filters/trails.cpp
+HEADERS += main_window.hpp toolbox_window.hpp display_window.hpp version_info.hpp new_image.hpp debug_window.hpp cat_vec.hpp new_filter.hpp filters/filters.hpp filters/colorxor2.hpp filters/frame_collection.hpp filters/trails.hpp filters/glitch.hpp
+SOURCES += main.cpp main_window.cpp toolbox_window.cpp display_window.cpp new_image.cpp debug_window.cpp cat_vec.cpp new_filter.cpp filters/filters.cpp filters/colorxor2.cpp filters/frame_collection.cpp filters/trails.cpp filters/glitch.cpp
