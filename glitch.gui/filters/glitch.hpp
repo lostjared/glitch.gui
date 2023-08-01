@@ -11,7 +11,8 @@ public:
     void clear() override;
     ~Glitch_Line_Down();
 private:
-
+    int offset_y;
+    cv::Vec3b color;
 };
 
 
