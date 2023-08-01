@@ -2,6 +2,7 @@
 #include"../new_filter.hpp"
 #include "colorxor2.hpp"
 #include "trails.hpp"
+#include "glitch.hpp"
 
 void init_filters_local() {
    new_filter_list.push_back({"New_ColorXor2", new ColorXor2()});
@@ -10,5 +11,6 @@ void init_filters_local() {
    new_filter_list.push_back({"New_ColorXor5", new ColorXor5()});
    new_filter_list.push_back({"New_ColorXor6", new ColorXor6()});
 
+   new_filter_list.push_back({"New_Glitch_Line_Down", new Glitch_Line_Down()});
    new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
 }
