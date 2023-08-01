@@ -12,5 +12,6 @@ void init_filters_local() {
    new_filter_list.push_back({"New_ColorXor6", new ColorXor6()});
 
    new_filter_list.push_back({"New_Glitch_Line_Down", new Glitch_Line_Down()});
+   new_filter_list.push_back({"New_Glitch_Line_Down_X2", new Glitch_Line_Down_X2()});
    new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
 }
