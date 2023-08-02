@@ -150,14 +150,17 @@ void DisplayWindow::timeoutFunc() {
             }   
         }
     }
+
+    cv::Mat final_image;
+    if(fade) final_image = image.clone();
+
     if(first_filter != "None")
         New_CallFilter(first_filter, image);
 
     New_CallFilter(current_filter, image);
     setColorOffset(image);
 
-    if(fade) {
-        cv::Mat final_image = image.clone();
+    if(fade && !final_image.empty()) {        
         if(fade_filter.length() > 0)
             New_CallFilter(fade_filter, final_image);
 
