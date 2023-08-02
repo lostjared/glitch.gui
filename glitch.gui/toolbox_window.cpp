@@ -28,11 +28,24 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     use_color = new QCheckBox(tr("Offset Color"), this);
     use_color->setGeometry(120,40+25+10, 100, 25);
     use_color->setChecked(false);
+    use_fade = new QCheckBox(tr("Fade"), this);
+    use_fade->setGeometry(120,40+25+10+30, 100, 25);
+    use_fade->setChecked(false);
     sel_color = new QPushButton("...", this);
     sel_color->setGeometry(10+75, 40+25+10, 25, 25);
     connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
     connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
+    connect(use_fade, SIGNAL(toggled(bool)), this, SLOT(clickFade(bool)));
+
     disableButtons();
+}
+
+void ToolboxWindow::clickFade(bool) {
+    if(use_fade->isChecked()) {
+        display_window->setFade(true);
+    } else {
+        display_window->setFade(false);
+    }
 }
 
 void ToolboxWindow::enableButtons() {
