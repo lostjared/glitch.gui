@@ -72,6 +72,11 @@ void DisplayWindow::stopAnimation() {
 }
 
 void DisplayWindow::setCurrentFilter(const std::string &f) {
+    if(fade_on) {
+        fade_filter = current_filter;
+        fade = true;
+        fade_f = 1.0;
+    }
     if(current_filter.find("New_") != std::string::npos) {
         New_CallFilterClear(current_filter);
     }
@@ -150,7 +155,23 @@ void DisplayWindow::timeoutFunc() {
 
     New_CallFilter(current_filter, image);
     setColorOffset(image);
-    display(image);
+
+    if(fade) {
+        cv::Mat final_image = image.clone();
+        if(fade_filter.length() > 0)
+            New_CallFilter(fade_filter, final_image);
+
+        ac::AlphaBlend(image, final_image, image, fade_f);
+        fade_f += 0.1;
+        if(fade_f >= 2.5) {
+            fade_f = 1.0;
+            fade = false;
+        }
+        std::cout << "HERE!: "<< fade_f <<"\n";
+        display(image);
+    } else {
+        display(image);
+    }
     update();
 }
 
@@ -280,4 +301,8 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
 
 void DisplayWindow::setInputMode(const InputMode &m) {
     mode = m;
+}
+
+void DisplayWindow::setFade(bool value) {
+    fade_on = value;
 }

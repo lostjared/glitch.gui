@@ -43,6 +43,7 @@ public:
 
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);
+    void setFade(bool value);
 
 public slots:
     void timeoutFunc();
@@ -64,6 +65,9 @@ private:
     InputMode mode = InputMode::IMAGE;
     cv::VideoCapture cap;
     std::string input_filename;
+    bool fade = false, fade_on = false;
+    double fade_f = 1.0;
+    std::string fade_filter;
 };
 
 #endif
