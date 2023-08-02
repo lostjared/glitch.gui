@@ -75,7 +75,7 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     if(fade_on) {
         fade_filter = current_filter;
         fade = true;
-        fade_f = 1.0;
+        fade_f = 0.5;
     }
     if(current_filter.find("New_") != std::string::npos) {
         New_CallFilterClear(current_filter);
@@ -163,11 +163,11 @@ void DisplayWindow::timeoutFunc() {
 
         ac::AlphaBlend(image, final_image, image, fade_f);
         fade_f += 0.1;
-        if(fade_f >= 2.5) {
-            fade_f = 1.0;
+        if(fade_f >= 1.0) {
+            fade_f = 0.5;
             fade = false;
         }
-        std::cout << "HERE!: "<< fade_f <<"\n";
+        std::cout << "HERE!: "<< fade_f << ":" << fade_filter <<"\n";
         display(image);
     } else {
         display(image);
