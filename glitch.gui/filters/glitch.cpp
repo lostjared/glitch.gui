@@ -80,3 +80,15 @@ void Glitch_Line_Down_X3::proc(cv::Mat &frame) {
 }
 void Glitch_Line_Down_X3::clear() {}
 Glitch_Line_Down_X3::~Glitch_Line_Down_X3() {}
+
+/* line down x4 */
+
+void Glitch_Line_Down_X4::init() {
+
+}
+void Glitch_Line_Down_X4::proc(cv::Mat &frame) {
+
+}
+
+void Glitch_Line_Down_X4::clear() {}
+Glitch_Line_Down_X4::~Glitch_Line_Down_X4() {}
