@@ -11,7 +11,7 @@ public:
     ~SimpleTrails();
 private:
     FrameCollection collection;
-
+    
 };
 
 

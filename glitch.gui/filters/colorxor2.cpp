@@ -9,7 +9,7 @@ void ColorXor2::init() {
     dir[1] = rand()%2;
     dir[2] = rand()%2;
 }
- 
+
 void ColorXor2::proc(cv::Mat &frame) {
     for(int z = 0; z < frame.rows; z++) {
         for(int i = 0; i < frame.cols; i++) {
@@ -51,24 +51,24 @@ void ColorXor2::proc(cv::Mat &frame) {
         }
     }
 }
-  
-ColorXor2::~ColorXor2() {
 
+ColorXor2::~ColorXor2() {
+    
 }
 
 void ColorXor3::init() {
-   srand(static_cast<unsigned int>(time(0)));
-   alpha[0] = static_cast<double>(rand()%4);
-   alpha[1] = static_cast<double>(rand()%4);
-   alpha[2] = static_cast<double>(rand()%4); 
-   dir[0] = rand()%2;
-   dir[1] = rand()%2;
-   dir[2] = rand()%2;
-
+    srand(static_cast<unsigned int>(time(0)));
+    alpha[0] = static_cast<double>(rand()%4);
+    alpha[1] = static_cast<double>(rand()%4);
+    alpha[2] = static_cast<double>(rand()%4);
+    dir[0] = rand()%2;
+    dir[1] = rand()%2;
+    dir[2] = rand()%2;
+    
 }
 
 void ColorXor3::proc(cv::Mat &frame) {
-  for(int z = 0; z < frame.rows; z++) {
+    for(int z = 0; z < frame.rows; z++) {
         for(int i = 0; i < frame.cols; i++) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             unsigned char value[3];
@@ -109,7 +109,7 @@ void ColorXor3::proc(cv::Mat &frame) {
 
 
 ColorXor3::~ColorXor3() {
-
+    
 }
 
 void ColorXor4::init() {
@@ -136,7 +136,7 @@ void ColorXor4::proc(cv::Mat &frame) {
             }
         }
     }
-        for(int q = 0; q < 3; ++q) {
+    for(int q = 0; q < 3; ++q) {
         double r = static_cast<double>(rand()%10);
         if(dir[q] == 1) {
             alpha[q] += 0.01*r;
@@ -165,7 +165,7 @@ void ColorXor4::proc(cv::Mat &frame) {
 }
 
 ColorXor4::~ColorXor4() {
-
+    
 }
 
 void ColorXor5::init() {
@@ -176,9 +176,9 @@ void ColorXor5::init() {
     dir[1] = 0;
     dir[2] = 1;
 }
- 
+
 void ColorXor5::proc(cv::Mat &frame) {
-   for(int z = 0; z < frame.rows; z++) {
+    for(int z = 0; z < frame.rows; z++) {
         for(int i = 0; i < frame.cols; i++) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             unsigned char value[3];
@@ -186,10 +186,10 @@ void ColorXor5::proc(cv::Mat &frame) {
                 value[q] = ac::wrap_cast(alpha[q] * pixel[q]);
                 pixel[q] = pixel[q]^value[q];
             }
-           
+            
         }
     }
-     for(int q = 0; q < 3; ++q) {
+    for(int q = 0; q < 3; ++q) {
         if(dir[q] == 1) {
             alpha[q] += 0.01;
             if(alpha[q] >= 3.0) {
@@ -205,9 +205,9 @@ void ColorXor5::proc(cv::Mat &frame) {
         }
     }
 }
- 
-ColorXor5::~ColorXor5() {
 
+ColorXor5::~ColorXor5() {
+    
 }
 
 void ColorXor6::init() {
@@ -268,5 +268,5 @@ void ColorXor6::proc(cv::Mat &frame) {
 }
 
 ColorXor6::~ColorXor6() {
-
+    
 }

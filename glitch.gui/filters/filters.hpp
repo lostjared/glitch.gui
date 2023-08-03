@@ -4,5 +4,4 @@
 
 void init_filters_local();
 
-
 #endif

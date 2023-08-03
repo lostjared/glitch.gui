@@ -2,7 +2,7 @@
 
 void Glitch_Line_Down::init() {
     offset_y = rand()%300;
-    color = cv::Vec3b(150, 150, 150);    
+    color = cv::Vec3b(150, 150, 150);
 }
 
 void Glitch_Line_Down::proc(cv::Mat &frame) {
@@ -48,7 +48,7 @@ void Glitch_Line_Down_X2::proc(cv::Mat &frame) {
         offset_y = rand()%frame.rows;
     }
 }
- 
+
 void Glitch_Line_Down_X2::clear() {}
 
 Glitch_Line_Down_X2::~Glitch_Line_Down_X2() {}
@@ -86,10 +86,10 @@ Glitch_Line_Down_X3::~Glitch_Line_Down_X3() {}
 void Glitch_Line_Down_X4::init() {
     offset_y = 0;
     color = cv::Vec3b(0, 0, 0);
-
+    
 }
 void Glitch_Line_Down_X4::proc(cv::Mat &frame) {
-
+    
     for(int x = 0; x < frame.cols; ++x) {
         color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
@@ -137,7 +137,7 @@ void Glitch_Line_Down_X5::proc(cv::Mat &frame) {
             }
         }
         width=5+rand()%50;
-
+        
     }
     offset_y = rand()%frame.rows;
 }

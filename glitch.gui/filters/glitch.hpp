@@ -35,7 +35,7 @@ public:
 private:
     int offset_y;
     cv::Vec3b color;
-
+    
 };
 
 class Glitch_Line_Down_X4 : public FilterFunc {

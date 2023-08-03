@@ -1,7 +1,7 @@
 #include"trails.hpp"
 
 void SimpleTrails::init() {
-
+    
 }
 
 void SimpleTrails::proc(cv::Mat &frame) {
@@ -12,10 +12,10 @@ void SimpleTrails::proc(cv::Mat &frame) {
 }
 
 void SimpleTrails::clear() {
-//   std::cout << "cleared: " << collection.count() << " frames\n";
+    //   std::cout << "cleared: " << collection.count() << " frames\n";
     collection.clear();
 }
 
 SimpleTrails::~SimpleTrails() {
-
+    
 }
