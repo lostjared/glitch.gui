@@ -48,4 +48,14 @@ private:
     cv::Vec3b color;
 };
 
+class Glitch_Line_Down_X5 : public FilterFunc {
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Line_Down_X5();
+private:
+    int offset_y;
+    cv::Vec3b color;
+};
+
 #endif
