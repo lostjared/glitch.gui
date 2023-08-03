@@ -23,7 +23,7 @@ class DebugWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-
+    
 public:
     MainWindow();
     void paintEvent(QPaintEvent *event) override;
@@ -50,7 +50,7 @@ private:
     QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear;
     QLabel *filter_first;
     std::string first_filter = "None";
-public slots:
+    public slots:
     void openFile();
     void indexChanged(int index);
     void catIndexChanged(int index);

@@ -13,7 +13,7 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
     setWindowTitle("Display Window");
     setWindowIcon(QIcon(":/images/icon.png"));
-
+    
     image_label = new QLabel(this);
     image_label->setGeometry(0, 0, 640, 480);
     // don't use debug_window not initalized yet
@@ -43,17 +43,17 @@ void DisplayWindow::paintEvent(QPaintEvent *) {
 }
 
 void DisplayWindow::display(QImage &image) {
-        QRect src(QPoint(0, 0), size());
-        QPixmap p = QPixmap::fromImage(image).scaled(size(),Qt::KeepAspectRatio, Qt::FastTransformation);
-        QRect dst(QPoint(0,0),p.size());
-        dst.moveCenter(src.center());
-        image_label->setGeometry(dst);
-        image_label->setPixmap(p);
+    QRect src(QPoint(0, 0), size());
+    QPixmap p = QPixmap::fromImage(image).scaled(size(),Qt::KeepAspectRatio, Qt::FastTransformation);
+    QRect dst(QPoint(0,0),p.size());
+    dst.moveCenter(src.center());
+    image_label->setGeometry(dst);
+    image_label->setPixmap(p);
 }
 
 void DisplayWindow::display(const cv::Mat &src) {
-       QImage image = Mat2QImage(src);
-       display(image);
+    QImage image = Mat2QImage(src);
+    display(image);
 }
 
 void DisplayWindow::startAnimation() {
@@ -150,20 +150,20 @@ void DisplayWindow::timeoutFunc() {
             }   
         }
     }
-
+    
     cv::Mat final_image;
     if(fade) final_image = image.clone();
-
+    
     if(first_filter != "None")
         New_CallFilter(first_filter, image);
-
+    
     New_CallFilter(current_filter, image);
     setColorOffset(image);
-
+    
     if(fade && !final_image.empty()) {        
         if(fade_filter.length() > 0)
             New_CallFilter(fade_filter, final_image);
-
+        
         ac::AlphaBlend(image, final_image, image, fade_f);
         fade_f += 0.1;
         if(fade_f >= 1.0) {
@@ -202,15 +202,15 @@ void DisplayWindow::setFilterFirst(const std::string &first) {
 void DisplayWindow::keyPressEvent(QKeyEvent *e) {
     switch(e->key()) {
         case Qt::Key_Up:
-        if(main_window != nullptr)
-            main_window->keyShiftUp();
-
-        break;
-        case Qt::Key_Down:
-        if(main_window != nullptr)
-            main_window->keyShiftDown();
+            if(main_window != nullptr)
+                main_window->keyShiftUp();
             
-        break;
+            break;
+        case Qt::Key_Down:
+            if(main_window != nullptr)
+                main_window->keyShiftDown();
+            
+            break;
         case Qt::Key_S: {
             if(outdir != "") {
                 static int snap_index = 0;
@@ -220,25 +220,25 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
                 takeSnapshot(text, "png");
             }
         }
-        break;
+            break;
         case Qt::Key_A: {
             if(main_window != nullptr)
                 main_window->toolbox_window->setSource();
-
+            
         }
-        break;
+            break;
         case Qt::Key_E: {
             if(main_window != nullptr) {
                 main_window->toolbox_window->stepAction();
             }
         }
-        break;
+            break;
         case Qt::Key_D: {
             if(main_window != nullptr) {
                 main_window->toolbox_window->stopAction();
             }           
         }
-        break;
+            break;
     }
 }
 
@@ -247,7 +247,7 @@ void DisplayWindow::setPrefix(const QString &dir, const QString &p) {
     prefix = p;
 }
 void DisplayWindow::undo() {
-
+    
     if(!undo_list.empty()) {
         QString text;
         QTextStream stream(&text);
@@ -278,12 +278,12 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
     if(mode == InputMode::IMAGE) {
         source_image = cv::imread(input_filename);
         if(source_image.empty()) {
-           QMessageBox box;
-           box.setWindowTitle("Error could not load image");
-           box.setIcon(QMessageBox::Icon::Warning);
-           box.setText("Could not load image");
-           box.exec(); 
-           return false;
+            QMessageBox box;
+            box.setWindowTitle("Error could not load image");
+            box.setIcon(QMessageBox::Icon::Warning);
+            box.setText("Could not load image");
+            box.exec(); 
+            return false;
         }        
     } else if(mode == InputMode::VIDEO) {
         main_window->disableUndo();

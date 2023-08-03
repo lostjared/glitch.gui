@@ -20,7 +20,7 @@ public:
     void disableButtons();
     void enableSource();
     void disableSource();
-public slots:
+    public slots:
     void saveSnapshot();
     void setSource();
     void stopAction();

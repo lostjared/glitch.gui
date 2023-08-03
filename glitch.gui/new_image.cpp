@@ -61,13 +61,13 @@ void NewImageWindow::selectDir() {
             video_start->setEnabled(true);
         }
     }
-
+    
 }
 
 void NewImageWindow::videoStart() {
     float fps = video_fps->text().toFloat();
     QString prefix = video_filename->text();
-
+    
     if(fps > 0 && prefix.length() > 0 && filename_set == true && outdir_set == true) {
         QString filename = input_file->text();
         QString outdir = output_location->text();

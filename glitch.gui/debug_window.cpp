@@ -19,14 +19,14 @@ void DebugWindow::clear() {
 }
 // add Log message to debug window
 void DebugWindow::Log(const QString &text) {
-   QString current;
-   current = text_view->toPlainText();
-   current += text;
-   current.replace("gui: ", "<span style=\"color: red;\">gui: </span>");
-   current.replace("glitch: ", "<span style=\"color: green;\">glitch: </span>");
-   current.replace("\n", "<br>");
-   text_view->setHtml(current);
-   QTextCursor tmpCursor = text_view->textCursor();
-   tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
-   text_view->setTextCursor(tmpCursor);
+    QString current;
+    current = text_view->toPlainText();
+    current += text;
+    current.replace("gui: ", "<span style=\"color: red;\">gui: </span>");
+    current.replace("glitch: ", "<span style=\"color: green;\">glitch: </span>");
+    current.replace("\n", "<br>");
+    text_view->setHtml(current);
+    QTextCursor tmpCursor = text_view->textCursor();
+    tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+    text_view->setTextCursor(tmpCursor);
 }

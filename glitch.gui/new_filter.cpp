@@ -8,7 +8,7 @@ class ColorXor1 : public FilterFunc {
 public:
     double alpha[3];
     int dir[3];
-
+    
     void init() override {
         srand(static_cast<unsigned int>(time(0)));
         alpha[0] = static_cast<double>(rand()%4);
@@ -22,7 +22,7 @@ public:
         // release
         std::cout << "release..\n";
     }
-    void proc(cv::Mat &frame) override {      
+    void proc(cv::Mat &frame) override {
         for(int z = 0; z < frame.rows; z++) {
             for(int i = 0; i < frame.cols; i++) {
                 cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
@@ -30,7 +30,7 @@ public:
                 for(int q = 0; q < 3; ++q) {
                     value[q] = ac::wrap_cast(alpha[q] * pixel[q]);
                     pixel[q] = pixel[q]^value[q];
-                }        
+                }
             }
         }
         for(int q = 0; q < 3; ++q) {
@@ -47,13 +47,13 @@ public:
                     dir[q] = 1;
                 }
             }
-         }
+        }
     }
 };
 
 void init_filter_list() {
     new_filter_list.push_back({"New_ColorXor1", new ColorXor1()});
-   
+    
 }
 
 // if need to be released
@@ -65,7 +65,7 @@ void release_filter_list() {
 
 
 void update_new_filter_map() {
-     for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
+    for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
         new_filter_map[new_filter_list[i].name] = &new_filter_list[i];
     }
 }

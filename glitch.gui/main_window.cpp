@@ -34,64 +34,64 @@ QImage Mat2QImage(cv::Mat const& src)
 MainWindow::MainWindow()  {
     ac::init();
     build_lists();
-
+    
     debug_window = new DebugWindow(this);
     debug_window->show();
-
+    
     toolbox_window = new ToolboxWindow(this);
     toolbox_window->setGeometry(100,100,250,400);
     toolbox_window->show();
-
+    
     display_window = new DisplayWindow(this);
     display_window->setMainWindow(this);
     display_window->setGeometry(700, 600, 640, 480);
-    display_window->hide();  
+    display_window->hide();
     display_window->setDebugWindow(debug_window);
-
-    toolbox_window->setDisplayWindow(display_window);  
-
+    
+    toolbox_window->setDisplayWindow(display_window);
+    
     newimage_window = new NewImageWindow(this);
     newimage_window->setGeometry(1000, 100, 320, 240);
     newimage_window->setMainWindow(this);
     newimage_window->hide();
-
+    
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Image"), this);
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
-
+    
     edit_menu = menuBar()->addMenu(tr("&Edit"));
     edit_undo = new QAction(tr("Undo"), this);
     edit_undo->setShortcut(tr("Ctrl+Z"));
     edit_undo->setEnabled(false);
-
+    
     connect(edit_undo, SIGNAL(triggered()), this, SLOT(editUndo()));
-
+    
     edit_menu->addAction(edit_undo);
-
+    
     edit_redo = new QAction(tr("Redo"), this);
     edit_redo->setShortcut(tr("Shift+Ctrl+Z"));
     edit_redo->setEnabled(false);
-
+    
     connect(edit_redo, SIGNAL(triggered()), this, SLOT(editRedo()));
-
+    
     edit_menu->addAction(edit_redo);
-
+    
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
     help_menu->addAction(help_about);
-
+    
     setGeometry(375,100,640,480);
-
+    
     filter_cat = new QComboBox(this);
     filter_cat->setGeometry(15, 35, 300, 25);
-
+    
     filter_cat->addItem(tr("In order"));
     filter_cat->addItem(tr("Sorted"));
-    filter_cat->addItem(tr("Fast")); 
+    filter_cat->addItem(tr("Fast"));
     filter_cat->addItem(tr("Glitch"));
     filter_cat->addItem(tr("Mirror"));
     filter_cat->addItem(tr("New Filter"));
@@ -102,33 +102,33 @@ MainWindow::MainWindow()  {
     filter_list->setGeometry(15, 35+35, 300, 25);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     filter_list->setEnabled(false);
-
+    
     filter_list_view = new QListWidget(this);
     filter_list_view->setGeometry(15, 35+25+10+35, 300, 200);
-
+    
     filter_search = new QLineEdit(this);
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
-
+    
     filter_search_button = new QPushButton(tr("Search"), this);
     filter_search_button->setGeometry(300+15+10+225+10, 35, 70, 30);
-
+    
     connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
-
+    
     filter_search_set = new QPushButton(tr("Select"), this);
     filter_search_set->setGeometry(15, 35+25+10+200+10+35, 70, 30);
-
+    
     connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
-
+    
     filter_first_set = new QPushButton(tr("&First"), this);
     filter_first_set->setGeometry(15+70+10, 35+25+10+200+10+35, 70, 30);
-
+    
     connect(filter_first_set, SIGNAL(clicked()), this, SLOT(firstSet()));
-
+    
     filter_first_clear = new QPushButton(tr("&Clear"), this);
     filter_first_clear->setGeometry(15+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-
+    
     connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
-
+    
     filter_list_view->setEnabled(false);
     filter_search->setEnabled(false);
     filter_search_button->setEnabled(false);
@@ -136,10 +136,10 @@ MainWindow::MainWindow()  {
     filter_cat->setEnabled(false);
     filter_first_set->setEnabled(false);
     filter_first_clear->setEnabled(false);
-
+    
     filter_first = new QLabel(tr("First: None"), this);
     filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
-
+    
     init_filter_list();
     init_filters_local();
     update_new_filter_map();
@@ -167,7 +167,7 @@ void MainWindow::loadCategory(int index) {
 }
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
-       if(filename != "") {
+    if(filename != "") {
         auto lwr = [](const std::string &text) {
             std::string ftext;
             for(std::string::size_type i = 0; i < text.length(); ++i) {
@@ -177,7 +177,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             return ftext;
         };
         std::string filename_chk = lwr(filename.toStdString());
-
+        
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setGeometry(700, 0, 800, 600);
@@ -201,7 +201,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 edit_redo->setEnabled(true);
                 toolbox_window->enableButtons();
                 toolbox_window->disableSource();
-                return;    
+                return;
             }
         }
         cv::Mat src = cv::imread(filename.toStdString());
@@ -230,30 +230,30 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             toolbox_window->enableButtons();
             toolbox_window->enableSource();
         } else {
-           QMessageBox box;
-           box.setWindowTitle("Error could not load image");
-           box.setIcon(QMessageBox::Icon::Warning);
-           box.setText("Could not load image");
-           box.exec(); 
+            QMessageBox box;
+            box.setWindowTitle("Error could not load image");
+            box.setIcon(QMessageBox::Icon::Warning);
+            box.setText("Could not load image");
+            box.exec();
         }
-     } 
+    }
 }
 
 
 void MainWindow::openFile() {
     /*
-    QString filename;
-    filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
-    if(filename != "") {
-        cv::Mat src = cv::imread(filename.toStdString());
-        if(!src.empty()) {
-            display_window->setGeometry(0, 0, 800, 600);
-            display_window->setSourceImage(src);
-            display_window->show();
-            display_window->startAnimation();
-        }
+     QString filename;
+     filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+     if(filename != "") {
+     cv::Mat src = cv::imread(filename.toStdString());
+     if(!src.empty()) {
+     display_window->setGeometry(0, 0, 800, 600);
+     display_window->setSourceImage(src);
+     display_window->show();
+     display_window->startAnimation();
+     }
      }*/
-     newimage_window->show();
+    newimage_window->show();
 }
 
 void MainWindow::indexChanged(int) {
@@ -277,7 +277,7 @@ void MainWindow::searchFilter() {
         }
     }
     filter_list_view->setCurrentRow(0);
-
+    
 }
 
 void MainWindow::setSearch() {
@@ -321,7 +321,7 @@ void MainWindow::firstClear() {
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
-
+    
 }
 
 // keypress event
@@ -334,17 +334,17 @@ void MainWindow::keyPressEvent(QKeyEvent *e)  {
                     filter_list->setCurrentIndex(pos-1);
                 }
             }
-            break;
+                break;
             case Qt::Key_Down: {
                 int pos = filter_list->currentIndex();
                 if(pos + 1 < filter_list->count()) {
                     filter_list->setCurrentIndex(pos+1);
                 }
             }
-            break;
+                break;
         }
     }
-
+    
 }
 
 void MainWindow::keyShiftUp() {

@@ -18,36 +18,36 @@ class DisplayWindow : public QDialog {
 public:
     DisplayWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
-    void setDebugWindow(DebugWindow *d);    
+    void setDebugWindow(DebugWindow *d);
     void setSourceImage(const cv::Mat &src);
     void paintEvent(QPaintEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;
-
+    
     void display(QImage &image);
     void display(const cv::Mat &src);
-
+    
     void startAnimation();
     void startAnimation(float fps);
     void stopAnimation();
     void setCurrentFilter(const std::string &f);
-
+    
     void takeSnapshot(const QString &text, const QString &file_type);
     void setSource();
-
+    
     void step();
     void setPrefix(const QString &dir, const QString &p);
     void setColorOffset(const cv::Vec3b &color);
     void setFilterFirst(const std::string &first);
     void undo();
     void redo();
-
+    
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);
     void setFade(bool value);
-
-public slots:
+    
+    public slots:
     void timeoutFunc();
-
+    
 private:
     cv::Mat source_image, image;
     QLabel *image_label;

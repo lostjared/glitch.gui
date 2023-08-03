@@ -6,7 +6,7 @@
 #include"filters/frame_collection.hpp"
 
 class FilterFunc {
-    public:
+public:
     virtual ~FilterFunc() = default;
     virtual void init() = 0;
     virtual void proc(cv::Mat &frame) = 0;

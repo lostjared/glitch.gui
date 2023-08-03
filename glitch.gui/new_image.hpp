@@ -21,10 +21,10 @@ private:
     QPushButton *output_location_select;
     QLineEdit *video_fps, *video_filename;
     QPushButton *video_start;
-
+    
     bool filename_set = false, outdir_set = false;
-
-public slots:
+    
+    public slots:
     void openFile();
     void selectDir();
     void videoStart();

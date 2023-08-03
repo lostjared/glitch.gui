@@ -8,19 +8,19 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     save_snapshot = new QPushButton(tr("Save"), this);
     save_snapshot->setGeometry(10, 10, 100, 25);
     connect(save_snapshot, SIGNAL(clicked()), this, SLOT(saveSnapshot()));
-
+    
     setsource_action = new QPushButton(tr("Source"), this);
     setsource_action->setGeometry(120, 10, 100, 25);
     connect(setsource_action, SIGNAL(clicked()), this, SLOT(setSource()));
-
+    
     stop_action = new QPushButton(tr("Stop"), this);
     stop_action->setGeometry(10, 40, 100, 25);
     connect(stop_action, SIGNAL(clicked()), this, SLOT(stopAction()));
-
+    
     step_action = new QPushButton(tr("Step"), this);
     step_action->setGeometry(120, 40, 100, 25);
     connect(step_action, SIGNAL(clicked()), this, SLOT(stepAction()));
-
+    
     color_lbl = new QLabel(this);
     color_lbl->setGeometry(10, 40+25+10, 75, 25);
     QString color_var = "#000000";
@@ -36,7 +36,7 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
     connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
     connect(use_fade, SIGNAL(toggled(bool)), this, SLOT(clickFade(bool)));
-
+    
     disableButtons();
 }
 
@@ -57,7 +57,7 @@ void ToolboxWindow::enableButtons() {
     stop_action->setText(tr("Stop"));
     step_action->setEnabled(true);
 }
- 
+
 void ToolboxWindow::disableButtons() {
     sel_color->setEnabled(false);
     use_color->setEnabled(false);
@@ -93,7 +93,7 @@ void ToolboxWindow::setSource() {
 }
 
 void ToolboxWindow::stopAction() {
-
+    
     if(stop_action->text() == "Stop") {
         if(display_window != nullptr)
             display_window->stopAnimation();
@@ -108,7 +108,7 @@ void ToolboxWindow::stopAction() {
 void ToolboxWindow::stepAction() {
     if(display_window != nullptr) 
         display_window->step();
-
+    
 }
 
 void ToolboxWindow::selectColor() {
@@ -133,7 +133,7 @@ void ToolboxWindow::clickOffset(bool) {
 
 void ToolboxWindow::enableSource() {
     setsource_action->setEnabled(true);
-
+    
 }
 
 void ToolboxWindow::disableSource() {
