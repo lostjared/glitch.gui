@@ -152,8 +152,27 @@ void Glitch_RandRect::init() {
 }
  
 void Glitch_RandRect::proc(cv::Mat &frame) {
-
+    int rand_rects = 25+rand()%50;
+    for(int i = 0; i < rand_rects; ++i) {
+        int x = rand()%frame.cols;
+        int y = rand()%frame.rows;
+        int w = rand()%frame.cols;
+        int h = rand()%frame.rows;
+        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        blendRect(frame, color, x, y, w, h);
+    }
 }
  
 void Glitch_RandRect::clear() {}
 Glitch_RandRect::~Glitch_RandRect() {}
+
+void Glitch_RandRect::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int y, int w, int h) {
+    for(int i = x; i < w && i < frame.cols; ++i) {
+        for(int z = y; z < h && z < frame.rows; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            for(int q = 0; q < 3; ++q) {
+                pixel[q] = ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
+            }    
+        }
+    }
+}

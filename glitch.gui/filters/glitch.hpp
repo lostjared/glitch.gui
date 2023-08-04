@@ -65,7 +65,7 @@ public:
     void clear() override;
     ~Glitch_RandRect();
 private:
-
+    void blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int y, int w, int h);
 };
 
 #endif
