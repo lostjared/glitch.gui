@@ -144,3 +144,16 @@ void Glitch_Line_Down_X5::proc(cv::Mat &frame) {
 
 void Glitch_Line_Down_X5::clear() {}
 Glitch_Line_Down_X5::~Glitch_Line_Down_X5() {}
+
+/* rand rect */
+
+void Glitch_RandRect::init() {
+
+}
+ 
+void Glitch_RandRect::proc(cv::Mat &frame) {
+
+}
+ 
+void Glitch_RandRect::clear() {}
+Glitch_RandRect::~Glitch_RandRect() {}
