@@ -170,7 +170,6 @@ void DisplayWindow::timeoutFunc() {
             fade_f = 0.5;
             fade = false;
         }
-        std::cout << "HERE!: "<< fade_f << ":" << fade_filter <<"\n";
         display(image);
     } else {
         display(image);
