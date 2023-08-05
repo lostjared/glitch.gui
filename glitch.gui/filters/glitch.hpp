@@ -78,4 +78,14 @@ private:
     void blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int y, int w, int h);
 };
 
+class Glitch_RandRect_X2_Wrap : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_RandRect_X2_Wrap();
+private:
+    void blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int y, int w, int h);
+};
+
 #endif
