@@ -7,6 +7,7 @@
 #include<QComboBox>
 #include<QListWidget>
 #include<QLineEdit>
+#include<QTextEdit>
 #include<QPushButton>
 #include<QLabel>
 #include<QKeyEvent>
@@ -49,6 +50,7 @@ private:
     QLineEdit *filter_search;
     QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear;
     QLabel *filter_first;
+    QTextEdit *content_data;
     std::string first_filter = "None";
     public slots:
     void openFile();

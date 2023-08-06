@@ -139,6 +139,10 @@ MainWindow::MainWindow()  {
     
     filter_first = new QLabel(tr("First: None"), this);
     filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
+
+    content_data = new QTextEdit(this);
+    content_data->setGeometry(315+10,135,300,165); 
+    content_data->setText("Content-Data");
     
     init_filter_list();
     init_filters_local();
