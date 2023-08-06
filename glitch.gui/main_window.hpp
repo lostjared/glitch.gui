@@ -35,6 +35,8 @@ public:
     void loadCategory(int index);
     void disableUndo();
     void enableUndo();
+    void setInfo(const cv::Mat &frame);
+
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
 private:
@@ -52,7 +54,8 @@ private:
     QLabel *filter_first;
     QTextEdit *content_data;
     std::string first_filter = "None";
-    public slots:
+     std::string cur_filename;
+public slots:
     void openFile();
     void indexChanged(int index);
     void catIndexChanged(int index);
@@ -63,6 +66,8 @@ private:
     void firstClear();
     void editUndo();
     void editRedo();
+    QString contentData(const std::string &fn, const cv::Mat &frame);
+   
 };
 
 

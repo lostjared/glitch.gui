@@ -142,6 +142,7 @@ MainWindow::MainWindow()  {
 
     content_data = new QTextEdit(this);
     content_data->setGeometry(315+10,135,300,165); 
+    content_data->setReadOnly(true);
     content_data->setText("Content-Data");
     
     init_filter_list();
@@ -170,6 +171,19 @@ void MainWindow::loadCategory(int index) {
     filter_list->setCurrentIndex(0);
 }
 
+QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
+    QString text;
+    QTextStream stream(&text);
+    stream << "path [" << fn.c_str() << "]" << "\n info [" << frame.cols << "x" << frame.rows << "]\n";
+    return text;
+}
+
+void MainWindow::setInfo(const cv::Mat &frame) {
+    QString data = contentData(cur_filename, frame);
+    content_data->setText(data);
+}
+
+
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
     if(filename != "") {
         auto lwr = [](const std::string &text) {
@@ -180,9 +194,10 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             }
             return ftext;
         };
+
         std::string filename_chk = lwr(filename.toStdString());
-        
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
+            cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setGeometry(700, 0, 800, 600);
             if(display_window->resetInputMode(InputMode::VIDEO,filename.toStdString())) {
@@ -210,6 +225,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         }
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
+            cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setInputMode(InputMode::IMAGE);
             display_window->setGeometry(700, 0, 800, 600);

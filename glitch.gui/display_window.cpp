@@ -49,9 +49,10 @@ void DisplayWindow::display(QImage &image) {
     dst.moveCenter(src.center());
     image_label->setGeometry(dst);
     image_label->setPixmap(p);
-}
+} 
 
 void DisplayWindow::display(const cv::Mat &src) {
+    main_window->setInfo(src);
     QImage image = Mat2QImage(src);
     display(image);
 }
