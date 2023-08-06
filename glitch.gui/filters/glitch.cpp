@@ -277,7 +277,7 @@ void Glitch_RandRect_X3::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int 
         for(int z = y; z < h && z < frame.rows; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
-                pixel[q] = ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
+                pixel[q] += ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
             }    
         }
     }
