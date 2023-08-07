@@ -352,7 +352,7 @@ void Glitch_Pixel_X1::fillRect(cv::Mat &frame, int x, int y, int w, int h) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
                 cv::Vec3b color(rand()%255, rand()%255, rand()%255);
-                pixel[q] += ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
+                pixel[q] += ac::wrap_cast((0.2 * color[q]) + (0.8 * pixel[q]));
             }    
         }
     }
