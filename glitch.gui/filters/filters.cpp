@@ -21,5 +21,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_RandRect_X2_Wrap", new Glitch_RandRect_X2_Wrap()});
     new_filter_list.push_back({"New_Glitch_RandRect_X3", new Glitch_RandRect_X3()});
     new_filter_list.push_back({"New_Glitch_RandRect_X4", new Glitch_RandRect_X4()});
+    new_filter_list.push_back({"New_Glitch_Pixel_X1", new Glitch_Pixel_X1()});
     new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
 }

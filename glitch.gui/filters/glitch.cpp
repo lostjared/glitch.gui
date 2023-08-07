@@ -326,9 +326,14 @@ void Glitch_Pixel_X1::init() {
 }
 
 void Glitch_Pixel_X1::proc(cv::Mat &frame) {
-
-
-
+    int rand_rects = 25+rand()%25;
+    for(int i = 0; i < rand_rects; ++i) {
+        int x = rand()%frame.cols;
+        int y = rand()%frame.rows;
+        int w = rand()%frame.cols;
+        int h = rand()%frame.rows; 
+        fillRect(frame, x, y, w, h);
+    }
 }
 
 void Glitch_Pixel_X1::clear() {
@@ -342,4 +347,14 @@ Glitch_Pixel_X1::~Glitch_Pixel_X1() {
 
 void Glitch_Pixel_X1::fillRect(cv::Mat &frame, int x, int y, int w, int h) {
     
+       for(int i = x; i < w && i < frame.cols; ++i) {
+        for(int z = y; z < h && z < frame.rows; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            for(int q = 0; q < 3; ++q) {
+                cv::Vec3b color(rand()%255, rand()%255, rand()%255);
+                pixel[q] += ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
+            }    
+        }
+    }
+ 
 }
