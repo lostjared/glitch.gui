@@ -282,3 +282,39 @@ void Glitch_RandRect_X3::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int 
         }
     }
 }
+
+/* rect x4 */
+
+void Glitch_RandRect_X4::init() {
+
+}
+ 
+void Glitch_RandRect_X4::proc(cv::Mat &frame) {
+    int rand_rects = 25+rand()%50;
+    for(int i = 0; i < rand_rects; ++i) {
+        int x = rand()%frame.cols;
+        int y = rand()%frame.rows;
+        int w = rand()%frame.cols;
+        int h = rand()%frame.rows;
+        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        cv::Vec3b color2 = cv::Vec3b(0, 0, 0);
+        if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
+            color2 = frame.at<cv::Vec3b>(y, x);
+            
+        blendRect(frame, color, color2, x, y, w, h);
+    }
+}
+ 
+void Glitch_RandRect_X4::clear() {}
+Glitch_RandRect_X4::~Glitch_RandRect_X4() {}
+
+void Glitch_RandRect_X4::blendRect(cv::Mat &frame, cv::Vec3b &color, cv::Vec3b &color2, int x, int y, int w, int h) {
+    for(int i = x; i < w && i < frame.cols; ++i) {
+        for(int z = y; z < h && z < frame.rows; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            for(int q = 0; q < 3; ++q) {
+               pixel[q] |= ac::wrap_cast((0.3 * color[q]) + (0.3 * pixel[q]) + (0.3 * color2[q]));
+            }    
+        }
+    }
+}
