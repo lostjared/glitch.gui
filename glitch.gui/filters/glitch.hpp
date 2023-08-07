@@ -108,5 +108,16 @@ private:
     void blendRect(cv::Mat &frame, cv::Vec3b &color,cv::Vec3b &color2, int x, int y, int w, int h);
 };
 
+class Glitch_Pixel_X1 : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Pixel_X1();
+private:
+    void fillRect(cv::Mat &frame, int x, int y, int w, int h);
+};
+
+
 
 #endif

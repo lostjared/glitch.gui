@@ -318,3 +318,28 @@ void Glitch_RandRect_X4::blendRect(cv::Mat &frame, cv::Vec3b &color, cv::Vec3b &
         }
     }
 }
+
+/* pixel x1 */
+
+void Glitch_Pixel_X1::init() {
+
+}
+
+void Glitch_Pixel_X1::proc(cv::Mat &frame) {
+
+
+
+}
+
+void Glitch_Pixel_X1::clear() {
+
+}
+
+Glitch_Pixel_X1::~Glitch_Pixel_X1() {
+
+}
+
+
+void Glitch_Pixel_X1::fillRect(cv::Mat &frame, int x, int y, int w, int h) {
+    
+}
