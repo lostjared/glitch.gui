@@ -394,7 +394,9 @@ void Glitch_Mirror_Shift::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             if(i+off < frame.cols) {
                 cv::Vec3b pix = src.at<cv::Vec3b>(z, i+off);
-                pixel = pix;
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] ^= ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                }
             }
         }
     }
