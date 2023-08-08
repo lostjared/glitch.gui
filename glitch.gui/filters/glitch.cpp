@@ -363,16 +363,39 @@ void Glitch_Pixel_X1::fillRect(cv::Mat &frame, int x, int y, int w, int h) {
 
 
 void Glitch_Mirror_Shift::init() {
-
+    size_x = 0;
 }
 
 void Glitch_Mirror_Shift::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+    int width = frame.cols/collection.count();
+    int x_pos = 0;
 
+    for(int i = 0; i < collection.count(); ++i) {
+        drawMatrix(frame, collection[i], size_x, x_pos, width);
+        size_x += 25;
+        x_pos += width;
+    }
+    if(size_x > frame.cols)
+        size_x = 0;
 }
 
 void Glitch_Mirror_Shift::clear() {
+    collection.clear();
+}
+
+Glitch_Mirror_Shift::~Glitch_Mirror_Shift() {
 
 }
-Glitch_Mirror_Shift::~Glitch_Mirror_Shift() {
-    
+
+void Glitch_Mirror_Shift::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
+    for(int i = x; i < x+w && i < frame.cols; ++i) {
+        for(int z = 0; z < frame.rows; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            if(i+off < frame.cols) {
+                cv::Vec3b pix = src.at<cv::Vec3b>(z, i+off);
+                pixel = pix;
+            }
+        }
+    }
 }
