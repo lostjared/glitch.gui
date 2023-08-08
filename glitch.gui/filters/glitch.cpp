@@ -358,3 +358,21 @@ void Glitch_Pixel_X1::fillRect(cv::Mat &frame, int x, int y, int w, int h) {
     }
  
 }
+
+/* Glitch Mirror Shift */
+
+
+void Glitch_Mirror_Shift::init() {
+
+}
+
+void Glitch_Mirror_Shift::proc(cv::Mat &frame) {
+
+}
+
+void Glitch_Mirror_Shift::clear() {
+
+}
+Glitch_Mirror_Shift::~Glitch_Mirror_Shift() {
+    
+}

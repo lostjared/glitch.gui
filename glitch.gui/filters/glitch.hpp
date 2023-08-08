@@ -118,6 +118,12 @@ private:
     void fillRect(cv::Mat &frame, int x, int y, int w, int h);
 };
 
-
+class Glitch_Mirror_Shift : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Shift();
+};
 
 #endif
