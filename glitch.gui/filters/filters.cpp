@@ -24,4 +24,5 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Pixel_X1", new Glitch_Pixel_X1()});
     new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
     new_filter_list.push_back({"New_Glitch_Mirror_Shift", new Glitch_Mirror_Shift()});
+    new_filter_list.push_back({"New_Glitch_Mirror_Shift_Xor", new Glitch_Mirror_Shift_Xor()});
 }

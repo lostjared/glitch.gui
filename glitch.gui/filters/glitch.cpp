@@ -401,3 +401,46 @@ void Glitch_Mirror_Shift::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off
         }
     }
 }
+
+/* Glitch Mirror Shift Xor */
+
+
+void Glitch_Mirror_Shift_Xor::init() {
+    size_x = 0;
+}
+
+void Glitch_Mirror_Shift_Xor::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+    int width = frame.cols/collection.count();
+    int x_pos = 0;
+
+    for(int i = 0; i < collection.count(); ++i) {
+        drawMatrix(frame, collection[rand()%collection.count()], size_x, x_pos, width);
+        size_x += 25;
+        x_pos += width;
+    }
+    if(size_x > frame.cols)
+        size_x = 0;
+}
+
+void Glitch_Mirror_Shift_Xor::clear() {
+    collection.clear();
+}
+
+Glitch_Mirror_Shift_Xor::~Glitch_Mirror_Shift_Xor() {
+
+}
+
+void Glitch_Mirror_Shift_Xor::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
+    for(int i = x; i < x+w && i < frame.cols; ++i) {
+        for(int z = 0; z < frame.rows; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            if(i+off < frame.cols) {
+                cv::Vec3b pix = src.at<cv::Vec3b>(z, i+off);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] ^= ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                }
+            }
+        }
+    }
+}
