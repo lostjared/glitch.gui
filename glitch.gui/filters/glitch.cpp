@@ -371,7 +371,7 @@ void Glitch_Mirror_Shift::proc(cv::Mat &frame) {
     int width = frame.cols/collection.count();
     int x_pos = 0;
 
-    for(int i = 0; i < collection.count(); ++i) {
+    for(size_t i = 0; i < collection.count(); ++i) {
         drawMatrix(frame, collection[rand()%collection.count()], size_x, x_pos, width);
         size_x += 25;
         x_pos += width;
@@ -414,7 +414,7 @@ void Glitch_Mirror_Shift_Xor::proc(cv::Mat &frame) {
     int width = frame.cols/collection.count();
     int x_pos = 0;
 
-    for(int i = 0; i < collection.count(); ++i) {
+    for(size_t i = 0; i < collection.count(); ++i) {
         drawMatrix(frame, collection[rand()%collection.count()], size_x, x_pos, width);
         size_x += 25;
         x_pos += width;
