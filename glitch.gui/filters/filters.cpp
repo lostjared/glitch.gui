@@ -25,4 +25,5 @@ void init_filters_local() {
     new_filter_list.push_back({"New_SimpleTrails", new SimpleTrails()});
     new_filter_list.push_back({"New_Glitch_Mirror_Shift", new Glitch_Mirror_Shift()});
     new_filter_list.push_back({"New_Glitch_Mirror_Shift_Xor", new Glitch_Mirror_Shift_Xor()});
+    new_filter_list.push_back({"New_Glitch_Mirror_Slice", new Glitch_Mirror_Slice()});
 }
