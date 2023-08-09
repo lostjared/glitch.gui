@@ -372,7 +372,7 @@ void Glitch_Mirror_Shift::proc(cv::Mat &frame) {
     int x_pos = 0;
 
     for(int i = 0; i < collection.count(); ++i) {
-        drawMatrix(frame, collection[i], size_x, x_pos, width);
+        drawMatrix(frame, collection[rand()%collection.count()], size_x, x_pos, width);
         size_x += 25;
         x_pos += width;
     }
@@ -395,7 +395,7 @@ void Glitch_Mirror_Shift::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off
             if(i+off < frame.cols) {
                 cv::Vec3b pix = src.at<cv::Vec3b>(z, i+off);
                 for(int q = 0; q < 3; ++q) {
-                    pixel[q] ^= ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
                 }
             }
         }
