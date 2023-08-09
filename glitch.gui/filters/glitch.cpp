@@ -457,7 +457,7 @@ void Glitch_Mirror_Slice::proc(cv::Mat &frame) {
     int width = frame.cols/collection.count();
     int offset = 0;
     for(size_t i = 0; i < collection.count(); ++i) {
-        drawMatrix(frame, collection[i%collection.count()], 0, offset, width);
+        drawMatrix(frame, collection[i%collection.count()], rand()%frame.cols, offset, width);
         offset += width;
     }
 }
@@ -471,9 +471,6 @@ Glitch_Mirror_Slice::~Glitch_Mirror_Slice() {
 }
 
 void Glitch_Mirror_Slice::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
-
-    off = rand()%frame.cols;
-
     for(int i = x; i < x+w && i < frame.cols; ++i) {
         for(int z = 0; z < frame.rows; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
@@ -484,5 +481,4 @@ void Glitch_Mirror_Slice::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off
             }
         }
     }
-
 }
