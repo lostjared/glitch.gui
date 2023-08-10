@@ -40,6 +40,7 @@ public:
     void setFilterFirst(const std::string &first);
     void undo();
     void redo();
+    void clear_undo();
     
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);

@@ -309,3 +309,12 @@ void DisplayWindow::setInputMode(const InputMode &m) {
 void DisplayWindow::setFade(bool value) {
     fade_on = value;
 }
+
+void DisplayWindow::clear_undo() {
+   if(!undo_list.empty())
+        undo_list.erase(undo_list.begin(), undo_list.end());
+
+   if(!redo_list.empty())
+        redo_list.erase(redo_list.begin(), redo_list.end());
+    
+}

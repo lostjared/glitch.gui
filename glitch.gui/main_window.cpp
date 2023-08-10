@@ -218,6 +218,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 filter_first_clear->setEnabled(true);
                 edit_undo->setEnabled(true);
                 edit_redo->setEnabled(true);
+                display_window->clear_undo();
                 toolbox_window->enableButtons();
                 toolbox_window->disableSource();
                 return;
@@ -247,6 +248,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             filter_first_clear->setEnabled(true);
             edit_undo->setEnabled(true);
             edit_redo->setEnabled(true);
+            display_window->clear_undo();
             toolbox_window->enableButtons();
             toolbox_window->enableSource();
         } else {
