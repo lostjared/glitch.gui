@@ -482,3 +482,42 @@ void Glitch_Mirror_Slice::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off
         }
     }
 }
+
+/* Glitch Mirror Slice Rand*/
+
+
+void Glitch_Mirror_Slice_Rand::init() {
+    size_x = 0;
+}
+
+void Glitch_Mirror_Slice_Rand::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+    int width = frame.cols/collection.count();
+    int offset = 0;
+    for(size_t i = 0; i < collection.count() * 2; ++i) {
+        drawMatrix(frame, collection[i%collection.count()], rand()%frame.cols, offset, width);
+        offset += width;
+    }
+}
+
+void Glitch_Mirror_Slice_Rand::clear() {
+    collection.clear();
+}
+
+Glitch_Mirror_Slice_Rand::~Glitch_Mirror_Slice_Rand() {
+
+}
+
+void Glitch_Mirror_Slice_Rand::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
+    for(int i = x; i < x+w && i < frame.cols; ++i) {
+        int row_size = rand()%frame.rows;
+        for(int z = 0; z < row_size; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            if(i + off < frame.cols) {
+                 cv::Vec3b pix = src.at<cv::Vec3b>(z, off+i);
+                for(int q = 0; q < 3; ++q)
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+            }
+        }
+    }
+}
