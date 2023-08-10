@@ -257,6 +257,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             box.setIcon(QMessageBox::Icon::Warning);
             box.setText("Could not load image");
             box.exec();
+            display_window->clear_undo();
         }
     }
 }
