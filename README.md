@@ -3,7 +3,7 @@
 glitch.gui  -v0.1.0 
 
 
-this is an application that allows you to generate interesting base images to use with text 2 image ai prompts. 
+This is an application that allows you to generate interesting base images to use with text 2 image ai prompts. 
 
 How it works:
 
