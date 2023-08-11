@@ -10,4 +10,6 @@ How it works:
     Supply a example image or video file, start an animation press Save or the s key to save a snapshot
     use the arrow keys or the GUI to move through the supplied distortion filters.
 
-
+Required libraries:
+   OpenCV 4, http://github.com/lostjared/libacidcam - libacidcam, Qt6
+    
