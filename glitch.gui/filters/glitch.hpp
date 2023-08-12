@@ -166,4 +166,17 @@ private:
     int size_x;
 };
 
+class Glitch_Mirror_Slice_Inc : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Slice_Inc();
+private:
+    void drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w);
+    FrameCollection collection;
+    int size_x;
+    int rsize_val;
+};
+
 #endif
