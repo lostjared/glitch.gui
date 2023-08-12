@@ -593,12 +593,13 @@ Glitch_Mirror_Slice_Inc_X2::~Glitch_Mirror_Slice_Inc_X2() {
 void Glitch_Mirror_Slice_Inc_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
     for(int i = x; i < x+w && i < frame.cols; ++i) {
         int row_size = rsize_val;
-        for(int z = 0; z < row_size; ++z) {
+        int row_start = rand()%frame.rows;
+        for(int z = row_start; z < row_size; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             if(i + off < frame.cols) {
                  cv::Vec3b pix = src.at<cv::Vec3b>(z, off+i);
                 for(int q = 0; q < 3; ++q)
-                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.7 * pixel[q]) + (0.5 * pix[q]));
             }
         }
     }
