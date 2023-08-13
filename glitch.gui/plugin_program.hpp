@@ -3,16 +3,21 @@
 #define _PLUGIN_PROGRAM_H_
 
 #include"acidcam/ac.h"
+#include<QLibrary>
 
+typedef void (*proc)(cv::Mat &frame);
+typedef void (*init)();
+typedef void (*clear)();
+typedef void (*rls)();
 
-class Plugin_Program {
+class Plugin_Program  {
 public:
-    Plugin_Program(const std::string &filename);
-    void (*init)() = 0;
-    void (*clear)() = 0;
-    void (*proc)(cv::Mat &frame) = 0;
-    void (*free)() = 0;
+    Plugin_Program(const QString &filename);
+    QLibrary library;
+    proc f_proc;
+    init f_init;
+    clear f_clear;
+    rls f_rls;
 };
-
 
 #endif
