@@ -180,6 +180,8 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
 
 void MainWindow::setInfo(const cv::Mat &frame) {
     QString data = contentData(cur_filename, frame);
+    QTextStream stream(&data);
+    stream << "Current Filter: " << display_window->getCurrentFilter() << "\n";
     content_data->setText(data);
 }
 

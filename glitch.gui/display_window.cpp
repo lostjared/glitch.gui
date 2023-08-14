@@ -90,6 +90,9 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     debug_window->Log(text);
 }
 
+QString DisplayWindow::getCurrentFilter() const { return current_filter.c_str(); }
+
+
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
     QTextStream stream(&text);

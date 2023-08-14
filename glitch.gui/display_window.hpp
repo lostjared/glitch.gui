@@ -41,12 +41,15 @@ public:
     void undo();
     void redo();
     void clear_undo();
-    
+
+
+    QString getCurrentFilter() const;
+
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);
     void setFade(bool value);
     
-    public slots:
+public slots:
     void timeoutFunc();
     
 private:
