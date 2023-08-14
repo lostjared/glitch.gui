@@ -182,6 +182,7 @@ void MainWindow::setInfo(const cv::Mat &frame) {
     QString data = contentData(cur_filename, frame);
     QTextStream stream(&data);
     stream << "Current Filter: " << display_window->getCurrentFilter() << "\n";
+    stream << "Current FPS: " << display_window->getCurrentFPS() << "\n";
     content_data->setText(data);
 }
 
