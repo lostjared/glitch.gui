@@ -91,7 +91,8 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
 }
 
 QString DisplayWindow::getCurrentFilter() const { return current_filter.c_str(); }
-
+double DisplayWindow::getCurrentFPS() const { return this->fps; }
+    
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
