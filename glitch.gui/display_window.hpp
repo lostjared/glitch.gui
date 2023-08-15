@@ -45,6 +45,7 @@ public:
 
     QString getCurrentFilter() const;
     double getCurrentFPS() const;
+    InputMode getCurrentInputMode() const;
     
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);

@@ -92,7 +92,7 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
 
 QString DisplayWindow::getCurrentFilter() const { return current_filter.c_str(); }
 double DisplayWindow::getCurrentFPS() const { return this->fps; }
-    
+InputMode DisplayWindow::getCurrentInputMode() const { return mode; }
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
