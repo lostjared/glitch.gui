@@ -13,6 +13,8 @@ class MainWindow;
 
 enum class InputMode { IMAGE, VIDEO };
 
+std::ostream &operator<<(std::ostream &out, const InputMode &im);
+
 class DisplayWindow : public QDialog {
     Q_OBJECT
 public:
@@ -46,6 +48,7 @@ public:
     QString getCurrentFilter() const;
     double getCurrentFPS() const;
     InputMode getCurrentInputMode() const;
+    QString getCurrentInputModeString() const;
     
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);

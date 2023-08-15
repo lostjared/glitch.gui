@@ -93,6 +93,10 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
 QString DisplayWindow::getCurrentFilter() const { return current_filter.c_str(); }
 double DisplayWindow::getCurrentFPS() const { return this->fps; }
 InputMode DisplayWindow::getCurrentInputMode() const { return mode; }
+QString DisplayWindow::getCurrentInputModeString() const {
+    if(mode == InputMode::IMAGE) return "Image";
+    return "Video";
+}
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
@@ -321,4 +325,12 @@ void DisplayWindow::clear_undo() {
    if(!redo_list.empty())
         redo_list.erase(redo_list.begin(), redo_list.end());
     
+}
+
+std::ostream &operator<<(std::ostream &out, const InputMode &im) {
+    if(im == InputMode::VIDEO)
+        out << "Video";
+    else if(im == InputMode::IMAGE)
+        out << "Image";
+    return out;
 }

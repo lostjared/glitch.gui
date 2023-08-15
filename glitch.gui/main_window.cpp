@@ -181,6 +181,7 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
 void MainWindow::setInfo(const cv::Mat &frame) {
     QString data = contentData(cur_filename, frame);
     QTextStream stream(&data);
+    stream << "Input Mode: [" << display_window->getCurrentInputModeString() << "]\n";
     stream << "Current Filter: " << display_window->getCurrentFilter() << "\n";
     stream << "Current FPS: " << display_window->getCurrentFPS() << "\n";
     content_data->setText(data);
