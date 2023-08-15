@@ -97,6 +97,8 @@ QString DisplayWindow::getCurrentInputModeString() const {
     if(mode == InputMode::IMAGE) return "Image";
     return "Video";
 }
+QString DisplayWindow::getPrefix() const { return prefix; }
+QString DisplayWindow::getDirPath() const { return outdir; }
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;

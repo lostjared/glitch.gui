@@ -49,7 +49,8 @@ public:
     double getCurrentFPS() const;
     InputMode getCurrentInputMode() const;
     QString getCurrentInputModeString() const;
-    
+    QString getPrefix() const;
+    QString getDirPath() const; 
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);
     void setFade(bool value);
