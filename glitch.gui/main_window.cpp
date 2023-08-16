@@ -276,18 +276,6 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
 
 
 void MainWindow::openFile() {
-    /*
-     QString filename;
-     filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
-     if(filename != "") {
-     cv::Mat src = cv::imread(filename.toStdString());
-     if(!src.empty()) {
-     display_window->setGeometry(0, 0, 800, 600);
-     display_window->setSourceImage(src);
-     display_window->show();
-     display_window->startAnimation();
-     }
-     }*/
     newimage_window->show();
 }
 
