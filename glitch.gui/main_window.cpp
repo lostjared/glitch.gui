@@ -184,6 +184,12 @@ void MainWindow::setInfo(const cv::Mat &frame) {
     stream << "Input Mode: [" << display_window->getCurrentInputModeString() << "]\n";
     stream << "Current Filter: " << display_window->getCurrentFilter() << "\n";
     stream << "Current FPS: " << display_window->getCurrentFPS() << "\n";
+    
+    if(display_window->getCap().isOpened()) {
+        double fps_ = display_window->getCap().get(cv::CAP_PROP_FPS);
+        stream << "Video stream FPS: " << fps_ << "\n";
+    }
+    
     content_data->setText(data);
 }
 

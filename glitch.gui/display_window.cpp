@@ -99,6 +99,7 @@ QString DisplayWindow::getCurrentInputModeString() const {
 }
 QString DisplayWindow::getPrefix() const { return prefix; }
 QString DisplayWindow::getDirPath() const { return outdir; }
+cv::VideoCapture &DisplayWindow::getCap() { return cap; }
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
