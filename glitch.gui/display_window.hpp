@@ -55,7 +55,8 @@ public:
     bool resetInputMode(const InputMode &m, std::string source_file);
     void setInputMode(const InputMode &m);
     void setFade(bool value);
-    
+    void resetFrameCount();
+    size_t getFrameCount() const;
 public slots:
     void timeoutFunc();
     
@@ -79,6 +80,7 @@ private:
     bool fade = false, fade_on = false;
     double fade_f = 1.0;
     std::string fade_filter;
+    size_t frame_count = 0;
 };
 
 #endif

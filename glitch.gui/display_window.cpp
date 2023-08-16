@@ -72,6 +72,11 @@ void DisplayWindow::stopAnimation() {
     debug_window->Log("gui: Animation stopped\n");
 }
 
+void DisplayWindow::resetFrameCount() {
+    frame_count = 0;
+}
+
+
 void DisplayWindow::setCurrentFilter(const std::string &f) {
     if(fade_on) {
         fade_filter = current_filter;
@@ -100,6 +105,7 @@ QString DisplayWindow::getCurrentInputModeString() const {
 QString DisplayWindow::getPrefix() const { return prefix; }
 QString DisplayWindow::getDirPath() const { return outdir; }
 cv::VideoCapture &DisplayWindow::getCap() { return cap; }
+size_t DisplayWindow::getFrameCount() const { return frame_count; }
 
 void DisplayWindow::takeSnapshot(const QString &filename, const QString &file_type) {
     QString text;
@@ -141,6 +147,9 @@ void DisplayWindow::step() {
 }
 
 void DisplayWindow::timeoutFunc() {
+
+    frame_count ++;
+
     if(mode == InputMode::IMAGE)
         image = source_image.clone();
     else if(mode == InputMode::VIDEO) {

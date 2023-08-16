@@ -181,18 +181,18 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
 void MainWindow::setInfo(const cv::Mat &frame) {
     QString data = contentData(cur_filename, frame);
     QTextStream stream(&data);
+    stream << "Frame Index: " << display_window->getFrameCount() << "\n";
     stream << "Input Mode: [" << display_window->getCurrentInputModeString() << "]\n";
     stream << "Current Filter: " << display_window->getCurrentFilter() << "\n";
     stream << "Current FPS: " << display_window->getCurrentFPS() << "\n";
-    
     if(display_window->getCap().isOpened()) {
         double fps_ = display_window->getCap().get(cv::CAP_PROP_FPS);
         stream << "Video stream FPS: " << fps_ << "\n";
+        double fc_ = display_window->getCap().get(cv::CAP_PROP_FRAME_COUNT);
+        stream << "Video stream Frame Count: " << static_cast<int>(fc_) << "\n";
     }
-    
     content_data->setText(data);
 }
-
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
     if(filename != "") {
@@ -231,6 +231,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 display_window->clear_undo();
                 toolbox_window->enableButtons();
                 toolbox_window->disableSource();
+                display_window->resetFrameCount();
                 return;
             }
         }
@@ -261,6 +262,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             display_window->clear_undo();
             toolbox_window->enableButtons();
             toolbox_window->enableSource();
+            display_window->resetFrameCount();
         } else {
             QMessageBox box;
             box.setWindowTitle("Error could not load image");
