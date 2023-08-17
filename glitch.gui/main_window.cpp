@@ -190,6 +190,8 @@ void MainWindow::setInfo(const cv::Mat &frame) {
         stream << "Video stream FPS: " << fps_ << "\n";
         double fc_ = display_window->getCap().get(cv::CAP_PROP_FRAME_COUNT);
         stream << "Video stream Frame Count: " << static_cast<int>(fc_) << "\n";
+        double per = static_cast<double>(display_window->getFrameCount())/fc_ * 100.00;
+        stream << " Video stream: " << static_cast<int>(per) << "%\n";
     }
     content_data->setText(data);
 }
