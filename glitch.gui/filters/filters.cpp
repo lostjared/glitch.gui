@@ -30,4 +30,5 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Mirror_Slice_Inc", new Glitch_Mirror_Slice_Inc()});
     new_filter_list.push_back({"New_Glitch_Mirror_Slice_Inc_X2", new Glitch_Mirror_Slice_Inc_X2()});
     new_filter_list.push_back({"New_Glitch_Mirror_Slice_X2", new Glitch_Mirror_Slice_Inc_X2()});
+    new_filter_list.push_back({"New_Glitch_Mirror_Bars", new Glitch_Mirror_Bars()});
 }
