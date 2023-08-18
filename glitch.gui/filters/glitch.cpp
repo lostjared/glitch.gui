@@ -655,3 +655,16 @@ void Glitch_Mirror_Slice_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int 
         rsize_val = 0;
     }
 }
+
+/* glitch mirror bars */
+
+void Glitch_Mirror_Bars::init() {
+}
+
+void Glitch_Mirror_Bars::proc(cv::Mat &frame) {
+
+}
+
+void Glitch_Mirror_Bars::clear() {}
+
+Glitch_Mirror_Bars::~Glitch_Mirror_Bars() {}

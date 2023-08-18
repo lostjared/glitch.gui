@@ -206,5 +206,13 @@ private:
     int rsize_val;
 };
 
+class Glitch_Mirror_Bars : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Bars();
+};
+
 
 #endif
