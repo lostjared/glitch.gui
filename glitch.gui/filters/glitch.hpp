@@ -212,6 +212,8 @@ public:
     void proc(cv::Mat &frame) override;
     void clear() override;
     ~Glitch_Mirror_Bars();
+private:
+    void drawMatrix(cv::Mat &frame, const cv::Mat &src, int col, int sizex);
 };
 
 
