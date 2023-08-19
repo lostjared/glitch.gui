@@ -659,25 +659,45 @@ void Glitch_Mirror_Slice_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int 
 /* glitch mirror bars */
 
 void Glitch_Mirror_Bars::init() {
+    num_rows = 1;
+    dir = 1;
 }
 
 void Glitch_Mirror_Bars::proc(cv::Mat &frame) {
-
+    cv::Mat fx = frame.clone();
+    for(int i = 0; i < num_rows; ++i) {
+        drawMatrix(frame, fx, rand()%2, i,  num_rows);
+    }
+    if(dir == 1) {
+        num_rows += 1;
+        if(num_rows >= 32)
+            dir = 0;    
+    } else {
+        num_rows -= 1;
+        if(num_rows <= 1)
+            dir = 1;
+    }
 }
 
 void Glitch_Mirror_Bars::clear() {}
 
 Glitch_Mirror_Bars::~Glitch_Mirror_Bars() {}
 
-void Glitch_Mirror_Bars::drawMatrix(cv::Mat &frame, const cv::Mat &src, int col, int sizex) {
+void Glitch_Mirror_Bars::drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev, int col, int sizex) {
     int width = frame.cols/sizex;
     int start_x = col*width;
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = start_x; i < start_x+width && i < frame.cols; i++) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            cv::Vec3b pix = src.at<cv::Vec3b>(z, i);
-            for(int q = 0; q < 3; ++q)
-                pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+            if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
+                cv::Vec3b pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
+                for(int q = 0; q < 3; ++q)
+                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+            } else {
+                cv::Vec3b pix = src.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q)
+                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+            }
         }
     }
 }
