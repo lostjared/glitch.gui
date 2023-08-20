@@ -217,5 +217,15 @@ private:
     int num_rows, dir;
 };
 
+class Glitch_Mirror_Bars_X2 : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Bars_X2();
+private:
+    void drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev, int col, int sizex);
+    int num_rows, dir;
+};
 
 #endif
