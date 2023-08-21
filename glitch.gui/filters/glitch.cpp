@@ -711,12 +711,12 @@ void Glitch_Mirror_Bars_X2::init() {
 
 void Glitch_Mirror_Bars_X2::proc(cv::Mat &frame) {
     cv::Mat fx = frame.clone();
-    for(int i = 0; i < num_rows; ++i) {
+    for(int i = 0; i < frame.cols/num_rows; ++i) {
         drawMatrix(frame, fx, rand()%2, i,  num_rows);
     }
     if(dir == 1) {
         num_rows += 1;
-        if(num_rows >= 32)
+        if(num_rows >= 128)
             dir = 0;    
     } else {
         num_rows -= 1;
@@ -730,7 +730,7 @@ void Glitch_Mirror_Bars_X2::clear() {}
 Glitch_Mirror_Bars_X2::~Glitch_Mirror_Bars_X2() {}
 
 void Glitch_Mirror_Bars_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev, int col, int sizex) {
-    int width = frame.cols/sizex;
+    int width = sizex;
     int start_x = col*width;
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = start_x; i < start_x+width && i < frame.cols; i++) {
