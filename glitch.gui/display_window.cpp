@@ -242,7 +242,7 @@ void DisplayWindow::keyPressEvent(QKeyEvent *e) {
         }
             break;
         case Qt::Key_A: {
-            if(main_window != nullptr)
+            if(main_window != nullptr && mode == InputMode::IMAGE)
                 main_window->toolbox_window->setSource();
             
         }
