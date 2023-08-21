@@ -751,14 +751,14 @@ void Glitch_Mirror_Bars_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int r
 /* glitch mirror bars col*/
 
 void Glitch_Mirror_Bars_Col::init() {
-    num_rows = 1;
+    num_rows = 64;
     dir = 1;
 }
 
 void Glitch_Mirror_Bars_Col::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
     for(int i = 0; i < frame.cols/num_rows; ++i) {
-        cv::Mat fx = collection[rand()%collection.count()].clone();
+        cv::Mat &fx = collection[rand()%collection.count()];
         drawMatrix(frame, fx, 1, i,  num_rows);
     }
     if(dir == 1) {
@@ -767,7 +767,7 @@ void Glitch_Mirror_Bars_Col::proc(cv::Mat &frame) {
             dir = 0;    
     } else {
         num_rows -= 1;
-        if(num_rows <= 1)
+        if(num_rows <= 64)
             dir = 1;
     }
 }
