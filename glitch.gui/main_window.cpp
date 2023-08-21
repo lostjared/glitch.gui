@@ -306,6 +306,10 @@ void MainWindow::searchFilter() {
 }
 
 void MainWindow::setSearch() {
+
+    if(filter_list_view->count() == 0) 
+        return;
+
     auto text = filter_list_view->currentItem();
     QString text_value = text->text();
     for(int i = 0; i < filter_list->count(); ++i) {
