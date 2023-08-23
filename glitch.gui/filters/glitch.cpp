@@ -800,7 +800,7 @@ void Glitch_Mirror_Bars_Col_Orig::drawMatrix(cv::Mat &frame, const cv::Mat &src,
 /* glitch mirror bars col*/
 
 void Glitch_Mirror_Bars_Col::init() {
-    num_rows = 64;
+    num_rows = 128;
     dir = 1;
 }
 
@@ -812,11 +812,11 @@ void Glitch_Mirror_Bars_Col::proc(cv::Mat &frame) {
     }
     if(dir == 1) {
         num_rows += 1;
-        if(num_rows >= 128)
+        if(num_rows >= 256)
             dir = 0;    
     } else {
         num_rows -= 1;
-        if(num_rows <= 64)
+        if(num_rows <= 128)
             dir = 1;
     }
 }
