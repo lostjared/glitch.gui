@@ -835,12 +835,10 @@ void Glitch_Mirror_Bars_Col::drawMatrix(cv::Mat &frame, const cv::Mat &src, int 
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 cv::Vec3b pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
-                for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                pixel = pix;
             } else {
                 cv::Vec3b pix = src.at<cv::Vec3b>(z, i);
-                for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                pixel = pix;
             }
         }
     }
