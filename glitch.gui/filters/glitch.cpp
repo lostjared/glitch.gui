@@ -878,7 +878,8 @@ Glitch_Mirror_Bars_Col_OrigY::~Glitch_Mirror_Bars_Col_OrigY() {}
 void Glitch_Mirror_Bars_Col_OrigY::drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev, int col, int sizex) {
     int width = sizex;
     int start_x = col*width;
-    for(int z = 0; z < frame.rows; ++z) {
+    int rand_height = rand()%frame.rows;
+    for(int z = 0; z < rand_height; ++z) {
         for(int i = start_x; i < start_x+width && i < frame.cols; i++) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
