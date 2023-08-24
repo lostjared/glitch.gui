@@ -34,5 +34,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_X2", new Glitch_Mirror_Bars_X2()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col", new Glitch_Mirror_Bars_Col()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_Orig", new Glitch_Mirror_Bars_Col_Orig()});
+    new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigY", new Glitch_Mirror_Bars_Col_OrigY()});
 }
 
