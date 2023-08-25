@@ -264,4 +264,16 @@ private:
     FrameCollection collection;
 };
 
+class Glitch_Mirror_Bars_Col_OrigYH : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Bars_Col_OrigYH();
+private:
+    void drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev, int col, int sizex);
+    int num_rows, dir;
+    FrameCollection collection;
+};
+
 #endif
