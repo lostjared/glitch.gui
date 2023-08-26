@@ -36,5 +36,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_Orig", new Glitch_Mirror_Bars_Col_Orig()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigY", new Glitch_Mirror_Bars_Col_OrigY()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigYH", new Glitch_Mirror_Bars_Col_OrigYH()});
+    new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigYH_Pixels", new Glitch_Mirror_Bars_Col_OrigYH_Pixels()});
 }
 
