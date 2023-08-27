@@ -288,4 +288,18 @@ private:
     FrameCollection collection;
 };
 
+class Glitch_Mirror_Bars_Col_OrigY_Grad : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Bars_Col_OrigY_Grad();
+private:
+    void drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev, int col, int sizex);
+    int num_rows, dir;
+    double alpha = 1.0;
+    int alpha_dir = 1;
+    FrameCollection collection;
+};
+
 #endif
