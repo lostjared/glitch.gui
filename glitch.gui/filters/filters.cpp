@@ -38,6 +38,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigYH", new Glitch_Mirror_Bars_Col_OrigYH()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigYH_Pixels", new Glitch_Mirror_Bars_Col_OrigYH_Pixels()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigY_Grad", new Glitch_Mirror_Bars_Col_OrigY_Grad()});
-
+    new_filter_list.push_back({"New_Glitch_Mirror_Bars_Col_OrigY_Grad_Overflow", new Glitch_Mirror_Bars_Col_OrigY_Grad_Overflow()});
 }
 
