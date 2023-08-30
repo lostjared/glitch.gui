@@ -41,3 +41,15 @@ cv::Mat &FrameCollection::operator[](size_t pos) {
 void FrameCollection::setMaxFrames(size_t max) {
     max_frames = max;
 }
+
+void FrameCollection::set(size_t index, cv::Mat &frame) {
+    frames[index] = frame.clone();
+}
+
+bool FrameCollection::get(size_t index, cv::Mat &frame) {
+    if(index < frames.size()) {
+        frame = frames[index];
+        return true;
+    }
+    return false;
+}
