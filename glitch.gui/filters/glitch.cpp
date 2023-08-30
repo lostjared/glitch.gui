@@ -1123,3 +1123,20 @@ void Glitch_Mirror_Bars_Col_OrigY_Grad_Overflow::drawMatrix(cv::Mat &frame, cons
         }
     }
 }
+
+/* glitch mirror bars horiz */
+
+void Glitch_Mirror_Bars_Horiz::init() {
+
+}
+void Glitch_Mirror_Bars_Horiz::proc(cv::Mat &frame) {
+
+}
+
+void Glitch_Mirror_Bars_Horiz::clear() {
+
+}
+Glitch_Mirror_Bars_Horiz::~Glitch_Mirror_Bars_Horiz() {
+
+
+ }

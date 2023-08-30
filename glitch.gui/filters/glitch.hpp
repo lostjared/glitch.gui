@@ -316,4 +316,13 @@ private:
     FrameCollection collection;
 };
 
+class Glitch_Mirror_Bars_Horiz : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Bars_Horiz();
+private:
+};
+
 #endif
