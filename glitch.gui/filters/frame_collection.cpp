@@ -53,3 +53,7 @@ bool FrameCollection::get(size_t index, cv::Mat &frame) {
     }
     return false;
 }
+
+cv::Mat &FrameCollection::get_frame(size_t index) {
+    return frames[index];
+}
