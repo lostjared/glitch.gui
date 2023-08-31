@@ -8,7 +8,7 @@ FrameCollection::FrameCollection(size_t max) {
     setMaxFrames(max);
 }
 
-void FrameCollection::shiftFrames(cv::Mat &frame) {
+void FrameCollection::shiftFrames(const cv::Mat &frame) {
     if(frames.size() < max_frames) {
         for(size_t i = 0; i < max_frames; ++i) {
             frames.push_back(frame);
@@ -42,7 +42,7 @@ void FrameCollection::setMaxFrames(size_t max) {
     max_frames = max;
 }
 
-void FrameCollection::set(size_t index, cv::Mat &frame) {
+void FrameCollection::set(size_t index, const cv::Mat &frame) {
     frames[index] = frame.clone();
 }
 

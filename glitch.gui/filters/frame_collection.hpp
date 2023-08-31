@@ -8,13 +8,13 @@ class FrameCollection {
 public:
     FrameCollection();
     FrameCollection(size_t max);
-    void shiftFrames(cv::Mat &frame);
+    void shiftFrames(const cv::Mat &frame);
     const cv::Mat &operator[](size_t pos) const;
     cv::Mat &operator[](size_t pos);
     void setMaxFrames(size_t max);
     void clear();
     size_t count() const;
-    void set(size_t index, cv::Mat &frame);
+    void set(size_t index, const cv::Mat &frame);
     bool get(size_t index, cv::Mat &frame);
 private:
     size_t max_frames;
