@@ -11,7 +11,7 @@ public:
     FrameCollection(const FrameCollection &f);
     FrameCollection(FrameCollection &&f);
 
-    FrameCollection &operator=(FrameCollection &f);
+    FrameCollection &operator=(const FrameCollection &f);
     FrameCollection &operator=(FrameCollection &&f);
 
     void shiftFrames(const cv::Mat &frame);

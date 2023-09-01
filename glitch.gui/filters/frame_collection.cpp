@@ -11,7 +11,7 @@ FrameCollection::FrameCollection(size_t max) {
 FrameCollection::FrameCollection(const FrameCollection &f) : max_frames{f.max_frames}, frames{f.frames} {}
 FrameCollection::FrameCollection(FrameCollection &&f) : max_frames{f.max_frames}, frames{std::move(f.frames)} {}
 
-FrameCollection &FrameCollection::operator=(FrameCollection &f) {
+FrameCollection &FrameCollection::operator=(const FrameCollection &f) {
     max_frames = f.max_frames;
     if(!frames.empty())
         frames.erase(frames.begin(), frames.end());        
