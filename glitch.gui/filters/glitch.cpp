@@ -1127,16 +1127,46 @@ void Glitch_Mirror_Bars_Col_OrigY_Grad_Overflow::drawMatrix(cv::Mat &frame, cons
 /* glitch mirror bars horiz */
 
 void Glitch_Mirror_Bars_Horiz::init() {
-
+    num_rows = 25;
+    height = 23;
+    dir = 1;
 }
 void Glitch_Mirror_Bars_Horiz::proc(cv::Mat &frame) {
+    num_rows = frame.rows/height;
 
+    collection.shiftFrames(frame);
+    for(int i = 0; i < num_rows; ++i) {
+        drawMatrixRect(frame, collection[rand()%collection.count()], i*height, height);
+    }
+
+    if(dir == 1) {
+        height += 5;
+        if(height >= frame.rows/2) {
+            dir = 0;
+        }
+    } else {
+        dir -= 5;
+        if(height <= 5) {
+            dir = 1;
+        }
+    }
 }
 
 void Glitch_Mirror_Bars_Horiz::clear() {
-
+    collection.clear();
 }
-Glitch_Mirror_Bars_Horiz::~Glitch_Mirror_Bars_Horiz() {
+Glitch_Mirror_Bars_Horiz::~Glitch_Mirror_Bars_Horiz() {}
 
 
- }
+void Glitch_Mirror_Bars_Horiz::drawMatrixRect(cv::Mat &frame, const cv::Mat &src, int row, int height) {
+    int start_y = row;
+    for(int y = start_y; y < start_y+height && y < frame.rows; ++y) {
+        for(int x = 0; x < frame.cols; ++x) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+            const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
+            for(int q = 0; q < 3; ++q) 
+                pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+
+        }
+    }
+}

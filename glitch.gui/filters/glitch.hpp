@@ -323,6 +323,9 @@ public:
     void clear() override;
     ~Glitch_Mirror_Bars_Horiz();
 private:
+    void drawMatrixRect(cv::Mat &frame, const cv::Mat &src, int row, int height);
+    FrameCollection collection;
+    int num_rows, height, dir;
 };
 
 #endif
