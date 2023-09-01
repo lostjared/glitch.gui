@@ -8,6 +8,24 @@ FrameCollection::FrameCollection(size_t max) {
     setMaxFrames(max);
 }
 
+FrameCollection::FrameCollection(const FrameCollection &f) : max_frames{f.max_frames}, frames{f.frames} {}
+FrameCollection::FrameCollection(FrameCollection &&f) : max_frames{f.max_frames}, frames{std::move(f.frames)} {}
+
+FrameCollection &FrameCollection::operator=(FrameCollection &f) {
+    max_frames = f.max_frames;
+    if(!frames.empty())
+        frames.erase(frames.begin(), frames.end());        
+    std::copy(f.frames.begin(), f.frames.end(), std::back_inserter(frames));
+    return *this;
+}
+ 
+ FrameCollection &FrameCollection::operator=(FrameCollection &&f) {
+    max_frames = f.max_frames;
+    frames = std::move(f.frames);
+    return *this;
+ }
+
+
 void FrameCollection::shiftFrames(const cv::Mat &frame) {
     if(frames.size() < max_frames) {
         for(size_t i = 0; i < max_frames; ++i) {
