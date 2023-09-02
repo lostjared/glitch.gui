@@ -75,3 +75,11 @@ bool FrameCollection::get(size_t index, cv::Mat &frame) {
 cv::Mat &FrameCollection::get_frame(size_t index) {
     return frames[index];
 }
+
+cv::Mat *FrameCollection::at(size_t index) {
+    if(index < frames.size())
+        return &frames[index];
+
+    return nullptr;
+}
+    

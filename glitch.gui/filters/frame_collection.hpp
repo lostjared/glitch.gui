@@ -20,9 +20,13 @@ public:
     void setMaxFrames(size_t max);
     void clear();
     size_t count() const;
+
     void set(size_t index, const cv::Mat &frame);
     bool get(size_t index, cv::Mat &frame);
+    
     cv::Mat &get_frame(size_t index);    
+    cv::Mat *at(size_t index);
+
 private:
     size_t max_frames;
     std::deque<cv::Mat> frames;
