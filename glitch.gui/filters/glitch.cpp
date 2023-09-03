@@ -1224,6 +1224,8 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad::init() {
     num_rows = 25;
     height = 23;
     dir = 1;
+    alpha = 0.1;
+    alpha_dir = 1;
 }
 void Glitch_Mirror_Bars_Horiz_X1_Grad::proc(cv::Mat &frame) {
     num_rows = frame.rows/height;
@@ -1244,6 +1246,18 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad::proc(cv::Mat &frame) {
             dir = 1;
         }
     }
+
+    if(alpha_dir == 1) {
+        alpha += 0.05;
+        if(alpha >= 1.0) {
+            alpha_dir = 0;
+        }
+    } else {
+        alpha -= 0.05;
+        if(alpha <= 0.1) {
+            alpha_dir = 1;
+        }
+    }
 }
 
 void Glitch_Mirror_Bars_Horiz_X1_Grad::clear() {
@@ -1259,7 +1273,7 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad::drawMatrixRect(cv::Mat &frame, const cv::
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
             for(int q = 0; q < 3; ++q) 
-                pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
 
         }
     }

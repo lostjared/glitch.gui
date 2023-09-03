@@ -349,6 +349,7 @@ public:
 private:
     void drawMatrixRect(cv::Mat &frame, const cv::Mat &src, int row, int height);
     FrameCollection collection;
-    int num_rows, height, dir;
+    int num_rows, height, dir, alpha_dir;
+    double alpha;
 };
 #endif
