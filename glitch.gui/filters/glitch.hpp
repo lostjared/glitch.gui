@@ -352,4 +352,19 @@ private:
     int num_rows, height, dir, alpha_dir;
     double alpha;
 };
+
+class Glitch_Mirror_Bars_Horiz_X1_Grad_Xor : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Mirror_Bars_Horiz_X1_Grad_Xor();
+private:
+    void drawMatrixRect(cv::Mat &frame, const cv::Mat &src, int row, int height);
+    FrameCollection collection;
+    int num_rows, height, dir, alpha_dir;
+    double alpha;
+};
+
+
 #endif
