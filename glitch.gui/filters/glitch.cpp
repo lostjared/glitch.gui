@@ -1334,7 +1334,7 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad_Xor::drawMatrixRect(cv::Mat &frame, const 
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
             for(int q = 0; q < 3; ++q) 
-                pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
+                pixel[q] ^= ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
 
         }
     }
