@@ -42,5 +42,9 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Horiz", new Glitch_Mirror_Bars_Horiz()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Horiz_X1", new Glitch_Mirror_Bars_Horiz_X1()});
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Horiz_X1_Grad", new Glitch_Mirror_Bars_Horiz_X1_Grad()});
+    new_filter_list.push_back({"New_Glitch_Mirror_Bars_Horiz_X1_Grad_Xor", new Glitch_Mirror_Bars_Horiz_X1_Grad_Xor()});
+
+    
+
 }
 
