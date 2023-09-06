@@ -1350,11 +1350,12 @@ void Glitch_Line_Horiz::init() {
 void Glitch_Line_Horiz::proc(cv::Mat &frame) {
     for(int x = 0; x < frame.cols; ++x) {
         color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        const cv::Vec3b &pix = frame.at<cv::Vec3b>(rand()%(frame.rows/2), x);
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
-            pixel[0] += pixel[0]*color[0];
-            pixel[1] += pixel[1]*color[1];
-            pixel[2] += pixel[2]*color[2];
+            pixel[0] += pix[0]^pixel[0]*color[0];
+            pixel[1] += pix[1]^pixel[1]*color[1];
+            pixel[2] += pix[2]^pixel[2]*color[2];
         }
         offset_y = rand()%frame.rows;
     }
