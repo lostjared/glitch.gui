@@ -366,5 +366,16 @@ private:
     double alpha;
 };
 
+class Glitch_Line_Horiz : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Line_Horiz();
+private:
+    int offset_y;
+    cv::Vec3b color;
+};
+
 
 #endif
