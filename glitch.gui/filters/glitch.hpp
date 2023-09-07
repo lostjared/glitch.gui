@@ -377,5 +377,17 @@ private:
     cv::Vec3b color;
 };
 
+class Glitch_Line_Horiz_Grad : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Line_Horiz_Grad();
+private:
+    int offset_y;
+    cv::Vec3b color;
+    double alpha;
+    int alpha_dir;
+};
 
 #endif
