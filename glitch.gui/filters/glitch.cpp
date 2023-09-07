@@ -1370,6 +1370,8 @@ Glitch_Line_Horiz::~Glitch_Line_Horiz() {}
 void Glitch_Line_Horiz_Grad::init() {
     offset_y = rand()%300;
     color = cv::Vec3b(150, 150, 150);
+    alpha_dir = 1;
+    alpha = 0.5;
 }
 
 void Glitch_Line_Horiz_Grad::proc(cv::Mat &frame) {
@@ -1378,11 +1380,23 @@ void Glitch_Line_Horiz_Grad::proc(cv::Mat &frame) {
         const cv::Vec3b &pix = frame.at<cv::Vec3b>(rand()%(frame.rows/2), x);
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
-            pixel[0] += pix[0]^pixel[0]*color[0];
-            pixel[1] += pix[1]^pixel[1]*color[1];
-            pixel[2] += pix[2]^pixel[2]*color[2];
+            pixel[0] = ac::wrap_cast((alpha * pixel[0]) + ((1-alpha) * (pix[0]^pixel[0]*color[0])));
+            pixel[1] = ac::wrap_cast((alpha * pixel[1]) + ((1-alpha) * (pix[1]^pixel[1]*color[1])));
+            pixel[2] = ac::wrap_cast((alpha * pixel[2]) + ((1-alpha) * (pix[2]^pixel[2]*color[2])));
         }
         offset_y = rand()%frame.rows;
+    }
+
+     if(alpha_dir == 1) {
+        alpha += 0.05;
+        if(alpha >= 1.0) {
+            alpha_dir = 0;
+        }
+    } else {
+        alpha -= 0.05;
+        if(alpha <= 0.1) {
+            alpha_dir = 1;
+        }
     }
 }
 
