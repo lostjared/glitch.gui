@@ -1403,3 +1403,15 @@ void Glitch_Line_Horiz_Grad::proc(cv::Mat &frame) {
 void Glitch_Line_Horiz_Grad::clear() {}
 
 Glitch_Line_Horiz_Grad::~Glitch_Line_Horiz_Grad() {}
+
+/* glitch rect grad */
+
+void Glitch_Rect_Grad::init() {
+}
+
+void Glitch_Rect_Grad::proc(cv::Mat &frame) {
+}
+
+void Glitch_Rect_Grad::clear() {}
+
+Glitch_Rect_Grad::~Glitch_Rect_Grad() {}
