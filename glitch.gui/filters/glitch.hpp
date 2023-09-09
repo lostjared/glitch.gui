@@ -396,6 +396,14 @@ public:
     void proc(cv::Mat &frame) override;
     void clear() override;
     ~Glitch_Rect_Grad();
+private:
+    FrameCollection collection;
+    int num_rows;
+    int num_cols;
+    int arr_size;
+    double *alpha_array;
+    void drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src);
+
 };
 
 #endif
