@@ -1453,4 +1453,7 @@ void Glitch_Rect_Grad::clear() {
 }
 
 
-Glitch_Rect_Grad::~Glitch_Rect_Grad() {}
+Glitch_Rect_Grad::~Glitch_Rect_Grad() {
+    if(alpha_array != nullptr)
+        delete [] alpha_array;
+}

@@ -401,7 +401,7 @@ private:
     int num_rows;
     int num_cols;
     int arr_size;
-    double *alpha_array;
+    double *alpha_array = nullptr;
     void drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src);
 
 };
