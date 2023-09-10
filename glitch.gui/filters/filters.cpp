@@ -46,6 +46,7 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Line_Horiz", new Glitch_Line_Horiz()});
     new_filter_list.push_back({"New_Glitch_Line_Horiz_Grad", new Glitch_Line_Horiz_Grad()});
     new_filter_list.push_back({"New_Glitch_Rect_Grad", new Glitch_Rect_Grad()});
+    new_filter_list.push_back({"New_Glitch_Rect_Size", new Glitch_Rect_Size()});
  
     
 
