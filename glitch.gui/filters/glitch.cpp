@@ -1521,10 +1521,22 @@ void Glitch_Rect_SizeY::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
+    int index = 0;
+
+    double alpha_inc = 1.0/double(num_rows);
+    double alpha_y = 1.0;
+        
     for(int y = 0; y < frame.rows; y += row_size) {
+
+        index ++;
+        if(index > static_cast<int>(collection.count())-1)
+            index = 0;
+
+        alpha_y -= alpha_inc;
+
         for(int x = 0; x < frame.cols; x += col_size) {
-            double alpha = 0.5;
-            drawBlock(alpha, x, y, col_size, row_size, frame, collection[rand()%collection.count()]);
+            double alpha = 0.1 + alpha_y;
+            drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);
         }   
     }
     if(num_dir == 1) {
