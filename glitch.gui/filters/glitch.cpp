@@ -148,9 +148,9 @@ Glitch_Line_Down_X5::~Glitch_Line_Down_X5() {}
 /* rand rect */
 
 void Glitch_RandRect::init() {
-
+    
 }
- 
+
 void Glitch_RandRect::proc(cv::Mat &frame) {
     int rand_rects = 25+rand()%50;
     for(int i = 0; i < rand_rects; ++i) {
@@ -162,7 +162,7 @@ void Glitch_RandRect::proc(cv::Mat &frame) {
         blendRect(frame, color, x, y, w, h);
     }
 }
- 
+
 void Glitch_RandRect::clear() {}
 Glitch_RandRect::~Glitch_RandRect() {}
 
@@ -172,7 +172,7 @@ void Glitch_RandRect::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int y, 
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
                 pixel[q] = ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
-            }    
+            }
         }
     }
 }
@@ -180,9 +180,9 @@ void Glitch_RandRect::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int y, 
 /* rand rect x2*/
 
 void Glitch_RandRect_X2::init() {
-
+    
 }
- 
+
 void Glitch_RandRect_X2::proc(cv::Mat &frame) {
     int rand_rects = 25+rand()%50;
     for(int i = 0; i < rand_rects; ++i) {
@@ -193,11 +193,11 @@ void Glitch_RandRect_X2::proc(cv::Mat &frame) {
         cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
             color = frame.at<cv::Vec3b>(y, x);
-            
+        
         blendRect(frame, color, x, y, w, h);
     }
 }
- 
+
 void Glitch_RandRect_X2::clear() {}
 Glitch_RandRect_X2::~Glitch_RandRect_X2() {}
 
@@ -207,7 +207,7 @@ void Glitch_RandRect_X2::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int 
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
                 pixel[q] = ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
-            }    
+            }
         }
     }
 }
@@ -216,9 +216,9 @@ void Glitch_RandRect_X2::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int 
 /* rand rect x2 wrap*/
 
 void Glitch_RandRect_X2_Wrap::init() {
-
+    
 }
- 
+
 void Glitch_RandRect_X2_Wrap::proc(cv::Mat &frame) {
     int rand_rects = 25+rand()%50;
     for(int i = 0; i < rand_rects; ++i) {
@@ -229,11 +229,11 @@ void Glitch_RandRect_X2_Wrap::proc(cv::Mat &frame) {
         cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
             color = frame.at<cv::Vec3b>(y, x);
-            
+        
         blendRect(frame, color, x, y, w, h);
     }
 }
- 
+
 void Glitch_RandRect_X2_Wrap::clear() {}
 Glitch_RandRect_X2_Wrap::~Glitch_RandRect_X2_Wrap() {}
 
@@ -243,7 +243,7 @@ void Glitch_RandRect_X2_Wrap::blendRect(cv::Mat &frame, cv::Vec3b &color, int x,
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
                 pixel[q] = ac::wrap_cast((0.7 * color[q]) + (0.7 * pixel[q]));
-            }    
+            }
         }
     }
 }
@@ -251,9 +251,9 @@ void Glitch_RandRect_X2_Wrap::blendRect(cv::Mat &frame, cv::Vec3b &color, int x,
 /* rect x3 */
 
 void Glitch_RandRect_X3::init() {
-
+    
 }
- 
+
 void Glitch_RandRect_X3::proc(cv::Mat &frame) {
     int rand_rects = 25+rand()%50;
     for(int i = 0; i < rand_rects; ++i) {
@@ -264,11 +264,11 @@ void Glitch_RandRect_X3::proc(cv::Mat &frame) {
         cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
             color = frame.at<cv::Vec3b>(y, x);
-            
+        
         blendRect(frame, color, x, y, w, h);
     }
 }
- 
+
 void Glitch_RandRect_X3::clear() {}
 Glitch_RandRect_X3::~Glitch_RandRect_X3() {}
 
@@ -278,7 +278,7 @@ void Glitch_RandRect_X3::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int 
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
                 pixel[q] += ac::wrap_cast((0.7 * color[q]) + (0.3 * pixel[q]));
-            }    
+            }
         }
     }
 }
@@ -286,9 +286,9 @@ void Glitch_RandRect_X3::blendRect(cv::Mat &frame, cv::Vec3b &color, int x, int 
 /* rect x4 */
 
 void Glitch_RandRect_X4::init() {
-
+    
 }
- 
+
 void Glitch_RandRect_X4::proc(cv::Mat &frame) {
     int rand_rects = 25+rand()%50;
     for(int i = 0; i < rand_rects; ++i) {
@@ -300,11 +300,11 @@ void Glitch_RandRect_X4::proc(cv::Mat &frame) {
         cv::Vec3b color2 = cv::Vec3b(0, 0, 0);
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
             color2 = frame.at<cv::Vec3b>(y, x);
-            
+        
         blendRect(frame, color, color2, x, y, w, h);
     }
 }
- 
+
 void Glitch_RandRect_X4::clear() {}
 Glitch_RandRect_X4::~Glitch_RandRect_X4() {}
 
@@ -313,8 +313,8 @@ void Glitch_RandRect_X4::blendRect(cv::Mat &frame, cv::Vec3b &color, cv::Vec3b &
         for(int z = y; z < h && z < frame.rows; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
-               pixel[q] |= ac::wrap_cast((0.3 * color[q]) + (0.3 * pixel[q]) + (0.3 * color2[q]));
-            }    
+                pixel[q] |= ac::wrap_cast((0.3 * color[q]) + (0.3 * pixel[q]) + (0.3 * color2[q]));
+            }
         }
     }
 }
@@ -322,7 +322,7 @@ void Glitch_RandRect_X4::blendRect(cv::Mat &frame, cv::Vec3b &color, cv::Vec3b &
 /* pixel x1 */
 
 void Glitch_Pixel_X1::init() {
-
+    
 }
 
 void Glitch_Pixel_X1::proc(cv::Mat &frame) {
@@ -331,32 +331,32 @@ void Glitch_Pixel_X1::proc(cv::Mat &frame) {
         int x = rand()%frame.cols;
         int y = rand()%frame.rows;
         int w = rand()%frame.cols;
-        int h = rand()%frame.rows; 
+        int h = rand()%frame.rows;
         fillRect(frame, x, y, w, h);
     }
 }
 
 void Glitch_Pixel_X1::clear() {
-
+    
 }
 
 Glitch_Pixel_X1::~Glitch_Pixel_X1() {
-
+    
 }
 
 
 void Glitch_Pixel_X1::fillRect(cv::Mat &frame, int x, int y, int w, int h) {
     
-       for(int i = x; i < w && i < frame.cols; ++i) {
+    for(int i = x; i < w && i < frame.cols; ++i) {
         for(int z = y; z < h && z < frame.rows; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
                 cv::Vec3b color(rand()%255, rand()%255, rand()%255);
                 pixel[q] += ac::wrap_cast((0.2 * color[q]) + (0.8 * pixel[q]));
-            }    
+            }
         }
     }
- 
+    
 }
 
 /* Glitch Mirror Shift */
@@ -370,7 +370,7 @@ void Glitch_Mirror_Shift::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
     int width = frame.cols/collection.count();
     int x_pos = 0;
-
+    
     for(size_t i = 0; i < collection.count(); ++i) {
         drawMatrix(frame, collection[rand()%collection.count()], size_x, x_pos, width);
         size_x += 25;
@@ -385,7 +385,7 @@ void Glitch_Mirror_Shift::clear() {
 }
 
 Glitch_Mirror_Shift::~Glitch_Mirror_Shift() {
-
+    
 }
 
 void Glitch_Mirror_Shift::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -413,7 +413,7 @@ void Glitch_Mirror_Shift_Xor::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
     int width = frame.cols/collection.count();
     int x_pos = 0;
-
+    
     for(size_t i = 0; i < collection.count(); ++i) {
         drawMatrix(frame, collection[rand()%collection.count()], size_x, x_pos, width);
         size_x += 25;
@@ -428,7 +428,7 @@ void Glitch_Mirror_Shift_Xor::clear() {
 }
 
 Glitch_Mirror_Shift_Xor::~Glitch_Mirror_Shift_Xor() {
-
+    
 }
 
 void Glitch_Mirror_Shift_Xor::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -467,7 +467,7 @@ void Glitch_Mirror_Slice::clear() {
 }
 
 Glitch_Mirror_Slice::~Glitch_Mirror_Slice() {
-
+    
 }
 
 void Glitch_Mirror_Slice::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -505,7 +505,7 @@ void Glitch_Mirror_Slice_Rand::clear() {
 }
 
 Glitch_Mirror_Slice_Rand::~Glitch_Mirror_Slice_Rand() {
-
+    
 }
 
 void Glitch_Mirror_Slice_Rand::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -544,7 +544,7 @@ void Glitch_Mirror_Slice_Inc::clear() {
 }
 
 Glitch_Mirror_Slice_Inc::~Glitch_Mirror_Slice_Inc() {
-
+    
 }
 
 void Glitch_Mirror_Slice_Inc::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -553,7 +553,7 @@ void Glitch_Mirror_Slice_Inc::drawMatrix(cv::Mat &frame, const cv::Mat &src, int
         for(int z = 0; z < row_size; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             if(i + off < frame.cols) {
-                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, off+i);
+                const cv::Vec3b &pix = src.at<cv::Vec3b>(z, off+i);
                 for(int q = 0; q < 3; ++q)
                     pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             }
@@ -587,7 +587,7 @@ void Glitch_Mirror_Slice_Inc_X2::clear() {
 }
 
 Glitch_Mirror_Slice_Inc_X2::~Glitch_Mirror_Slice_Inc_X2() {
-
+    
 }
 
 void Glitch_Mirror_Slice_Inc_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -632,7 +632,7 @@ void Glitch_Mirror_Slice_X2::clear() {
 }
 
 Glitch_Mirror_Slice_X2::~Glitch_Mirror_Slice_X2() {
-
+    
 }
 
 void Glitch_Mirror_Slice_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int off, int x, int w) {
@@ -671,7 +671,7 @@ void Glitch_Mirror_Bars::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 32)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 1)
@@ -692,11 +692,11 @@ void Glitch_Mirror_Bars::drawMatrix(cv::Mat &frame, const cv::Mat &src, int rev,
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             }
         }
     }
@@ -717,7 +717,7 @@ void Glitch_Mirror_Bars_X2::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 1)
@@ -738,11 +738,11 @@ void Glitch_Mirror_Bars_X2::drawMatrix(cv::Mat &frame, const cv::Mat &src, int r
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             }
         }
     }
@@ -765,7 +765,7 @@ void Glitch_Mirror_Bars_Col::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 256)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 128)
@@ -812,7 +812,7 @@ void Glitch_Mirror_Bars_Col_Orig::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 64)
@@ -835,11 +835,11 @@ void Glitch_Mirror_Bars_Col_Orig::drawMatrix(cv::Mat &frame, const cv::Mat &src,
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             }
         }
     }
@@ -861,7 +861,7 @@ void Glitch_Mirror_Bars_Col_OrigY::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 64)
@@ -885,11 +885,11 @@ void Glitch_Mirror_Bars_Col_OrigY::drawMatrix(cv::Mat &frame, const cv::Mat &src
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             }
         }
     }
@@ -911,7 +911,7 @@ void Glitch_Mirror_Bars_Col_OrigYH::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 64)
@@ -936,11 +936,11 @@ void Glitch_Mirror_Bars_Col_OrigYH::drawMatrix(cv::Mat &frame, const cv::Mat &sr
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
             }
         }
     }
@@ -962,7 +962,7 @@ void Glitch_Mirror_Bars_Col_OrigYH_Pixels::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 64)
@@ -987,11 +987,11 @@ void Glitch_Mirror_Bars_Col_OrigYH_Pixels::drawMatrix(cv::Mat &frame, const cv::
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((1.1 * pixel[q]) + (1.1 * pix[q]));
+                    pixel[q] = ac::wrap_cast((1.1 * pixel[q]) + (1.1 * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((1.1 * pixel[q]) + (1.1 * pix[q]));
+                    pixel[q] = ac::wrap_cast((1.1 * pixel[q]) + (1.1 * pix[q]));
             }
         }
     }
@@ -1015,13 +1015,13 @@ void Glitch_Mirror_Bars_Col_OrigY_Grad::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 64)
             dir = 1;
     }
-
+    
     if(alpha_dir == 1) {
         alpha += 0.05;
         if(alpha >= 1.0) {
@@ -1051,11 +1051,11 @@ void Glitch_Mirror_Bars_Col_OrigY_Grad::drawMatrix(cv::Mat &frame, const cv::Mat
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
+                    pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
+                    pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
             }
         }
     }
@@ -1078,13 +1078,13 @@ void Glitch_Mirror_Bars_Col_OrigY_Grad_Overflow::proc(cv::Mat &frame) {
     if(dir == 1) {
         num_rows += 1;
         if(num_rows >= 128)
-            dir = 0;    
+            dir = 0;
     } else {
         num_rows -= 1;
         if(num_rows <= 64)
             dir = 1;
     }
-
+    
     if(alpha_dir == 1) {
         alpha += 0.05;
         if(alpha >= 3.0) {
@@ -1114,11 +1114,11 @@ void Glitch_Mirror_Bars_Col_OrigY_Grad_Overflow::drawMatrix(cv::Mat &frame, cons
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
+                    pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
                 for(int q = 0; q < 3; ++q)
-                   pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
+                    pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
             }
         }
     }
@@ -1133,12 +1133,12 @@ void Glitch_Mirror_Bars_Horiz::init() {
 }
 void Glitch_Mirror_Bars_Horiz::proc(cv::Mat &frame) {
     num_rows = frame.rows/height;
-
+    
     collection.shiftFrames(frame);
     for(int i = 0; i < num_rows; ++i) {
         drawMatrixRect(frame, collection[rand()%collection.count()], i*height, height);
     }
-
+    
     if(dir == 1) {
         height += 5;
         if(height >= frame.rows/2) {
@@ -1164,9 +1164,9 @@ void Glitch_Mirror_Bars_Horiz::drawMatrixRect(cv::Mat &frame, const cv::Mat &src
         for(int x = 0; x < frame.cols; ++x) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
-            for(int q = 0; q < 3; ++q) 
+            for(int q = 0; q < 3; ++q)
                 pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
-
+            
         }
     }
 }
@@ -1180,12 +1180,12 @@ void Glitch_Mirror_Bars_Horiz_X1::init() {
 }
 void Glitch_Mirror_Bars_Horiz_X1::proc(cv::Mat &frame) {
     num_rows = frame.rows/height;
-
+    
     collection.shiftFrames(frame);
     for(int i = 0; i < num_rows; ++i) {
         drawMatrixRect(frame, collection[rand()%collection.count()], i*height, height);
     }
-
+    
     if(dir == 1) {
         height += 2;
         if(height >= frame.rows/4) {
@@ -1211,9 +1211,9 @@ void Glitch_Mirror_Bars_Horiz_X1::drawMatrixRect(cv::Mat &frame, const cv::Mat &
         for(int x = 0; x < frame.cols; ++x) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
-            for(int q = 0; q < 3; ++q) 
+            for(int q = 0; q < 3; ++q)
                 pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
-
+            
         }
     }
 }
@@ -1229,12 +1229,12 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad::init() {
 }
 void Glitch_Mirror_Bars_Horiz_X1_Grad::proc(cv::Mat &frame) {
     num_rows = frame.rows/height;
-
+    
     collection.shiftFrames(frame);
     for(int i = 0; i < num_rows; ++i) {
         drawMatrixRect(frame, collection[rand()%collection.count()], i*height, height);
     }
-
+    
     if(dir == 1) {
         height += 2;
         if(height >= frame.rows/4) {
@@ -1246,7 +1246,7 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad::proc(cv::Mat &frame) {
             dir = 1;
         }
     }
-
+    
     if(alpha_dir == 1) {
         alpha += 0.05;
         if(alpha >= 1.0) {
@@ -1272,9 +1272,9 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad::drawMatrixRect(cv::Mat &frame, const cv::
         for(int x = 0; x < frame.cols; ++x) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
-            for(int q = 0; q < 3; ++q) 
+            for(int q = 0; q < 3; ++q)
                 pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
-
+            
         }
     }
 }
@@ -1290,12 +1290,12 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad_Xor::init() {
 }
 void Glitch_Mirror_Bars_Horiz_X1_Grad_Xor::proc(cv::Mat &frame) {
     num_rows = frame.rows/height;
-
+    
     collection.shiftFrames(frame);
     for(int i = 0; i < num_rows; ++i) {
         drawMatrixRect(frame, collection[rand()%collection.count()], i*height, height);
     }
-
+    
     if(dir == 1) {
         height += 2;
         if(height >= frame.rows/4) {
@@ -1307,7 +1307,7 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad_Xor::proc(cv::Mat &frame) {
             dir = 1;
         }
     }
-
+    
     if(alpha_dir == 1) {
         alpha += 0.05;
         if(alpha >= 1.0) {
@@ -1333,9 +1333,9 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad_Xor::drawMatrixRect(cv::Mat &frame, const 
         for(int x = 0; x < frame.cols; ++x) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(y, x);
-            for(int q = 0; q < 3; ++q) 
+            for(int q = 0; q < 3; ++q)
                 pixel[q] ^= ac::wrap_cast((alpha * pixel[q]) + ((1-alpha) * pix[q]));
-
+            
         }
     }
 }
@@ -1386,8 +1386,8 @@ void Glitch_Line_Horiz_Grad::proc(cv::Mat &frame) {
         }
         offset_y = rand()%frame.rows;
     }
-
-     if(alpha_dir == 1) {
+    
+    if(alpha_dir == 1) {
         alpha += 0.05;
         if(alpha >= 1.0) {
             alpha_dir = 0;
@@ -1417,19 +1417,19 @@ void Glitch_Rect_Grad::init() {
 }
 
 void Glitch_Rect_Grad::proc(cv::Mat &frame) {
-
+    
     collection.shiftFrames(frame);
-
+    
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
     int index = 0;
-
+    
     for(int y = 0; y < frame.rows; y += row_size) {
         for(int x = 0; x < frame.cols; x += col_size) {
             drawBlock(alpha_array[index++], x, y, col_size, row_size, frame, collection[rand()%collection.count()]);
-        }   
+        }
     }
-
+    
     for(int i = 0; i < index; ++i) {
         alpha_array[i] += 0.05;
         if(alpha_array[i] >= 1.0)
@@ -1474,7 +1474,7 @@ void Glitch_Rect_Size::proc(cv::Mat &frame) {
         for(int x = 0; x < frame.cols; x += col_size) {
             double alpha = 0.5;
             drawBlock(alpha, x, y, col_size, row_size, frame, collection[rand()%collection.count()]);
-        }   
+        }
     }
     if(num_dir == 1) {
         num_rows += 2;
@@ -1522,22 +1522,22 @@ void Glitch_Rect_SizeY::proc(cv::Mat &frame) {
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
     int index = 0;
-
+    
     double alpha_inc = 1.0/double(num_rows);
     double alpha_y = 1.0;
-        
+    
     for(int y = 0; y < frame.rows; y += row_size) {
-
+        
         index ++;
         if(index > static_cast<int>(collection.count())-1)
             index = 0;
-
+        
         alpha_y -= alpha_inc;
-
+        
         for(int x = 0; x < frame.cols; x += col_size) {
             double alpha = 0.1 + alpha_y;
             drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);
-        }   
+        }
     }
     if(num_dir == 1) {
         num_rows += 2;
@@ -1585,23 +1585,23 @@ void Glitch_Rect_SizeX::proc(cv::Mat &frame) {
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
     int index = 0;
-
+    
     double alpha_inc = 1.0/double(num_rows);
     double alpha_y = 1.0;
-        
+    
     for(int y = 0; y < frame.rows; y += row_size) {
-
+        
         for(int x = 0; x < frame.cols; x += col_size) {
             double alpha = 0.1 + alpha_y;
             drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);
-
+            
             index ++;
             if(index > static_cast<int>(collection.count())-1)
                 index = 0;
-
-       alpha_y -= alpha_inc;
-
-        }   
+            
+            alpha_y -= alpha_inc;
+            
+        }
     }
     if(num_dir == 1) {
         num_rows += 2;
