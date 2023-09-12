@@ -1585,12 +1585,9 @@ void Glitch_Rect_SizeX::proc(cv::Mat &frame) {
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
     int index = 0;
-    
-    double alpha_inc = 1.0/double(num_rows);
-    double alpha_y = 1.0;
-    
+    double alpha_inc = 1.0/double(num_cols);
     for(int y = 0; y < frame.rows; y += row_size) {
-        
+        double alpha_y = 1.0;
         for(int x = 0; x < frame.cols; x += col_size) {
             double alpha = 0.1 + alpha_y;
             drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);
@@ -1624,7 +1621,7 @@ void Glitch_Rect_SizeX::drawBlock(double &alpha, int x, int y,  int w, int h, cv
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q)
-                pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha)*pix[q]));
+                pixel[q] = cv::saturate_cast<unsigned char>((alpha * pixel[q]) + ((1-alpha)*pix[q]));
         }
     }
 }
