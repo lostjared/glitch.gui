@@ -1647,19 +1647,16 @@ void Glitch_Rect_Size_Odd::proc(cv::Mat &frame) {
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
     int index = 0;
-    double alpha_inc = 1.0/double(num_cols);
+    
     for(int y = 0; y < frame.rows; y += row_size) {
-        double alpha_y = 1.0;
+        int index = rand()%(collection.count()-1);    
         for(int x = 0; x < frame.cols; x += col_size) {
-            double alpha = 0.1 + alpha_y;
-            drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);
-            
-            index ++;
+            double alpha = 0.5;
+            drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);   
+               index ++;
             if(index > static_cast<int>(collection.count())-1)
                 index = 0;
-            
-            alpha_y -= alpha_inc;
-            
+         
         }
     }
     if(num_dir == 1) {
