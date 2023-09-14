@@ -49,6 +49,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Rect_Size", new Glitch_Rect_Size()});
     new_filter_list.push_back({"New_Glitch_Rect_SizeY", new Glitch_Rect_SizeY()});
     new_filter_list.push_back({"New_Glitch_Rect_SizeX", new Glitch_Rect_SizeX()}); 
-    
+    new_filter_list.push_back({"New_Glitch_Rect_Size_Odd", new Glitch_Rect_Size_Odd()});  
 }
 
