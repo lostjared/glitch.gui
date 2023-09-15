@@ -108,6 +108,7 @@ MainWindow::MainWindow()  {
     
     filter_search = new QLineEdit(this);
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
+    connect(filter_search, SIGNAL(returnPressed()), this, SLOT(searchFilter()));
     
     filter_search_button = new QPushButton(tr("Search"), this);
     filter_search_button->setGeometry(300+15+10+225+10, 35, 70, 30);
