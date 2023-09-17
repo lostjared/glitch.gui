@@ -10,7 +10,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_ColorXor4", new ColorXor4()});
     new_filter_list.push_back({"New_ColorXor5", new ColorXor5()});
     new_filter_list.push_back({"New_ColorXor6", new ColorXor6()});
-    
     new_filter_list.push_back({"New_Glitch_Line_Down", new Glitch_Line_Down()});
     new_filter_list.push_back({"New_Glitch_Line_Down_X2", new Glitch_Line_Down_X2()});
     new_filter_list.push_back({"New_Glitch_Line_Down_X3", new Glitch_Line_Down_X3()});
@@ -51,6 +50,7 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Rect_SizeX", new Glitch_Rect_SizeX()}); 
     new_filter_list.push_back({"New_Glitch_Rect_Size_Odd", new Glitch_Rect_Size_Odd()}); 
     new_filter_list.push_back({"New_Glitch_Rect_Size_Overflow", new Glitch_Rect_Size_Overflow()}); 
-    new_filter_list.push_back({"New_Glitch_Rect_Size_Fast", new Glitch_Rect_Size_Fast()});   
+    new_filter_list.push_back({"New_Glitch_Rect_Size_Fast", new Glitch_Rect_Size_Fast()});  
+    new_filter_list.push_back({"New_Glitch_Rect_Size_Slow", new Glitch_Rect_Size_Slow()});  
 }
 
