@@ -1864,16 +1864,23 @@ void Glitch_Rect_Size_Row::proc(cv::Mat &frame) {
         }
     }
     if(num_dir == 1) {
-        num_rows += 1;
         num_cols += 1;
-        if(num_rows >= 128) {
-            num_dir = 0;
+        if(num_cols >= 64) {
+            num_rows += 1;
+            if(num_rows >= 64) {
+                num_dir = 0;
+            } else num_cols = 4;
         }
+        
     } else {
-        num_rows -= 1;
         num_cols -= 1;
-        if(num_rows <= 4) {
-            num_dir = 1;
+        if(num_cols <= 4) {
+            num_rows -= 1;
+            if(num_rows <= 4) {
+                num_dir = 1;
+            } else {
+                num_cols = 64;
+            }
         }
     }
 }
