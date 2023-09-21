@@ -54,5 +54,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Rect_Size_Slow", new Glitch_Rect_Size_Slow()});  
     new_filter_list.push_back({"New_Glitch_Rect_Size_Row", new Glitch_Rect_Size_Row()});
     new_filter_list.push_back({"New_Glitch_Rect_Size_Row_Rand", new Glitch_Rect_Size_Row_Rand()});
+    new_filter_list.push_back({"New_Glitch_Rect_Size_RGB", new Glitch_Rect_Size_RGB()});
 
 }
