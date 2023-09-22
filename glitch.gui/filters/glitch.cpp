@@ -2018,3 +2018,59 @@ void Glitch_Rect_Size_RGB::clear() {
 
 
 Glitch_Rect_Size_RGB::~Glitch_Rect_Size_RGB() {}
+
+/* glitch rect Size RGB Order */
+
+void Glitch_Rect_Size_RGB_Order::init() {
+    num_rows = 8;
+    num_cols = 8;
+    num_dir = 1;
+    srand(static_cast<int>(time(0)));
+}
+
+void Glitch_Rect_Size_RGB_Order::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+    int row_size = frame.rows/num_rows;
+    int col_size = frame.cols/num_cols;
+
+    int channel = 0;
+
+    for(int y = 0; y < frame.rows; y += row_size) {
+        for(int x = 0; x < frame.cols; x += col_size) {
+            double alpha = 0.5;
+            ++channel;
+            if(channel > 2) channel = 0;
+            drawBlock(channel, alpha, x, y, col_size, row_size, frame, collection[rand()%collection.count()]);
+        }
+    }
+    if(num_dir == 1) {
+        num_rows += 2;
+        num_cols += 2;
+        if(num_rows >= 64) {
+            num_dir = 0;
+        }
+    } else {
+        num_rows -= 2;
+        num_cols -= 2;
+        if(num_rows <= 4) {
+            num_dir = 1;
+        }
+    }
+}
+
+void Glitch_Rect_Size_RGB_Order::drawBlock(int channel, double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src) {
+    for(int z = y; z < y+h && z < frame.rows; ++z) {
+        for(int i = x;  i < x+w && i < frame.cols; ++i) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
+            pixel[channel] = ac::wrap_cast((alpha * pixel[channel]) + ((1-alpha)*pix[channel]));
+        }
+    }
+}
+
+void Glitch_Rect_Size_RGB_Order::clear() {
+    collection.clear();
+}
+
+
+Glitch_Rect_Size_RGB_Order::~Glitch_Rect_Size_RGB_Order() {}
