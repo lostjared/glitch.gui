@@ -2081,16 +2081,23 @@ void Glitch_Rect_Size_Col::init() {
     num_rows = 8;
     num_cols = 8;
     num_dir = 1;
+    index = 0;
 }
 
 void Glitch_Rect_Size_Col::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
     int row_size = frame.rows/num_rows;
     int col_size = frame.cols/num_cols;
+
     for(int y = 0; y < frame.rows; y += row_size) {
+
+        ++index;
+        if(index > collection.count()-1)
+            index = 0;
+
         for(int x = 0; x < frame.cols; x += col_size) {
             double alpha = 0.5;
-            drawBlock(alpha, x, y, col_size, row_size, frame, collection[rand()%collection.count()]);
+            drawBlock(alpha, x, y, col_size, row_size, frame, collection[index]);
         }
     }
     if(num_dir == 1) {

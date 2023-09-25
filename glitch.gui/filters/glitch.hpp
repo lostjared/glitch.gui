@@ -572,6 +572,7 @@ private:
     int num_rows;
     int num_cols;
     int num_dir;
+    int index;
     void drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src);
 };
 
