@@ -2137,7 +2137,7 @@ Glitch_Rect_Size_Col::~Glitch_Rect_Size_Col() {}
 
 void Glitch_Rect_Size_Rev::init() {
     num_rows = 8;
-    num_cols = 8;
+    num_cols = 64;
     num_dir = 1;
 }
 
