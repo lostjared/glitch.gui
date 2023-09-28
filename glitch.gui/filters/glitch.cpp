@@ -2229,7 +2229,7 @@ void Glitch_Rect_Size_Xor::drawBlock(double &alpha, int x, int y,  int w, int h,
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q)
-                pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha)*pix[q]));
+                pixel[q] ^= ac::wrap_cast((alpha * pixel[q]) + ((1-alpha)*pix[q]));
         }
     }
 }
