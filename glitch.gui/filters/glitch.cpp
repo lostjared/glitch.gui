@@ -2301,6 +2301,22 @@ void Glitch_Line_Effect::init() {
 }
 
 void Glitch_Line_Effect::proc(cv::Mat &frame) {
+    static unsigned char col = 0;
+    static double alpha = 1.0;
+
+    for(int z = 0; z < frame.rows; ++z) {
+        for(int i = 0; i < frame.cols; ++i) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            if((z%2)==0) {
+                pixel[0] = pixel[1] = pixel[2] = ++col;
+            } else {
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = ac::wrap_cast(pixel[q]*alpha);
+                }
+                alpha += 0.001;
+            }
+        }
+    }
 }
 
 void Glitch_Line_Effect::clear() {}
