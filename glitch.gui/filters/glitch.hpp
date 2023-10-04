@@ -618,4 +618,14 @@ private:
     void drawBlock(int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src);
 };
 
+
+class Glitch_Line_Effect : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Line_Effect();
+private:
+};
+
 #endif

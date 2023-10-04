@@ -2294,3 +2294,15 @@ void Glitch_Rect_Size_Fade::clear() {
 
 
 Glitch_Rect_Size_Fade::~Glitch_Rect_Size_Fade() {}
+
+/* Glitch line effect */
+
+void Glitch_Line_Effect::init() {
+}
+
+void Glitch_Line_Effect::proc(cv::Mat &frame) {
+}
+
+void Glitch_Line_Effect::clear() {}
+
+Glitch_Line_Effect::~Glitch_Line_Effect() {}
