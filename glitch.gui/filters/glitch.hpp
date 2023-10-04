@@ -626,6 +626,8 @@ public:
     void clear() override;
     ~Glitch_Line_Effect();
 private:
+    char col;
+    double alpha;
 };
 
 #endif

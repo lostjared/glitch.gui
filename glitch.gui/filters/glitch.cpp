@@ -2298,12 +2298,12 @@ Glitch_Rect_Size_Fade::~Glitch_Rect_Size_Fade() {}
 /* Glitch line effect */
 
 void Glitch_Line_Effect::init() {
+    col = 0;
+    alpha = 1.0;
 }
 
 void Glitch_Line_Effect::proc(cv::Mat &frame) {
-    static unsigned char col = 0;
-    static double alpha = 1.0;
-
+  
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
