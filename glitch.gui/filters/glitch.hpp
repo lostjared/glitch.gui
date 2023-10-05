@@ -630,4 +630,15 @@ private:
     double alpha;
 };
 
+class Glitch_Line_Effect_Down : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Line_Effect_Down();
+private:
+    char col;
+    double alpha;
+};
+
 #endif
