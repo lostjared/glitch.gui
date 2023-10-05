@@ -2326,17 +2326,14 @@ Glitch_Line_Effect::~Glitch_Line_Effect() {}
 /* Glitch line effect Down */
 
 void Glitch_Line_Effect_Down::init() {
-    col = 0;
     alpha = 1.0;
 }
 
 void Glitch_Line_Effect_Down::proc(cv::Mat &frame) {
-  
-    for(int z = 0; z < frame.rows; ++z) {
-        for(int i = 0; i < frame.cols; ++i) {
+    for(int i = 0; i < frame.cols; ++i) {
+        for(int z = 0; z < frame.rows; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            if((z%2)==0) {
-                pixel[0] = pixel[1] = pixel[2] = ++col;
+            if((i%2)==0) {
             } else {
                 for(int q = 0; q < 3; ++q) {
                     pixel[q] = ac::wrap_cast(pixel[q]*alpha);
