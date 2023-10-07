@@ -640,4 +640,18 @@ private:
     double alpha;
 };
 
+class Glitch_Rect_Size_Rand : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Rect_Size_Rand();
+private:
+    FrameCollection collection;
+    int num_rows;
+    int num_cols;
+    int num_dir;
+    void drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src);
+};
+
 #endif
