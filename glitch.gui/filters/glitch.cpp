@@ -2396,7 +2396,7 @@ Glitch_Rect_Size_Rand::~Glitch_Rect_Size_Rand() {}
 
 void Glitch_Rect_Size_V2::init() {
     num_rows = 8;
-    num_cols = 8;
+    num_cols = 64;
     num_dir = 1;
 }
 
@@ -2412,13 +2412,13 @@ void Glitch_Rect_Size_V2::proc(cv::Mat &frame) {
     }
     if(num_dir == 1) {
         num_rows += 2;
-        num_cols += 2;
+        num_cols -= 2;
         if(num_rows >= 64) {
             num_dir = 0;
         }
     } else {
         num_rows -= 2;
-        num_cols -= 2;
+        num_cols += 2;
         if(num_rows <= 4) {
             num_dir = 1;
         }
