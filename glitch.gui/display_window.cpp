@@ -91,8 +91,10 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     ac::release_all_objects();
     QString text;
     QTextStream stream(&text);
-    stream << "glitch: Current filter set to: " << f.c_str() << "\n";
-    debug_window->Log(text);
+    if(f.length() > 0) {
+        stream << "glitch: Current filter set to: " << f.c_str() << "\n";
+        debug_window->Log(text);
+    }
 }
 
 QString DisplayWindow::getCurrentFilter() const { return current_filter.c_str(); }
