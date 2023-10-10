@@ -2442,3 +2442,28 @@ void Glitch_Rect_Size_V2::clear() {
 
 
 Glitch_Rect_Size_V2::~Glitch_Rect_Size_V2() {}
+
+/* Glitch line effect Down v2*/
+
+void Glitch_Line_Effect_Down_V2::init() {
+    alpha = 1.0;
+}
+
+void Glitch_Line_Effect_Down_V2::proc(cv::Mat &frame) {
+    for(int i = 0; i < frame.cols; ++i) {
+        for(int z = 0; z < frame.rows; ++z) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            if((i%2)==0) {
+            } else {
+                pixel[0] = ac::wrap_cast(cosf(i));
+                pixel[1] = ac::wrap_cast(sinf(z));
+                pixel[2] = ac::wrap_cast(tanf(alpha));
+                alpha += 0.01;
+            }
+        }
+    }
+}
+
+void Glitch_Line_Effect_Down_V2::clear() {}
+
+Glitch_Line_Effect_Down_V2::~Glitch_Line_Effect_Down_V2() {}
