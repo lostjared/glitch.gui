@@ -2484,7 +2484,7 @@ void Glitch_Line_Effect_Down_V3::proc(cv::Mat &frame) {
             const cv::Vec3b &pix = frame2.at<cv::Vec3b>(z, i);
             pixel[0] = ac::wrap_cast(((pixel[0] / 3) * cosf(pix[0]/3))*alpha);   
             pixel[1] = ac::wrap_cast(((pixel[1] / 3) * sinf(pix[1]/3))*alpha);
-            pixel[2] = ac::wrap_cast((pixel[2] / 3) * tanf(pix[2]/3)*alpha);      
+            pixel[2] = ac::wrap_cast((pixel[2] / 3) * tanf((pix[2]/3))*alpha);      
         }
     }
 
