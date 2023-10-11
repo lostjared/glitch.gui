@@ -2467,3 +2467,30 @@ void Glitch_Line_Effect_Down_V2::proc(cv::Mat &frame) {
 void Glitch_Line_Effect_Down_V2::clear() {}
 
 Glitch_Line_Effect_Down_V2::~Glitch_Line_Effect_Down_V2() {}
+
+
+/* Glitch line effect Down v3*/
+
+void Glitch_Line_Effect_Down_V3::init() {
+    alpha = 1.0;
+}
+
+void Glitch_Line_Effect_Down_V3::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+    cv::Mat &frame2 = collection.get_frame(5);
+    for(int z = 0; z < frame.rows; ++z) {
+        for(int i = 0; i < frame.cols; ++i) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            const cv::Vec3b &pix = frame2.at<cv::Vec3b>(z, i);
+            pixel[0] = (pixel[0] / 3) * cosf(pix[0]/3);   
+            pixel[1] = (pixel[1] / 3) * sinf(pix[1]/3);
+            pixel[2] = (pixel[2] / 3) * tanf(pix[2]/3);      
+        }
+    }
+}
+
+void Glitch_Line_Effect_Down_V3::clear() {
+    collection.clear();
+}
+
+Glitch_Line_Effect_Down_V3::~Glitch_Line_Effect_Down_V3() {}
