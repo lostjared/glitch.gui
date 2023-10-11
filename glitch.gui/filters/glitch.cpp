@@ -2482,11 +2482,14 @@ void Glitch_Line_Effect_Down_V3::proc(cv::Mat &frame) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             const cv::Vec3b &pix = frame2.at<cv::Vec3b>(z, i);
-            pixel[0] = (pixel[0] / 3) * cosf(pix[0]/3);   
-            pixel[1] = (pixel[1] / 3) * sinf(pix[1]/3);
-            pixel[2] = (pixel[2] / 3) * tanf(pix[2]/3);      
+            pixel[0] = ac::wrap_cast(((pixel[0] / 3) * cosf(pix[0]/3))*alpha);   
+            pixel[1] = ac::wrap_cast(((pixel[1] / 3) * sinf(pix[1]/3))*alpha);
+            pixel[2] = ac::wrap_cast((pixel[2] / 3) * tanf(pix[2]/3)*alpha);      
         }
     }
+
+    alpha += 0.01;
+    if(alpha > 3) alpha = 1.0;
 }
 
 void Glitch_Line_Effect_Down_V3::clear() {
