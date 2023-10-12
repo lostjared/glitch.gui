@@ -212,7 +212,6 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
-            display_window->setGeometry(700, 0, 800, 600);
             if(display_window->resetInputMode(InputMode::VIDEO,filename.toStdString())) {
                 display_window->setPrefix(outdir, prefix);
                 display_window->show();
