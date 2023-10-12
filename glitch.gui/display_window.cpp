@@ -197,7 +197,6 @@ void DisplayWindow::timeoutFunc() {
     } else {
         display(image);
     }
-    update();
 }
 
 void DisplayWindow::setColorOffset(const cv::Vec3b &color) {
