@@ -36,8 +36,27 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
     connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
     connect(use_fade, SIGNAL(toggled(bool)), this, SLOT(clickFade(bool)));
+
+    show_disp = new QPushButton(tr("Show"), this);
+    show_disp->setGeometry(10,45+25+10+25,100,25);
+    connect(show_disp, SIGNAL(clicked()), this, SLOT(showDisplay()));
     
+
     disableButtons();
+}
+
+void ToolboxWindow::setHide() {
+    show_disp->setText("Hide");
+}
+
+void ToolboxWindow::showDisplay() {
+    if(show_disp->text() == "Show") {
+        display_window->show();
+        show_disp->setText("Hide");
+    } else {
+        display_window->hide();
+        show_disp->setText("Show");
+    }
 }
 
 void ToolboxWindow::clickFade(bool) {

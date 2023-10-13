@@ -215,6 +215,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             if(display_window->resetInputMode(InputMode::VIDEO,filename.toStdString())) {
                 display_window->setPrefix(outdir, prefix);
                 display_window->show();
+                toolbox_window->setHide();
                 display_window->startAnimation(fps);
                 QString text;
                 QTextStream stream(&text);
@@ -246,6 +247,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             display_window->setSourceImage(src);
             display_window->setPrefix(outdir, prefix);
             display_window->show();
+            toolbox_window->setHide();
             display_window->startAnimation(fps);
             QString text;
             QTextStream stream(&text);

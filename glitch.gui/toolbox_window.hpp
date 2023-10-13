@@ -20,6 +20,7 @@ public:
     void disableButtons();
     void enableSource();
     void disableSource();
+    void setHide();
     public slots:
     void saveSnapshot();
     void setSource();
@@ -28,12 +29,13 @@ public:
     void selectColor();
     void clickOffset(bool);
     void clickFade(bool);
+    void showDisplay();
 private:
     QLabel *color_lbl;
     QString outdir;
     DisplayWindow *display_window = nullptr;
     int snap_index = 0;
-    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color;
+    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color, *show_disp;
     QCheckBox *use_color, *use_fade;
     cv::Vec3b color_value;
     QString prefix;
