@@ -21,6 +21,11 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
 }
 
+void DisplayWindow::closeEvent(QCloseEvent *) {
+    main_window->toolbox_window->setShow();
+}
+
+
 void DisplayWindow::setMainWindow(MainWindow *m) {
     main_window = m;
 }

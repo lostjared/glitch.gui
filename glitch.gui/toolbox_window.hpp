@@ -21,6 +21,7 @@ public:
     void enableSource();
     void disableSource();
     void setHide();
+    void setShow();
     public slots:
     void saveSnapshot();
     void setSource();

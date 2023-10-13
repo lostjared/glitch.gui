@@ -24,6 +24,7 @@ public:
     void setSourceImage(const cv::Mat &src);
     void paintEvent(QPaintEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;
+    void closeEvent(QCloseEvent *e) override;
     
     void display(QImage &image);
     void display(const cv::Mat &src);

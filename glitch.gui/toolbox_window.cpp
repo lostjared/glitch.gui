@@ -49,6 +49,10 @@ void ToolboxWindow::setHide() {
     show_disp->setText("Hide");
 }
 
+void ToolboxWindow::setShow() {
+    show_disp->setText("Show");
+}
+
 void ToolboxWindow::showDisplay() {
     if(show_disp->text() == "Show") {
         display_window->show();
