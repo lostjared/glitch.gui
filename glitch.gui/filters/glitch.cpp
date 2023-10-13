@@ -1410,7 +1410,7 @@ void Glitch_Rect_Grad::init() {
     num_rows = 8;
     num_cols = 8;
     arr_size = num_rows * num_cols;
-    alpha_array = new double[ arr_size ];
+    alpha_array = new double[ arr_size + 1 ];
     for(int i = 0; i < arr_size; ++i) {
         alpha_array[i] = (0.1) * (rand()%10);
     }
