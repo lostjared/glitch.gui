@@ -243,7 +243,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setInputMode(InputMode::IMAGE);
-            display_window->setGeometry(700, 0, 800, 600);
+            display_window->setGeometry(700, 100, 640, 480);
             display_window->setSourceImage(src);
             display_window->setPrefix(outdir, prefix);
             display_window->show();
