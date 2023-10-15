@@ -2558,4 +2558,4 @@ void Glitch_Line_Effect_Down_V5::clear() {
     collection.clear();
 }
 
-~Glitch_Line_Effect_Down_V5::~Glitch_Line_Effect_Down_V5() {}
+Glitch_Line_Effect_Down_V5::~Glitch_Line_Effect_Down_V5() {}
