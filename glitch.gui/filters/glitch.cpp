@@ -2533,11 +2533,17 @@ Glitch_Line_Effect_Down_V4::~Glitch_Line_Effect_Down_V4() {}
 
 void Glitch_Line_Effect_Down_V5::init() {
     alpha = 1.0;
+    index = 0;
 }
 
 void Glitch_Line_Effect_Down_V5::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
-    cv::Mat &frame2 = collection.get_frame(5);
+
+    ++index;
+    if(index > collection.count()-1)
+        index = 0;
+
+    cv::Mat &frame2 = collection.get_frame(index);
 
     double diff = 1.0/double(frame.rows);
     alpha = (rand()%10) * 0.1;

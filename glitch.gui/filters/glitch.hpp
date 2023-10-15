@@ -709,6 +709,7 @@ public:
 private:
     double alpha;
     FrameCollection collection;
+    int index;
 };
 
 
