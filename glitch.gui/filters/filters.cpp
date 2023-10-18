@@ -69,4 +69,6 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Line_Effect_Down_V4", new Glitch_Line_Effect_Down_V4()}); 
     new_filter_list.push_back({"New_Glitch_Line_Effect_Down_V5", new Glitch_Line_Effect_Down_V5()}); 
     new_filter_list.push_back({"New_Glitch_Line_Effect_Down_V5_Strong", new Glitch_Line_Effect_Down_V5_Strong()}); 
+    new_filter_list.push_back({"New_Glitch_Line_Effect_Down_V6", new Glitch_Line_Effect_Down_V6()}); 
+
 }
