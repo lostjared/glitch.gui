@@ -2602,3 +2602,40 @@ void Glitch_Line_Effect_Down_V5_Strong::clear() {
 }
 
 Glitch_Line_Effect_Down_V5_Strong::~Glitch_Line_Effect_Down_V5_Strong() {}
+
+/* Glitch line effect Down v6*/
+
+void Glitch_Line_Effect_Down_V6::init() {
+    alpha = 1.0;
+    index = 0;
+}
+
+void Glitch_Line_Effect_Down_V6::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+
+    ++index;
+    if(index > collection.count()-1)
+        index = 0;
+
+    cv::Mat &frame2 = collection.get_frame(index);
+
+    double diff = 1.0/double(frame.rows);
+    alpha = (rand()%10) * 0.1;
+
+    for(int z = 0; z < frame.rows; ++z) {
+        for(int i = 0; i < frame.cols; ++i) {
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            const cv::Vec3b &pix = frame2.at<cv::Vec3b>(z, i);
+            for(int q = 0; q < 3; ++q) {
+                pixel[q] = ac::wrap_cast((alpha * pixel[q]) + ((1-alpha)*pix[q]));
+            }
+        }
+        alpha += diff;
+    }
+}
+
+void Glitch_Line_Effect_Down_V6::clear() {
+    collection.clear();
+}
+
+Glitch_Line_Effect_Down_V6::~Glitch_Line_Effect_Down_V6() {}

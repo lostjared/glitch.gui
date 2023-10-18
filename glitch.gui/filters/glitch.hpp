@@ -724,5 +724,16 @@ private:
     size_t index;
 };
 
+class Glitch_Line_Effect_Down_V6 : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Line_Effect_Down_V6();
+private:
+    double alpha;
+    FrameCollection collection;
+    size_t index;
+};
 
 #endif
