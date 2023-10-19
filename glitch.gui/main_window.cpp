@@ -60,6 +60,8 @@ MainWindow::MainWindow()  {
     record_window->setMainWindow(this);
     record_window->hide();
 
+    toolbox_window->setRecordWindow(record_window);
+
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));

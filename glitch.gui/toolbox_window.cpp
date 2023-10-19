@@ -1,5 +1,7 @@
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
+#include"record_window.hpp"
+
 #include<QColorDialog>
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
@@ -40,7 +42,10 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     show_disp = new QPushButton(tr("Show"), this);
     show_disp->setGeometry(10,45+25+10+25,100,25);
     connect(show_disp, SIGNAL(clicked()), this, SLOT(showDisplay()));
-    
+
+    record_btn = new QPushButton(tr("Record"), this);
+    record_btn->setGeometry(10, 45+25+10+25+25+5,100,25);
+    connect(record_btn, SIGNAL(clicked()), this, SLOT(showRecord()));
 
     disableButtons();
 }
@@ -61,6 +66,10 @@ void ToolboxWindow::showDisplay() {
         display_window->hide();
         show_disp->setText("Show");
     }
+}
+
+void ToolboxWindow::showRecord() {
+    if(record_window != nullptr) record_window->show();    
 }
 
 void ToolboxWindow::clickFade(bool) {
@@ -100,6 +109,11 @@ void ToolboxWindow::setDisplayWindow(DisplayWindow *disp) {
     display_window = disp;
     display_window->setColorOffset(cv::Vec3b(0, 0, 0));
 }
+
+void ToolboxWindow::setRecordWindow(RecordWindow *r) {
+    record_window = r;
+}
+
 
 void ToolboxWindow::saveSnapshot() {
     if(outdir != "") {

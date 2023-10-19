@@ -8,7 +8,7 @@
 #include"acidcam/ac.h"
 
 class DisplayWindow;
-
+class RecordWindow;
 
 class ToolboxWindow : public QDialog {
     Q_OBJECT
@@ -16,6 +16,7 @@ public:
     ToolboxWindow(QWidget *parent = 0);
     void setOutputDirectory(const QString &odir, const QString &prefix);
     void setDisplayWindow(DisplayWindow *disp);
+    void setRecordWindow(RecordWindow *r);
     void enableButtons();
     void disableButtons();
     void enableSource();
@@ -31,12 +32,14 @@ public:
     void clickOffset(bool);
     void clickFade(bool);
     void showDisplay();
+    void showRecord();
 private:
     QLabel *color_lbl;
     QString outdir;
     DisplayWindow *display_window = nullptr;
+    RecordWindow *record_window = nullptr;
     int snap_index = 0;
-    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color, *show_disp;
+    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color, *show_disp, *record_btn;
     QCheckBox *use_color, *use_fade;
     cv::Vec3b color_value;
     QString prefix;
