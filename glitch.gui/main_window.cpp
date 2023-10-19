@@ -83,6 +83,16 @@ MainWindow::MainWindow()  {
     connect(edit_redo, SIGNAL(triggered()), this, SLOT(editRedo()));
     
     edit_menu->addAction(edit_redo);
+
+    record_menu = menuBar()->addMenu(tr("&Record"));
+
+    record_set = new QAction(tr("Record"), this);
+    record_set->setShortcut(tr("Ctrl+S"));
+    record_set->setEnabled(true);
+
+    record_menu->addAction(record_set);
+
+    connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
     
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
@@ -182,6 +192,10 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
     QTextStream stream(&text);
     stream << "path [" << fn.c_str() << "]" << "\n info [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
     return text;
+}
+
+void MainWindow::showRecord() {
+    record_window->show();
 }
 
 void MainWindow::setInfo(const cv::Mat &frame) {
