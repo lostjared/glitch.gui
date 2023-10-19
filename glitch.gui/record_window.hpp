@@ -2,6 +2,8 @@
 #define RECORD_WINDOW_HPP_
 
 #include<QDialog>
+#include<QPushButton>
+#include<QLineEdit>
 
 class MainWindow;
 
@@ -12,6 +14,7 @@ public:
     void setMainWindow(MainWindow *m);
 private:
     MainWindow *main_window;
+    QLineEdit *ffmpeg_path;
 };
 
 
