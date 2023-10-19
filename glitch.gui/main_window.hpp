@@ -21,6 +21,7 @@ class ToolboxWindow;
 class DisplayWindow;
 class NewImageWindow;
 class DebugWindow;
+class RecordWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -46,6 +47,7 @@ private:
     QAction *help_about; 
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
+    RecordWindow *record_window;
     QImage image;
     QComboBox *filter_list, *filter_cat;
     QListWidget *filter_list_view;

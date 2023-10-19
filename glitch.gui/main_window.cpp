@@ -7,6 +7,7 @@
 #include"display_window.hpp"
 #include"new_image.hpp"
 #include"debug_window.hpp"
+#include"record_window.hpp"
 #include"cat_vec.hpp"
 #include"new_filter.hpp"
 #include"filters/filters.hpp"
@@ -55,6 +56,10 @@ MainWindow::MainWindow()  {
     newimage_window->setMainWindow(this);
     newimage_window->hide();
     
+    record_window = new RecordWindow(this);
+    record_window->setMainWindow(this);
+    record_window->hide();
+
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));
