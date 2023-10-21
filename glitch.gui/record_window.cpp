@@ -2,15 +2,15 @@
 #include"main_window.hpp"
 
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
-   setGeometry(1200, 100, 640, 480);
-   setWindowTitle(tr("Record Options"));
-
-   QLabel *ff_lbl = new QLabel(tr("FFFMpeg path:"), this);
-   ff_lbl->setGeometry(25, 25, 100, 25);
-   ffmpeg_path = new QLineEdit(this); 
-   ffmpeg_path->setText("ffmpeg");
-   ffmpeg_path->setGeometry(25+100,25,300,25);
-
+    setGeometry(1200, 100, 640, 480);
+    setWindowTitle(tr("Record Options"));
+    
+    QLabel *ff_lbl = new QLabel(tr("FFFMpeg path:"), this);
+    ff_lbl->setGeometry(25, 25, 100, 25);
+    ffmpeg_path = new QLineEdit(this);
+    ffmpeg_path->setText("ffmpeg");
+    ffmpeg_path->setGeometry(25+100,25,300,25);
+    
     QLabel *ff_type = new QLabel(tr("Codec: "), this);
     ff_type->setGeometry(25, 75, 50, 25);
     ffmpeg_type = new QComboBox(this);
