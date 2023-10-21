@@ -88,7 +88,7 @@ MainWindow::MainWindow()  {
 
     record_menu = menuBar()->addMenu(tr("&Record"));
 
-    record_set = new QAction(tr("Record"), this);
+    record_set = new QAction(tr("Record Settings"), this);
     record_set->setShortcut(tr("Ctrl+S"));
     record_set->setEnabled(true);
 
