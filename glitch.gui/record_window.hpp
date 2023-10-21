@@ -4,6 +4,7 @@
 #include<QDialog>
 #include<QPushButton>
 #include<QLineEdit>
+#include<QComboBox>
 
 class MainWindow;
 
@@ -15,6 +16,7 @@ public:
 private:
     MainWindow *main_window;
     QLineEdit *ffmpeg_path;
+    QComboBox *ffmpeg_type;
 };
 
 
