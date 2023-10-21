@@ -17,8 +17,17 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_type->setGeometry(25+50, 75, 100, 25);
     ffmpeg_type->addItem(tr("x264"));
     ffmpeg_type->addItem(tr("x265"));
+
+    settings_save = new QPushButton(tr("Save"), this);
+    settings_save->setGeometry(width()-125,height()-40, 100, 25);
+
+    connect(settings_save, SIGNAL(clicked()), this, SLOT(saveSettings()));
 }
 
 void RecordWindow::setMainWindow(MainWindow *m) {
     main_window = m;
+}
+
+void RecordWindow::saveSettings() {
+    hide();
 }

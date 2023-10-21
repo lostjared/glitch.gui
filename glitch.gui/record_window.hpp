@@ -13,10 +13,14 @@ class RecordWindow : public QDialog {
 public:
     RecordWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
+public slots:
+    void saveSettings();
+    
 private:
     MainWindow *main_window;
     QLineEdit *ffmpeg_path;
     QComboBox *ffmpeg_type;
+    QPushButton *settings_save;
 };
 
 
