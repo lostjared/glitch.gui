@@ -21,6 +21,7 @@ private:
     QLineEdit *ffmpeg_path;
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
+    QLineEdit *ffmpeg_fps;
 };
 
 

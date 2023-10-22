@@ -22,6 +22,14 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     settings_save->setGeometry(width()-125,height()-40, 100, 25);
 
     connect(settings_save, SIGNAL(clicked()), this, SLOT(saveSettings()));
+
+    QLabel *ff_fps = new QLabel(tr("FPS: "), this);
+    ff_fps->setGeometry(25, 105, 50, 25);
+
+    ffmpeg_fps = new QLineEdit(this);
+    ffmpeg_fps->setGeometry(75, 105, 100, 25);
+    ffmpeg_fps->setText(tr("Same"));
+
 }
 
 void RecordWindow::setMainWindow(MainWindow *m) {
