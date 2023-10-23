@@ -5,6 +5,7 @@
 #include<QPushButton>
 #include<QLineEdit>
 #include<QComboBox>
+#include<QCheckBox>
 
 class MainWindow;
 
@@ -15,6 +16,7 @@ public:
     void setMainWindow(MainWindow *m);
 public slots:
     void saveSettings();
+    void chkStateChanged();
     
 private:
     MainWindow *main_window;
@@ -22,6 +24,7 @@ private:
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
     QLineEdit *ffmpeg_fps;
+    QCheckBox *ffmpeg_same;
 };
 
 

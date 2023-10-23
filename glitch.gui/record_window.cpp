@@ -28,7 +28,15 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
 
     ffmpeg_fps = new QLineEdit(this);
     ffmpeg_fps->setGeometry(75, 105, 100, 25);
-    ffmpeg_fps->setText(tr("Same"));
+    ffmpeg_fps->setText(tr("30"));
+
+    ffmpeg_same = new QCheckBox(this);
+    ffmpeg_same->setGeometry(185,105,120,25);
+    ffmpeg_same->setText(tr("Same as Source"));
+    ffmpeg_same->setChecked(Qt::Checked);
+    ffmpeg_fps->setEnabled(false);
+
+    connect(ffmpeg_same, SIGNAL(clicked()), this, SLOT(chkStateChanged()));
 
 }
 
@@ -38,4 +46,12 @@ void RecordWindow::setMainWindow(MainWindow *m) {
 
 void RecordWindow::saveSettings() {
     hide();
+}
+
+void RecordWindow::chkStateChanged() {
+    if(ffmpeg_same->checkState() == Qt::Checked) {
+        ffmpeg_fps->setEnabled(false);
+    } else {
+        ffmpeg_fps->setEnabled(true);
+    }
 }
