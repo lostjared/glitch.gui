@@ -6,6 +6,7 @@
 #include<QLineEdit>
 #include<QComboBox>
 #include<QCheckBox>
+#include<QLabel>
 
 class MainWindow;
 
@@ -17,6 +18,7 @@ public:
 public slots:
     void saveSettings();
     void chkStateChanged();
+    void selectPath();
     
 private:
     MainWindow *main_window;
@@ -25,6 +27,9 @@ private:
     QPushButton *settings_save;
     QLineEdit *ffmpeg_fps;
     QCheckBox *ffmpeg_same;
+    QLabel *ffmpeg_file;
+    QPushButton *ffmpeg_file_set;
+    bool path_selected = false;
 };
 
 

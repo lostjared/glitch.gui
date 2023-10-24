@@ -66,6 +66,7 @@ MainWindow::MainWindow()  {
     setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Image"), this);
+    file_open->setShortcut(tr("Ctrl+N"));
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
     
@@ -94,8 +95,16 @@ MainWindow::MainWindow()  {
 
     record_menu->addAction(record_set);
 
+    record_rec = new QAction(tr("Record"), this);
+    record_rec->setShortcut(tr("Ctrl+R"));
+    record_rec->setEnabled(false);
+
+    record_menu->addSeparator();
+
+    record_menu->addAction(record_rec);
+
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
-    
+    connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));   
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
@@ -198,6 +207,14 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
 
 void MainWindow::showRecord() {
     record_window->show();
+}
+
+void MainWindow::recordVideo() {
+
+}
+
+void MainWindow::enableRecord() {
+    record_rec->setEnabled(true);
 }
 
 void MainWindow::setInfo(const cv::Mat &frame) {

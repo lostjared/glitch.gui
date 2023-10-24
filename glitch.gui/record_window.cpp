@@ -1,8 +1,10 @@
 #include"record_window.hpp"
 #include"main_window.hpp"
+#include<QFileDialog>
+
 
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
-    setGeometry(1200, 100, 640, 480);
+    setGeometry(1200, 100, 460, 220);
     setWindowTitle(tr("Record Options"));
     
     QLabel *ff_lbl = new QLabel(tr("FFFMpeg path:"), this);
@@ -19,7 +21,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_type->addItem(tr("x265"));
 
     settings_save = new QPushButton(tr("Save"), this);
-    settings_save->setGeometry(width()-125,height()-40, 100, 25);
+    settings_save->setGeometry(width()-125,height()-45, 100, 25);
 
     connect(settings_save, SIGNAL(clicked()), this, SLOT(saveSettings()));
 
@@ -38,6 +40,12 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
 
     connect(ffmpeg_same, SIGNAL(clicked()), this, SLOT(chkStateChanged()));
 
+    ffmpeg_file = new QLabel(tr("Select File Path"), this);
+    ffmpeg_file->setGeometry(25,105+25+5, 300, 25);
+    ffmpeg_file_set = new QPushButton(tr("Select"), this);
+    ffmpeg_file_set->setGeometry(25+310,105+25+5,100,25);
+
+    connect(ffmpeg_file_set, SIGNAL(clicked()), this, SLOT(selectPath()));
 }
 
 void RecordWindow::setMainWindow(MainWindow *m) {
@@ -45,7 +53,11 @@ void RecordWindow::setMainWindow(MainWindow *m) {
 }
 
 void RecordWindow::saveSettings() {
+    // validate form
+    // set enabled
+    // main_window->enableRecord();
     hide();
+    
 }
 
 void RecordWindow::chkStateChanged() {
@@ -53,5 +65,14 @@ void RecordWindow::chkStateChanged() {
         ffmpeg_fps->setEnabled(false);
     } else {
         ffmpeg_fps->setEnabled(true);
+    }
+}
+
+void RecordWindow::selectPath() {
+    QString dir;
+    dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), "");
+    if(dir != "") {
+        ffmpeg_file->setText(dir);
+        path_selected = true;
     }
 }

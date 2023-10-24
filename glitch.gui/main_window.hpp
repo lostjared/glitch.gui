@@ -37,6 +37,7 @@ public:
     void disableUndo();
     void enableUndo();
     void setInfo(const cv::Mat &frame);
+    void enableRecord();
 
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
@@ -44,7 +45,7 @@ private:
     QMenu *file_menu, *edit_menu, *record_menu, *help_menu;
     QAction *file_open;
     QAction *edit_undo, *edit_redo;
-    QAction *record_set;
+    QAction *record_set, *record_rec;
     QAction *help_about; 
     DisplayWindow *display_window;
     NewImageWindow *newimage_window;
@@ -70,6 +71,7 @@ public slots:
     void editUndo();
     void editRedo();
     void showRecord();
+    void recordVideo();
     QString contentData(const std::string &fn, const cv::Mat &frame);
    
 };
