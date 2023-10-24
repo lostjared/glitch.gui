@@ -56,6 +56,10 @@ void RecordWindow::saveSettings() {
     // validate form
     // set enabled
     // main_window->enableRecord();
+
+    // check if ffmpeg_path exisits
+    // if(path_selected == true)
+
     hide();
     
 }
