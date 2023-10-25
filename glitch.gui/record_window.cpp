@@ -1,7 +1,8 @@
 #include"record_window.hpp"
 #include"main_window.hpp"
 #include<QFileDialog>
-
+#include<QFile>
+#include<QMessageBox>
 
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(1200, 100, 460, 220);
@@ -53,15 +54,32 @@ void RecordWindow::setMainWindow(MainWindow *m) {
 }
 
 void RecordWindow::saveSettings() {
-    // validate form
-    // set enabled
-    // main_window->enableRecord();
 
-    // check if ffmpeg_path exisits
-    // if(path_selected == true)
+    QFile f(ffmpeg_path->text());
+    if(f.exists() && path_selected == true) {
+        main_window->enableRecord();
+        hide();
+        return;
+    }
 
-    hide();
-    
+    if(!f.exists()) {
+        QMessageBox msgbox;    
+        msgbox.setWindowTitle(tr("Error invalid path"));
+        msgbox.setIcon(QMessageBox::Icon::Critical);
+        msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+        msgbox.setText(tr("Invalid path to ffmpeg is it installed?\nMaybe try /usr/local/bin/ffmpeg or\n/usr/bin/ffmpeg\n"));
+        msgbox.exec();
+        return;
+    }
+
+    if(path_selected == false) {
+        QMessageBox msgbox;    
+        msgbox.setWindowTitle(tr("Error invalid path"));
+        msgbox.setIcon(QMessageBox::Icon::Critical);
+        msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+        msgbox.setText(tr("You must select path for outputted videos click Select and choose a directory.\n"));
+        msgbox.exec();
+    }
 }
 
 void RecordWindow::chkStateChanged() {
