@@ -6,6 +6,7 @@
 
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(1200, 100, 460, 220);
+    setFixedSize(460, 220);
     setWindowTitle(tr("Record Options"));
     
     QLabel *ff_lbl = new QLabel(tr("FFFMpeg path:"), this);
