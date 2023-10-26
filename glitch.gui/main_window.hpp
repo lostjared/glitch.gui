@@ -41,15 +41,15 @@ public:
 
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
+    RecordWindow *record_window;
+    DisplayWindow *display_window;
+    NewImageWindow *newimage_window;
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *help_menu;
     QAction *file_open;
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec;
     QAction *help_about; 
-    DisplayWindow *display_window;
-    NewImageWindow *newimage_window;
-    RecordWindow *record_window;
     QImage image;
     QComboBox *filter_list, *filter_cat;
     QListWidget *filter_list_view;

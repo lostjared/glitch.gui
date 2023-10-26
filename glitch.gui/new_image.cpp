@@ -1,5 +1,6 @@
 #include"new_image.hpp"
 #include"main_window.hpp"
+#include"record_window.hpp"
 #include<QFileDialog>
 #include<QIcon>
 #include<QMessageBox>
@@ -33,6 +34,12 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     video_filename = new QLineEdit(this);
     video_filename->setText(tr("glitch.gui.file1"));
     video_filename->setGeometry(110, 110, 195, 30);
+    video_record = new QCheckBox(tr("Record on Start"), this);
+    video_record->setGeometry(10, 140, 150, 25);
+    video_record->setChecked(Qt::Unchecked);
+
+    connect(video_record, SIGNAL(clicked()), this, SLOT(openRecordOptions()));
+
 }
 
 void NewImageWindow::setMainWindow(MainWindow *main_w) {
@@ -80,4 +87,9 @@ void NewImageWindow::videoStart() {
         box.setIcon(QMessageBox::Icon::Warning);
         box.exec();
     }
+}
+
+void NewImageWindow::openRecordOptions() {
+    if(video_record->checkState() == Qt::Checked) 
+        main_window->record_window->show();
 }

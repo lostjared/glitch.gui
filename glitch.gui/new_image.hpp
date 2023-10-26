@@ -5,6 +5,7 @@
 #include<QLabel>
 #include<QPushButton>
 #include<QLineEdit>
+#include<QCheckBox>
 
 class MainWindow;
 
@@ -13,6 +14,9 @@ class NewImageWindow : public QDialog {
 public:
     NewImageWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *main_w);
+public slots:
+    void openRecordOptions();
+
 private:
     MainWindow *main_window;
     QLabel *input_file;
@@ -21,7 +25,8 @@ private:
     QPushButton *output_location_select;
     QLineEdit *video_fps, *video_filename;
     QPushButton *video_start;
-    
+    QCheckBox *video_record;
+
     bool filename_set = false, outdir_set = false;
     
     public slots:
