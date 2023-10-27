@@ -70,6 +70,17 @@ void RecordWindow::saveSettings() {
         return;
     }
 
+    int crf = ffmpeg_crf->text().toInt();
+    if(crf < 10 || crf > 40) {
+        QMessageBox msgbox;    
+        msgbox.setWindowTitle(tr("Error invalid CRF value"));
+        msgbox.setIcon(QMessageBox::Icon::Critical);
+        msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+        msgbox.setText(tr("Invalid CRF Value\n"));
+        msgbox.exec();
+        return; 
+    }
+
     if(!f.exists()) {
         QMessageBox msgbox;    
         msgbox.setWindowTitle(tr("Error invalid path"));
