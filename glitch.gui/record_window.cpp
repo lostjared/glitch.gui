@@ -62,15 +62,8 @@ void RecordWindow::setMainWindow(MainWindow *m) {
 }
 
 void RecordWindow::saveSettings() {
-
-    QFile f(ffmpeg_path->text());
-    if(f.exists() && path_selected == true) {
-        main_window->enableRecord();
-        hide();
-        return;
-    }
-
     int crf = ffmpeg_crf->text().toInt();
+    QFile f(ffmpeg_path->text());
     if(crf < 10 || crf > 40) {
         QMessageBox msgbox;    
         msgbox.setWindowTitle(tr("Error invalid CRF value"));
@@ -98,7 +91,11 @@ void RecordWindow::saveSettings() {
         msgbox.setWindowIcon(QIcon(":/images/icon.png"));
         msgbox.setText(tr("You must select path for outputted videos click Select and choose a directory.\n"));
         msgbox.exec();
+        return;
     }
+
+    main_window->enableRecord();
+    hide();
 }
 
 void RecordWindow::chkStateChanged() {
