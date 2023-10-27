@@ -22,6 +22,13 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_type->addItem(tr("x264"));
     ffmpeg_type->addItem(tr("x265"));
 
+    QLabel *lbl_crf = new QLabel(tr("CRF"), this);
+    lbl_crf->setGeometry(180, 75, 50, 25);
+
+    ffmpeg_crf = new QLineEdit(this);
+    ffmpeg_crf->setText("24");
+    ffmpeg_crf->setGeometry(180+50+5, 75, 100, 25);
+
     settings_save = new QPushButton(tr("Save"), this);
     settings_save->setGeometry(width()-125,height()-45, 100, 25);
 

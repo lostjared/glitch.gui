@@ -25,7 +25,7 @@ private:
     QLineEdit *ffmpeg_path;
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
-    QLineEdit *ffmpeg_fps;
+    QLineEdit *ffmpeg_fps, *ffmpeg_crf;
     QCheckBox *ffmpeg_same;
     QLabel *ffmpeg_file;
     QPushButton *ffmpeg_file_set;
