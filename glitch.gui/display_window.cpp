@@ -199,8 +199,15 @@ void DisplayWindow::timeoutFunc() {
             fade = false;
         }
         display(image);
+
+        if(main_window->isFileOpen())
+            main_window->writeFrame(image);
+
     } else {
         display(image);
+
+        if(main_window->isFileOpen())
+            main_window->writeFrame(image);
     }
 }
 

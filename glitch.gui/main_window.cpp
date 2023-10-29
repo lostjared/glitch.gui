@@ -211,7 +211,13 @@ void MainWindow::showRecord() {
 }
 
 void MainWindow::recordVideo() {
-
+    if(record_rec->text() == tr("Record")) {
+        // start recording
+        record_rec->setText(tr("Stop Recording"));
+    } else {
+        record_rec->setText(tr("Record"));
+        // stop recording
+    }
 }
 
 void MainWindow::startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps) {
@@ -233,6 +239,12 @@ void MainWindow::startRecording(const QString &filename, const QString &codec_ty
 void MainWindow::writeFrame(cv::Mat &frame) {
     if(file_stream != NULL)
         write_ffmpeg(file_stream, frame);
+}
+
+bool MainWindow::isFileOpen() {
+    if(file_stream != NULL)
+        return true;
+    return false;
 }
 
 void MainWindow::enableRecord() {
