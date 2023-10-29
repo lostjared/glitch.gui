@@ -13,6 +13,7 @@
 #include"filters/filters.hpp"
 #include<cctype>
 #include<cstring>
+#include"ffmpeg_write.h"
 
 
 cv::Mat QImage2Mat(QImage const& src)
@@ -211,6 +212,27 @@ void MainWindow::showRecord() {
 
 void MainWindow::recordVideo() {
 
+}
+
+void MainWindow::startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps) {
+    if(file_stream == NULL) {
+        file_stream = open_ffmpeg(filename.toStdString().c_str(), codec_type.toStdString().c_str(),res.toStdString().c_str(), dst_res.toStdString().c_str(), fps.toStdString().c_str(), crf.toStdString().c_str());
+        if(!file_stream) {
+            std::cerr << "Could not open pipe to FFmpeg\n";
+            QMessageBox msgbox;
+            msgbox.setIcon(QMessageBox::Icon::Critical);
+            msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+            msgbox.setWindowTitle(tr("Error on opening pipe"));
+            msgbox.setText(tr("Could not open pipe to ffmpeg. Is it installed and path set?"));
+            msgbox.exec();
+            return;
+        }
+    }
+}
+
+void MainWindow::writeFrame(cv::Mat &frame) {
+    if(file_stream != NULL)
+        write_ffmpeg(file_stream, frame);
 }
 
 void MainWindow::enableRecord() {

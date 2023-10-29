@@ -11,6 +11,7 @@
 #include<QPushButton>
 #include<QLabel>
 #include<QKeyEvent>
+#include<cstdio>
 
 #include"acidcam/ac.h"
 
@@ -38,7 +39,8 @@ public:
     void enableUndo();
     void setInfo(const cv::Mat &frame);
     void enableRecord();
-
+    void startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps);
+    void writeFrame(cv::Mat &frame);
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
     RecordWindow *record_window;
@@ -58,7 +60,8 @@ private:
     QLabel *filter_first;
     QTextEdit *content_data;
     std::string first_filter = "None";
-     std::string cur_filename;
+    std::string cur_filename;
+    FILE *file_stream = NULL;
 public slots:
     void openFile();
     void indexChanged(int index);
