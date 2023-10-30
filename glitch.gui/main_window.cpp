@@ -224,6 +224,10 @@ void MainWindow::recordVideo() {
             pclose(file_stream);
 #endif
             file_stream = NULL;
+            QString output;
+            QTextStream stream(&output);
+            stream << "glitch: Stopped recording...\n";
+            debug_window->Log(output); 
         }
     }
 }
@@ -249,6 +253,10 @@ void MainWindow::record() {
         filename << info.filename << "/" << "Video" << index++ << ".mp4";
         if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
             record_rec->setText(tr("Stop Recording"));
+            QString output;
+            QTextStream stream(&output);
+            stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";
+            debug_window->Log(output); 
         }
      } else {
         QMessageBox msgbox;
