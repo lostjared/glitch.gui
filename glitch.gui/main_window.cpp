@@ -46,7 +46,7 @@ MainWindow::MainWindow()  {
     
     display_window = new DisplayWindow(this);
     display_window->setMainWindow(this);
-    display_window->setGeometry(700, 600, 640, 480);
+    display_window->setGeometry(700, 100, 800, 600);
     display_window->hide();
     display_window->setDebugWindow(debug_window);
     
@@ -244,7 +244,10 @@ void MainWindow::record() {
             QTextStream stream(&fps);
             stream << display_window->getCurrentFPS();
         }
-        if(startRecording(info.filename.c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
+        static int index = 1;
+        std::ostringstream filename;
+        filename << info.filename << "/" << "Video" << index++ << ".mp4";
+        if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
             record_rec->setText(tr("Stop Recording"));
         }
      } else {
@@ -354,7 +357,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setInputMode(InputMode::IMAGE);
-            display_window->setGeometry(700, 100, 640, 480);
+            display_window->setGeometry(700, 100, 800, 600);
             display_window->setSourceImage(src);
             display_window->setPrefix(outdir, prefix);
             display_window->show();

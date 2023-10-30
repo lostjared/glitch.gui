@@ -107,9 +107,7 @@ void RecordWindow::saveSettings() {
     }
 
     std::ostringstream stream;
-    stream << ffmpeg_file->text().toStdString() << "/VideoFile";
-    static int index = 1;
-    stream << index++ << ".mp4";
+    stream << ffmpeg_file->text().toStdString();
     rec_info.filename = stream.str();
     if(ffmpeg_same->isChecked()){
         rec_info.fps = "same";
