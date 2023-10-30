@@ -319,6 +319,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 display_window->setPrefix(outdir, prefix);
                 display_window->show();
                 toolbox_window->setHide();
+                fps = display_window->videoFPS(); // override new fps with video src
                 display_window->startAnimation(fps);
                 QString text;
                 QTextStream stream(&text);

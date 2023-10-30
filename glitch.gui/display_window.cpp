@@ -370,6 +370,9 @@ bool DisplayWindow::getResolution(int &w, int &h) {
     return false;
 }
 
+float DisplayWindow::videoFPS() {
+    return static_cast<float>(cap.get(cv::CAP_PROP_FPS));
+}
 
 std::ostream &operator<<(std::ostream &out, const InputMode &im) {
     if(im == InputMode::VIDEO)

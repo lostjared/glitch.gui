@@ -45,6 +45,7 @@ public:
     void redo();
     void clear_undo();
     bool getResolution(int &w, int &h);
+    float videoFPS();
 
     QString getCurrentFilter() const;
     double getCurrentFPS() const;
