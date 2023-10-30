@@ -79,7 +79,7 @@ void NewImageWindow::videoStart() {
         QString filename = input_file->text();
         QString outdir = output_location->text();
 
-        if(video_record->isChecked())
+        if(video_record->checkState() == Qt::Checked)
             main_window->record_window->rec_info.load_start = true;
         else
             main_window->record_window->rec_info.load_start = false;

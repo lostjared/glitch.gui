@@ -362,6 +362,10 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             display_window->setPrefix(outdir, prefix);
             display_window->show();
             toolbox_window->setHide();
+
+            if(record_window->rec_info.load_start == true)
+                record();
+
             display_window->startAnimation(fps);
             QString text;
             QTextStream stream(&text);
