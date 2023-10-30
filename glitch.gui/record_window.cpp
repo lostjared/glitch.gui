@@ -3,6 +3,7 @@
 #include<QFileDialog>
 #include<QFile>
 #include<QMessageBox>
+#include<sstream>
 
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(1200, 100, 460, 220);
@@ -94,6 +95,27 @@ void RecordWindow::saveSettings() {
         return;
     }
 
+    rec_info.crf = ffmpeg_crf->text().toStdString();
+    switch(ffmpeg_type->currentIndex()) {
+        case 0:
+            rec_info.codec = "libx264";
+        break;
+        case 1:
+            rec_info.codec = "libx265";
+        break;
+    }
+
+    std::ostringstream stream;
+    stream << ffmpeg_file << "/VideoFile";
+    static int index = 1;
+    stream << index++ << ".mp4";
+    rec_info.filename = stream.str();
+    if(ffmpeg_same->isChecked()){
+        rec_info.fps = "same";
+    } else {
+        rec_info.fps = ffmpeg_fps->text().toStdString();
+    }
+    rec_info_set = true;
     main_window->enableRecord();
     hide();
 }

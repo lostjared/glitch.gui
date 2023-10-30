@@ -10,11 +10,24 @@
 
 class MainWindow;
 
+struct RecordInfo {
+    std::string fps;
+    std::string crf;
+    std::string filename;
+    std::string codec;
+    std::string dst;
+    std::string src;
+};
+
 class RecordWindow : public QDialog {
     Q_OBJECT
 public:
     RecordWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
+
+   RecordInfo rec_info;
+   bool rec_info_set = false;
+   
 public slots:
     void saveSettings();
     void chkStateChanged();
@@ -30,7 +43,6 @@ private:
     QLabel *ffmpeg_file;
     QPushButton *ffmpeg_file_set;
     bool path_selected = false;
-};
-
+ };
 
 #endif
