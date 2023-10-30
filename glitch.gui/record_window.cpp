@@ -46,7 +46,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_same = new QCheckBox(this);
     ffmpeg_same->setGeometry(185,105,120,25);
     ffmpeg_same->setText(tr("Same as Source"));
-    ffmpeg_same->setChecked(Qt::Checked);
+    ffmpeg_same->setChecked(true);
     ffmpeg_fps->setEnabled(false);
 
     connect(ffmpeg_same, SIGNAL(clicked()), this, SLOT(chkStateChanged()));
