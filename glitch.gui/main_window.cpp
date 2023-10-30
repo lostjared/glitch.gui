@@ -213,28 +213,32 @@ void MainWindow::showRecord() {
 void MainWindow::recordVideo() {
     if(record_rec->text() == tr("Record")) {
         // start recording
-        if(record_window->rec_info_set) {
-            RecordInfo &info = record_window->rec_info;
-            QString fps = info.fps.c_str();
-            if(info.fps == "same") {
-                fps = "";
-                QTextStream stream(&fps);
-                stream << display_window->getCurrentFPS();
-            }
-            if(startRecording(info.filename.c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
-                record_rec->setText(tr("Stop Recording"));
-            }
-        } else {
-            QMessageBox msgbox;
-            msgbox.setIcon(QMessageBox::Icon::Critical);
-            msgbox.setWindowIcon(QIcon(":/images/icon.png"));
-            msgbox.setWindowTitle(tr("Error didn't set Record info"));
-            msgbox.setText(tr("Please fill out the recording information before recording...\n"));
-            msgbox.exec();
-        }
+        record();
     } else {
         record_rec->setText(tr("Record"));
         // stop recording
+    }
+}
+
+void MainWindow::record() {
+    if(record_window->rec_info_set) {
+        RecordInfo &info = record_window->rec_info;
+        QString fps = info.fps.c_str();
+        if(info.fps == "same") {
+            fps = "";
+            QTextStream stream(&fps);
+            stream << display_window->getCurrentFPS();
+        }
+        if(startRecording(info.filename.c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
+            record_rec->setText(tr("Stop Recording"));
+        }
+     } else {
+        QMessageBox msgbox;
+        msgbox.setIcon(QMessageBox::Icon::Critical);
+        msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+        msgbox.setWindowTitle(tr("Error didn't set Record info"));
+        msgbox.setText(tr("Please fill out the recording information before recording...\n"));
+        msgbox.exec();
     }
 }
 
