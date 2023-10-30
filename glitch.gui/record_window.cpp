@@ -1,5 +1,6 @@
 #include"record_window.hpp"
 #include"main_window.hpp"
+#include"display_window.hpp"
 #include<QFileDialog>
 #include<QFile>
 #include<QMessageBox>
@@ -106,7 +107,7 @@ void RecordWindow::saveSettings() {
     }
 
     std::ostringstream stream;
-    stream << ffmpeg_file << "/VideoFile";
+    stream << ffmpeg_file->text().toStdString() << "/VideoFile";
     static int index = 1;
     stream << index++ << ".mp4";
     rec_info.filename = stream.str();
@@ -115,9 +116,16 @@ void RecordWindow::saveSettings() {
     } else {
         rec_info.fps = ffmpeg_fps->text().toStdString();
     }
-    rec_info_set = true;
-    main_window->enableRecord();
-    hide();
+    std::ostringstream res;
+    int width = 0, height = 0;
+    if(main_window->display_window->getResolution(width, height)) {
+        res << width << "x" << height;
+        rec_info.dst = res.str();
+        rec_info.src = res.str();
+        rec_info_set = true;
+        main_window->enableRecord();
+        hide();
+    }
 }
 
 void RecordWindow::chkStateChanged() {

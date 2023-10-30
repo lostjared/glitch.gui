@@ -355,6 +355,22 @@ void DisplayWindow::clear_undo() {
     
 }
 
+bool DisplayWindow::getResolution(int &w, int &h) {
+    if(mode == InputMode::VIDEO) {
+        if(cap.isOpened()) {
+            w = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_WIDTH));
+            h = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_HEIGHT));
+            return true;   
+        }
+    } else {
+         w = source_image.cols;
+         h = source_image.rows;
+         return true;
+    }
+    return false;
+}
+
+
 std::ostream &operator<<(std::ostream &out, const InputMode &im) {
     if(im == InputMode::VIDEO)
         out << "Video";

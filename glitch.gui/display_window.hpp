@@ -44,7 +44,7 @@ public:
     void undo();
     void redo();
     void clear_undo();
-
+    bool getResolution(int &w, int &h);
 
     QString getCurrentFilter() const;
     double getCurrentFPS() const;

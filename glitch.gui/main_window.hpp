@@ -39,7 +39,7 @@ public:
     void enableUndo();
     void setInfo(const cv::Mat &frame);
     void enableRecord();
-    void startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps);
+    bool startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps);
     void writeFrame(cv::Mat &frame);
     bool isFileOpen();
     DebugWindow *debug_window;

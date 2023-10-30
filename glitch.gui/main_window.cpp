@@ -213,14 +213,32 @@ void MainWindow::showRecord() {
 void MainWindow::recordVideo() {
     if(record_rec->text() == tr("Record")) {
         // start recording
-        record_rec->setText(tr("Stop Recording"));
+        if(record_window->rec_info_set) {
+            RecordInfo &info = record_window->rec_info;
+            QString fps = info.fps.c_str();
+            if(info.fps == "same") {
+                fps = "";
+                QTextStream stream(&fps);
+                stream << display_window->getCurrentFPS();
+            }
+            if(startRecording(info.filename.c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
+                record_rec->setText(tr("Stop Recording"));
+            }
+        } else {
+            QMessageBox msgbox;
+            msgbox.setIcon(QMessageBox::Icon::Critical);
+            msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+            msgbox.setWindowTitle(tr("Error didn't set Record info"));
+            msgbox.setText(tr("Please fill out the recording information before recording...\n"));
+            msgbox.exec();
+        }
     } else {
         record_rec->setText(tr("Record"));
         // stop recording
     }
 }
 
-void MainWindow::startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps) {
+bool MainWindow::startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps) {
     if(file_stream == NULL) {
         file_stream = open_ffmpeg(filename.toStdString().c_str(), codec_type.toStdString().c_str(),res.toStdString().c_str(), dst_res.toStdString().c_str(), fps.toStdString().c_str(), crf.toStdString().c_str());
         if(!file_stream) {
@@ -231,9 +249,10 @@ void MainWindow::startRecording(const QString &filename, const QString &codec_ty
             msgbox.setWindowTitle(tr("Error on opening pipe"));
             msgbox.setText(tr("Could not open pipe to ffmpeg. Is it installed and path set?"));
             msgbox.exec();
-            return;
+            return false;
         }
     }
+    return true;
 }
 
 void MainWindow::writeFrame(cv::Mat &frame) {
