@@ -231,6 +231,13 @@ void MainWindow::recordVideo() {
 void MainWindow::record() {
     if(file_stream == NULL && record_window->rec_info_set) {
         RecordInfo &info = record_window->rec_info;
+        std::ostringstream res;
+        int width = 0, height = 0;
+        if(display_window->getResolution(width, height)) {
+            res << width << "x" << height;
+            info.dst = res.str();
+            info.src = res.str();
+        } 
         QString fps = info.fps.c_str();
         if(info.fps == "same") {
             fps = "";

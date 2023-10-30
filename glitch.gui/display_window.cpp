@@ -2,6 +2,7 @@
 #include"main_window.hpp"
 #include"debug_window.hpp"
 #include"toolbox_window.hpp"
+#include"record_window.hpp"
 #include<QPainter>
 #include<QIcon>
 #include<QDateTime>
@@ -155,12 +156,13 @@ void DisplayWindow::step() {
 
 void DisplayWindow::timeoutFunc() {
 
-    frame_count ++;
+  frame_count ++;
 
     if(mode == InputMode::IMAGE)
         image = source_image.clone();
     else if(mode == InputMode::VIDEO) {
         cv::Mat m;
+
         if(cap.read(m)) {
             image = m;
         } else {
@@ -175,8 +177,10 @@ void DisplayWindow::timeoutFunc() {
                 box.exec();
                 stopAnimation();
                 main_window->disableUndo();
-            }   
+            }  
+
         }
+
     }
     
     cv::Mat final_image;
@@ -320,7 +324,10 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
             box.setText("Could not load image");
             box.exec(); 
             return false;
-        }        
+        }
+        if(main_window->record_window->rec_info.load_start == true)
+            main_window->record();
+        
     } else if(mode == InputMode::VIDEO) {
         main_window->disableUndo();
         cap.open(source_file);
@@ -333,6 +340,9 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
             box.exec();
             stopAnimation();
             return false;         
+        } else {
+           if(main_window->record_window->rec_info.load_start == true)
+                main_window->record();
         }
     }
     return true;

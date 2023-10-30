@@ -78,6 +78,12 @@ void NewImageWindow::videoStart() {
     if(fps > 0 && prefix.length() > 0 && filename_set == true && outdir_set == true) {
         QString filename = input_file->text();
         QString outdir = output_location->text();
+
+        if(video_record->isChecked())
+            main_window->record_window->rec_info.load_start = true;
+        else
+            main_window->record_window->rec_info.load_start = false;
+
         main_window->startNewAnimation(filename, outdir, prefix, fps);
         hide();
     } else {

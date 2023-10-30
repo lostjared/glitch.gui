@@ -17,6 +17,7 @@ struct RecordInfo {
     std::string codec;
     std::string dst;
     std::string src;
+    bool load_start = false;
 };
 
 class RecordWindow : public QDialog {

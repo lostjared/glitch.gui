@@ -116,16 +116,9 @@ void RecordWindow::saveSettings() {
     } else {
         rec_info.fps = ffmpeg_fps->text().toStdString();
     }
-    std::ostringstream res;
-    int width = 0, height = 0;
-    if(main_window->display_window->getResolution(width, height)) {
-        res << width << "x" << height;
-        rec_info.dst = res.str();
-        rec_info.src = res.str();
-        rec_info_set = true;
-        main_window->enableRecord();
-        hide();
-    }
+    rec_info_set = true;
+    main_window->enableRecord();
+    hide();
 }
 
 void RecordWindow::chkStateChanged() {
