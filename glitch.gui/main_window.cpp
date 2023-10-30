@@ -217,11 +217,19 @@ void MainWindow::recordVideo() {
     } else {
         record_rec->setText(tr("Record"));
         // stop recording
+        if(file_stream != NULL) {
+#ifdef _WIN32
+            _pclose(file_stream);
+#else
+            pclose(file_stream);
+#endif
+            file_stream = NULL;
+        }
     }
 }
 
 void MainWindow::record() {
-    if(record_window->rec_info_set) {
+    if(file_stream == NULL && record_window->rec_info_set) {
         RecordInfo &info = record_window->rec_info;
         QString fps = info.fps.c_str();
         if(info.fps == "same") {
