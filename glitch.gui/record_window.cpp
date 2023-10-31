@@ -14,7 +14,14 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     QLabel *ff_lbl = new QLabel(tr("FFFMpeg path:"), this);
     ff_lbl->setGeometry(25, 25, 100, 25);
     ffmpeg_path = new QLineEdit(this);
+#if defined(_WIN32)
     ffmpeg_path->setText("ffmpeg");
+#elif defined(__linux__)
+    ffmpeg_path->setText("/usr/bin/ffmpeg");
+#elif defined(__APPLE__)
+    ffmpeg_path->setText("/usr/local/bin/ffmpeg");
+#endif
+
     ffmpeg_path->setGeometry(25+100,25,300,25);
     
     QLabel *ff_type = new QLabel(tr("Codec: "), this);

@@ -23,7 +23,7 @@ public:
     void disableSource();
     void setHide();
     void setShow();
-    public slots:
+public slots:
     void saveSnapshot();
     void setSource();
     void stopAction();
@@ -33,13 +33,14 @@ public:
     void clickFade(bool);
     void showDisplay();
     void showRecord();
+    void recordNow();
 private:
     QLabel *color_lbl;
     QString outdir;
     DisplayWindow *display_window = nullptr;
     RecordWindow *record_window = nullptr;
     int snap_index = 0;
-    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color, *show_disp, *record_btn;
+    QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color, *show_disp, *record_btn, *record_now;
     QCheckBox *use_color, *use_fade;
     cv::Vec3b color_value;
     QString prefix;

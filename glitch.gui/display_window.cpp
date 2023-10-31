@@ -312,6 +312,15 @@ void DisplayWindow::redo() {
     }
 }
 
+void DisplayWindow::record() {
+    main_window->recordVideo();
+}
+
+bool DisplayWindow::recording() {
+    return main_window->isFileOpen();
+}
+
+
 bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) {
     mode = m;
     input_filename = source_file;
@@ -325,8 +334,6 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
             box.exec(); 
             return false;
         }
-        if(main_window->record_window->rec_info.load_start == true)
-            main_window->record();
         
     } else if(mode == InputMode::VIDEO) {
         main_window->disableUndo();

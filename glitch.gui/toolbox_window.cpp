@@ -43,11 +43,24 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     show_disp->setGeometry(10,45+25+10+25,100,25);
     connect(show_disp, SIGNAL(clicked()), this, SLOT(showDisplay()));
 
-    record_btn = new QPushButton(tr("Record"), this);
+    record_btn = new QPushButton(tr("Rec Settings"), this);
     record_btn->setGeometry(10, 45+25+10+25+25+5,100,25);
     connect(record_btn, SIGNAL(clicked()), this, SLOT(showRecord()));
 
+    record_now = new QPushButton(tr("Record"), this);
+    record_now->setGeometry(120, 45+25+10+25+25+5, 100, 25);
+    connect(record_now, SIGNAL(clicked()), this, SLOT(recordNow()));
+
     disableButtons();
+}
+
+void ToolboxWindow::recordNow() {
+    display_window->record();
+    if(display_window->recording()) {
+        record_now->setText(tr("Stop"));
+    } else {
+        record_now->setText(tr("Record"));
+    }
 }
 
 void ToolboxWindow::setHide() {
