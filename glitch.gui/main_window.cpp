@@ -66,7 +66,7 @@ MainWindow::MainWindow()  {
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));
-    file_open = new QAction(tr("&Create New Image"), this);
+    file_open = new QAction(tr("&Create New Art"), this);
     file_open->setShortcut(tr("Ctrl+N"));
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
@@ -245,7 +245,7 @@ void MainWindow::record() {
         display_window->savePNG(true, info.filename);
         QString text;
         QTextStream stream(&text);
-        stream << "glitch: Now writing PNG sequence...\n";
+        stream << "glitch: Now writing PNG sequence to: " << info.filename.c_str() << "\n";
         debug_window->Log(text);
         record_rec->setText(tr("Stop Recording"));
         toolbox_window->setRecordText(false);
