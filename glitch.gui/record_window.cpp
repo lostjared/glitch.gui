@@ -30,7 +30,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_type->setGeometry(25+50, 75, 100, 25);
     ffmpeg_type->addItem(tr("x264"));
     ffmpeg_type->addItem(tr("x265"));
-
+    ffmpeg_type->addItem(tr("PNG"));
     QLabel *lbl_crf = new QLabel(tr("CRF"), this);
     lbl_crf->setGeometry(180, 75, 50, 25);
 
@@ -104,6 +104,12 @@ void RecordWindow::saveSettings() {
     }
 
     rec_info.crf = ffmpeg_crf->text().toStdString();
+    rec_info.save_png = false;
+
+    std::ostringstream stream;
+    stream << ffmpeg_file->text().toStdString();
+    rec_info.filename = stream.str();
+   
     switch(ffmpeg_type->currentIndex()) {
         case 0:
             rec_info.codec = "libx264";
@@ -111,12 +117,16 @@ void RecordWindow::saveSettings() {
         case 1:
             rec_info.codec = "libx265";
         break;
+        case 2:
+            rec_info.save_png = true;
+            rec_info_set = true;
+            main_window->enableRecord();
+            hide();
+            return;
+        break;
     }
 
-    std::ostringstream stream;
-    stream << ffmpeg_file->text().toStdString();
-    rec_info.filename = stream.str();
-    if(ffmpeg_same->isChecked()){
+     if(ffmpeg_same->isChecked()){
         rec_info.fps = "same";
     } else {
         rec_info.fps = ffmpeg_fps->text().toStdString();

@@ -18,6 +18,7 @@ struct RecordInfo {
     std::string dst;
     std::string src;
     bool load_start = false;
+    bool save_png = false;
 };
 
 class RecordWindow : public QDialog {

@@ -203,15 +203,27 @@ void DisplayWindow::timeoutFunc() {
             fade = false;
         }
         display(image);
+        if(save_png_file == true) {
+            std::ostringstream stream;
+            stream << png_path << "/" << "png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
+            cv::imwrite(stream.str(), image);
 
-        if(main_window->isFileOpen())
-            main_window->writeFrame(image);
+        } else {
+            if(main_window->isFileOpen())
+               main_window->writeFrame(image);
+        }
 
     } else {
         display(image);
+        if(save_png_file == true) {
+            std::ostringstream stream;
+            stream << png_path << "/" << "png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
+            cv::imwrite(stream.str(), image);
 
-        if(main_window->isFileOpen())
-            main_window->writeFrame(image);
+        } else {
+            if(main_window->isFileOpen())
+               main_window->writeFrame(image);
+        }
     }
 }
 
@@ -320,6 +332,11 @@ bool DisplayWindow::recording() {
     return main_window->isFileOpen();
 }
 
+void DisplayWindow::savePNG(bool on, std::string path) {
+    save_png_file = on;
+    png_count = 0;
+    png_path = path;
+}
 
 bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) {
     mode = m;

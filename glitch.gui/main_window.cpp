@@ -228,36 +228,51 @@ void MainWindow::recordVideo() {
             QTextStream stream(&output);
             stream << "glitch: Stopped recording...\n";
             debug_window->Log(output); 
+        } else if(record_window->rec_info.save_png == true) {
+            display_window->savePNG(false, "");
+            debug_window->Log("glitch: Stopping PNG sequence\n");
         }
     }
 }
 
 void MainWindow::record() {
-    if(file_stream == NULL && record_window->rec_info_set) {
-        RecordInfo &info = record_window->rec_info;
-        std::ostringstream res;
-        int width = 0, height = 0;
-        if(display_window->getResolution(width, height)) {
-            res << width << "x" << height;
-            info.dst = res.str();
-            info.src = res.str();
+
+
+    RecordInfo &info = record_window->rec_info;
+
+    if(info.save_png == true) {
+        display_window->savePNG(true, info.filename);
+        QString text;
+        QTextStream stream(&text);
+        stream << "glitch: Now writing PNG sequence...\n";
+        debug_window->Log(text);
+        record_rec->setText(tr("Stop Recording"));
+    } else if(file_stream == NULL && record_window->rec_info_set) {
+        if(info.save_png == false) {
+            std::ostringstream res;
+            int width = 0, height = 0;
+            if(display_window->getResolution(width, height)) {
+                res << width << "x" << height;
+                info.dst = res.str();
+                info.src = res.str();
+            }    
+            QString fps = info.fps.c_str();
+            if(info.fps == "same") {
+                fps = "";
+                QTextStream stream(&fps);
+                stream << display_window->getCurrentFPS();
+            }
+            static int index = 1;
+            std::ostringstream filename;
+            filename << info.filename << "/" << "Video" << index++ << ".mp4";
+            if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
+                record_rec->setText(tr("Stop Recording"));
+                QString output;
+                QTextStream stream(&output);
+                stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";
+                debug_window->Log(output); 
+            }   
         } 
-        QString fps = info.fps.c_str();
-        if(info.fps == "same") {
-            fps = "";
-            QTextStream stream(&fps);
-            stream << display_window->getCurrentFPS();
-        }
-        static int index = 1;
-        std::ostringstream filename;
-        filename << info.filename << "/" << "Video" << index++ << ".mp4";
-        if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
-            record_rec->setText(tr("Stop Recording"));
-            QString output;
-            QTextStream stream(&output);
-            stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";
-            debug_window->Log(output); 
-        }
      } else {
         QMessageBox msgbox;
         msgbox.setIcon(QMessageBox::Icon::Critical);
