@@ -128,7 +128,7 @@ MainWindow::MainWindow()  {
     filter_list = new QComboBox(this);
     filter_list->setGeometry(15, 35+35, 300, 25);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
-    filter_list->setEnabled(false);
+    filter_list->setEnabled(true);
     
     filter_list_view = new QListWidget(this);
     filter_list_view->setGeometry(15, 35+25+10+35, 300, 200);
@@ -157,13 +157,13 @@ MainWindow::MainWindow()  {
     
     connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
     
-    filter_list_view->setEnabled(false);
-    filter_search->setEnabled(false);
-    filter_search_button->setEnabled(false);
-    filter_search_set->setEnabled(false);
-    filter_cat->setEnabled(false);
-    filter_first_set->setEnabled(false);
-    filter_first_clear->setEnabled(false);
+    filter_list_view->setEnabled(true);
+    filter_search->setEnabled(true);
+    filter_search_button->setEnabled(true);
+    filter_search_set->setEnabled(true);
+    filter_cat->setEnabled(true);
+    filter_first_set->setEnabled(true);
+    filter_first_clear->setEnabled(true);
     
     filter_first = new QLabel(tr("First: None"), this);
     filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
