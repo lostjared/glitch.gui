@@ -23,6 +23,7 @@ public:
     void disableSource();
     void setHide();
     void setShow();
+    void setRecordText(bool b);
 public slots:
     void saveSnapshot();
     void setSource();

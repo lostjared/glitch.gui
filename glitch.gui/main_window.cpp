@@ -216,6 +216,7 @@ void MainWindow::recordVideo() {
         record();
     } else {
         record_rec->setText(tr("Record"));
+        toolbox_window->setRecordText(true);
         // stop recording
         if(file_stream != NULL) {
 #ifdef _WIN32
@@ -247,6 +248,7 @@ void MainWindow::record() {
         stream << "glitch: Now writing PNG sequence...\n";
         debug_window->Log(text);
         record_rec->setText(tr("Stop Recording"));
+        toolbox_window->setRecordText(false);
     } else if(file_stream == NULL && record_window->rec_info_set) {
         if(info.save_png == false) {
             std::ostringstream res;
@@ -267,6 +269,7 @@ void MainWindow::record() {
             filename << info.filename << "/" << "Video" << index++ << ".mp4";
             if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
                 record_rec->setText(tr("Stop Recording"));
+                toolbox_window->setRecordText(false);
                 QString output;
                 QTextStream stream(&output);
                 stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";

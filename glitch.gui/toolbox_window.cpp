@@ -81,6 +81,14 @@ void ToolboxWindow::showDisplay() {
     }
 }
 
+void ToolboxWindow::setRecordText(bool b) {
+    if(b) {
+        record_now->setText(tr("Record"));
+    } else {
+        record_now->setText(tr("Stop"));
+    }
+}
+
 void ToolboxWindow::showRecord() {
     if(record_window != nullptr) record_window->show();    
 }
