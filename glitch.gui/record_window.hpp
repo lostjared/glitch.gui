@@ -41,7 +41,7 @@ private:
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
     QLineEdit *ffmpeg_fps, *ffmpeg_crf;
-    QCheckBox *ffmpeg_same;
+    QCheckBox *ffmpeg_same, *ffmpeg_man;
     QLabel *ffmpeg_file;
     QPushButton *ffmpeg_file_set;
     bool path_selected = false;

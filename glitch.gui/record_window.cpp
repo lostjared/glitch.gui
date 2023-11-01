@@ -22,7 +22,13 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_path->setText("/usr/local/bin/ffmpeg");
 #endif
 
-    ffmpeg_path->setGeometry(25+100,25,300,25);
+    ffmpeg_path->setGeometry(25+100,25,225,25);
+
+    ffmpeg_man = new QCheckBox(tr("Set Path"), this);
+    ffmpeg_man->setGeometry(25+100+225+10, 25, 100, 25);
+
+    ffmpeg_path->setEnabled(false);
+
     
     QLabel *ff_type = new QLabel(tr("Codec: "), this);
     ff_type->setGeometry(25, 75, 50, 25);
