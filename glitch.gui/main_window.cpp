@@ -268,6 +268,10 @@ void MainWindow::record() {
             std::ostringstream filename;
             filename << info.filename << "/" << "Video" << index++ << ".mp4";
             ffmpeg_path = info.ffmpeg_path;
+            #ifdef _WIN32
+            QDir d(".");
+            ffmpeg_path = d.absoultePath().toStdString() + "/ffmpeg.exe";
+            #endif
             if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
                 record_rec->setText(tr("Stop Recording"));
                 toolbox_window->setRecordText(false);
@@ -305,8 +309,9 @@ bool MainWindow::startRecording(const QString &filename, const QString &codec_ty
 }
 
 void MainWindow::writeFrame(cv::Mat &frame) {
-    if(file_stream != NULL)
+    if(file_stream != NULL) {
         write_ffmpeg(file_stream, frame);
+    }
 }
 
 bool MainWindow::isFileOpen() {
