@@ -14,7 +14,7 @@
 #include<cctype>
 #include<cstring>
 #include"ffmpeg_write.h"
-
+#include<QDir>
 
 cv::Mat QImage2Mat(QImage const& src)
 {
