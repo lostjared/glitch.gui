@@ -267,6 +267,7 @@ void MainWindow::record() {
             static int index = 1;
             std::ostringstream filename;
             filename << info.filename << "/" << "Video" << index++ << ".mp4";
+            ffmpeg_path = info.ffmpeg_path;
             if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
                 record_rec->setText(tr("Stop Recording"));
                 toolbox_window->setRecordText(false);

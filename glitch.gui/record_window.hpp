@@ -17,6 +17,7 @@ struct RecordInfo {
     std::string codec;
     std::string dst;
     std::string src;
+    std::string ffmpeg_path;
     bool load_start = false;
     bool save_png = false;
 };
@@ -34,6 +35,7 @@ public slots:
     void saveSettings();
     void chkStateChanged();
     void selectPath();
+    void setPath();
     
 private:
     MainWindow *main_window;

@@ -29,6 +29,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
 
     ffmpeg_path->setEnabled(false);
 
+    connect(ffmpeg_man, SIGNAL(clicked()), this, SLOT(setPath()));
     
     QLabel *ff_type = new QLabel(tr("Codec: "), this);
     ff_type->setGeometry(25, 75, 50, 25);
@@ -76,9 +77,24 @@ void RecordWindow::setMainWindow(MainWindow *m) {
     main_window = m;
 }
 
+void RecordWindow::setPath() {
+    if(ffmpeg_man->isChecked()) {
+        ffmpeg_path->setEnabled(true);
+    } else {
+        ffmpeg_path->setEnabled(false);
+    }
+}
+
 void RecordWindow::saveSettings() {
     int crf = ffmpeg_crf->text().toInt();
     QFile f(ffmpeg_path->text());
+
+    if(ffmpeg_man->isChecked()) {
+        rec_info.ffmpeg_path = ffmpeg_path->text().toStdString();
+    } else {
+        rec_info.ffmpeg_path = "ffmpeg";
+    }
+
     if(crf < 10 || crf > 40) {
         QMessageBox msgbox;    
         msgbox.setWindowTitle(tr("Error invalid CRF value"));
@@ -89,7 +105,7 @@ void RecordWindow::saveSettings() {
         return; 
     }
 
-    if(!f.exists()) {
+    if(ffmpeg_man->isChecked() && !f.exists()) {
         QMessageBox msgbox;    
         msgbox.setWindowTitle(tr("Error invalid path"));
         msgbox.setIcon(QMessageBox::Icon::Critical);
