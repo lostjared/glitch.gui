@@ -15,6 +15,7 @@
 #include<cstring>
 #include"ffmpeg_write.h"
 #include<QDir>
+#include<algorithm>
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -192,7 +193,9 @@ void MainWindow::loadCategory(int index) {
     } else {
         std::vector<std::string> *v = vec_cat[index];
         for(int i = 0; i < static_cast<int>(v->size()); ++i) {
-            filter_list->addItem(v->at(i).c_str());
+            std::string s = v->at(i);
+            if(s.find("InOrder") == std::string::npos)
+                filter_list->addItem(v->at(i).c_str());
         }
     }
     filter_list_view->clear();
@@ -450,7 +453,8 @@ void MainWindow::searchFilter() {
     for(int i = 0; i < filter_list->count(); ++i) {
         QString text = filter_list->itemText(i);
         if(text.contains(search)) {
-            filter_list_view->addItem(text);
+            if(text.toStdString().find("InOrder") == std::string::npos)
+                filter_list_view->addItem(text);
         }
     }
     filter_list_view->setCurrentRow(0);
