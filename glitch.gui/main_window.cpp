@@ -37,7 +37,7 @@ QImage Mat2QImage(cv::Mat const& src)
 MainWindow::MainWindow()  {
     ac::init();
     build_lists();
-    ac::setMaxAllocated(300);
+    ac::setMaxAllocated(325);
     debug_window = new DebugWindow(this);
     debug_window->show();
     
