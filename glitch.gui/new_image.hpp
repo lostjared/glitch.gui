@@ -26,7 +26,7 @@ private:
     QLineEdit *video_fps, *video_filename;
     QPushButton *video_start;
     QCheckBox *video_record;
-
+  
     bool filename_set = false, outdir_set = false;
     
     public slots:

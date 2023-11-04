@@ -105,6 +105,14 @@ MainWindow::MainWindow()  {
 
     record_menu->addAction(record_rec);
 
+    record_menu->addSeparator();
+
+    record_repeat = new QAction(tr("Repeat"), this);
+    record_repeat->setShortcut(tr("Ctrl+U"));
+    record_repeat->setCheckable(true);
+    record_repeat->setChecked(true);
+    record_menu->addAction(record_repeat);
+
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
     connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));   
     help_menu = menuBar()->addMenu(tr("&Help"));

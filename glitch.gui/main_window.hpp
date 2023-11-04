@@ -52,7 +52,7 @@ private:
     QMenu *file_menu, *edit_menu, *record_menu, *help_menu;
     QAction *file_open;
     QAction *edit_undo, *edit_redo;
-    QAction *record_set, *record_rec;
+    QAction *record_set, *record_rec, *record_repeat;
     QAction *help_about; 
     QImage image;
     QComboBox *filter_list, *filter_cat;
