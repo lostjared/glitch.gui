@@ -408,6 +408,10 @@ float DisplayWindow::videoFPS() {
     return static_cast<float>(cap.get(cv::CAP_PROP_FPS));
 }
 
+void DisplayWindow::setRepeat(bool r) {
+    repeat = r;
+}
+
 std::ostream &operator<<(std::ostream &out, const InputMode &im) {
     if(im == InputMode::VIDEO)
         out << "Video";

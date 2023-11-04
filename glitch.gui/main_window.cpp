@@ -113,6 +113,8 @@ MainWindow::MainWindow()  {
     record_repeat->setChecked(true);
     record_menu->addAction(record_repeat);
 
+
+    connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
     connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));   
     help_menu = menuBar()->addMenu(tr("&Help"));
@@ -575,3 +577,6 @@ void MainWindow::enableUndo() {
     edit_redo->setEnabled(true);
 }
 
+void MainWindow::toggle_repeat() {
+
+}

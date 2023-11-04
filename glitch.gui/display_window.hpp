@@ -49,7 +49,7 @@ public:
     void record();
     bool recording();
     void savePNG(bool on, std::string path);
-
+    void setRepeat(bool r);
     QString getCurrentFilter() const;
     double getCurrentFPS() const;
     InputMode getCurrentInputMode() const;
@@ -89,6 +89,7 @@ private:
     int png_count = 0;
     bool save_png_file = false;
     std::string png_path;
+    bool repeat = true;
 };
 
 #endif
