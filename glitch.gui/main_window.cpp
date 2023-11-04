@@ -578,5 +578,11 @@ void MainWindow::enableUndo() {
 }
 
 void MainWindow::toggle_repeat() {
-
+    if(record_repeat->isChecked()) {
+        display_window->setRepeat(true);
+        debug_window->Log("gui: Repeat toggled on\n");
+    } else {
+        display_window->setRepeat(false);
+        debug_window->Log("gui: Repeat toggled off\n");
+    }
 }
