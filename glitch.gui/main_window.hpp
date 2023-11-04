@@ -79,6 +79,7 @@ public slots:
     void recordVideo();
     QString contentData(const std::string &fn, const cv::Mat &frame);
     void toggle_repeat();
+    void stopRecording();
    
 };
 

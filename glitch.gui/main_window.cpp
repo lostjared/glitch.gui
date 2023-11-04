@@ -231,22 +231,26 @@ void MainWindow::recordVideo() {
         record_rec->setText(tr("Record"));
         toolbox_window->setRecordText(true);
         // stop recording
-        if(file_stream != NULL) {
-#ifdef _WIN32
-            _pclose(file_stream);
-#else
-            pclose(file_stream);
-#endif
-            file_stream = NULL;
-            QString output;
-            QTextStream stream(&output);
-            stream << "glitch: Stopped recording...\n";
-            debug_window->Log(output); 
-        } else if(record_window->rec_info.save_png == true) {
-            display_window->savePNG(false, "");
-            debug_window->Log("glitch: Stopping PNG sequence\n");
-        }
+        stopRecording();
     }
+}
+
+void MainWindow::stopRecording() {
+   if(file_stream != NULL) {
+#ifdef _WIN32
+        _pclose(file_stream);
+#else
+        pclose(file_stream);
+#endif
+        file_stream = NULL;
+        QString output;
+        QTextStream stream(&output);
+        stream << "glitch: Stopped recording...\n";
+        debug_window->Log(output); 
+    } else if(record_window->rec_info.save_png == true) {
+        display_window->savePNG(false, "");
+        debug_window->Log("glitch: Stopping PNG sequence\n");
+    } 
 }
 
 void MainWindow::record() {
