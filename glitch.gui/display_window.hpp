@@ -89,7 +89,7 @@ private:
     int png_count = 0;
     bool save_png_file = false;
     std::string png_path;
-    bool repeat = true;
+    bool repeat = false;
 };
 
 #endif

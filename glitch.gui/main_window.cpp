@@ -110,9 +110,8 @@ MainWindow::MainWindow()  {
     record_repeat = new QAction(tr("Repeat"), this);
     record_repeat->setShortcut(tr("Ctrl+U"));
     record_repeat->setCheckable(true);
-    record_repeat->setChecked(true);
+    record_repeat->setChecked(false);
     record_menu->addAction(record_repeat);
-
 
     connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
