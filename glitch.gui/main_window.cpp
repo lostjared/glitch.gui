@@ -120,13 +120,26 @@ MainWindow::MainWindow()  {
     image_menu = menuBar()->addMenu(tr("&Image"));
     image_save = new QAction(tr("&Save"));
     image_save->setShortcut(tr("Ctrl+S"));
+    image_save->setEnabled(false);
 
     image_menu->addAction(image_save);
 
     image_step = new QAction(tr("S&tep"));
     image_step->setShortcut(tr("Ctrl+T"));
+    image_step->setEnabled(false);
 
     image_menu->addAction(image_step);
+
+    image_set_source = new QAction(tr("S&et Source"));
+    image_set_source->setShortcut(tr("Ctrl+E"));
+    image_set_source->setEnabled(false);
+
+    image_menu->addAction(image_set_source);
+
+    connect(image_save, SIGNAL(triggered()), this, SLOT(image_Save()));
+    connect(image_step, SIGNAL(triggered()), this, SLOT(image_Step()));
+    connect(image_set_source, SIGNAL(triggered()), this, SLOT(image_Set()));
+
     
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
@@ -409,6 +422,9 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 toolbox_window->enableButtons();
                 toolbox_window->disableSource();
                 display_window->resetFrameCount();
+                image_save->setEnabled(true);
+                image_step->setEnabled(true);
+                image_set_source->setEnabled(true);
                 return;
             }
         }
@@ -445,6 +461,9 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             toolbox_window->enableButtons();
             toolbox_window->enableSource();
             display_window->resetFrameCount();
+            image_save->setEnabled(true);
+            image_step->setEnabled(true);
+            image_set_source->setEnabled(true); 
         } else {
             QMessageBox box;
             box.setWindowTitle("Error could not load image");
@@ -600,4 +619,16 @@ void MainWindow::toggle_repeat() {
         display_window->setRepeat(false);
         debug_window->Log("gui: Repeat toggled off\n");
     }
+}
+
+void MainWindow::image_Save() {
+    toolbox_window->saveSnapshot();
+}
+
+void MainWindow::image_Step() {
+    toolbox_window->stepAction();
+}
+
+void MainWindow::image_Set() {
+    toolbox_window->setSource();
 }

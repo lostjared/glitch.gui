@@ -81,6 +81,9 @@ public slots:
     QString contentData(const std::string &fn, const cv::Mat &frame);
     void toggle_repeat();
     void stopRecording();
+    void image_Save();
+    void image_Step();
+    void image_Set();
    
 };
 
