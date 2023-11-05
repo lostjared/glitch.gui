@@ -115,7 +115,19 @@ MainWindow::MainWindow()  {
 
     connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
-    connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));   
+    connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));  
+
+    image_menu = menuBar()->addMenu(tr("&Image"));
+    image_save = new QAction(tr("&Save"));
+    image_save->setShortcut(tr("Ctrl+S"));
+
+    image_menu->addAction(image_save);
+
+    image_step = new QAction(tr("S&tep"));
+    image_step->setShortcut(tr("Ctrl+T"));
+
+    image_menu->addAction(image_step);
+    
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
