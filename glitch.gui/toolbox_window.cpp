@@ -204,3 +204,8 @@ void ToolboxWindow::disableSource() {
 void ToolboxWindow::setMainWindow(MainWindow *m) {
     main_window = m;
 }
+
+void ToolboxWindow::setStopText() {
+    stop_action->setText("Stop");
+    main_window->setAniString("Stop");
+}
