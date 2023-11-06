@@ -9,6 +9,7 @@
 
 class DisplayWindow;
 class RecordWindow;
+class MainWindow;
 
 class ToolboxWindow : public QDialog {
     Q_OBJECT
@@ -17,6 +18,7 @@ public:
     void setOutputDirectory(const QString &odir, const QString &prefix);
     void setDisplayWindow(DisplayWindow *disp);
     void setRecordWindow(RecordWindow *r);
+    void setMainWindow(MainWindow *m);
     void enableButtons();
     void disableButtons();
     void enableSource();
@@ -40,6 +42,7 @@ private:
     QString outdir;
     DisplayWindow *display_window = nullptr;
     RecordWindow *record_window = nullptr;
+    MainWindow *main_window = nullptr;
     int snap_index = 0;
     QPushButton *save_snapshot, *setsource_action, *stop_action, *step_action, *sel_color, *show_disp, *record_btn, *record_now;
     QCheckBox *use_color, *use_fade;

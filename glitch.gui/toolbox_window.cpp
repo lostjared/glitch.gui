@@ -1,6 +1,7 @@
 #include"toolbox_window.hpp"
 #include"display_window.hpp"
 #include"record_window.hpp"
+#include"main_window.hpp"
 
 #include<QColorDialog>
 
@@ -156,8 +157,10 @@ void ToolboxWindow::stopAction() {
         if(display_window != nullptr)
             display_window->stopAnimation();
         stop_action->setText("Start");
+        main_window->setAniString(stop_action->text());
     } else {
         stop_action->setText("Stop");
+        main_window->setAniString(stop_action->text());
         if(display_window != nullptr)
             display_window->startAnimation();
     }
@@ -196,4 +199,8 @@ void ToolboxWindow::enableSource() {
 
 void ToolboxWindow::disableSource() {
     setsource_action->setEnabled(false);
+}
+
+void ToolboxWindow::setMainWindow(MainWindow *m) {
+    main_window = m;
 }

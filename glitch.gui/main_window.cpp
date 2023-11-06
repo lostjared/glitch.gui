@@ -43,6 +43,7 @@ MainWindow::MainWindow()  {
     
     toolbox_window = new ToolboxWindow(this);
     toolbox_window->setGeometry(100,100,250,400);
+    toolbox_window->setMainWindow(this);
     toolbox_window->show();
     
     display_window = new DisplayWindow(this);
@@ -136,10 +137,16 @@ MainWindow::MainWindow()  {
 
     image_menu->addAction(image_set_source);
 
+    image_ani = new QAction(tr("Stop Animation"));
+    image_ani->setShortcut(tr("Ctrl+Z"));
+    image_ani->setEnabled(false);
+
+    image_menu->addAction(image_ani);
+
     connect(image_save, SIGNAL(triggered()), this, SLOT(image_Save()));
     connect(image_step, SIGNAL(triggered()), this, SLOT(image_Step()));
     connect(image_set_source, SIGNAL(triggered()), this, SLOT(image_Set()));
-
+    connect(image_ani, SIGNAL(triggered()), this, SLOT(image_Ani()));
     
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
@@ -425,6 +432,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 image_save->setEnabled(true);
                 image_step->setEnabled(true);
                 image_set_source->setEnabled(true);
+                image_ani->setEnabled(true);
                 return;
             }
         }
@@ -464,6 +472,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             image_save->setEnabled(true);
             image_step->setEnabled(true);
             image_set_source->setEnabled(true); 
+            image_ani->setEnabled(true);
         } else {
             QMessageBox box;
             box.setWindowTitle("Error could not load image");
@@ -631,4 +640,12 @@ void MainWindow::image_Step() {
 
 void MainWindow::image_Set() {
     toolbox_window->setSource();
+}
+
+void MainWindow::image_Ani() {
+    toolbox_window->stopAction();
+}
+
+void MainWindow::setAniString(const QString &ani) {
+    image_ani->setText(ani);
 }

@@ -43,6 +43,7 @@ public:
     void record();
     void writeFrame(cv::Mat &frame);
     bool isFileOpen();
+    void setAniString(const QString &ani);
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
     RecordWindow *record_window;
@@ -53,7 +54,7 @@ private:
     QAction *file_open;
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat;
-    QAction *image_save, *image_step, *image_set_source;
+    QAction *image_save, *image_step, *image_set_source, *image_ani;
     QAction *help_about; 
     QImage image;
     QComboBox *filter_list, *filter_cat;
@@ -84,6 +85,7 @@ public slots:
     void image_Save();
     void image_Step();
     void image_Set();
+    void image_Ani();
    
 };
 
