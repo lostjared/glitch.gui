@@ -39,6 +39,7 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     video_record->setChecked(Qt::Unchecked);
 
     connect(video_record, SIGNAL(clicked()), this, SLOT(openRecordOptions()));
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
 }
 

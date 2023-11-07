@@ -222,6 +222,8 @@ MainWindow::MainWindow()  {
     setWindowIcon(QIcon(":/images/icon.png"));
     display_window->setFilterFirst("None");
     debug_window->Log("gui: successfully initalized\n");
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+
 }
 
 void MainWindow::loadCategory(int index) {

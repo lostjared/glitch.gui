@@ -52,6 +52,7 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     connect(record_now, SIGNAL(clicked()), this, SLOT(recordNow()));
 
     disableButtons();
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 void ToolboxWindow::recordNow() {

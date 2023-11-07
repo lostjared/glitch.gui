@@ -11,6 +11,7 @@ DebugWindow::DebugWindow(QWidget *parent) : QDialog(parent) {
     text_view->setGeometry(10, 10, 1280-20, 320-20);
     text_view->setReadOnly(true);
     text_view->setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); font-size: 20px;");
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 // clear the debug window
