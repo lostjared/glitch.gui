@@ -2,7 +2,6 @@
 #include"display_window.hpp"
 #include"record_window.hpp"
 #include"main_window.hpp"
-
 #include<QColorDialog>
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {

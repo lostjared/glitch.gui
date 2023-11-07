@@ -246,6 +246,10 @@ void MainWindow::loadCategory(int index) {
 QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
     QString text;
     QTextStream stream(&text);
+
+    if(isFileOpen())
+        stream << "[ Recording ] - ";
+
     stream << "path [" << fn.c_str() << "]" << "\n info [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
     return text;
 }
