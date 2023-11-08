@@ -34,8 +34,8 @@ void FrameCollection::shiftFrames(const cv::Mat &frame) {
         return;
        
     }
-    frames.push_back(frame);
-    frames.pop_front();
+    frames.push_front(frame);
+    frames.pop_back();
 }
 
 void FrameCollection::clear() {

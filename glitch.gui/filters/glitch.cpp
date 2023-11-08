@@ -2643,13 +2643,24 @@ Glitch_Line_Effect_Down_V6::~Glitch_Line_Effect_Down_V6() {}
 /* Glitch Square Scramble */
 
 void Glitch_Square_Scramble::init() {
-
+    collection.setMaxFrames(8);
+    index = 0;
 }
 
 void Glitch_Square_Scramble::proc(cv::Mat &frame) {
     collection.shiftFrames(frame);
-
-
+    for(int x = 0; x < frame.cols; ++x) {
+        for(int y = 0; y < frame.rows; ++y) {
+            cv::Mat &new_frame = collection[index];
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+            const cv::Vec3b &pix = new_frame.at<cv::Vec3b>(y, x);
+            pixel = pix;
+        if((y%64)==0)
+            index = rand()%(collection.count()-1);
+        }
+        if((x%64)==0)
+            index = rand()%(collection.count()-1);
+    }
 }
 
 void Glitch_Square_Scramble::clear() {
@@ -2658,6 +2669,3 @@ void Glitch_Square_Scramble::clear() {
 
 Glitch_Square_Scramble::~Glitch_Square_Scramble() {}
 
-void Glitch_Square_Scramble::buildFrame(cv::Mat &frame) {
-    
-}
