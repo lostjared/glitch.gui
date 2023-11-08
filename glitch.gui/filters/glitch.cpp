@@ -2639,3 +2639,21 @@ void Glitch_Line_Effect_Down_V6::clear() {
 }
 
 Glitch_Line_Effect_Down_V6::~Glitch_Line_Effect_Down_V6() {}
+
+/* Glitch Square Scramble */
+
+void Glitch_Square_Scramble::init() {
+
+}
+
+void Glitch_Square_Scramble::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+
+
+}
+
+void Glitch_Square_Scramble::clear() {
+    collection.clear();
+}
+
+Glitch_Square_Scramble::~Glitch_Square_Scramble() {}

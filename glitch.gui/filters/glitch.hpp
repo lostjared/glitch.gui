@@ -736,4 +736,15 @@ private:
     size_t index;
 };
 
+class Glitch_Square_Scramble : public FilterFunc {
+public:
+    void init() override;
+    void proc(cv::Mat &frame) override;
+    void clear() override;
+    ~Glitch_Square_Scramble();
+private:
+    FrameCollection collection;
+};
+
+
 #endif
