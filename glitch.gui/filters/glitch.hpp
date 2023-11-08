@@ -744,6 +744,7 @@ public:
     ~Glitch_Square_Scramble();
 private:
     FrameCollection collection;
+    void buildFrame(cv::Mat &frame);
 };
 
 

@@ -2657,3 +2657,7 @@ void Glitch_Square_Scramble::clear() {
 }
 
 Glitch_Square_Scramble::~Glitch_Square_Scramble() {}
+
+void Glitch_Square_Scramble::buildFrame(cv::Mat &frame) {
+    
+}
