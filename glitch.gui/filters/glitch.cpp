@@ -2723,3 +2723,31 @@ void Glitch_Square_ScrambleY::clear() {
 }
 
 Glitch_Square_ScrambleY::~Glitch_Square_ScrambleY() {}
+
+/* Glitch Square */
+
+void Glitch_Square::init() {
+    collection.setMaxFrames(8);
+    index = 0;
+}
+
+void Glitch_Square::proc(cv::Mat &frame) {
+    collection.shiftFrames(frame);
+    for(int x = 0; x < frame.cols; ++x) {
+        for(int y = 0; y < frame.rows; ++y) {
+            cv::Mat &new_frame = collection[index];
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+            const cv::Vec3b &pix = new_frame.at<cv::Vec3b>(y, x);
+            pixel = pix;
+        if((y%64)==0)
+            index = rand()%(collection.count()-1);
+
+       }
+    }
+}
+
+void Glitch_Square::clear() {
+    collection.clear();
+}
+
+Glitch_Square::~Glitch_Square() {}
