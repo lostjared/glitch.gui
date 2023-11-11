@@ -73,4 +73,5 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Square_Scramble", new Glitch_Square_Scramble()});
     new_filter_list.push_back({"New_Glitch_Square_ScrambleX", new Glitch_Square_ScrambleX()}); 
     new_filter_list.push_back({"New_Glitch_Square_ScrambleY", new Glitch_Square_ScrambleY()}); 
+    new_filter_list.push_back({"New_Glitch_Square", new Glitch_Square()}); 
 }
