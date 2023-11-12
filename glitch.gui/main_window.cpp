@@ -16,6 +16,7 @@
 #include"ffmpeg_write.h"
 #include<QDir>
 #include<algorithm>
+#include"custom_window.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -64,6 +65,9 @@ MainWindow::MainWindow()  {
     record_window->hide();
 
     toolbox_window->setRecordWindow(record_window);
+
+    custom_window = new CustomWindow(this);
+    custom_window->hide();
 
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
