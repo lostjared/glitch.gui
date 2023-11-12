@@ -3,12 +3,15 @@
 
 #include<QDialog>
 
+class MainWindow;
+
 class CustomWindow : public QDialog {
     Q_OBJECT
-
 public:
     CustomWindow(QWidget *parent = 0);
-
+    void setMainWindow(MainWindow *m);
+private:
+    MainWindow *main_window = nullptr;
 };
 
 #endif
