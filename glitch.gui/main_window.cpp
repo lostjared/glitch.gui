@@ -151,7 +151,15 @@ MainWindow::MainWindow()  {
     connect(image_step, SIGNAL(triggered()), this, SLOT(image_Step()));
     connect(image_set_source, SIGNAL(triggered()), this, SLOT(image_Set()));
     connect(image_ani, SIGNAL(triggered()), this, SLOT(image_Ani()));
+
+    filter_menu = menuBar()->addMenu(tr("&Filter"));
+    filter_custom = new QAction(tr("Custom Filter"), this);
+    filter_custom->setShortcut(tr("CtrL+C"));
+
+    connect(filter_custom, SIGNAL(triggered()), this, SLOT(filter_Show()));
     
+    filter_menu->addAction(filter_custom);
+
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
@@ -658,4 +666,8 @@ void MainWindow::image_Ani() {
 
 void MainWindow::setAniString(const QString &ani) {
     image_ani->setText(ani);
+}
+
+void MainWindow::filter_Show() {
+    custom_window->show();
 }
