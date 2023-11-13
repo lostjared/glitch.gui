@@ -2,6 +2,9 @@
 #define _CUSTOM_WINDOW_H_
 
 #include<QDialog>
+#include<QComboBox>
+#include<QListView>
+#include<QLineEdit>
 
 class MainWindow;
 
@@ -12,6 +15,9 @@ public:
     void setMainWindow(MainWindow *m);
 private:
     MainWindow *main_window = nullptr;
+    QComboBox *filter, *filter_cat;
+    QListView *filter_custom;
+    QLineEdit *filter_name;
 };
 
 #endif
