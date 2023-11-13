@@ -7,6 +7,9 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     filter_cat->setGeometry(15, 15, (640-15-15), 25);
     filter = new QComboBox(this);
     filter->setGeometry(15, 15+25+5, (640-15-15), 25);
+
+    filter_custom = new QListView(this);
+    filter_custom->setGeometry(15, 15+25+5+25+5, (640-15-15), 300);
     
 }
 
