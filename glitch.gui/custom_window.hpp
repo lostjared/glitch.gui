@@ -3,7 +3,7 @@
 
 #include<QDialog>
 #include<QComboBox>
-#include<QListView>
+#include<QListWidget>
 #include<QLineEdit>
 
 class MainWindow;
@@ -16,7 +16,7 @@ public:
 private:
     MainWindow *main_window = nullptr;
     QComboBox *filter, *filter_cat;
-    QListView *filter_custom;
+    QListWidget *filter_custom;
     QLineEdit *filter_name;
 };
 
