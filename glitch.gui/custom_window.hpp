@@ -13,11 +13,21 @@ class CustomWindow : public QDialog {
 public:
     CustomWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
+
+public slots:
+    void addFilter();
+    void rmvFilter();
+    void move_Up();
+    void move_Down();
+    void changeCategory(int cat);
+    void setFilter();
+
 private:
     MainWindow *main_window = nullptr;
     QComboBox *filter, *filter_cat;
     QListWidget *filter_custom;
     QLineEdit *filter_name;
+    QPushButton *btn_add, *btn_rmv, *btn_up, *btn_down, *btn_set;
 };
 
 #endif

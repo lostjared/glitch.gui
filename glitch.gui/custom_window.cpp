@@ -16,3 +16,27 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
 void CustomWindow::setMainWindow(MainWindow *m) {
     main_window = m;
 }
+
+void CustomWindow::addFilter() {
+
+}
+
+void CustomWindow::rmvFilter() {
+
+}
+
+void CustomWindow::move_Up() {
+
+}
+
+void CustomWindow::move_Down() {
+
+}
+
+void CustomWindow::changeCategory(int cat) {
+
+}
+
+void CustomWindow::setFilter() {
+    
+}
