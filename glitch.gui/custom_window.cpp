@@ -30,9 +30,19 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     btn_down->setGeometry(15+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_down, SIGNAL(clicked()), this, SLOT(move_Down()));
-    
 
-    
+    QLabel *f_name = new QLabel(tr("Name: "), this);
+    f_name->setGeometry(25, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
+
+    filter_name = new QLineEdit(this);
+    filter_name->setGeometry(50+25+5, 15+25+5+25+5+300+5+25+5+10+5, 200, 25);
+
+    btn_set = new QPushButton(tr("Set Filter"), this);
+    btn_set->setGeometry(640-125-5, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
+
+    connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
+
+    setWindowTitle("Create Custom Filter");
 }
 
 void CustomWindow::setMainWindow(MainWindow *m) {
