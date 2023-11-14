@@ -10,6 +10,12 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
 
     filter_custom = new QListWidget(this);
     filter_custom->setGeometry(15, 15+25+5+25+5, (640-15-15), 300);
+
+    btn_add = new QPushButton(tr("Add"), this);
+    btn_add->setGeometry(15, 15+25+5+25+5+300+5, 100, 25);
+
+    connect(btn_add, SIGNAL(clicked()), this, SLOT(addFilter()));
+
     
 }
 
@@ -38,5 +44,5 @@ void CustomWindow::changeCategory(int cat) {
 }
 
 void CustomWindow::setFilter() {
-    
+
 }
