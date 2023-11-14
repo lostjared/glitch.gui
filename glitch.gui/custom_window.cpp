@@ -25,6 +25,13 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     btn_up->setGeometry(15+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_up, SIGNAL(clicked()), this, SLOT(move_Up()));
+
+    btn_down = new QPushButton(tr("Move Down"), this);
+    btn_down->setGeometry(15+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
+
+    connect(btn_down, SIGNAL(clicked()), this, SLOT(move_Down()));
+    
+
     
 }
 
