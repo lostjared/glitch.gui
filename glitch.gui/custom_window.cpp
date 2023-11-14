@@ -21,6 +21,10 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
 
     connect(btn_rmv, SIGNAL(clicked()), this, SLOT(rmvFilter()));
 
+    btn_up = new QPushButton(tr("Move Up"), this);
+    btn_up->setGeometry(15+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
+
+    connect(btn_up, SIGNAL(clicked()), this, SLOT(move_Up()));
     
 }
 
