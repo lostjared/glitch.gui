@@ -43,6 +43,13 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
 
     setWindowTitle("Create Custom Filter");
+    
+    filter_cat->addItem(tr("In order"));
+    filter_cat->addItem(tr("Sorted"));
+    filter_cat->addItem(tr("Fast"));
+    filter_cat->addItem(tr("Glitch"));
+    filter_cat->addItem(tr("Mirror"));
+    filter_cat->addItem(tr("New Filter"));
 }
 
 void CustomWindow::setMainWindow(MainWindow *m) {
@@ -70,5 +77,9 @@ void CustomWindow::changeCategory(int cat) {
 }
 
 void CustomWindow::setFilter() {
+
+}
+
+void CustomWindow::loadCustomList(int cat) {
 
 }

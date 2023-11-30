@@ -13,6 +13,7 @@ class CustomWindow : public QDialog {
 public:
     CustomWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
+    void loadCustomList(int cat);
 
 public slots:
     void addFilter();
