@@ -62,7 +62,11 @@ void CustomWindow::setMainWindow(MainWindow *m) {
 }
 
 void CustomWindow::addFilter() {
-
+    int index = filter->currentIndex();
+    if(index >= 0) {
+        QString val = filter->itemText(index);
+        filter_custom->addItem(val);        
+    }
 }
 
 void CustomWindow::rmvFilter() {
@@ -95,7 +99,7 @@ void CustomWindow::loadCategory(int index) {
     filter->setCurrentIndex(0);
 }
 
-void CustomWindow::changeCategory(int cat) {
+void CustomWindow::changeCategory(int) {
     int index = filter_cat->currentIndex();
     loadCategory(index);
 }
