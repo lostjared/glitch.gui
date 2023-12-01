@@ -1,5 +1,8 @@
 #include"custom_window.hpp"
 #include"main_window.hpp"
+#include"cat_vec.hpp"
+#include"new_filter.hpp"
+
 
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(640, 480);
@@ -50,6 +53,8 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     filter_cat->addItem(tr("Glitch"));
     filter_cat->addItem(tr("Mirror"));
     filter_cat->addItem(tr("New Filter"));
+
+    loadCategory(0);
 }
 
 void CustomWindow::setMainWindow(MainWindow *m) {
@@ -72,8 +77,27 @@ void CustomWindow::move_Down() {
 
 }
 
-void CustomWindow::changeCategory(int cat) {
+void CustomWindow::loadCategory(int index) {
+    filter->clear();
+    if(index == 5) {
+        auto *a = &new_filter_list;
+        for(int i = 0; i < static_cast<int>(a->size()); ++i) {
+            filter->addItem(a->at(i).name);
+        }
+    } else {
+        std::vector<std::string> *v = vec_cat[index];
+        for(int i = 0; i < static_cast<int>(v->size()); ++i) {
+            std::string s = v->at(i);
+            if(s.find("InOrder") == std::string::npos)
+                filter->addItem(v->at(i).c_str());
+        }
+    }
+    filter->setCurrentIndex(0);
+}
 
+void CustomWindow::changeCategory(int cat) {
+    int index = filter_cat->currentIndex();
+    loadCategory(index);
 }
 
 void CustomWindow::setFilter() {
