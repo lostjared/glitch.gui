@@ -72,7 +72,7 @@ void CustomWindow::addFilter() {
 void CustomWindow::rmvFilter() {
     int index = filter_custom->currentRow();
     if(index >= 0) {
-        auto widget = filter_custom->takeItem(index);
+        filter_custom->takeItem(index);
     }
 }
 
