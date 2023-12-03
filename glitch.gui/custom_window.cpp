@@ -77,7 +77,19 @@ void CustomWindow::rmvFilter() {
 }
 
 void CustomWindow::move_Up() {
-
+    int index = filter_custom->currentRow();
+    if(index >= 0) {
+        QListWidgetItem *item = filter_custom->item(index);
+        if(index-1 >= 0) {
+            QListWidgetItem *item2 = filter_custom->item(index-1);
+            QString data[2];
+            data[0] = item->text();
+            data[1] = item2->text();
+            item->setText(data[1]);
+            item2->setText(data[0]);
+            filter_custom->setCurrentRow(index-1);
+        }
+    }
 }
 
 void CustomWindow::move_Down() {
