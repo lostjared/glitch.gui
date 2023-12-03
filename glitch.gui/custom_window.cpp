@@ -93,7 +93,17 @@ void CustomWindow::move_Up() {
 }
 
 void CustomWindow::move_Down() {
-
+    int index = filter_custom->currentRow();
+    if(index+1 < filter_custom->count()) {
+        QListWidgetItem *it1 = filter_custom->item(index);
+        QListWidgetItem *it2 = filter_custom->item(index+1);        
+        QString data[2];
+        data[0] = it1->text();
+        data[1] = it2->text();
+        it1->setText(data[1]);
+        it2->setText(data[0]);
+        filter_custom->setCurrentRow(index+1);
+    }
 }
 
 void CustomWindow::loadCategory(int index) {
