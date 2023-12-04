@@ -14,7 +14,7 @@ public:
     CustomWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
     void loadCategory(int cat);
-   
+    bool createCustom(const QString &name); 
 public slots:
     void addFilter();
     void rmvFilter();
