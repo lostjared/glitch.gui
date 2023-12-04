@@ -154,7 +154,15 @@ bool CustomWindow::createCustom(const QString &name) {
     if(name.length() == 0) 
         return false;
 
+    std::vector<std::string> custom_data;
 
+    for(int i = 0; i < filter_custom->count(); ++i) {
+        auto data = filter_custom->item(i);
+        custom_data.push_back(data->text().toStdString());
+    }
+
+    if(custom_data.size()==0)
+        return false;
 
     return true;
 }
