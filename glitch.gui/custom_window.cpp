@@ -164,5 +164,9 @@ bool CustomWindow::createCustom(const QString &name) {
     if(custom_data.size()==0)
         return false;
 
+    QString fname = "Custom__" + name;
+
+    cat_custom.push_back(std::make_pair(fname.toStdString(), custom_data));
+
     return true;
 }

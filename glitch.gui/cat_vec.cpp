@@ -720,6 +720,11 @@ std::vector<std::string> cat_mirror {
 };
 
 std::vector<std::string> *vec_cat[] = { &cat_in_order, &cat_sorted, &cat_fast, &cat_glitch, &cat_mirror, 0 };
+std::vector<custom_filter> cat_custom;
+
+void load_custom() {
+
+}
 
 void build_lists() {
     for(auto it = ac::solo_filter.begin(); it != ac::solo_filter.end(); ++it) {
@@ -727,4 +732,5 @@ void build_lists() {
         cat_sorted.push_back(*it);
     }
     std::sort(cat_sorted.begin(), cat_sorted.end());
+    load_custom();
 }
