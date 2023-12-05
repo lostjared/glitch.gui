@@ -165,8 +165,9 @@ bool CustomWindow::createCustom(const QString &name) {
         return false;
 
     QString fname = "Custom__" + name;
-
     cat_custom.push_back(std::make_pair(fname.toStdString(), custom_data));
-
+    for(size_t i = 0; i < cat_custom.size(); ++i) {
+        cat_custom_index[cat_custom[i].first] = i;
+    }
     return true;
 }

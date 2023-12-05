@@ -721,6 +721,7 @@ std::vector<std::string> cat_mirror {
 
 std::vector<std::string> *vec_cat[] = { &cat_in_order, &cat_sorted, &cat_fast, &cat_glitch, &cat_mirror, 0 };
 std::vector<custom_filter> cat_custom;
+std::unordered_map<std::string, int> cat_custom_index;
 
 void load_custom() {
 

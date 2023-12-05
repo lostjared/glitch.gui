@@ -1,4 +1,5 @@
 #include"new_filter.hpp"
+#include"cat_vec.hpp"
 #include<unordered_map>
 
 std::vector<FilterList> new_filter_list;
@@ -75,7 +76,14 @@ void add_new_filter(const FilterList &lst) {
 }
 
 void New_CallFilter(std::string name, cv::Mat &frame) {
-    if(name.find("New_") == std::string::npos) {
+    if(name.find("Custom__") != std::string::npos) {
+        int index = cat_custom_index[name];
+        auto &lst = cat_custom[index].second;
+        for(size_t i = 0; i < lst.size(); ++i) {
+            std::string &name_index = lst[i];
+            New_CallFilter(name_index, frame); 
+        }
+    } else if(name.find("New_") == std::string::npos) {
         ac::CallFilter(name, frame);
     } else {
         auto pos = new_filter_map.find(name);
