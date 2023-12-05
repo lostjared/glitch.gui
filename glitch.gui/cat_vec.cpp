@@ -725,14 +725,33 @@ std::vector<custom_filter> cat_custom;
 std::unordered_map<std::string, int> cat_custom_index;
 
 void load_custom() {
-
     std::fstream file;
     file.open("custom.dat", std::ios::in);
     if(!file.is_open()) {
         std::cerr << "Error opening custom file: custom.dat\n";
         return;
     }
-    // load file
+    while(!file.eof()) {
+        std::string line;
+        std::getline(file, line);
+        if(file) {
+            std::string name;
+            auto pos = line.find("=");
+            if(pos == std::string::npos) break;
+            name = line.substr(0, pos);
+            line = line.substr(pos+1, line.length());
+            std::vector<std::string> names;
+            while(line.find(",") != std::string::npos) {
+                std::string name1;
+                auto pos = line.find(",");
+                name1 = line.substr(0, pos);
+                line = line.substr(pos+1, line.length());
+                names.push_back(name1);
+            }
+            names.push_back(line);
+            cat_custom.push_back(std::make_pair(name, names));
+        }
+    }
     file.close();
 }
 
