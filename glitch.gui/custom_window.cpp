@@ -169,5 +169,6 @@ bool CustomWindow::createCustom(const QString &name) {
     for(size_t i = 0; i < cat_custom.size(); ++i) {
         cat_custom_index[cat_custom[i].first] = i;
     }
+    save_custom();
     return true;
 }

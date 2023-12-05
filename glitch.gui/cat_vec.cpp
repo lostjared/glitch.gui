@@ -2,6 +2,7 @@
 #include"acidcam/ac.h"
 
 #include<algorithm>
+#include<fstream>
 
 std::vector<std::string> cat_in_order;
 std::vector<std::string> cat_sorted;
@@ -725,6 +726,35 @@ std::unordered_map<std::string, int> cat_custom_index;
 
 void load_custom() {
 
+    std::fstream file;
+    file.open("custom.dat", std::ios::in);
+    if(!file.is_open()) {
+        std::cerr << "Error opening custom file: custom.dat\n";
+        return;
+    }
+    // load file
+    file.close();
+}
+
+void save_custom() {
+    std::fstream file;
+    file.open("custom.dat", std::ios::out);
+    if(!file.is_open()) {
+        std::cerr << "Error saving custom file: custom.dat\n";
+        return;
+    }
+
+    for(size_t i = 0; i < cat_custom.size(); ++i) {
+        std::string &name = cat_custom[i].first;
+        file << name << "=";
+        for(size_t z = 0; z < cat_custom[i].second.size()-1; ++z) {
+           std::string &name = cat_custom[i].second[z];
+           file << name << ",";
+        }
+        file << cat_custom[i].second[cat_custom[i].second.size()-1] << "\n";
+      }
+
+    file.close();
 }
 
 void build_lists() {
