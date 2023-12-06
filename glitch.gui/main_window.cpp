@@ -17,6 +17,7 @@
 #include<QDir>
 #include<algorithm>
 #include"custom_window.hpp"
+#include"custom_edit.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -68,6 +69,9 @@ MainWindow::MainWindow()  {
 
     custom_window = new CustomWindow(this);
     custom_window->hide();
+
+    custom_edit = new CustomEditWindow(this);
+    custom_edit->hide();
 
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
@@ -685,5 +689,5 @@ void MainWindow::filter_Show() {
 }
 
 void MainWindow::filter_Edit() {
-    
+    custom_edit->show();
 }
