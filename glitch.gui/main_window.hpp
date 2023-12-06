@@ -57,7 +57,7 @@ private:
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
-    QAction *filter_custom;
+    QAction *filter_custom, *filter_edit;
     QAction *help_about; 
     QImage image;
     QComboBox *filter_list, *filter_cat;
@@ -90,6 +90,7 @@ public slots:
     void image_Set();
     void image_Ani();
     void filter_Show();
+    void filter_Edit();
    
 };
 

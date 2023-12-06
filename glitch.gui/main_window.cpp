@@ -160,6 +160,12 @@ MainWindow::MainWindow()  {
     
     filter_menu->addAction(filter_custom);
 
+    filter_edit = new QAction(tr("Remove Custom"));
+
+    connect(filter_edit, SIGNAL(triggered()), this, SLOT(filter_Edit()));
+
+    filter_menu->addAction(filter_edit);
+
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
@@ -676,4 +682,8 @@ void MainWindow::setAniString(const QString &ani) {
 
 void MainWindow::filter_Show() {
     custom_window->show();
+}
+
+void MainWindow::filter_Edit() {
+    
 }
