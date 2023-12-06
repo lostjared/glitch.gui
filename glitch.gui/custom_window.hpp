@@ -25,7 +25,7 @@ public slots:
 
 private:
     MainWindow *main_window = nullptr;
-    QComboBox *filter, *filter_cat;
+    QComboBox *filter, *filter_cat, *filter_name_combo;
     QListWidget *filter_custom;
     QLineEdit *filter_name;
     QPushButton *btn_add, *btn_rmv, *btn_up, *btn_down, *btn_set;
