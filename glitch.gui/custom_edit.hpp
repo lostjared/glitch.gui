@@ -7,8 +7,8 @@ I#iclude<QPushButton>
 class CustomEditWindow : public QDialog {
 public:
     CustomEditWindow(QWidget *parent = 0);
-    QComboBox *filer_names;
-    QPushButton *rmv;
+    QComboBox *filter_names;
+    QPushButton *filter_rmv;
 
     void updateFilterNames();
 
