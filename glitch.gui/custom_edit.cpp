@@ -4,3 +4,14 @@ CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(320, 240);
 }
     
+void CustomEditWindow::updateFilterNames() {
+    
+}
+
+
+
+
+
+
+
+
