@@ -1,7 +1,7 @@
 #ifndef _CUSTOM_EDIT_HPP_
 #define _CUSTOM_EDIT_HPP_
 #include<QComboBox>
-I#iclude<QPushButton>
+#include<QPushButton>
 #include<QDialog>
 
 class CustomEditWindow : public QDialog {
