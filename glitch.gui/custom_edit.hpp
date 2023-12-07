@@ -11,6 +11,8 @@ public:
     QPushButton *filter_rmv;
 
     void updateFilterNames();
+public slots:
+    void removeCustom();
 
 };
 
