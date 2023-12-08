@@ -753,6 +753,18 @@ void load_custom() {
         }
     }
     file.close();
+    setup_map(true);
+}
+
+void setup_map(bool clear) {
+
+   if(clear && !cat_custom_index.empty()) {
+        cat_custom_index.erase(cat_custom_index.begin(), cat_custom_index.end());
+    }
+
+     for(size_t i = 0; i < cat_custom.size(); ++i) {
+        cat_custom_index[cat_custom[i].first] = i;
+    }
 }
 
 void save_custom() {

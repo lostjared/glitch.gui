@@ -152,25 +152,18 @@ void CustomWindow::setFilter() {
 }
 
 bool CustomWindow::createCustom(const QString &name) {
-
     if(name.length() == 0) 
         return false;
-
     std::vector<std::string> custom_data;
-
     for(int i = 0; i < filter_custom->count(); ++i) {
         auto data = filter_custom->item(i);
         custom_data.push_back(data->text().toStdString());
     }
-
     if(custom_data.size()==0)
         return false;
-
     QString fname = "Custom__" + name;
     cat_custom.push_back(std::make_pair(fname.toStdString(), custom_data));
-    for(size_t i = 0; i < cat_custom.size(); ++i) {
-        cat_custom_index[cat_custom[i].first] = i;
-    }
+    setup_map(false);
     save_custom();
     main_window->custom_edit->updateFilterNames();
     return true;

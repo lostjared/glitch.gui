@@ -1,5 +1,6 @@
 #include"custom_edit.hpp"
 #include"cat_vec.hpp"
+#include<iostream>
 
 CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(320, 120);
@@ -20,8 +21,20 @@ void CustomEditWindow::updateFilterNames() {
 }
 
 void CustomEditWindow::removeCustom() {
-
-  
+    int index = filter_names->currentIndex();
+    if(index >= 0) { 
+        QString name = filter_names->itemText(index);
+        auto pos = cat_custom_index.find(name.toStdString());
+        if(pos != cat_custom_index.end()) {
+            std::string name = pos->first;
+            int spot = pos->second;
+            std::vector<custom_filter>::iterator i = cat_custom.begin()+spot;
+            cat_custom.erase(i);
+            cat_custom_index.erase(pos);        
+        }
+        save_custom();
+        updateFilterNames();
+    }  
 }
 
 

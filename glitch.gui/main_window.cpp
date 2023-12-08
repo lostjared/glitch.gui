@@ -68,6 +68,7 @@ MainWindow::MainWindow()  {
     toolbox_window->setRecordWindow(record_window);
 
     custom_window = new CustomWindow(this);
+    custom_window->setMainWindow(this);
     custom_window->hide();
 
     custom_edit = new CustomEditWindow(this);
