@@ -2,6 +2,8 @@
 #include"main_window.hpp"
 #include"cat_vec.hpp"
 #include"new_filter.hpp"
+#include"custom_edit.hpp"
+
 #include<QMessageBox>
 
 
@@ -170,5 +172,6 @@ bool CustomWindow::createCustom(const QString &name) {
         cat_custom_index[cat_custom[i].first] = i;
     }
     save_custom();
+    main_window->custom_edit->updateFilterNames();
     return true;
 }
