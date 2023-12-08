@@ -8,6 +8,7 @@ CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     filter_rmv = new QPushButton(tr("Remove"), this);
     filter_rmv->setGeometry(30, 30+30, 100, 25);
     connect(filter_rmv, SIGNAL(clicked()), this, SLOT(removeCustom()));
+    updateFilterNames();
 }
     
 void CustomEditWindow::updateFilterNames() {
@@ -20,7 +21,7 @@ void CustomEditWindow::updateFilterNames() {
 
 void CustomEditWindow::removeCustom() {
 
-    updateFilterNames();
+  
 }
 
 
