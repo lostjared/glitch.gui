@@ -796,3 +796,10 @@ void build_lists() {
     std::sort(cat_sorted.begin(), cat_sorted.end());
     load_custom();
 }
+
+bool custom_exists(const std::string &s) {
+    auto pos = cat_custom_index.find(s);
+    if(pos != cat_custom_index.end())
+        return true;
+    return false;
+}
