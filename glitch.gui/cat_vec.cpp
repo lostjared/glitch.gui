@@ -799,7 +799,7 @@ void build_lists() {
 
 bool custom_exists(const std::string &s) {
     auto pos = cat_custom_index.find(s);
-    if(pos != cat_custom_index.end())
-        return true;
-    return false;
+    if(pos == cat_custom_index.end())
+        return false;
+    return true;
 }

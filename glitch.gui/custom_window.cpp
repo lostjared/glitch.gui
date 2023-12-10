@@ -154,6 +154,17 @@ void CustomWindow::setFilter() {
 bool CustomWindow::createCustom(const QString &name) {
     if(name.length() == 0) 
         return false;
+    
+    if(custom_exists("Custom__" + name.toStdString())) {
+        QMessageBox box;
+        box.setWindowTitle(APP_NAME);
+        box.setText("Error custom name already defined");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Warning);
+        box.exec();
+        return false;
+    }
+    
     std::vector<std::string> custom_data;
     for(int i = 0; i < filter_custom->count(); ++i) {
         auto data = filter_custom->item(i);
