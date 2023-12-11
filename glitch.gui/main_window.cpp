@@ -222,6 +222,10 @@ MainWindow::MainWindow()  {
     filter_first_clear->setGeometry(15+70+10+70+10, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
+
+    filter_set_custom = new QPushButton(tr("Custom"), this);
+    filter_set_custom->setGeometry(15+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+
     
     filter_list_view->setEnabled(true);
     filter_search->setEnabled(true);
