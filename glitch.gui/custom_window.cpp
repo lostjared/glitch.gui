@@ -60,6 +60,10 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     loadCategory(0);
 }
 
+void CustomWindow::addItem(const QString &text) {
+    filter_custom->addItem(text);
+}
+
 void CustomWindow::setMainWindow(MainWindow *m) {
     main_window = m;
 }

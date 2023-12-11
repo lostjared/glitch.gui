@@ -15,6 +15,7 @@ public:
     void setMainWindow(MainWindow *m);
     void loadCategory(int cat);
     bool createCustom(const QString &name); 
+    void addItem(const QString &text);
 public slots:
     void addFilter();
     void rmvFilter();

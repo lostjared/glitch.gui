@@ -699,5 +699,9 @@ void MainWindow::filter_Edit() {
 }
 
 void MainWindow::custom_Add() {
-    
+    int cur_sel = filter_list_view->currentRow();
+    if(cur_sel >= 0) {
+        QListWidgetItem *w = filter_list_view->item(cur_sel);
+        custom_window->addItem(w->text());
+    }
 }
