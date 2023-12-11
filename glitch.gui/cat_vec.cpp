@@ -753,10 +753,10 @@ void load_custom() {
         }
     }
     file.close();
-    setup_map(true);
+    custom_setup_map(true);
 }
 
-void setup_map(bool clear) {
+void custom_setup_map(bool clear) {
 
    if(clear && !cat_custom_index.empty()) {
         cat_custom_index.erase(cat_custom_index.begin(), cat_custom_index.end());

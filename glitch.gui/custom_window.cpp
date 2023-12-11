@@ -174,7 +174,7 @@ bool CustomWindow::createCustom(const QString &name) {
         return false;
     QString fname = "Custom__" + name;
     cat_custom.push_back(std::make_pair(fname.toStdString(), custom_data));
-    setup_map(false);
+    custom_setup_map(false);
     save_custom();
     main_window->custom_edit->updateFilterNames();
     return true;

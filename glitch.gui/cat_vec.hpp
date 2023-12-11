@@ -14,5 +14,5 @@ extern std::unordered_map<std::string, int> cat_custom_index;
 void build_lists();
 void save_custom();
 bool custom_exists(const std::string &s);
-void setup_map(bool clear);
+void custom_setup_map(bool clear);
 #endif
