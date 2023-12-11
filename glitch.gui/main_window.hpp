@@ -93,6 +93,7 @@ public slots:
     void image_Ani();
     void filter_Show();
     void filter_Edit();
+    void custom_Add();
    
 };
 
