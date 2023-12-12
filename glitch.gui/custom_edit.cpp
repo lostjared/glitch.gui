@@ -1,6 +1,8 @@
 #include"custom_edit.hpp"
 #include"cat_vec.hpp"
 #include<iostream>
+#include"main_window.hpp"
+
 
 CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(320, 120);
@@ -12,12 +14,17 @@ CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     updateFilterNames();
 }
     
+void CustomEditWindow::setMainWindow(MainWindow *m) {
+    main_window = m;
+}
+
 void CustomEditWindow::updateFilterNames() {
     filter_names->clear();
     for(size_t i = 0; i < cat_custom.size(); ++i) {
         custom_filter &f = cat_custom[i];
         filter_names->addItem(f.first.c_str());
     }
+   if(main_window != nullptr) main_window->catIndexChanged(0);
 }
 
 void CustomEditWindow::removeCustom() {

@@ -4,6 +4,8 @@
 #include<QPushButton>
 #include<QDialog>
 
+class MainWindow;
+
 class CustomEditWindow : public QDialog {
 Q_OBJECT
 public:
@@ -11,8 +13,11 @@ public:
     QComboBox *filter_names;
     QPushButton *filter_rmv;
     void updateFilterNames();
+    void setMainWindow(MainWindow *m);
 public slots:
     void removeCustom();
+private:
+    MainWindow *main_window = nullptr;
 
 };
 

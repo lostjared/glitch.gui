@@ -72,6 +72,7 @@ MainWindow::MainWindow()  {
     custom_window->hide();
 
     custom_edit = new CustomEditWindow(this);
+    custom_edit->setMainWindow(this);
     custom_edit->hide();
 
     setFixedSize(640, 360);
