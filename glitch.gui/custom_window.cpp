@@ -3,7 +3,7 @@
 #include"cat_vec.hpp"
 #include"new_filter.hpp"
 #include"custom_edit.hpp"
-
+#include"debug_window.hpp"
 #include<QMessageBox>
 
 
@@ -181,5 +181,6 @@ bool CustomWindow::createCustom(const QString &name) {
     custom_setup_map(false);
     save_custom();
     main_window->custom_edit->updateFilterNames();
+    main_window->debug_window->Log("gui: Created new custom filter: " + fname + "\n");
     return true;
 }
