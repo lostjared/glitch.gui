@@ -2,7 +2,7 @@
 #include"cat_vec.hpp"
 #include<iostream>
 #include"main_window.hpp"
-
+#include"debug_window.hpp"
 
 CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(320, 120);
@@ -41,6 +41,7 @@ void CustomEditWindow::removeCustom() {
         }
         save_custom();
         updateFilterNames();
+        main_window->debug_window->Log("gui: Removed custom filter: " + name + "\n");
     }  
 }
 
