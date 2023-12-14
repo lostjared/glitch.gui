@@ -1,6 +1,7 @@
 #include"record_window.hpp"
 #include"main_window.hpp"
 #include"display_window.hpp"
+#include"debug_window.hpp"
 #include<QFileDialog>
 #include<QFile>
 #include<QMessageBox>
@@ -156,6 +157,7 @@ void RecordWindow::saveSettings() {
     }
     rec_info_set = true;
     main_window->enableRecord();
+    main_window->debug_window->Log("gui: Updated record settings...\n");
     hide();
 }
 

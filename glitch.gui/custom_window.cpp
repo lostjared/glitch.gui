@@ -6,7 +6,6 @@
 #include"debug_window.hpp"
 #include<QMessageBox>
 
-
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(640, 480);
     filter_cat = new QComboBox(this);
@@ -56,7 +55,6 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     filter_cat->addItem(tr("Glitch"));
     filter_cat->addItem(tr("Mirror"));
     filter_cat->addItem(tr("New Filter"));
-
     loadCategory(0);
 }
 
@@ -72,14 +70,17 @@ void CustomWindow::addFilter() {
     int index = filter->currentIndex();
     if(index >= 0) {
         QString val = filter->itemText(index);
-        filter_custom->addItem(val);        
+        filter_custom->addItem(val);     
+        main_window->debug_window->Log("gui: Added " + val + " to custom.\n");   
     }
 }
 
 void CustomWindow::rmvFilter() {
     int index = filter_custom->currentRow();
     if(index >= 0) {
-        filter_custom->takeItem(index);
+        QListWidgetItem *itm = filter_custom->takeItem(index);
+        main_window->debug_window->Log("gui: Removed " + itm->text() + " from custom.\n");
+
     }
 }
 

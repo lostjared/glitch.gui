@@ -38,7 +38,7 @@ public slots:
     void setPath();
     
 private:
-    MainWindow *main_window;
+    MainWindow *main_window = nullptr;
     QLineEdit *ffmpeg_path;
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
