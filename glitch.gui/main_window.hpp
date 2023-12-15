@@ -25,6 +25,7 @@ class DebugWindow;
 class RecordWindow;
 class CustomWindow;
 class CustomEditWindow;
+class PrefWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -53,6 +54,7 @@ public:
     NewImageWindow *newimage_window;
     CustomWindow *custom_window;
     CustomEditWindow *custom_edit;
+    PrefWindow *pref_window;
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu;
     QAction *file_open;

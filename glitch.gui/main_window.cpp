@@ -18,6 +18,7 @@
 #include<algorithm>
 #include"custom_window.hpp"
 #include"custom_edit.hpp"
+#include"pref_window.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -74,6 +75,10 @@ MainWindow::MainWindow()  {
     custom_edit = new CustomEditWindow(this);
     custom_edit->setMainWindow(this);
     custom_edit->hide();
+
+    pref_window = new PrefWindow(this);
+    //preF_window->setMainWindow(this);
+    pref_window->hide();
 
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
