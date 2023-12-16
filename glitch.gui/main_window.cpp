@@ -87,6 +87,9 @@ MainWindow::MainWindow()  {
     file_open->setShortcut(tr("Ctrl+N"));
     connect(file_open, SIGNAL(triggered()), this, SLOT(openFile()));
     file_menu->addAction(file_open);
+
+    file_pref = new QAction(tr("Preferences"));
+    connect(file_pref, SIGNAL(triggered()), this, SLOT(file_Pref()));
     
     edit_menu = menuBar()->addMenu(tr("&Edit"));
     edit_undo = new QAction(tr("Undo"), this);

@@ -57,7 +57,7 @@ public:
     PrefWindow *pref_window;
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu;
-    QAction *file_open;
+    QAction *file_open, *file_pref;
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
