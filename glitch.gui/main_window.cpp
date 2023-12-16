@@ -90,6 +90,8 @@ MainWindow::MainWindow()  {
 
     file_pref = new QAction(tr("Preferences"));
     connect(file_pref, SIGNAL(triggered()), this, SLOT(file_Pref()));
+
+    file_menu->addAction(file_pref);
     
     edit_menu = menuBar()->addMenu(tr("&Edit"));
     edit_undo = new QAction(tr("Undo"), this);
@@ -713,4 +715,8 @@ void MainWindow::custom_Add() {
         QListWidgetItem *w = filter_list_view->item(cur_sel);
         custom_window->addItem(w->text());
     }
+}
+
+void MainWindow::file_Pref() {
+    pref_window->show();
 }

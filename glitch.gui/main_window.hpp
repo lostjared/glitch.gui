@@ -96,6 +96,7 @@ public slots:
     void filter_Show();
     void filter_Edit();
     void custom_Add();
+    void file_Pref();
    
 };
 
