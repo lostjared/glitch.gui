@@ -1,5 +1,6 @@
 #include<QDialog>
 #include<QCheckBox>
+#include<QPushButton>
 
 class MainWindow;
 
@@ -9,6 +10,7 @@ public:
     PrefWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
     QCheckBox *chk_path;
+    QPushButton *pref_save, *pref_cancel;
 private:
     MainWindow *main_window;
 
