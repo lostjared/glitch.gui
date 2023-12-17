@@ -11,6 +11,10 @@ public:
     void setMainWindow(MainWindow *m);
     QCheckBox *chk_path;
     QPushButton *pref_save, *pref_cancel;
+public slots:
+    void pref_Save();
+    void pref_Cancel();
+
 private:
     MainWindow *main_window;
 

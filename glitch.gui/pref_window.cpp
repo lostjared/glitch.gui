@@ -13,8 +13,18 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent) {
     pref_cancel = new QPushButton(tr("Cancel"), this);
     pref_cancel->setGeometry(120, height()-40, 75, 25);
 
+    connect(pref_save, SIGNAL(clicked()), this, SLOT(pref_Save()));
+    connect(pref_cancel, SIGNAL(clicked()), this, SLOT(pref_Cancel()));
 }
 
 void PrefWindow::setMainWindow(MainWindow *m) {
     main_window = m;
+}
+
+void PrefWindow::pref_Save() {
+
+}
+
+void PrefWindow::pref_Cancel() {
+
 }
