@@ -2,6 +2,7 @@
 #include"main_window.hpp"
 #include"display_window.hpp"
 #include"debug_window.hpp"
+#include"pref_window.hpp"
 #include<QFileDialog>
 #include<QFile>
 #include<QMessageBox>
@@ -171,9 +172,20 @@ void RecordWindow::chkStateChanged() {
 
 void RecordWindow::selectPath() {
     QString dir;
-    dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), "");
+    QString path;
+    
+    if(main_window->pref_window->savePath()) {
+        path = main_window->pref_window->settings.value("record_path").toString();
+    }
+
+    dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), path);
     if(dir != "") {
         ffmpeg_file->setText(dir);
         path_selected = true;
+        if(main_window->pref_window->savePath())
+            main_window->pref_window->settings.setValue("record_path", dir);
     }
+
+
+
 }

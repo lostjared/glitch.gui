@@ -31,3 +31,7 @@ void PrefWindow::pref_Save() {
 void PrefWindow::pref_Cancel() {
     hide();
 }
+
+bool PrefWindow::savePath() const {
+    return chk_path->isChecked();
+}

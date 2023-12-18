@@ -13,6 +13,7 @@ public:
     QCheckBox *chk_path;
     QPushButton *pref_save, *pref_cancel;
     QSettings settings;
+    bool savePath() const;
 public slots:
     void pref_Save();
     void pref_Cancel();
