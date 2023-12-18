@@ -369,7 +369,7 @@ void MainWindow::record() {
             ffmpeg_path = info.ffmpeg_path;
             #ifdef _WIN32
             QDir d(".");
-            ffmpeg_path = d.absoultePath().toStdString() + "/ffmpeg.exe";
+            ffmpeg_path = d.absolutePath().toStdString() + "/ffmpeg.exe";
             #endif
             if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
                 record_rec->setText(tr("Stop Recording"));
