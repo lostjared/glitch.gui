@@ -1,6 +1,7 @@
 #include"new_image.hpp"
 #include"main_window.hpp"
 #include"record_window.hpp"
+#include"pref_window.hpp"
 #include<QFileDialog>
 #include<QIcon>
 #include<QMessageBox>
@@ -49,25 +50,40 @@ void NewImageWindow::setMainWindow(MainWindow *main_w) {
 
 void NewImageWindow::openFile() {
     QString filename;
-    filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), "", tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
+    QString path;
+
+    if(main_window->pref_window->savePath())
+        path = main_window->pref_window->settings.value("image_file_path").toString();
+
+    filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
         input_file->setText(filename);
         filename_set = true;
         if(outdir_set == true && filename_set == true) {
             video_start->setEnabled(true);
         }
+        if(main_window->pref_window->savePath())
+            main_window->pref_window->settings.setValue("image_file_path", filename);
     }
 }
 
 void NewImageWindow::selectDir() {
     QString dir;
-    dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), "");
+    QString path;
+
+    if(main_window->pref_window->savePath())
+        path = main_window->pref_window->settings.value("image_path").toString();
+
+
+    dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), path);
     if(dir != "") {
         output_location->setText(dir);
         outdir_set = true;
         if(outdir_set == true && filename_set == true) {
             video_start->setEnabled(true);
         }
+        if(main_window->pref_window->savePath())
+            main_window->pref_window->settings.setValue("image_path", dir);
     }
     
 }
