@@ -371,7 +371,7 @@ void MainWindow::record() {
             QDir d(".");
             ffmpeg_path = d.absolutePath().toStdString() + "/ffmpeg.exe";
             #endif
-            if(startRecording(filename.str().c_str(), info.codec.c_str(), info.src.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
+            if(startRecording(filename.str().c_str(), info.codec.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
                 record_rec->setText(tr("Stop Recording"));
                 toolbox_window->setRecordText(false);
                 QString output;
@@ -390,9 +390,9 @@ void MainWindow::record() {
     }
 }
 
-bool MainWindow::startRecording(const QString &filename, const QString &codec_type, const QString &res, const QString &dst_res, const QString &crf, const QString &fps) {
+bool MainWindow::startRecording(const QString &filename, const QString &codec_type,const QString &dst_res, const QString &crf, const QString &fps) {
     if(file_stream == NULL) {
-        file_stream = open_ffmpeg(filename.toStdString().c_str(), codec_type.toStdString().c_str(),res.toStdString().c_str(), dst_res.toStdString().c_str(), fps.toStdString().c_str(), crf.toStdString().c_str());
+        file_stream = open_ffmpeg(filename.toStdString().c_str(), codec_type.toStdString().c_str(),dst_res.toStdString().c_str(), fps.toStdString().c_str(), crf.toStdString().c_str());
         if(!file_stream) {
             std::cerr << "Could not open pipe to FFmpeg\n";
             QMessageBox msgbox;

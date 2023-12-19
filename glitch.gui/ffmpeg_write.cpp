@@ -17,7 +17,7 @@ char buffer[1024*1024];
 std::fstream file;
 int stdout_save;
 
-FILE *open_ffmpeg(const char *output, const char *codec, const char *, const char *dst_res, const char *fps, const char *crf) {
+FILE *open_ffmpeg(const char *output, const char *codec, const char *dst_res, const char *fps, const char *crf) {
     
     std::string tag;
     if(std::string(codec)=="libx265")
