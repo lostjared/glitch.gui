@@ -1,4 +1,6 @@
 #include"pref_window.hpp"
+#include"debug_window.hpp"
+#include"main_window.hpp"
 
 PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent), settings("LostSideDead", "glitch.gui") {
     setFixedSize(640, 480);
@@ -26,6 +28,7 @@ void PrefWindow::setMainWindow(MainWindow *m) {
 void PrefWindow::pref_Save() {
     settings.setValue("chk_path", chk_path->isChecked());   
     hide(); 
+    main_window->debug_window->Log("gui: Preferences saved.\n");
 }
 
 void PrefWindow::pref_Cancel() {
