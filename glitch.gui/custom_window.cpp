@@ -96,7 +96,7 @@ void CustomWindow::move_Up() {
             item->setText(data[1]);
             item2->setText(data[0]);
             filter_custom->setCurrentRow(index-1);
-            main_window->debug_window->Log("gui: Moved filter up in list.\n");
+            main_window->debug_window->Log("gui: Moved filter up in Custom filter list.\n");
         }
     }
 }
@@ -112,6 +112,7 @@ void CustomWindow::move_Down() {
         it1->setText(data[1]);
         it2->setText(data[0]);
         filter_custom->setCurrentRow(index+1);
+        main_window->debug_window->Log("gui: Moved filter down in Custom filter list.\n");
     }
 }
 
