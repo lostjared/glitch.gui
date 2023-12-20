@@ -96,6 +96,7 @@ void CustomWindow::move_Up() {
             item->setText(data[1]);
             item2->setText(data[0]);
             filter_custom->setCurrentRow(index-1);
+            main_window->debug_window->Log("gui: Moved filter up in list.\n");
         }
     }
 }
