@@ -19,6 +19,7 @@
 #include"custom_window.hpp"
 #include"custom_edit.hpp"
 #include"pref_window.hpp"
+#include"mux_window.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -79,6 +80,9 @@ MainWindow::MainWindow()  {
     pref_window = new PrefWindow(this);
     pref_window->setMainWindow(this);
     pref_window->hide();
+
+    mux_window = new MuxWindow(this);
+    mux_window->hide();
 
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
