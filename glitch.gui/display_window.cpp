@@ -145,7 +145,7 @@ void DisplayWindow::setSource() {
     display(source_image);
     QString text;
     QTextStream stream(&text);
-    stream << "glitch: Set current frame as Source image\n";
+    stream << "glitch: Set current frame as Source image.\n";
     debug_window->Log(text);
 }
 
