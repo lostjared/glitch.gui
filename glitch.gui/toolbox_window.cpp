@@ -2,6 +2,7 @@
 #include"display_window.hpp"
 #include"record_window.hpp"
 #include"main_window.hpp"
+#include"debug_window.hpp"
 #include<QColorDialog>
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
@@ -167,8 +168,11 @@ void ToolboxWindow::stopAction() {
 }
 
 void ToolboxWindow::stepAction() {
-    if(display_window != nullptr) 
+    if(display_window != nullptr) {
         display_window->step();
+        if(main_window != nullptr)
+            main_window->debug_window->Log("gui: Step forward taken.\n");
+    }
     
 }
 

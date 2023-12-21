@@ -150,11 +150,7 @@ void DisplayWindow::setSource() {
 }
 
 void DisplayWindow::step() {
-    timeoutFunc();
-    QString text;
-    QTextStream stream(&text);
-    stream << "glitch: Took step.\n";
-    debug_window->Log(text);    
+    timeoutFunc();  
 }
 
 void DisplayWindow::timeoutFunc() {
