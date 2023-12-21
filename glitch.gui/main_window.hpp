@@ -12,6 +12,7 @@
 #include<QLabel>
 #include<QKeyEvent>
 #include<cstdio>
+#include<QTextStream>
 
 #include"acidcam/ac.h"
 
