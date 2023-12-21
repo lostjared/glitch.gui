@@ -59,12 +59,13 @@ public:
     PrefWindow *pref_window;
     MuxWindow *mux_window;
 private:
-    QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu;
+    QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu, *audio_menu;
     QAction *file_open, *file_pref;
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
     QAction *filter_custom, *filter_edit;
+    QAction *audio_mux;
     QAction *help_about; 
     QImage image;
     QComboBox *filter_list, *filter_cat;
@@ -100,6 +101,7 @@ public slots:
     void filter_Edit();
     void custom_Add();
     void file_Pref();
+    void menu_Audio();
    
 };
 

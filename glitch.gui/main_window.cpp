@@ -83,6 +83,7 @@ MainWindow::MainWindow()  {
 
     mux_window = new MuxWindow(this);
     mux_window->hide();
+    
 
     setFixedSize(640, 360);
     setWindowTitle(tr(APP_NAME));
@@ -185,6 +186,14 @@ MainWindow::MainWindow()  {
     connect(filter_edit, SIGNAL(triggered()), this, SLOT(filter_Edit()));
 
     filter_menu->addAction(filter_edit);
+
+    audio_menu = menuBar()->addMenu(tr("&Audio"));
+    audio_mux = new QAction("M&ux Audio");
+    audio_mux->setShortcut(tr("Ctrl+U"));
+    
+    connect(audio_mux, SIGNAL(triggered()), this, SLOT(menu_Audio()));
+
+    audio_menu->addAction(audio_mux);
 
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
@@ -727,4 +736,8 @@ void MainWindow::custom_Add() {
 
 void MainWindow::file_Pref() {
     pref_window->show();
+}
+
+void MainWindow::menu_Audio() {
+    mux_window->show();
 }
