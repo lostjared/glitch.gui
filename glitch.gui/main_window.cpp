@@ -261,6 +261,10 @@ MainWindow::MainWindow()  {
     loadCategory(0);
     setWindowIcon(QIcon(":/images/icon.png"));
     display_window->setFilterFirst("None");
+    QString custom_text;
+    QTextStream cstream(&custom_text);
+    cstream << "gui: succesfully loaded " << cat_custom.size() << " custom filters...\n"; 
+    debug_window->Log(custom_text);
     debug_window->Log("gui: successfully initalized\n");
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
