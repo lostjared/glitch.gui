@@ -3,7 +3,7 @@
 
 
 MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
-    setFixedSize(640, 480);
+    setFixedSize(480, 200);
     setWindowIcon(QIcon(":/images/icon.png"));
     setWindowTitle("Copy Audio");
     file_source = new QLabel("[ Source File ]", this);
