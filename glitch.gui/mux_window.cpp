@@ -1,6 +1,9 @@
 #include"mux_window.hpp"
 #include<QIcon>
 #include<QFileDialog>
+#include"ffmpeg_write.h"
+#include<QMessageBox>
+#include"version_info.hpp"
 
 MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(480, 200);
@@ -49,5 +52,13 @@ void MuxWindow::select_Dest() {
     values_set[2] = true;
 }
 void MuxWindow::mux_Files() {
-
+    if(values_set[0] && values_set[1] && values_set[2]) {
+        mux_audio(file_source->text().toStdString().c_str(), file_copy->text().toStdString().c_str(), file_dest->text().toStdString().c_str());
+        QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("Muxed audio: " + file_dest->text());
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Information);
+        box.exec();
+    }
 }
