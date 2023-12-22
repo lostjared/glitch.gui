@@ -20,5 +20,25 @@ MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
     select_dest = new QPushButton(tr("Select File"), this);
     select_dest->setGeometry(340, 60+25+5,100,25);
 
+    mux_files = new QPushButton(tr("Mux Files"), this);
+    mux_files->setGeometry(340, 60+25+5+25+5, 100, 25);
+
+    connect(select_source, SIGNAL(clicked()), this, SLOT(select_Source()));
+    connect(select_copy, SIGNAL(clicked()), this, SLOT(select_Copy()));
+    connect(select_dest, SIGNAL(clicked()), this, SLOT(select_Dest()));
+    connect(mux_files, SIGNAL(clicked()), this, SLOT(mux_Files()));
     
+}
+
+void MuxWindow::select_Source() {
+
+}
+void MuxWindow::select_Copy() {
+
+}
+void MuxWindow::select_Dest() {
+
+}
+void MuxWindow::mux_Files() {
+
 }
