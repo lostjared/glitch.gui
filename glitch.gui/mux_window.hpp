@@ -14,6 +14,7 @@ public:
 private:
     QLabel *file_source, *file_copy, *file_dest;
     QPushButton *select_source, *select_copy, *select_dest, *mux_files;
+    bool values_set[3] = { false };
 public slots:
     void select_Source();
     void select_Copy();

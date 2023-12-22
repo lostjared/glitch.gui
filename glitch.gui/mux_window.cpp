@@ -1,6 +1,6 @@
 #include"mux_window.hpp"
 #include<QIcon>
-
+#include<QFileDialog>
 
 MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(480, 200);
@@ -31,13 +31,22 @@ MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
 }
 
 void MuxWindow::select_Source() {
-
+    QString path = "";
+    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.mov *.mp4 *.mkv)"));
+    file_source->setText(filename);
+    values_set[0] = true;
 }
 void MuxWindow::select_Copy() {
-
+    QString path = "";
+    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.mov *.mp4 *.mkv)"));
+    file_copy->setText(filename);
+    values_set[1] = true;
 }
 void MuxWindow::select_Dest() {
-
+    QString path = "";
+    QString filename = QFileDialog::getSaveFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.mp4 *.mov *.mkv)"));
+    file_dest->setText(filename);
+    values_set[2] = true;
 }
 void MuxWindow::mux_Files() {
 
