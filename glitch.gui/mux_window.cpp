@@ -60,5 +60,12 @@ void MuxWindow::mux_Files() {
         box.setWindowIcon(QIcon(":/images/icon.png"));
         box.setIcon(QMessageBox::Icon::Information);
         box.exec();
+    } else {
+        QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("Please select files and destination.");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Information);
+        box.exec();
     }
 }
