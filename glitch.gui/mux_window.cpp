@@ -55,14 +55,14 @@ void MuxWindow::mux_Files() {
     if(values_set[0] && values_set[1] && values_set[2]) {
         mux_audio(file_source->text().toStdString().c_str(), file_copy->text().toStdString().c_str(), file_dest->text().toStdString().c_str());
         QMessageBox box;
-        box.setWindowTitle(tr(APP_NAME));
+        box.setWindowTitle(tr("Succesfull"));
         box.setText("Muxed audio: " + file_dest->text());
         box.setWindowIcon(QIcon(":/images/icon.png"));
         box.setIcon(QMessageBox::Icon::Information);
         box.exec();
     } else {
         QMessageBox box;
-        box.setWindowTitle(tr(APP_NAME));
+        box.setWindowTitle(tr("Required Info Missing"));
         box.setText("Please select files and destination.");
         box.setWindowIcon(QIcon(":/images/icon.png"));
         box.setIcon(QMessageBox::Icon::Information);
