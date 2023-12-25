@@ -1,4 +1,4 @@
-
+/* FFmpeg write OpenCV video via pipe */
 #ifndef  __FFMPEG_WRITE_H_
 #define __FFMPEG_WRITE_H_
 
