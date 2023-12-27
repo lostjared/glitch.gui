@@ -3,6 +3,7 @@
 #include<filesystem>
 
 std::unordered_map<std::string, int> plug_map;
+std::vector<AC_Plugin> plugins;
 
 Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
     f_init = (func) library.resolve("init");
@@ -38,6 +39,7 @@ void release_plugins(std::vector<AC_Plugin> &files) {
         std::string &f = files[i].first;
         Plugin_Program *prog = files[i].second;
         std::cout << "Releasing: " << f << "\n";
+        prog->f_rls();
         delete prog;
     }
 }

@@ -218,6 +218,7 @@ MainWindow::MainWindow()  {
     filter_cat->addItem(tr("Mirror"));
     filter_cat->addItem(tr("New Filter"));
     filter_cat->addItem(tr("Custom"));
+    filter_cat->addItem(tr("Plugin"));
     
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
     
@@ -302,6 +303,12 @@ void MainWindow::loadCategory(int index) {
         for(int i = 0; i < static_cast<int>(a->size()); ++i) {
             filter_list->addItem(a->at(i).first.c_str());
         }  
+    } else if(index == 7) {
+        auto *a = &plugins;
+        for(size_t i = 0; i < a->size(); ++i) {
+            filter_list->addItem(a->at(i).first.c_str());
+        }
+
     } else {
         std::vector<std::string> *v = vec_cat[index];
         for(int i = 0; i < static_cast<int>(v->size()); ++i) {

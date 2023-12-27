@@ -78,7 +78,7 @@ private:
     std::string first_filter = "None";
     std::string cur_filename;
     FILE *file_stream = NULL;
-    std::vector<AC_Plugin> plugins;
+    
 public slots:
     void openFile();
     void indexChanged(int index);

@@ -1,7 +1,7 @@
 #include"new_filter.hpp"
 #include"cat_vec.hpp"
 #include<unordered_map>
-
+#include"plugin_program.hpp"
 std::vector<FilterList> new_filter_list;
 std::unordered_map<std::string, FilterList*> new_filter_map;
 
@@ -76,7 +76,23 @@ void add_new_filter(const FilterList &lst) {
 }
 
 void New_CallFilter(std::string name, cv::Mat &frame) {
-    if(name.find("Custom__") != std::string::npos) {
+
+    if(name.find(".acidcam")  != std::string::npos) {
+
+        auto fptr = plug_map.find(name);
+        if(fptr == plug_map.end()) {
+            std::cerr << "Error: " << name << " not found\n";
+        }
+         else {
+            int index = fptr->second;
+            Plugin_Program *prog = plugins[index].second;
+            if(prog->init == false) {
+                prog->f_init();
+                prog->init = true;
+            }           
+            prog->f_proc(frame);
+         }
+    } else if(name.find("Custom__") != std::string::npos) {
         int index = cat_custom_index[name];
         auto &lst = cat_custom[index].second;
         for(size_t i = 0; i < lst.size(); ++i) {
