@@ -9,7 +9,7 @@ Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
     f_clear = (func) library.resolve("clear");
 
     if(f_init == 0 || f_rls == 0 || f_proc == 0 || f_clear == 0) {
-        std::cerr << "fatal error plugin missing function..\n";
+        std::cerr << "fatal error plugin: " << filename.toStdString() << " missing function..\n";
 //        exit(EXIT_FAILURE);
     }
 }
