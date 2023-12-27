@@ -1,5 +1,6 @@
 
 #include"plugin_program.hpp"
+#include<filesystem>
 
 Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
     f_init = (func) library.resolve("init");
@@ -10,5 +11,19 @@ Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
     if(f_init == 0 || f_rls == 0 || f_proc == 0 || f_clear == 0) {
         std::cerr << "fatal error plugin missing function..\n";
         exit(EXIT_FAILURE);
+    }
+}
+
+void load_plugins_strings(const std::string &path, std::vector<std::string> &files) {
+    std::filesystem::path p{path};
+    if(is_directory(p)) {
+        for(auto &i : std::filesystem::recursive_directory_iterator(path)) {
+            std::string f = i.path().string();
+            if(f.find(".acidcam") != std::string::npos) {
+                files.push_back(f);
+            }
+        }
+    } else {
+        std::cerr << "invalid input..\n";
     }
 }

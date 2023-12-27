@@ -19,4 +19,6 @@ public:
     func f_rls;
 };
 
+void load_plugins_strings(const std::string &path, std::vector<std::string> &files);
+
 #endif
