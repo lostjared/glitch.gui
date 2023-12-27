@@ -2,6 +2,8 @@
 #include"plugin_program.hpp"
 #include<filesystem>
 
+std::unordered_map<std::string, int> plug_map;
+
 Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
     f_init = (func) library.resolve("init");
     f_rls = (func) library.resolve("rls");
@@ -9,7 +11,7 @@ Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
     f_clear = (func) library.resolve("clear");
 
     if(f_init == 0 || f_rls == 0 || f_proc == 0 || f_clear == 0) {
-        std::cerr << "fatal error plugin: " << filename.toStdString() << " missing function..\n";
+        std::cerr << "error plugin: " << filename.toStdString() << " missing function..\n";
 //        exit(EXIT_FAILURE);
     }
 }
@@ -25,6 +27,9 @@ void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
         }
     } else {
         std::cerr << "invalid input..\n";
+    }
+    for(size_t i = 0; i < files.size(); ++i) {
+        plug_map[files[i].first] = i;
     }
 }
 

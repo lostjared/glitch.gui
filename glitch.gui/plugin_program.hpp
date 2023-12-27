@@ -22,4 +22,6 @@ public:
 using AC_Plugin = std::pair<std::string, Plugin_Program *>;
 void load_plugins(const std::string &path, std::vector<AC_Plugin> &files);
 void release_plugins(std::vector<AC_Plugin> &files);
+extern std::unordered_map<std::string, int> plug_map;
+
 #endif
