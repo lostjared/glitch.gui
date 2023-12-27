@@ -39,6 +39,11 @@ QImage Mat2QImage(cv::Mat const& src)
     return dest;
 }
 
+MainWindow::~MainWindow() {
+    std::cout << "Releasing plugins..\n";
+    release_plugins(plugins);
+}
+
 MainWindow::MainWindow()  {
     ac::init();
     build_lists();

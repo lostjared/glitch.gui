@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow {
     
 public:
     MainWindow();
+    ~MainWindow();
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void keyShiftUp();

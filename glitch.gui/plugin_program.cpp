@@ -27,3 +27,12 @@ void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
         std::cerr << "invalid input..\n";
     }
 }
+
+void release_plugins(std::vector<AC_Plugin> &files) {
+    for(size_t i = 0; i < files.size(); ++i) {
+        std::string &f = files[i].first;
+        Plugin_Program *prog = files[i].second;
+        std::cout << "Releasing: " << f << "\n";
+        delete prog;
+    }
+}
