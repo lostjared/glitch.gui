@@ -10,17 +10,17 @@ Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
 
     if(f_init == 0 || f_rls == 0 || f_proc == 0 || f_clear == 0) {
         std::cerr << "fatal error plugin missing function..\n";
-        exit(EXIT_FAILURE);
+//        exit(EXIT_FAILURE);
     }
 }
 
-void load_plugins_strings(const std::string &path, std::vector<std::string> &files) {
+void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
     std::filesystem::path p{path};
     if(is_directory(p)) {
         for(auto &i : std::filesystem::recursive_directory_iterator(path)) {
             std::string f = i.path().string();
             if(f.find(".acidcam") != std::string::npos) {
-                files.push_back(f);
+                files.push_back(std::make_pair(f, new Plugin_Program(f.c_str())));
             }
         }
     } else {

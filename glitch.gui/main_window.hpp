@@ -13,7 +13,7 @@
 #include<QKeyEvent>
 #include<cstdio>
 #include<QTextStream>
-
+#include"plugin_program.hpp"
 #include"acidcam/ac.h"
 
 cv::Mat QImage2Mat(QImage const& src);
@@ -77,6 +77,7 @@ private:
     std::string first_filter = "None";
     std::string cur_filename;
     FILE *file_stream = NULL;
+    std::vector<AC_Plugin> plugins;
 public slots:
     void openFile();
     void indexChanged(int index);

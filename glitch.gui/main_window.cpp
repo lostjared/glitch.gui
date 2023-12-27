@@ -20,6 +20,7 @@
 #include"custom_edit.hpp"
 #include"pref_window.hpp"
 #include"mux_window.hpp"
+#include"plugin_program.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -280,6 +281,7 @@ MainWindow::MainWindow()  {
     debug_window->Log(custom_text);
     debug_window->Log("gui: successfully initalized\n");
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    load_plugins("./plugins", plugins);
 
 }
 

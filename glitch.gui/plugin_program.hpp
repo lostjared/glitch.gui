@@ -19,6 +19,7 @@ public:
     func f_rls;
 };
 
-void load_plugins_strings(const std::string &path, std::vector<std::string> &files);
+using AC_Plugin = std::pair<std::string, Plugin_Program *>;
+void load_plugins(const std::string &path, std::vector<AC_Plugin> &files);
 
 #endif
