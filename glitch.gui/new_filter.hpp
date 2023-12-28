@@ -26,4 +26,5 @@ void update_new_filter_map();
 void release_filter_list();
 void New_CallFilter(std::string name, cv::Mat &frame);
 void New_CallFilterClear(std::string name);
+void Plug_CallFilterClear(std::string name);
 #endif

@@ -115,9 +115,19 @@ void New_CallFilter(std::string name, cv::Mat &frame) {
 }
 
 void New_CallFilterClear(std::string name) {
-    if(name.find("New_") == std::string::npos) {
-        return;
-    } else {
+    if(name.find(".acidcam") != std::string::npos) {
+        auto fptr = plug_map.find(name);
+        if(fptr == plug_map.end()) {
+            std::cerr << "Error: " << name << " not found\n";
+        }
+         else {
+            int index = fptr->second;
+            Plugin_Program *prog = plugins[index].second;
+            prog->f_clear();
+         }
+    } 
+    else
+    if(name.find("New_") != std::string::npos) {
         auto pos = new_filter_map.find(name);
         if(pos != new_filter_map.end()) {
             FilterList *l = pos->second;
