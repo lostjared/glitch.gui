@@ -2,8 +2,14 @@
 #ifndef _PLUGIN_PROGRAM_H_
 #define _PLUGIN_PROGRAM_H_
 
-#include"acidcam/ac.h"
 #include<QLibrary>
+#include<unordered_map>
+#include<vector>
+#include<iostream>
+
+namespace cv {
+    class Mat;
+}
 
 typedef void (*proc)(cv::Mat &frame);
 typedef void (*func)();
