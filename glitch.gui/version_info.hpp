@@ -3,6 +3,6 @@
 #define APP_VERSION "0.8.0"
 #define APP_NAME "glitch.gui"
 #define AUTHOR_NAME "Jared Bruni"
-#define APP_YEAR="2022-2023"
+#define APP_YEAR "(C) 2023-2024"
 #define DEV
 #endif
