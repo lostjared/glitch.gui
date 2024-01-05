@@ -2,7 +2,7 @@
 
 extern "C" void init() {
     std::cout << "colorxor81 initialized..\n";
-    srand(static_cast<unsigned int>(time(0));
+    srand(static_cast<unsigned int>(time(0)));
 }
 
 extern "C" void rls() {
