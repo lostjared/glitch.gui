@@ -1407,17 +1407,18 @@ Glitch_Line_Horiz_Grad::~Glitch_Line_Horiz_Grad() {}
 /* glitch rect grad */
 
 void Glitch_Rect_Grad::init() {
+    /*
     num_rows = 8;
     num_cols = 8;
     arr_size = num_rows * num_cols;
     alpha_array = new double[ arr_size + 2 ];
     for(int i = 0; i < arr_size; ++i) {
         alpha_array[i] = (0.1) * (rand()%10);
-    }
+    }*/
 }
 
 void Glitch_Rect_Grad::proc(cv::Mat &frame) {
-    
+    /*    
     collection.shiftFrames(frame);
     
     int row_size = frame.rows/num_rows;
@@ -1434,7 +1435,7 @@ void Glitch_Rect_Grad::proc(cv::Mat &frame) {
         alpha_array[i] += 0.05;
         if(alpha_array[i] >= 1.0)
             alpha_array[i] = 0.1;
-    }
+    }*/
 }
 
 void Glitch_Rect_Grad::drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src) {
@@ -1454,8 +1455,9 @@ void Glitch_Rect_Grad::clear() {
 
 
 Glitch_Rect_Grad::~Glitch_Rect_Grad() {
+    /*
     if(alpha_array != nullptr)
-        delete [] alpha_array;
+        delete [] alpha_array;*/
 }
 
 /* glitch rect Size */
