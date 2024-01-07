@@ -286,7 +286,7 @@ MainWindow::MainWindow()  {
     cstream << "gui: succesfully loaded " << cat_custom.size() << " custom filters...\n"; 
     debug_window->Log(custom_text);
     debug_window->Log("gui: successfully initalized\n");
-    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     load_plugins("./plugins", plugins);
 
 }

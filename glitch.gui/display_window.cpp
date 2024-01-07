@@ -20,7 +20,7 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     // don't use debug_window not initalized yet
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutFunc()));
-    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 void DisplayWindow::closeEvent(QCloseEvent *) {

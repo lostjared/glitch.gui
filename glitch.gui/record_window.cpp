@@ -73,7 +73,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_file_set->setGeometry(25+310,105+25+5,100,25);
 
     connect(ffmpeg_file_set, SIGNAL(clicked()), this, SLOT(selectPath()));
-    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 void RecordWindow::setMainWindow(MainWindow *m) {

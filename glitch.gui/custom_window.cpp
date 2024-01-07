@@ -142,20 +142,19 @@ void CustomWindow::changeCategory(int) {
 void CustomWindow::setFilter() {
     QString name = filter_name->text();
     if(createCustom(name)) {
-        /*QMessageBox box;
+        QMessageBox box;
         box.setWindowTitle(tr(APP_NAME));
         box.setText("Created custom: " + name);
         box.setWindowIcon(QIcon(":/images/icon.png"));
         box.setIcon(QMessageBox::Icon::Information);
-        box.exec();*/
+        box.exec();
     } else {
-        /*
        QMessageBox box;
         box.setWindowTitle(tr(APP_NAME));
         box.setText("Error creating custom No data? no Name?");
         box.setWindowIcon(QIcon(":/images/icon.png"));
         box.setIcon(QMessageBox::Icon::Critical);
-        box.exec(); */
+        box.exec(); 
     }
 }
 
