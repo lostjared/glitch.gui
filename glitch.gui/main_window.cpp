@@ -359,11 +359,12 @@ void MainWindow::stopRecording() {
         QString output;
         QTextStream stream(&output);
         stream << "glitch: Stopped recording...\n";
-        debug_window->Log(output); 
+        debug_window->Log(output);
     } else if(record_window->rec_info.save_png == true) {
         display_window->savePNG(false, "");
         debug_window->Log("glitch: Stopping PNG sequence\n");
     } 
+    ac::release_all_objects(); 
 }
 
 void MainWindow::record() {
