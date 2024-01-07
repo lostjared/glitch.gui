@@ -1417,7 +1417,7 @@ void Glitch_Rect_Grad::init() {
     }*/
 }
 
-void Glitch_Rect_Grad::proc(cv::Mat &frame) {
+void Glitch_Rect_Grad::proc(cv::Mat &) {
     /*    
     collection.shiftFrames(frame);
     
