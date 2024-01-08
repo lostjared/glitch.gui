@@ -24,7 +24,7 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *dst_res, co
         tag = "-tag:v hvc1";
     
     std::ostringstream stream;
-    stream << "\"" << ffmpeg_path << "\"" << " -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " <<  tag << " -crf " << crf << " " <<  "\"" << output << "\"";
+    stream << ffmpeg_path << " -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " <<  tag << " -crf " << crf << " " <<  "\"" << output << "\"";
     
     std::cout<<"acidcam: " << stream.str() << "\n";
     
@@ -69,7 +69,7 @@ void close_stdout() {
 
 void mux_audio(const char *output, const char *src, const char *final_file) {
     std::ostringstream stream;
-    stream << "\"" << ffmpeg_path << "\"" << " -y -i \"" << output << "\" -i \"" << src << "\" -c copy -map 0:v:0 -map 1:a:0? -shortest \"" << final_file << "\"";
+    stream << ffmpeg_path << " -y -i \"" << output << "\" -i \"" << src << "\" -c copy -map 0:v:0 -map 1:a:0? -shortest \"" << final_file << "\"";
     std::cout << "acidcam: " << stream.str() << "\n";
 #ifndef _WIN32
     FILE *fptr = popen(stream.str().c_str(), "r");
@@ -94,7 +94,7 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
 
 void rotate_90(const char *output, const char *src) {
     std::ostringstream stream;
-    stream << "\"" << ffmpeg_path << "\"" << " -i \"" << output << "\" -c copy  -metadata:s:v:0 rotate=90 " << "\"" << src << "\"";
+    stream <<  ffmpeg_path << " -i \"" << output << "\" -c copy  -metadata:s:v:0 rotate=90 " << "\"" << src << "\"";
     std::cout << "acidcam: " << stream.str() << "\n";
 #ifndef _WIN32
     FILE *fptr = popen(stream.str().c_str(), "r");
