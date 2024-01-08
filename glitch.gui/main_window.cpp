@@ -400,7 +400,7 @@ void MainWindow::record() {
             filename << info.filename << "/" << "Video" << index++ << ".mp4";
             ffmpeg_path = info.ffmpeg_path;
             #ifdef _WIN32
-            QDir d(".");
+            //QDir d(".");
             ffmpeg_path = "ffmpeg.exe"; //d.absolutePath().toStdString() + "/ffmpeg.exe";
             #endif
             if(startRecording(filename.str().c_str(), info.codec.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
