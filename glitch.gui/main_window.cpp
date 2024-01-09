@@ -395,9 +395,14 @@ void MainWindow::record() {
                 QTextStream stream(&fps);
                 stream << display_window->getCurrentFPS();
             }
+           QDateTime now = QDateTime::currentDateTime();
+           QString time_data = now.toString();
+            for(int i = 0; i < time_data.length(); ++i) {
+                if(time_data[i] == '/' || time_data[i] == ' ' || time_data[i] == ':') time_data[i] = '.';
+            }
             static int index = 1;
             std::ostringstream filename;
-            filename << info.filename << "/" << "Video" << index++ << ".mp4";
+            filename << info.filename << "/" << "Video-" << time_data.toStdString() << "-" << index++ << ".mp4";
             ffmpeg_path = info.ffmpeg_path;
             #ifdef _WIN32
             //QDir d(".");
