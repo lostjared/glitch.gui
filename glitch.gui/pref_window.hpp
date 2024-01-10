@@ -21,6 +21,7 @@ public:
     QLabel *custom_path_lbl;
     bool savePath() const;
     QString custom_path;
+    bool loaded = false;
 
 public slots:
     void pref_Save();

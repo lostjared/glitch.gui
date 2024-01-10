@@ -50,9 +50,9 @@ MainWindow::MainWindow()  {
     pref_window = new PrefWindow(this);
     pref_window->setMainWindow(this);
     pref_window->hide();
-
-    build_lists(pref_window->custom_path_lbl->text().toStdString());
     
+    build_lists(pref_window->custom_path_lbl->text().toStdString());
+
     debug_window = new DebugWindow(this);
     debug_window->show();
     
@@ -294,7 +294,9 @@ MainWindow::MainWindow()  {
     debug_window->Log("gui: successfully initalized\n");
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     load_plugins("./plugins", plugins);
-
+    if(pref_window->loaded == false) {
+        debug_window->Log("gui: Please select a location for saving custom filters in preferneces window...\n");
+    }
 }
 
 void MainWindow::loadCategory(int index) {

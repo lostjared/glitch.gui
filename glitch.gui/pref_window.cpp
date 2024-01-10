@@ -35,6 +35,7 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent), settings("LostSideDea
     QString fname = settings.value("chk_filename").toString();
     if(fname != "") {
         custom_path_lbl->setText(fname);
+        loaded = true;
     } 
 }
 
