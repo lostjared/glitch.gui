@@ -258,6 +258,11 @@ MainWindow::MainWindow()  {
     filter_set_custom->setGeometry(15+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
 
     connect(filter_set_custom, SIGNAL(clicked()), this, SLOT(custom_Add()));
+
+    filter_add_custom = new QPushButton(tr("Add"), this);
+    filter_add_custom->setGeometry(15+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+    
+    connect(filter_add_custom, SIGNAL(clicked()), this, SLOT(custom_filter_add()));
     
     filter_list_view->setEnabled(true);
     filter_search->setEnabled(true);
@@ -760,4 +765,12 @@ void MainWindow::file_Pref() {
 
 void MainWindow::menu_Audio() {
     mux_window->show();
+}
+
+void MainWindow::custom_filter_add() {
+    int cur_sel = filter_list->currentIndex();
+    if(cur_sel >= 0) {
+        QString text = filter_list->currentText();
+        custom_window->addItem(text);
+    }
 }
