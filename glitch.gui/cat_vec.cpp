@@ -731,6 +731,7 @@ void load_custom(std::string filename) {
         std::cerr << "Error opening custom file: " << filename << "\n";
         return;
     }
+    clear_custom();
     while(!file.eof()) {
         std::string line;
         std::getline(file, line);
@@ -756,6 +757,12 @@ void load_custom(std::string filename) {
     custom_setup_map(true);
 }
 
+void clear_custom() {
+    if(!cat_custom.empty()) {
+        cat_custom.erase(cat_custom.begin(), cat_custom.end());
+    }
+}
+
 void custom_setup_map(bool clear) {
 
    if(clear && !cat_custom_index.empty()) {
@@ -774,7 +781,6 @@ void save_custom(std::string filename) {
         std::cerr << "Error saving custom file: " << filename << "\n";
         return;
     }
-
     for(size_t i = 0; i < cat_custom.size(); ++i) {
         std::string &name = cat_custom[i].first;
         file << name << "=";

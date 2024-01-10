@@ -1,6 +1,8 @@
 #include"pref_window.hpp"
 #include"debug_window.hpp"
 #include"main_window.hpp"
+#include"cat_vec.hpp"
+#include"custom_edit.hpp"
 #include<QFileDialog>
 
 PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent), settings("LostSideDead", "glitch.gui") {
@@ -64,5 +66,7 @@ void PrefWindow::pref_setPath() {
         settings.setValue("chk_filename", filename);
         custom_path_lbl->setText(filename);
         main_window->debug_window->Log("gui: custom save file set to path: " + filename + "\n");
+        clear_custom();
+        main_window->custom_edit->updateFilterNames();
     }
 }

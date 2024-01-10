@@ -11,8 +11,11 @@ using custom_filter = std::pair<std::string, std::vector<std::string>>;
 extern std::vector<custom_filter> cat_custom;
 extern std::unordered_map<std::string, int> cat_custom_index;
 void build_lists(std::string filename);
+void load_custom(std::string filename);
 void save_custom(std::string filename);
+void clear_custom();
 bool custom_exists(const std::string &s);
 void custom_setup_map(bool clear);
+
 
 #endif
