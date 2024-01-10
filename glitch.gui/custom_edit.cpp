@@ -3,6 +3,7 @@
 #include<iostream>
 #include"main_window.hpp"
 #include"debug_window.hpp"
+#include"pref_window.hpp"
 
 CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(320, 120);
@@ -39,7 +40,7 @@ void CustomEditWindow::removeCustom() {
             cat_custom.erase(i);
             cat_custom_index.erase(pos);        
         }
-        save_custom();
+        save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
         updateFilterNames();
         main_window->debug_window->Log("gui: Removed custom filter: " + name + "\n");
     }  

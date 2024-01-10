@@ -4,6 +4,7 @@
 #include"new_filter.hpp"
 #include"custom_edit.hpp"
 #include"debug_window.hpp"
+#include"pref_window.hpp"
 #include<QMessageBox>
 
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
@@ -182,7 +183,7 @@ bool CustomWindow::createCustom(const QString &name) {
     QString fname = "Custom__" + name;
     cat_custom.push_back(std::make_pair(fname.toStdString(), custom_data));
     custom_setup_map(false);
-    save_custom();
+    save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
     main_window->custom_edit->updateFilterNames();
     main_window->debug_window->Log("gui: Created new custom filter: " + fname + "\n");
     return true;

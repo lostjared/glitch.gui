@@ -46,8 +46,13 @@ MainWindow::~MainWindow() {
 
 MainWindow::MainWindow()  {
     ac::init();
-    build_lists();
     ac::setMaxAllocated(325);
+    pref_window = new PrefWindow(this);
+    pref_window->setMainWindow(this);
+    pref_window->hide();
+
+    build_lists(pref_window->custom_path_lbl->text().toStdString());
+    
     debug_window = new DebugWindow(this);
     debug_window->show();
     
@@ -82,10 +87,6 @@ MainWindow::MainWindow()  {
     custom_edit = new CustomEditWindow(this);
     custom_edit->setMainWindow(this);
     custom_edit->hide();
-
-    pref_window = new PrefWindow(this);
-    pref_window->setMainWindow(this);
-    pref_window->hide();
 
     mux_window = new MuxWindow(this);
     mux_window->hide();

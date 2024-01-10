@@ -1,6 +1,7 @@
 #include"pref_window.hpp"
 #include"debug_window.hpp"
 #include"main_window.hpp"
+#include<QFileDialog>
 
 PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent), settings("LostSideDead", "glitch.gui") {
     setFixedSize(640, 480);
@@ -18,7 +19,23 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent), settings("LostSideDea
     connect(pref_save, SIGNAL(clicked()), this, SLOT(pref_Save()));
     connect(pref_cancel, SIGNAL(clicked()), this, SLOT(pref_Cancel()));
 
+    QLabel *title = new QLabel(tr("Save Filters: "), this);
+    title->setGeometry(25,60,100,25);
+
+    custom_path_lbl = new QLabel(tr("Custom Path"), this);
+    custom_path_lbl->setGeometry(125,60,200,25);
+
+    pref_custom = new QPushButton(tr("..."), this);
+    pref_custom->setGeometry(350, 60, 70, 25);
+
+    connect(pref_custom, SIGNAL(clicked()), this, SLOT(pref_setPath()));
+    
     chk_path->setChecked(settings.value("chk_path").toBool());
+
+    QString fname = settings.value("chk_filename").toString();
+    if(fname != "") {
+        custom_path_lbl->setText(fname);
+    } 
 }
 
 void PrefWindow::setMainWindow(MainWindow *m) {
@@ -37,4 +54,14 @@ void PrefWindow::pref_Cancel() {
 
 bool PrefWindow::savePath() const {
     return chk_path->isChecked();
+}
+
+
+void PrefWindow::pref_setPath() {
+    QString filename = QFileDialog::getSaveFileName(this,tr("Open Pref"), "/", tr("Custom Save File (*.dat)"));
+    if(filename != "") {
+        settings.setValue("chk_filename", filename);
+        custom_path_lbl->setText(filename);
+        main_window->debug_window->Log("gui: custom save file set to path: " + filename + "\n");
+    }
 }

@@ -724,11 +724,11 @@ std::vector<std::string> *vec_cat[] = { &cat_in_order, &cat_sorted, &cat_fast, &
 std::vector<custom_filter> cat_custom;
 std::unordered_map<std::string, int> cat_custom_index;
 
-void load_custom() {
+void load_custom(std::string filename) {
     std::fstream file;
-    file.open("custom.dat", std::ios::in);
+    file.open(filename, std::ios::in);
     if(!file.is_open()) {
-        std::cerr << "Error opening custom file: custom.dat\n";
+        std::cerr << "Error opening custom file: " << filename << "\n";
         return;
     }
     while(!file.eof()) {
@@ -767,11 +767,11 @@ void custom_setup_map(bool clear) {
     }
 }
 
-void save_custom() {
+void save_custom(std::string filename) {
     std::fstream file;
-    file.open("custom.dat", std::ios::out);
+    file.open(filename, std::ios::out);
     if(!file.is_open()) {
-        std::cerr << "Error saving custom file: custom.dat\n";
+        std::cerr << "Error saving custom file: " << filename << "\n";
         return;
     }
 
@@ -786,15 +786,16 @@ void save_custom() {
       }
 
     file.close();
+    std::cout << "custom saved to: " << filename << "\n";
 }
 
-void build_lists() {
+void build_lists(std::string filename) {
     for(auto it = ac::solo_filter.begin(); it != ac::solo_filter.end(); ++it) {
         cat_in_order.push_back(*it);
         cat_sorted.push_back(*it);
     }
     std::sort(cat_sorted.begin(), cat_sorted.end());
-    load_custom();
+    load_custom(filename);
 }
 
 bool custom_exists(const std::string &s) {

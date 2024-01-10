@@ -16,15 +16,16 @@ public:
     PrefWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
     QCheckBox *chk_path;
-    QPushButton *pref_save, *pref_cancel;
+    QPushButton *pref_save, *pref_cancel, *pref_custom;
     QSettings settings;
+    QLabel *custom_path_lbl;
     bool savePath() const;
-
     QString custom_path;
 
 public slots:
     void pref_Save();
     void pref_Cancel();
+    void pref_setPath();
 
 private:
     MainWindow *main_window;
