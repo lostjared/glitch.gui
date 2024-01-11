@@ -8,7 +8,7 @@
 #include<QDateTime>
 #include<QMessageBox>
 #include"new_filter.hpp"
-
+#include"control_window.hpp"
 
 DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
@@ -164,6 +164,8 @@ void DisplayWindow::timeoutFunc() {
 
         if(cap.read(m)) {
             image = m;
+            int pos = cap.get(cv::CAP_PROP_POS_FRAMES);
+            main_window->control_window->setPos(pos);
         } else {
 
             if(repeat == true) {
@@ -178,7 +180,11 @@ void DisplayWindow::timeoutFunc() {
                     box.exec();
                     stopAnimation();
                     main_window->disableUndo();
-                }  
+                } 
+    
+                int max = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_COUNT));
+                main_window->control_window->enableControl(0, max);
+                main_window->control_window->setPos(0);
             } else {
                 stopAnimation();
                 main_window->disableUndo();
@@ -370,6 +376,10 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
         } else {
            if(main_window->record_window->rec_info.load_start == true)
                 main_window->record();
+
+            int max = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_COUNT));
+            main_window->control_window->enableControl(0, max);
+            main_window->control_window->setPos(0);
         }
     }
     return true;
