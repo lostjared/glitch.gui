@@ -27,6 +27,7 @@ public:
     void setShow();
     void setRecordText(bool b);
     void setStopText();
+    void setStartText();
 public slots:
     void saveSnapshot();
     void setSource();

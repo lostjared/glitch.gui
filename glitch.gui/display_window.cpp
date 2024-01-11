@@ -78,7 +78,8 @@ void DisplayWindow::startAnimation(float fps) {
 void DisplayWindow::stopAnimation() {
     timer->stop();
     debug_window->Log("gui: Animation stopped\n");
-    main_window->stopRecording();
+    main_window->toolbox_window->setStopText();
+    //main_window->stopRecording();
 }
 
 void DisplayWindow::resetFrameCount() {
@@ -194,9 +195,22 @@ void DisplayWindow::timeoutFunc() {
                 int max = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_COUNT));
                 main_window->control_window->enableControl(0, max);
                 main_window->control_window->setPos(0);
+                frame_count = 0;
             } else {
                 stopAnimation();
+                main_window->stopRecording();
                 main_window->disableUndo();
+                main_window->toolbox_window->setStartText();
+                cap.open(input_filename);
+                if(!cap.isOpened()) {
+                    QMessageBox box;
+                    box.setWindowTitle("Error opening video file");
+                    box.setText("Error opening video file...\n");
+                    box.setIcon(QMessageBox::Icon::Warning);
+                    box.exec();
+                }
+                cap.read(image); 
+                frame_count = 0;             
             }
         }
     }

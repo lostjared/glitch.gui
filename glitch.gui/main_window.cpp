@@ -383,7 +383,10 @@ void MainWindow::stopRecording() {
         display_window->savePNG(false, "");
         debug_window->Log("glitch: Stopping PNG sequence\n");
     } 
-    ac::release_all_objects(); 
+    ac::release_all_objects();
+    record_rec->setText(tr("Record"));
+    toolbox_window->setRecordText(true);
+       
 }
 
 void MainWindow::record() {

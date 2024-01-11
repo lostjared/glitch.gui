@@ -213,3 +213,8 @@ void ToolboxWindow::setStopText() {
     stop_action->setText("Stop");
     main_window->setAniString("Stop");
 }
+
+void ToolboxWindow::setStartText() {
+    stop_action->setText("Start");
+    main_window->setAniString("Start");
+}
