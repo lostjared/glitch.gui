@@ -19,10 +19,10 @@ public:
     void setPosText(int pos); 
     QScrollBar *ctrl_pos;
     QLabel *ctrl_txt;
-
+    QPushButton *ctrl_set;
 private:
     MainWindow *main_window;
-    QPushButton *ctrl_set;
+   
 public slots:
     void changedIndex(int val);
     void setIndex();

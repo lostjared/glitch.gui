@@ -5,7 +5,7 @@
 #include<iostream>
 
 Control_Window::Control_Window(QWidget *parent) : QDialog(parent) {
-    setFixedSize(800, 100);
+    setFixedSize(675, 100);
     ctrl_pos = new QScrollBar(Qt::Horizontal, this);
     ctrl_pos->setGeometry(25, 25, 400, 25);
     ctrl_pos->setEnabled(false);
@@ -19,6 +19,8 @@ Control_Window::Control_Window(QWidget *parent) : QDialog(parent) {
     ctrl_set->setGeometry(545, 25, 100, 25);
 
     connect(ctrl_set, SIGNAL(clicked()), this, SLOT(setIndex()));
+
+    ctrl_set->setEnabled(false);
 }
 
 

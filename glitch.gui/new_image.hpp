@@ -14,6 +14,7 @@ class NewImageWindow : public QDialog {
 public:
     NewImageWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *main_w);
+    bool fileOpen() const;
 public slots:
     void openRecordOptions();
 

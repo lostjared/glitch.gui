@@ -72,7 +72,7 @@ MainWindow::MainWindow()  {
 
     control_window = new Control_Window(this);
     control_window->setMainWindow(this);
-    control_window->setGeometry(600,1000, 800, 100);
+    control_window->setGeometry(675,1000, 700, 100);
     control_window->hide();
     
     newimage_window = new NewImageWindow(this);
@@ -543,6 +543,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
                 image_step->setEnabled(true);
                 image_set_source->setEnabled(true);
                 image_ani->setEnabled(true);
+                control_window->ctrl_set->setEnabled(true);
                 return;
             }
         }
@@ -583,6 +584,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             image_step->setEnabled(true);
             image_set_source->setEnabled(true); 
             image_ani->setEnabled(true);
+            control_window->ctrl_set->setEnabled(false);
         } else {
             QMessageBox box;
             box.setWindowTitle("Error could not load image");
