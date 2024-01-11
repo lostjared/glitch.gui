@@ -62,6 +62,7 @@ public:
     void setFade(bool value);
     void resetFrameCount();
     size_t getFrameCount() const;
+    void setVideoIndex(int pos);
 public slots:
     void timeoutFunc();
     
