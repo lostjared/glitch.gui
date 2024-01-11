@@ -65,7 +65,7 @@ private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu, *audio_menu;
     QAction *file_open, *file_pref;
     QAction *edit_undo, *edit_redo;
-    QAction *record_set, *record_rec, *record_repeat;
+    QAction *record_set, *record_rec, *record_repeat, *record_control;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
     QAction *filter_custom, *filter_edit;
     QAction *audio_mux;
@@ -107,7 +107,7 @@ public slots:
     void file_Pref();
     void menu_Audio();
     void custom_filter_add();
-   
+    void showControls();
 };
 
 

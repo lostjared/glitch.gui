@@ -72,7 +72,7 @@ MainWindow::MainWindow()  {
 
     control_window = new Control_Window(this);
     control_window->setMainWindow(this);
-    control_window->setGeometry(700,900, 800, 100);
+    control_window->setGeometry(600,1000, 800, 100);
     control_window->hide();
     
     newimage_window = new NewImageWindow(this);
@@ -152,9 +152,14 @@ MainWindow::MainWindow()  {
     record_repeat->setChecked(false);
     record_menu->addAction(record_repeat);
 
+    record_control = new QAction(tr("Controls"), this);
+    record_control->setShortcut(tr("Ctrl+X"));
+    record_menu->addAction(record_control);
+
     connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
     connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));  
+    connect(record_control, SIGNAL(triggered()), this, SLOT(showControls()));
 
     image_menu = menuBar()->addMenu(tr("&Image"));
     image_save = new QAction(tr("&Save"));
@@ -783,3 +788,8 @@ void MainWindow::custom_filter_add() {
         custom_window->addItem(text);
     }
 }
+
+void MainWindow::showControls() {
+    control_window->show();
+}
+
