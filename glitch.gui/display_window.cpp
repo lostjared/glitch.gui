@@ -155,7 +155,7 @@ void DisplayWindow::step() {
 }
 
 void DisplayWindow::setVideoIndex(int pos) {
-    if(!timer->isActive()) {
+    if(!timer->isActive() && cap.isOpened()) {
         frame_count = pos;
         cap.set(cv::CAP_PROP_POS_FRAMES, pos);
         timeoutFunc();
