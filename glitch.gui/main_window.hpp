@@ -28,6 +28,7 @@ class CustomWindow;
 class CustomEditWindow;
 class PrefWindow;
 class MuxWindow;
+class Control_Window;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -59,6 +60,7 @@ public:
     CustomEditWindow *custom_edit;
     PrefWindow *pref_window;
     MuxWindow *mux_window;
+    Control_Window *control_window;
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu, *audio_menu;
     QAction *file_open, *file_pref;

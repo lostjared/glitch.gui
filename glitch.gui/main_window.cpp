@@ -21,6 +21,7 @@
 #include"pref_window.hpp"
 #include"mux_window.hpp"
 #include"plugin_program.hpp"
+#include"control_window.hpp"
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -68,6 +69,11 @@ MainWindow::MainWindow()  {
     display_window->setDebugWindow(debug_window);
     
     toolbox_window->setDisplayWindow(display_window);
+
+    control_window = new Control_Window(this);
+    control_window->setMainWindow(this);
+    control_window->setGeometry(700,900, 800, 100);
+    control_window->hide();
     
     newimage_window = new NewImageWindow(this);
     newimage_window->setGeometry(1000, 100, 320, 240);
