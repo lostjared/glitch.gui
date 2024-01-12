@@ -4,5 +4,5 @@
 #define APP_NAME "glitch.gui"
 #define AUTHOR_NAME "Jared Bruni"
 #define APP_YEAR "(C) 2023-2024"
-#define DEV
 #endif
+
