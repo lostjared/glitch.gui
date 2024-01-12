@@ -145,7 +145,7 @@ void RecordWindow::saveSettings() {
         case 2:
             rec_info.save_png = true;
             rec_info_set = true;
-            main_window->enableRecord();
+            //main_window->enableRecord();
             hide();
             return;
         break;
@@ -157,7 +157,7 @@ void RecordWindow::saveSettings() {
         rec_info.fps = ffmpeg_fps->text().toStdString();
     }
     rec_info_set = true;
-    main_window->enableRecord();
+    //main_window->enableRecord();
     main_window->debug_window->Log("gui: Updated record settings...\n");
     hide();
 }

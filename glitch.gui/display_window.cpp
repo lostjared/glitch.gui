@@ -73,6 +73,7 @@ void DisplayWindow::startAnimation(float fps) {
     this->fps = fps;
     timer->start(static_cast<int>((double)1000 / fps));
     main_window->toolbox_window->setStopText();
+    main_window->enableRecord();
 }
 
 void DisplayWindow::stopAnimation() {
