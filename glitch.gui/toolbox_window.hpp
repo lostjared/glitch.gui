@@ -28,6 +28,7 @@ public:
     void setRecordText(bool b);
     void setStopText();
     void setStartText();
+    void enableRecord();
 public slots:
     void saveSnapshot();
     void setSource();

@@ -52,8 +52,14 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     record_now->setGeometry(120, 45+25+10+25+25+5, 100, 25);
     connect(record_now, SIGNAL(clicked()), this, SLOT(recordNow()));
 
+    record_now->setEnabled(false);
+
     disableButtons();
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+}
+
+void ToolboxWindow::enableRecord() {
+    record_now->setEnabled(true);
 }
 
 void ToolboxWindow::recordNow() {

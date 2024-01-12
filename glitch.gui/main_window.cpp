@@ -480,6 +480,7 @@ bool MainWindow::isFileOpen() {
 
 void MainWindow::enableRecord() {
     record_rec->setEnabled(true);
+    toolbox_window->enableRecord();
 }
 
 void MainWindow::setInfo(const cv::Mat &frame) {
