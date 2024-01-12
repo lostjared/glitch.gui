@@ -1,0 +1,7 @@
+CXX=g++
+LIBS=`pkg-config acidcam opencv4 --libs`
+CXXFLAGS=`pkg-config acidcam opencv4 --cflags`
+PLUGIN_NAME=plugin.acidcam
+all:
+	$(CXX) -std=c++17 -shared -o $(PLUGIN_NAME) $(LIBS) $(CXXFLAGS) plugin.cpp
+
