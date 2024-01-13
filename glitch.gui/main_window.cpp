@@ -180,7 +180,7 @@ MainWindow::MainWindow()  {
     image_menu->addAction(image_set_source);
 
     image_ani = new QAction(tr("Stop Animation"));
-    image_ani->setShortcut(tr("Ctrl+Z"));
+    image_ani->setShortcut(tr("Ctrl+E"));
     image_ani->setEnabled(false);
 
     image_menu->addAction(image_ani);
