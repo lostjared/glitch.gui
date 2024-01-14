@@ -1,0 +1,4 @@
+#CXX=g++
+#CXX=x86_64-w64-mingw32-g++
+PLUGIN_NAME=pic_adjust2.acidcam
+include ../Makefile.top
