@@ -1,0 +1,4 @@
+#CXX=g++
+#CXX=x86_64-w64-mingw32-g++
+PLUGIN_NAME=line_offset_inout2.acidcam
+include ../Makefile.top
