@@ -6,6 +6,9 @@
 
 Control_Window::Control_Window(QWidget *parent) : QDialog(parent) {
     setFixedSize(675, 100);
+    setWindowTitle("Video Controls");
+    setWindowIcon(QIcon(":/images/icon.png"));
+    
     ctrl_pos = new QScrollBar(Qt::Horizontal, this);
     ctrl_pos->setGeometry(25, 25, 400, 25);
     ctrl_pos->setEnabled(false);
