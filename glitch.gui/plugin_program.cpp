@@ -18,11 +18,13 @@ Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
 }
 
 void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
+    std::cout << "Loading plugins from path: " << path << "\n";
     std::filesystem::path p{path};
     if(is_directory(p)) {
         for(auto &i : std::filesystem::recursive_directory_iterator(path)) {
             std::string f = i.path().string();
             if(f.find(".acidcam") != std::string::npos) {
+                std::cout << "Loading: " << f << "\n";
                 files.push_back(std::make_pair(f, new Plugin_Program(f.c_str())));
             }
         }
@@ -32,6 +34,7 @@ void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
     for(size_t i = 0; i < files.size(); ++i) {
         plug_map[files[i].first] = i;
     }
+    std::cout << "Sucessfully loaded " << files.size() << " plugin(s).\n";
 }
 
 void release_plugins(std::vector<AC_Plugin> &files) {
