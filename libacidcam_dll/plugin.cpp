@@ -1,8 +1,8 @@
 #include"acidcam/ac.h"
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/imgcodecs/imgcodecs.hpp>
+//#include <opencv2/core/core.hpp>
+//#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/imgproc/imgproc.hpp>
+//#include <opencv2/imgcodecs/imgcodecs.hpp>
 
 static constexpr int MAX = 8;   
 static ac::MatrixCollection<MAX> collection;
