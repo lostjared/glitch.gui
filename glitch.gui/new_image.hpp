@@ -14,7 +14,8 @@ class NewImageWindow : public QDialog {
 public:
     NewImageWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *main_w);
-    bool fileOpen() const;
+    bool fileOpen();
+    float getFPS(const QString &filename);
 public slots:
     void openRecordOptions();
 

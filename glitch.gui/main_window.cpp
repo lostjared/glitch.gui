@@ -412,9 +412,9 @@ void MainWindow::record() {
             }    
             QString fps = info.fps.c_str();
             if(info.fps == "same") {
-                fps = "";
-                QTextStream stream(&fps);
-                stream << display_window->getCurrentFPS();
+                //fps = "";
+                //QTextStream stream(&fps);
+                //stream << display_window->getCurrentFPS();
             }
            QDateTime now = QDateTime::currentDateTime();
            QString time_data = now.toString();

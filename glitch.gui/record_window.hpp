@@ -27,10 +27,10 @@ class RecordWindow : public QDialog {
 public:
     RecordWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *m);
-
-   RecordInfo rec_info;
-   bool rec_info_set = false;
-   
+    QCheckBox *ffmpeg_same, *ffmpeg_man; 
+    RecordInfo rec_info;
+    bool rec_info_set = false;
+    QString fps_same;
 public slots:
     void saveSettings();
     void chkStateChanged();
@@ -43,8 +43,8 @@ private:
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
     QLineEdit *ffmpeg_fps, *ffmpeg_crf;
-    QCheckBox *ffmpeg_same, *ffmpeg_man;
-    QLabel *ffmpeg_file;
+ 
+     QLabel *ffmpeg_file;
     QPushButton *ffmpeg_file_set;
     bool path_selected = false;
  };

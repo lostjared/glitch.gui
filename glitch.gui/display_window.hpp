@@ -63,6 +63,7 @@ public:
     void resetFrameCount();
     size_t getFrameCount() const;
     void setVideoIndex(int pos);
+    float getFPS(const QString &source);
 public slots:
     void timeoutFunc();
     
@@ -74,6 +75,7 @@ private:
     DebugWindow *debug_window = nullptr;
     MainWindow *main_window = nullptr;
     float fps = 24.0;
+    bool fps_same = true;
     cv::Vec3b color_offset;
     std::string first_filter;
     QString outdir, prefix;

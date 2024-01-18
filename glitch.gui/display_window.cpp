@@ -404,6 +404,7 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
             int max = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_COUNT));
             main_window->control_window->enableControl(0, max);
             main_window->control_window->setPos(0);
+          
         }
     }
     return true;

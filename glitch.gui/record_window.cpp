@@ -150,9 +150,11 @@ void RecordWindow::saveSettings() {
             return;
         break;
     }
-
      if(ffmpeg_same->isChecked()){
-        rec_info.fps = "same";
+        QString text;
+        QTextStream stream(&text);
+        stream << fps_same;
+        rec_info.fps = text.toStdString();
     } else {
         rec_info.fps = ffmpeg_fps->text().toStdString();
     }

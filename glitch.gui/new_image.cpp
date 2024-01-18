@@ -58,6 +58,11 @@ void NewImageWindow::openFile() {
     filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
         input_file->setText(filename);
+        QString text;
+        QTextStream stream(&text);
+        stream << getFPS(filename);
+        if(main_window->record_window->ffmpeg_same->isChecked())
+            main_window->record_window->fps_same = text;
         filename_set = true;
         if(outdir_set == true && filename_set == true) {
             video_start->setEnabled(true);
@@ -115,4 +120,13 @@ void NewImageWindow::videoStart() {
 void NewImageWindow::openRecordOptions() {
     if(video_record->checkState() == Qt::Checked) 
         main_window->record_window->show();
+}
+
+float NewImageWindow::getFPS(const QString &filename) {
+    cv::VideoCapture cap;
+    cap.open(filename.toStdString());
+    if(cap.isOpened()) {
+        return static_cast<float>(cap.get(cv::CAP_PROP_FPS));
+    }   
+    return 24.0f;
 }
