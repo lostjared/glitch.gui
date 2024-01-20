@@ -4,7 +4,7 @@ static constexpr int MAX = 8;
 static ac::MatrixCollection<MAX> collection;
 
 extern "C" void init() {
-    std::cout << "alphatrails initialized...\n";
+    std::cout << "line_collection01 initialized...\n";
     srand(static_cast<unsigned int>(time(0)));
 }
 
