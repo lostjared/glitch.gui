@@ -27,9 +27,7 @@ int main(int argc, char **argv) {
     ac::setMaxAllocated(325);
     std::cout << "libacidcam v" << ac::version << " succesfully loaded...\n";
     QString fname = settings.value("chk_filename").toString();
-    if(fname != "")
-        build_lists(fname.toStdString());
-
+    build_lists(fname.toStdString());
     MainWindow main_window;
     main_window.show();
     app.exec();
