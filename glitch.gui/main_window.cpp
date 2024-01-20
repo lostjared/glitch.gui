@@ -46,14 +46,10 @@ MainWindow::~MainWindow() {
 }
 
 MainWindow::MainWindow()  {
-    ac::init();
-    ac::setMaxAllocated(325);
     pref_window = new PrefWindow(this);
     pref_window->setMainWindow(this);
-    pref_window->hide();
-    
-    build_lists(pref_window->custom_path_lbl->text().toStdString());
-
+    pref_window->hide();  
+    //build_lists(pref_window->custom_path_lbl->text().toStdString());
     debug_window = new DebugWindow(this);
     debug_window->show();
     

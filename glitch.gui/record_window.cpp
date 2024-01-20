@@ -177,7 +177,7 @@ void RecordWindow::selectPath() {
     QString path;
     
     if(main_window->pref_window->savePath()) {
-        path = main_window->pref_window->settings.value("record_path").toString();
+        path = settings.value("record_path").toString();
     }
 
     dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), path);
@@ -185,7 +185,7 @@ void RecordWindow::selectPath() {
         ffmpeg_file->setText(dir);
         path_selected = true;
         if(main_window->pref_window->savePath())
-            main_window->pref_window->settings.setValue("record_path", dir);
+            settings.setValue("record_path", dir);
     }
 
 

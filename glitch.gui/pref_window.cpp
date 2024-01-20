@@ -5,7 +5,7 @@
 #include"custom_edit.hpp"
 #include<QFileDialog>
 
-PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent), settings("LostSideDead", "glitch.gui") {
+PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     setFixedSize(640, 480);
     setWindowTitle("Preferences");
 

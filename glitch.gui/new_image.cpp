@@ -53,7 +53,7 @@ void NewImageWindow::openFile() {
     QString path;
 
     if(main_window->pref_window->savePath())
-        path = main_window->pref_window->settings.value("image_file_path").toString();
+        path = settings.value("image_file_path").toString();
 
     filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
@@ -68,7 +68,7 @@ void NewImageWindow::openFile() {
             video_start->setEnabled(true);
         }
         if(main_window->pref_window->savePath())
-            main_window->pref_window->settings.setValue("image_file_path", filename);
+            settings.setValue("image_file_path", filename);
     }
 }
 
@@ -77,7 +77,7 @@ void NewImageWindow::selectDir() {
     QString path;
 
     if(main_window->pref_window->savePath())
-        path = main_window->pref_window->settings.value("image_path").toString();
+        path = settings.value("image_path").toString();
 
 
     dir = QFileDialog::getExistingDirectory(this, tr("Open Dir"), path);
@@ -88,7 +88,7 @@ void NewImageWindow::selectDir() {
             video_start->setEnabled(true);
         }
         if(main_window->pref_window->savePath())
-            main_window->pref_window->settings.setValue("image_path", dir);
+            settings.setValue("image_path", dir);
     }
     
 }
