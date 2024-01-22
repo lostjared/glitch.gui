@@ -4,7 +4,7 @@ static constexpr int MAX = 8;
 static ac::MatrixCollection<MAX> collection;
 
 extern "C" void init() {
-    std::cout << "picture_jump01 initalized...\n";
+    std::cout << "picture_jump21 initalized...\n";
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -22,34 +22,35 @@ extern "C" void proc(cv::Mat  &frame) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
     }
-    else if(rand()%5 == 0)
+    else
         collection.shiftFrames(frame);
     static int dir = 1;
     static int offset = 0;
+    static int div = 2;
+    static int size_x = frame.cols/16;
+    static int wait = rand()%30;
+    static int counter = 0;
     
-    frame = collection.frames[offset].clone();
-    
-    if(dir == 1) {
-        static int wait = 0;
-        static int timeout = rand()%10;
+    if(++counter > wait) {
+        counter = 0;
+        wait = rand()%10;
+        
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                int cx = AC_GetFX(frame.cols-1, i, size_x);
+                if(cx >= 0 && cx < frame.cols && z >= 0 && z < frame.rows) {
+                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, cx);
+                    pixel = pix;
+                }
+            }
+            size_x ++;
+            if(size_x > frame.cols*2)
+                size_x = frame.cols/16;
+        }
+        
         if(++offset > (MAX-1)) {
             offset = 0;
-        }
-        if(++wait > timeout) {
-            wait = 0;
-            timeout = rand()%10;
-            dir = 0;
-        }
-    } else {
-        static int wait = 0;
-        static int timeout = rand()%10;
-        if(--offset <= 0) {
-            offset = MAX-1;
-        }
-        if(++wait > timeout) {
-            wait = 0;
-            timeout = rand()%10;
-            dir = 1;
         }
     }
 }
