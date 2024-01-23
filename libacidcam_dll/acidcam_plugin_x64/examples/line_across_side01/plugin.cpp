@@ -19,7 +19,7 @@ struct LineAcrossImpl {
 
 
 extern "C" void init() {
-    std::cout << "picture_jump01 initalized...\n";
+    std::cout << "line_across_side01 initalized...\n";
     srand(static_cast<unsigned int>(time(0)));
 }
 
