@@ -1,4 +1,4 @@
 #CXX=g++
 #CXX=x86_64-w64-mingw32-g++
-PLUGIN_NAME=picture_jump28.acidcam
+PLUGIN_NAME=picture_jump31.acidcam
 include ../Makefile.top
