@@ -112,6 +112,7 @@ all:
 	make -C square_block_v2f
 	make -C square_block_v2g
 	make -C square_block_v2h
+	make -C square_xor
 	make -C store_frame10
 	make -C stuckframe
 	make -C stutter_long
