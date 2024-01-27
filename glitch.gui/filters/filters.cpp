@@ -44,7 +44,7 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Mirror_Bars_Horiz_X1_Grad_Xor", new Glitch_Mirror_Bars_Horiz_X1_Grad_Xor()});
     new_filter_list.push_back({"New_Glitch_Line_Horiz", new Glitch_Line_Horiz()});
     new_filter_list.push_back({"New_Glitch_Line_Horiz_Grad", new Glitch_Line_Horiz_Grad()});
-    new_filter_list.push_back({"New_Glitch_Rect_Grad", new Glitch_Rect_Grad()});
+    //new_filter_list.push_back({"New_Glitch_Rect_Grad", new Glitch_Rect_Grad()});
     new_filter_list.push_back({"New_Glitch_Rect_Size", new Glitch_Rect_Size()});
     new_filter_list.push_back({"New_Glitch_Rect_SizeY", new Glitch_Rect_SizeY()});
     new_filter_list.push_back({"New_Glitch_Rect_SizeX", new Glitch_Rect_SizeX()}); 
@@ -73,5 +73,5 @@ void init_filters_local() {
     new_filter_list.push_back({"New_Glitch_Square_Scramble", new Glitch_Square_Scramble()});
     new_filter_list.push_back({"New_Glitch_Square_ScrambleX", new Glitch_Square_ScrambleX()}); 
     new_filter_list.push_back({"New_Glitch_Square_ScrambleY", new Glitch_Square_ScrambleY()}); 
-    new_filter_list.push_back({"New_Glitch_Square", new Glitch_Square()}); 
+    //new_filter_list.push_back({"New_Glitch_Square", new Glitch_Square()}); 
 }
