@@ -31,6 +31,7 @@ void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
     } else {
         std::cerr << "invalid input..\n";
     }
+    std::sort(files.begin(), files.end());
     for(size_t i = 0; i < files.size(); ++i) {
         plug_map[files[i].first] = i;
     }
