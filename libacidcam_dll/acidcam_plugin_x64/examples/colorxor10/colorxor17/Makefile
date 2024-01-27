@@ -1,4 +1,4 @@
 #CXX=g++
 #CXX=x86_64-w64-mingw32-g++
-PLUGIN_NAME=colorxor20.acidcam
+PLUGIN_NAME=colorxor17.acidcam
 include ../Makefile.top

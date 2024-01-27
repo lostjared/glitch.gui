@@ -26,8 +26,7 @@ extern "C" void proc(cv::Mat  &frame) {
     static int dir[3] = {rand()%2, rand()%2, rand()%2};
     static double max_x[3]= {1.0, 2.0, 3.0};
     static double min_x[3] = {3.0, 2.0, 1.0};
-
-    static auto rand_d = []() -> double { return static_cast<double>(rand()%30) * 0.1; };
+    
     
     if(lazy == 0) {
         srand(static_cast<unsigned int>(time(0)));
@@ -38,12 +37,6 @@ extern "C" void proc(cv::Mat  &frame) {
         dir[0] = rand()%2;
         dir[1] = rand()%2;
         dir[2] = rand()%2;
-        max_x[0] = rand_d();
-        max_x[1] = rand_d();
-        max_x[2] = rand_d();
-        min_x[0] = rand_d();
-        min_x[1] = rand_d();
-        min_x[2] = rand_d();
     }
     
     for(int z = 0; z < frame.rows; z++) {
@@ -60,7 +53,7 @@ extern "C" void proc(cv::Mat  &frame) {
     for(int q = 0; q < 3; ++q) {
         double r = static_cast<double>(rand()%10);
         if(dir[q] == 1) {
-            alpha[q] += 0.003*r;
+            alpha[q] += 0.004*r;
             if(alpha[q] >= max_x[q]) {
                 alpha[q] = max_x[q];
                 dir[q] = rand()%2;
@@ -71,7 +64,7 @@ extern "C" void proc(cv::Mat  &frame) {
                     max_x[q] = 3.0;
             }
         } else {
-            alpha[q] -= 0.002*r;
+            alpha[q] -= 0.005*r;
             if(alpha[q] <= min_x[q]) {
                 alpha[q] = min_x[q];
                 dir[q] = rand()%2;
