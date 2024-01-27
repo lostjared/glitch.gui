@@ -18,6 +18,7 @@ int main(int argc, char **argv) {
             prog->f_init();
             bool active = true;
             cv::namedWindow("plug-test");
+            std::cout << "Press q to quit..\n";
             while(active) {
                 cv::Mat frame;
                 if(!cap.read(frame)) {
@@ -26,11 +27,13 @@ int main(int argc, char **argv) {
                         std::cerr << "Error opening video file..\n";
                         exit(EXIT_FAILURE);
                     }
+                    cap.read(frame);
                 }
                 prog->f_proc(frame);
                 cv::imshow("plug-test", frame);
-                if(cv::pollKey() != 0) {
+                if(cv::pollKey() == 'q') {
                     active = false;
+                    break;
                 }
             }
             prog->f_clear();
