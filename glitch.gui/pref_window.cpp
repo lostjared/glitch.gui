@@ -48,7 +48,7 @@ void PrefWindow::setMainWindow(MainWindow *m) {
 void PrefWindow::pref_Save() {
     settings.setValue("chk_path", chk_path->isChecked());   
     hide(); 
-    main_window->debug_window->Log("gui: Preferences saved.\n");
+    main_window->debug_window->Log("gui: ces saved.\n");
 }
 
 void PrefWindow::pref_Cancel() {

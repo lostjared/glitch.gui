@@ -303,7 +303,7 @@ MainWindow::MainWindow()  {
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     load_plugins("./plugins", plugins);
     if(pref_window->loaded == false) {
-        debug_window->Log("gui: Please select a location for saving custom filters in preferneces window...\n");
+        debug_window->Log("gui: Please select a location for saving custom filters in preferences window...\n");
     }
 }
 
