@@ -43,6 +43,8 @@ QImage Mat2QImage(cv::Mat const& src)
 MainWindow::~MainWindow() {
     std::cout << "Releasing plugins..\n";
     release_plugins(plugins);
+    std::cout << "Releasing filter list..\n";
+    release_filter_list();
 }
 
 MainWindow::MainWindow()  {
