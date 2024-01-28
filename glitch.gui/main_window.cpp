@@ -305,6 +305,10 @@ MainWindow::MainWindow()  {
     if(pref_window->loaded == false) {
         debug_window->Log("gui: Please select a location for saving custom filters in preferences window...\n");
     }
+    QString plug_out;
+    QTextStream ps(&plug_out);
+    ps << "gui: loaded " << plugins.size() << " plugin(s).\n";;
+    debug_window->Log(plug_out);
 }
 
 void MainWindow::loadCategory(int index) {
