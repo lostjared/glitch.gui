@@ -296,18 +296,18 @@ MainWindow::MainWindow()  {
     setWindowIcon(QIcon(":/images/icon.png"));
     display_window->setFilterFirst("None");
     QString custom_text;
-    QTextStream cstream(&custom_text);
-    cstream << "gui: succesfully loaded " << cat_custom.size() << " custom filters...\n"; 
-    debug_window->Log(custom_text);
     debug_window->Log("gui: successfully initalized\n");
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     load_plugins("./plugins", plugins);
     if(pref_window->loaded == false) {
         debug_window->Log("gui: Please select a location for saving custom filters in preferences window...\n");
     }
+    QTextStream cstream(&custom_text);
+    cstream << "gui: Loaded " << cat_custom.size() << " custom filter(s).\n"; 
+    debug_window->Log(custom_text);
     QString plug_out;
     QTextStream ps(&plug_out);
-    ps << "gui: loaded " << plugins.size() << " plugin(s).\n";;
+    ps << "gui: Loaded " << plugins.size() << " plugin(s).\n";;
     debug_window->Log(plug_out);
 }
 
