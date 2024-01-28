@@ -75,7 +75,7 @@ private:
     QComboBox *filter_list, *filter_cat;
     QListWidget *filter_list_view;
     QLineEdit *filter_search;
-    QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear, *filter_set_custom, *filter_add_custom, *filter_release;
+    QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear, *filter_set_custom, *filter_add_custom, *filter_release, *filter_btn_exit;
     QLabel *filter_first;
     QTextEdit *content_data;
     std::string first_filter = "None";

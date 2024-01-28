@@ -295,6 +295,11 @@ MainWindow::MainWindow()  {
 
     connect(filter_release, SIGNAL(clicked()), this, SLOT(filterRelease()));
 
+    filter_btn_exit = new QPushButton(tr("Exit"), this);
+    filter_btn_exit->setGeometry(15+70+10+70+10+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+
+    connect(filter_btn_exit, SIGNAL(clicked()), this, SLOT(quitProgram()));
+
     filter_list_view->setEnabled(true);
     filter_search->setEnabled(true);
     filter_search_button->setEnabled(true);
