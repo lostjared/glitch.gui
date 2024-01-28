@@ -60,7 +60,10 @@ void NewImageWindow::openFile() {
         input_file->setText(filename);
         QString text;
         QTextStream stream(&text);
-        stream << getFPS(filename);
+        int width = 0, height = 0;
+        stream << getFPS(filename, width, height);
+        main_window->current_width = width;
+        main_window->current_height = height;
         if(main_window->record_window->ffmpeg_same->isChecked())
             main_window->record_window->fps_same = text;
         filename_set = true;
@@ -122,11 +125,18 @@ void NewImageWindow::openRecordOptions() {
         main_window->record_window->show();
 }
 
-float NewImageWindow::getFPS(const QString &filename) {
+float NewImageWindow::getFPS(const QString &filename, int &width, int &height) {
     cv::VideoCapture cap;
     cap.open(filename.toStdString());
     if(cap.isOpened()) {
+        width = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_WIDTH));
+        height = static_cast<int>(cap.get(cv::CAP_PROP_FRAME_HEIGHT));
         return static_cast<float>(cap.get(cv::CAP_PROP_FPS));
-    }   
+    }
+    cv::Mat test_img = cv::imread(filename.toStdString());
+    if(test_img.empty()) {
+        width = test_img.cols;
+        height = test_img.rows;
+    }  
     return 24.0f;
 }

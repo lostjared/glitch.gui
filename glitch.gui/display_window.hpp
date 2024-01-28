@@ -63,7 +63,6 @@ public:
     void resetFrameCount();
     size_t getFrameCount() const;
     void setVideoIndex(int pos);
-    float getFPS(const QString &source);
 public slots:
     void timeoutFunc();
     

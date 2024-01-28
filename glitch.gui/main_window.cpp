@@ -425,7 +425,7 @@ void MainWindow::record() {
             }
             static int index = 1;
             std::ostringstream filename;
-            filename << info.filename << "/" << "Video-" << time_data.toStdString() << "-" << index++ << ".mp4";
+            filename << info.filename << "/" << "Video-" << time_data.toStdString() << "-" << current_width << "x" << current_height << "-" << index++ << ".mp4";
             ffmpeg_path = info.ffmpeg_path;
             #ifdef _WIN32
             //QDir d(".");
@@ -436,7 +436,7 @@ void MainWindow::record() {
                 toolbox_window->setRecordText(false);
                 QString output;
                 QTextStream stream(&output);
-                stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";
+                stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " FPS / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";
                 debug_window->Log(output); 
             }   
         } 

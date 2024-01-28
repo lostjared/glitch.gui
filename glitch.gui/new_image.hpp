@@ -15,7 +15,7 @@ public:
     NewImageWindow(QWidget *parent = 0);
     void setMainWindow(MainWindow *main_w);
     bool fileOpen();
-    float getFPS(const QString &filename);
+    float getFPS(const QString &filename, int &width, int &height);
 public slots:
     void openRecordOptions();
 

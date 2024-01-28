@@ -61,6 +61,7 @@ public:
     PrefWindow *pref_window;
     MuxWindow *mux_window;
     Control_Window *control_window;
+    int current_width = 0, current_height = 0; 
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu, *audio_menu;
     QAction *file_open, *file_pref;
@@ -80,7 +81,6 @@ private:
     std::string first_filter = "None";
     std::string cur_filename;
     FILE *file_stream = NULL;
-    
 public slots:
     void openFile();
     void indexChanged(int index);
