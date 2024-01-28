@@ -18,8 +18,8 @@ typedef void (*func)();
 class Plugin_Program  {
 public:
     Plugin_Program(const QString &filename);
-    QString filename_;
     QLibrary library;
+    QString filename_;
     proc f_proc;
     func f_init;
     func f_clear;
