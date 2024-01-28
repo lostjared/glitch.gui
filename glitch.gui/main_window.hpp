@@ -64,7 +64,7 @@ public:
     int current_width = 0, current_height = 0; 
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu, *help_menu, *audio_menu;
-    QAction *file_open, *file_pref;
+    QAction *file_open, *file_pref, *file_exit;
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat, *record_control;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
@@ -109,6 +109,7 @@ public slots:
     void custom_filter_add();
     void showControls();
     void filterRelease();
+    void quitProgram();
 };
 
 

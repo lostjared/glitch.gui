@@ -22,6 +22,7 @@
 #include"mux_window.hpp"
 #include"plugin_program.hpp"
 #include"control_window.hpp"
+#include<QCoreApplication>
 
 cv::Mat QImage2Mat(QImage const& src)
 {
@@ -108,6 +109,12 @@ MainWindow::MainWindow()  {
     connect(file_pref, SIGNAL(triggered()), this, SLOT(file_Pref()));
 
     file_menu->addAction(file_pref);
+
+    file_exit = new QAction(tr("Exit"));
+    connect(file_exit, SIGNAL(triggered()), this, SLOT(quitProgram()));
+
+    file_menu->addSeparator();
+    file_menu->addAction(file_exit);
     
     edit_menu = menuBar()->addMenu(tr("&Edit"));
     edit_undo = new QAction(tr("Undo"), this);
@@ -817,4 +824,8 @@ void MainWindow::showControls() {
 
 void MainWindow::filterRelease() {
     ac::release_all_objects();
+}
+
+void MainWindow::quitProgram() {
+    QCoreApplication::exit();
 }
