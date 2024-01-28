@@ -63,6 +63,7 @@ public:
     void resetFrameCount();
     size_t getFrameCount() const;
     void setVideoIndex(int pos);
+    void closeVideo();
 public slots:
     void timeoutFunc();
     

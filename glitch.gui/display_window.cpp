@@ -375,6 +375,9 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
     mode = m;
     input_filename = source_file;
     if(mode == InputMode::IMAGE) {
+        if(cap.isOpened()) {
+            cap.release();
+        }
         source_image = cv::imread(input_filename);
         if(source_image.empty()) {
             QMessageBox box;
@@ -387,6 +390,9 @@ bool DisplayWindow::resetInputMode(const InputMode &m, std::string source_file) 
         
     } else if(mode == InputMode::VIDEO) {
         main_window->disableUndo();
+        if(cap.isOpened()) {
+            cap.release();
+        }
         cap.open(source_file);
         if(!cap.isOpened()) {
             // error message
@@ -448,6 +454,12 @@ float DisplayWindow::videoFPS() {
 
 void DisplayWindow::setRepeat(bool r) {
     repeat = r;
+}
+
+void DisplayWindow::closeVideo() {
+    if(cap.isOpened()) {
+        cap.release();
+    }
 }
 
 std::ostream &operator<<(std::ostream &out, const InputMode &im) {

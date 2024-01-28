@@ -97,7 +97,7 @@ MainWindow::MainWindow()  {
     mux_window->hide();
     
 
-    setFixedSize(640, 360);
+    setFixedSize(640, 390);
     setWindowTitle(tr(APP_NAME));
     file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Art"), this);
@@ -336,6 +336,15 @@ MainWindow::MainWindow()  {
     QTextStream ps(&plug_out);
     ps << "gui: Loaded " << plugins.size() << " plugin(s).\n";;
     debug_window->Log(plug_out);
+
+    bar_position = new QProgressBar(this);
+    bar_position->setGeometry(10, 355, width()-20, 20);
+    bar_position->hide();
+}
+
+void MainWindow::setMinMax(int min, int max) {
+    bar_position->setMaximum(max);
+    bar_position->setMinimum(min);
 }
 
 void MainWindow::loadCategory(int index) {
@@ -525,8 +534,11 @@ void MainWindow::setInfo(const cv::Mat &frame) {
         stream << "Video stream Frame Count: " << static_cast<int>(fc_) << "\n";
         double per = static_cast<double>(display_window->getFrameCount())/fc_ * 100.00;
         stream << " Video stream: " << static_cast<int>(per) << "%\n";
+        content_data->setText(data);
+        bar_position->setEnabled(true);
+        setMinMax(0, static_cast<int>(fc_));
+        bar_position->setValue(display_window->getFrameCount());
     }
-    content_data->setText(data);
 }
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
@@ -544,6 +556,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
+            bar_position->show();
             if(display_window->resetInputMode(InputMode::VIDEO,filename.toStdString())) {
                 display_window->setPrefix(outdir, prefix);
                 display_window->show();
@@ -578,6 +591,8 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         }
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
+            display_window->closeVideo();
+            bar_position->hide();
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setInputMode(InputMode::IMAGE);

@@ -13,6 +13,7 @@
 #include<QKeyEvent>
 #include<cstdio>
 #include<QTextStream>
+#include<QProgressBar>
 #include"plugin_program.hpp"
 #include"acidcam/ac.h"
 
@@ -51,6 +52,7 @@ public:
     void writeFrame(cv::Mat &frame);
     bool isFileOpen();
     void setAniString(const QString &ani);
+    void setMinMax(int min, int max);
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
     RecordWindow *record_window;
@@ -81,6 +83,7 @@ private:
     std::string first_filter = "None";
     std::string cur_filename;
     FILE *file_stream = NULL;
+    QProgressBar *bar_position;
 public slots:
     void openFile();
     void indexChanged(int index);
