@@ -202,6 +202,16 @@ MainWindow::MainWindow()  {
 
     filter_menu->addAction(filter_edit);
 
+    filter_menu->addSeparator();
+
+    filter_menu_release = new QAction(tr("Release Stored Frames"));
+    filter_menu_release->setShortcut(tr("Ctrl+W"));
+
+    filter_menu->addAction(filter_menu_release);
+
+    connect(filter_menu_release, SIGNAL(triggered()), this, SLOT(filterRelease()));
+
+
     audio_menu = menuBar()->addMenu(tr("&Audio"));
     audio_mux = new QAction("M&ux Audio");
     audio_mux->setShortcut(tr("Ctrl+U"));
@@ -273,6 +283,11 @@ MainWindow::MainWindow()  {
     
     connect(filter_add_custom, SIGNAL(clicked()), this, SLOT(custom_filter_add()));
     
+    filter_release = new QPushButton(tr("Release"), this);
+    filter_release->setGeometry(15+70+10+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+
+    connect(filter_release, SIGNAL(clicked()), this, SLOT(filterRelease()));
+
     filter_list_view->setEnabled(true);
     filter_search->setEnabled(true);
     filter_search_button->setEnabled(true);
@@ -800,3 +815,6 @@ void MainWindow::showControls() {
     control_window->show();
 }
 
+void MainWindow::filterRelease() {
+    ac::release_all_objects();
+}

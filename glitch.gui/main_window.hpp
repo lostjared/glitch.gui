@@ -68,14 +68,14 @@ private:
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat, *record_control;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
-    QAction *filter_custom, *filter_edit;
+    QAction *filter_custom, *filter_edit, *filter_menu_release;
     QAction *audio_mux;
     QAction *help_about; 
     QImage image;
     QComboBox *filter_list, *filter_cat;
     QListWidget *filter_list_view;
     QLineEdit *filter_search;
-    QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear, *filter_set_custom, *filter_add_custom;
+    QPushButton *filter_search_button, *filter_search_set, *filter_first_set, *filter_first_clear, *filter_set_custom, *filter_add_custom, *filter_release;
     QLabel *filter_first;
     QTextEdit *content_data;
     std::string first_filter = "None";
@@ -108,6 +108,7 @@ public slots:
     void menu_Audio();
     void custom_filter_add();
     void showControls();
+    void filterRelease();
 };
 
 
