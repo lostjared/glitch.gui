@@ -18,12 +18,14 @@ typedef void (*func)();
 class Plugin_Program  {
 public:
     Plugin_Program(const QString &filename);
+    QString filename_;
     QLibrary library;
     proc f_proc;
     func f_init;
     func f_clear;
     func f_rls;
     bool init = false;
+    bool valid();
 };
 
 using AC_Plugin = std::pair<std::string, Plugin_Program *>;

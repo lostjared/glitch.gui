@@ -5,16 +5,19 @@
 std::unordered_map<std::string, int> plug_map;
 std::vector<AC_Plugin> plugins;
 
-Plugin_Program::Plugin_Program(const QString &filename) : library(filename) {
+Plugin_Program::Plugin_Program(const QString &filename) : library(filename), filename_(filename) {
     f_init = (func) library.resolve("init");
     f_rls = (func) library.resolve("rls");
     f_proc = (proc) library.resolve("proc");
     f_clear = (func) library.resolve("clear");
+}
 
+bool Plugin_Program::valid() {
     if(f_init == 0 || f_rls == 0 || f_proc == 0 || f_clear == 0) {
-        std::cerr << "error plugin: " << filename.toStdString() << " missing function..\n";
-//        exit(EXIT_FAILURE);
+        std::cerr << "error plugin: " << filename_.toStdString() << " missing function..\n";
+        return false;
     }
+    return true;
 }
 
 void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
@@ -25,7 +28,9 @@ void load_plugins(const std::string &path, std::vector<AC_Plugin> &files) {
             std::string f = i.path().string();
             if(f.find(".acidcam") != std::string::npos) {
                 std::cout << "Loading: " << f << "\n";
-                files.push_back(std::make_pair(f, new Plugin_Program(f.c_str())));
+                Plugin_Program *plugin_program = new Plugin_Program(f.c_str());
+                if(plugin_program != nullptr && plugin_program->valid())
+                    files.push_back(std::make_pair(f, plugin_program));
             }
         }
     } else {
