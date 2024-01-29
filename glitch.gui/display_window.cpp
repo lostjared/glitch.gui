@@ -261,7 +261,9 @@ void DisplayWindow::timeoutFunc() {
 }
 
 void DisplayWindow::setColorOffset(const cv::Vec3b &color) {
-    color_offset = color;
+    color_offset[0] = color[0];
+    color_offset[1] = color[1];
+    color_offset[2] = color[2];
     QString text;
     QTextStream stream(&text);
     stream << "glitch: color offset toggled; " << int(color[0]) << "," << int(color[1]) << "," << int(color[2]) << "\n";
