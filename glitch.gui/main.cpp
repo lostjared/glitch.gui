@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
     // init random seed
     srand(static_cast<unsigned int>(time(0)));
     std::cout << APP_NAME << " v" << APP_VERSION << "\n";
-    std::cout << APP_YEAR << " LostSideDead Software. GPL v3.\n";
+    std::cout << APP_YEAR << " LostSideDead Software. GPL v3.\nLoading...\n";
     ac::init();
     ac::setMaxAllocated(325);
     std::cout << "libacidcam v" << ac::version << " succesfully loaded...\n";
