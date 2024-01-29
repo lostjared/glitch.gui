@@ -534,12 +534,12 @@ void MainWindow::setInfo(const cv::Mat &frame) {
         double fc_ = display_window->getCap().get(cv::CAP_PROP_FRAME_COUNT);
         stream << "Video stream Frame Count: " << static_cast<int>(fc_) << "\n";
         double per = static_cast<double>(display_window->getFrameCount())/fc_ * 100.00;
-        stream << " Video stream: " << static_cast<int>(per) << "%\n";
-        content_data->setText(data);
+        stream << " Video stream: " << static_cast<int>(per) << "%\n";       
         bar_position->setEnabled(true);
         setMinMax(0, static_cast<int>(fc_));
         bar_position->setValue(display_window->getFrameCount());
     }
+    content_data->setText(data);
 }
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
