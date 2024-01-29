@@ -339,7 +339,8 @@ MainWindow::MainWindow()  {
 
     bar_position = new QProgressBar(this);
     bar_position->setGeometry(10, 355, width()-20, 20);
-    bar_position->hide();
+    bar_position->show();
+    bar_position->setEnabled(false);
 }
 
 void MainWindow::setMinMax(int min, int max) {
@@ -556,7 +557,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
-            bar_position->show();
+            bar_position->setEnabled(true);
             if(display_window->resetInputMode(InputMode::VIDEO,filename.toStdString())) {
                 display_window->setPrefix(outdir, prefix);
                 display_window->show();
@@ -592,7 +593,10 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
             display_window->closeVideo();
-            bar_position->hide();
+            bar_position->setEnabled(false);
+            setMinMax(0, 1);
+            bar_position->setValue(0);
+            
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setInputMode(InputMode::IMAGE);
