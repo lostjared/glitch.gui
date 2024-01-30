@@ -544,6 +544,7 @@ void MainWindow::setInfo(const cv::Mat &frame) {
 }
 
 void MainWindow::startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps) {
+    display_window->setPrefix(outdir, prefix);
     if(filename != "") {
         auto lwr = [](const std::string &text) {
             std::string ftext;
