@@ -1,6 +1,6 @@
 To compile these plugins on Linux
-you need to add -fPIC to CXXFLAGS in Makefile.top.macos
-then issue
+just use the macos Makefile it is compatible
+issue
 
 $ make -f Makefile.macos
 

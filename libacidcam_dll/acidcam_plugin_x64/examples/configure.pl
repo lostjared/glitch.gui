@@ -12,6 +12,6 @@ foreach my $fi (sort @files) {
     	print HANDLE "\tmake -C " . $fi . "\n" if -d $fi;
     }
 }
-print HANDLE "install:\n\tcp -rf */*.acidcam ../plugins/\n";
+print HANDLE "install:\n\tcp -rf */*.acidcam ../../../glitch.gui/plugins/\n";
 print HANDLE "clean:\n\t rm -rf */*.acidcam";
 close(HANDLE);

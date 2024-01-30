@@ -117,6 +117,6 @@ all:
 	make -C stutter_long
 	make -C stutter_sbrv
 install:
-	cp -rf */*.acidcam ../plugins/
+	cp -rf */*.acidcam ../../../glitch.gui/plugins/
 clean:
 	 rm -rf */*.acidcam
