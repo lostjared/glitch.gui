@@ -49,7 +49,6 @@ all:
 	make -C line_across_side04 -f Makefile.macos
 	make -C line_across_side05 -f Makefile.macos
 	make -C line_across_side06 -f Makefile.macos
-	make -C line_colection01 -f Makefile.macos
 	make -C line_collection01 -f Makefile.macos
 	make -C line_collection02 -f Makefile.macos
 	make -C line_collection03 -f Makefile.macos

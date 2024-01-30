@@ -49,7 +49,6 @@ all:
 	make -C line_across_side04
 	make -C line_across_side05
 	make -C line_across_side06
-	make -C line_colection01
 	make -C line_collection01
 	make -C line_collection02
 	make -C line_collection03
