@@ -33,7 +33,7 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     QLabel *prefix = new QLabel(tr("Filename Prefix:"), this);
     prefix->setGeometry(10, 110, 100, 30);
     video_filename = new QLineEdit(this);
-    video_filename->setText(tr("glitch.gui.file1"));
+    video_filename->setText(tr("Glitch1"));
     video_filename->setGeometry(110, 110, 195, 30);
     video_record = new QCheckBox(tr("Record on Start"), this);
     video_record->setGeometry(10, 140, 150, 25);

@@ -462,7 +462,8 @@ void MainWindow::record() {
             }
             static int index = 1;
             std::ostringstream filename;
-            filename << info.filename << "/" << "Video-" << time_data.toStdString() << "-" << current_width << "x" << current_height << "-" << index++ << ".mp4";
+            QString prefix = display_window->getPrefix();
+            filename << info.filename << "/" << prefix.toStdString() << ".Video" << index++ << "-" << time_data.toStdString() << "-" << current_width << "x" << current_height << ".mp4";
             ffmpeg_path = info.ffmpeg_path;
             #ifdef _WIN32
             //QDir d(".");
