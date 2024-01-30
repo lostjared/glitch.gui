@@ -27,4 +27,12 @@ void release_filter_list();
 void New_CallFilter(std::string name, cv::Mat &frame);
 void New_CallFilterClear(std::string name);
 void Plug_CallFilterClear(std::string name);
+
+template<typename T>
+void setvec(T &dst, const T &src) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
+}
+
 #endif

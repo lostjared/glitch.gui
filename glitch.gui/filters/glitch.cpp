@@ -2,12 +2,12 @@
 
 void Glitch_Line_Down::init() {
     offset_y = rand()%300;
-    color = cv::Vec3b(150, 150, 150);
+    setvec(color,cv::Vec3b(150, 150, 150));
 }
 
 void Glitch_Line_Down::proc(cv::Mat &frame) {
     for(int x = 0; x < frame.cols; ++x) {
-        color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        setvec(color,cv::Vec3b(rand()%255, rand()%255, rand()%255));
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             pixel[0] += pixel[0]*color[0];
@@ -26,13 +26,13 @@ Glitch_Line_Down::~Glitch_Line_Down() {}
 
 void Glitch_Line_Down_X2::init() {
     offset_y = 0;
-    color = cv::Vec3b(0, 0, 0);
+    setvec(color, cv::Vec3b(0, 0, 0));
 }
 
 
 void Glitch_Line_Down_X2::proc(cv::Mat &frame) {
     for(int x = 0; x < frame.cols; ++x) {
-        color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             pixel[0] += pixel[0]*color[0];
@@ -57,12 +57,12 @@ Glitch_Line_Down_X2::~Glitch_Line_Down_X2() {}
 
 void Glitch_Line_Down_X3::init() {
     offset_y = 0;
-    color = cv::Vec3b(0, 0, 0);
+    setvec(color,cv::Vec3b(0, 0, 0));
 }
 
 void Glitch_Line_Down_X3::proc(cv::Mat &frame) {
     for(int x = 0; x < frame.cols; ++x) {
-        color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        setvec(color,cv::Vec3b(rand()%255, rand()%255, rand()%255));
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             pixel[0] += pixel[0]^color[0];
@@ -85,13 +85,13 @@ Glitch_Line_Down_X3::~Glitch_Line_Down_X3() {}
 
 void Glitch_Line_Down_X4::init() {
     offset_y = 0;
-    color = cv::Vec3b(0, 0, 0);
+    setvec(color, cv::Vec3b(0, 0, 0));
     
 }
 void Glitch_Line_Down_X4::proc(cv::Mat &frame) {
     
     for(int x = 0; x < frame.cols; ++x) {
-        color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             pixel[0] += pixel[0]^color[0];
@@ -115,14 +115,14 @@ Glitch_Line_Down_X4::~Glitch_Line_Down_X4() {}
 
 void Glitch_Line_Down_X5::init() {
     offset_y = 0;
-    color = cv::Vec3b(0, 0, 0);
+    setvec(color, cv::Vec3b(0, 0, 0));
 }
 
 void Glitch_Line_Down_X5::proc(cv::Mat &frame) {
     int width=5+rand()%50;
     for(int x2 = 0; x2 < frame.cols; x2 += width) {
         for(int x = x2; x < x2+width && x < frame.cols; ++x) {
-            color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+            setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
             for(int y = 0; y < offset_y && y < frame.rows; ++y) {
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
                 pixel[0] += pixel[0]^color[0];
@@ -158,7 +158,7 @@ void Glitch_RandRect::proc(cv::Mat &frame) {
         int y = rand()%frame.rows;
         int w = rand()%frame.cols;
         int h = rand()%frame.rows;
-        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        cv::Vec3b color; setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         blendRect(frame, color, x, y, w, h);
     }
 }
@@ -190,9 +190,9 @@ void Glitch_RandRect_X2::proc(cv::Mat &frame) {
         int y = rand()%frame.rows;
         int w = rand()%frame.cols;
         int h = rand()%frame.rows;
-        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        cv::Vec3b color; setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
-            color = frame.at<cv::Vec3b>(y, x);
+            setvec(color,frame.at<cv::Vec3b>(y, x));
         
         blendRect(frame, color, x, y, w, h);
     }
@@ -226,9 +226,9 @@ void Glitch_RandRect_X2_Wrap::proc(cv::Mat &frame) {
         int y = rand()%frame.rows;
         int w = rand()%frame.cols;
         int h = rand()%frame.rows;
-        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        cv::Vec3b color; setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
-            color = frame.at<cv::Vec3b>(y, x);
+            setvec(color,frame.at<cv::Vec3b>(y, x));
         
         blendRect(frame, color, x, y, w, h);
     }
@@ -261,9 +261,9 @@ void Glitch_RandRect_X3::proc(cv::Mat &frame) {
         int y = rand()%frame.rows;
         int w = rand()%frame.cols;
         int h = rand()%frame.rows;
-        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        cv::Vec3b color; setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
-            color = frame.at<cv::Vec3b>(y, x);
+            setvec(color, frame.at<cv::Vec3b>(y, x));
         
         blendRect(frame, color, x, y, w, h);
     }
@@ -296,10 +296,10 @@ void Glitch_RandRect_X4::proc(cv::Mat &frame) {
         int y = rand()%frame.rows;
         int w = rand()%frame.cols;
         int h = rand()%frame.rows;
-        cv::Vec3b color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
-        cv::Vec3b color2 = cv::Vec3b(0, 0, 0);
+        cv::Vec3b color; setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
+        cv::Vec3b color2; setvec(color2,cv::Vec3b(0, 0, 0));
         if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows)
-            color2 = frame.at<cv::Vec3b>(y, x);
+            setvec(color2, frame.at<cv::Vec3b>(y, x));
         
         blendRect(frame, color, color2, x, y, w, h);
     }
@@ -787,10 +787,10 @@ void Glitch_Mirror_Bars_Col::drawMatrix(cv::Mat &frame, const cv::Mat &src, int 
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             if(rev == 0 && frame.cols-i-1 >= 0 && frame.cols-i-1 < frame.cols) {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, frame.cols-i-1);
-                pixel = pix;
+                 setvec(pixel, pix);
             } else {
                 const cv::Vec3b &pix = src.at<cv::Vec3b>(z, i);
-                pixel = pix;
+                 setvec(pixel, pix);
             }
         }
     }
@@ -1344,12 +1344,12 @@ void Glitch_Mirror_Bars_Horiz_X1_Grad_Xor::drawMatrixRect(cv::Mat &frame, const 
 
 void Glitch_Line_Horiz::init() {
     offset_y = rand()%300;
-    color = cv::Vec3b(150, 150, 150);
+    setvec(color, cv::Vec3b(150, 150, 150));
 }
 
 void Glitch_Line_Horiz::proc(cv::Mat &frame) {
     for(int x = 0; x < frame.cols; ++x) {
-        color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         const cv::Vec3b &pix = frame.at<cv::Vec3b>(rand()%(frame.rows/2), x);
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
@@ -1369,14 +1369,14 @@ Glitch_Line_Horiz::~Glitch_Line_Horiz() {}
 
 void Glitch_Line_Horiz_Grad::init() {
     offset_y = rand()%300;
-    color = cv::Vec3b(150, 150, 150);
+    setvec(color,cv::Vec3b(150, 150, 150));
     alpha_dir = 1;
     alpha = 0.5;
 }
 
 void Glitch_Line_Horiz_Grad::proc(cv::Mat &frame) {
     for(int x = 0; x < frame.cols; ++x) {
-        color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+        setvec(color, cv::Vec3b(rand()%255, rand()%255, rand()%255));
         const cv::Vec3b &pix = frame.at<cv::Vec3b>(rand()%(frame.rows/2), x);
         for(int y = 0; y < offset_y && y < frame.rows; ++y) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
@@ -2656,7 +2656,7 @@ void Glitch_Square_Scramble::proc(cv::Mat &frame) {
             cv::Mat &new_frame = collection[index];
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = new_frame.at<cv::Vec3b>(y, x);
-            pixel = pix;
+            setvec(pixel, pix);
         if((y%64)==0)
             index = rand()%(collection.count()-1);
         }
@@ -2685,7 +2685,7 @@ void Glitch_Square_ScrambleX::proc(cv::Mat &frame) {
             cv::Mat &new_frame = collection[index];
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = new_frame.at<cv::Vec3b>(y, x);
-            pixel = pix;
+            setvec(pixel, pix);
        }
         if((x%64)==0)
             index = rand()%(collection.count()-1);
@@ -2712,7 +2712,7 @@ void Glitch_Square_ScrambleY::proc(cv::Mat &frame) {
             cv::Mat &new_frame = collection[index];
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
             const cv::Vec3b &pix = new_frame.at<cv::Vec3b>(y, x);
-            pixel = pix;
+            setvec(pixel, pix);
         if((y%64)==0)
             index = rand()%(collection.count()-1);
 
