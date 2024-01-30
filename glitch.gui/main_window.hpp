@@ -53,6 +53,7 @@ public:
     bool isFileOpen();
     void setAniString(const QString &ani);
     void setMinMax(int min, int max);
+    void setImageDelay(int delay);
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
     RecordWindow *record_window;
@@ -84,6 +85,7 @@ private:
     std::string cur_filename;
     FILE *file_stream = NULL;
     QProgressBar *bar_position;
+    int video_speed = 1;
 public slots:
     void openFile();
     void indexChanged(int index);

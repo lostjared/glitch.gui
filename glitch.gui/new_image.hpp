@@ -6,6 +6,7 @@
 #include<QPushButton>
 #include<QLineEdit>
 #include<QCheckBox>
+#include<QScrollBar>
 
 class MainWindow;
 
@@ -18,7 +19,7 @@ public:
     float getFPS(const QString &filename, int &width, int &height);
 public slots:
     void openRecordOptions();
-
+    void changedPos(int value);
 private:
     MainWindow *main_window;
     QLabel *input_file;
@@ -28,10 +29,10 @@ private:
     QLineEdit *video_fps, *video_filename;
     QPushButton *video_start;
     QCheckBox *video_record;
-  
+    QScrollBar *video_image_delay;  
     bool filename_set = false, outdir_set = false;
-    
-    public slots:
+    QLabel *num_label;
+public slots:
     void openFile();
     void selectDir();
     void videoStart();

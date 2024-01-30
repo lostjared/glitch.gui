@@ -2,9 +2,11 @@
 #include"main_window.hpp"
 #include"record_window.hpp"
 #include"pref_window.hpp"
+#include"debug_window.hpp"
 #include<QFileDialog>
 #include<QIcon>
 #include<QMessageBox>
+#include<QTextStream>
 
 NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Start new Animation");
@@ -38,10 +40,27 @@ NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     video_record = new QCheckBox(tr("Record on Start"), this);
     video_record->setGeometry(10, 140, 150, 25);
     video_record->setChecked(Qt::Unchecked);
+    video_image_delay = new QScrollBar(Qt::Horizontal, this);
+    num_label = new QLabel("Image Delay: 1", this);
+    num_label->setGeometry(10, 172, 100, 25);
+    video_image_delay->setGeometry(110, 170, 200, 25);
+    video_image_delay->setMinimum(1);
+    video_image_delay->setMaximum(10);
+    video_image_delay->setValue(1);
+
+    video_image_delay->setEnabled(false);
 
     connect(video_record, SIGNAL(clicked()), this, SLOT(openRecordOptions()));
+    connect(video_image_delay, SIGNAL(valueChanged(int)), this, SLOT(changedPos(int)));
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
+}
+
+void NewImageWindow::changedPos(int) {
+    QString text;
+    QTextStream stream(&text);
+    stream << "Image Delay: " << video_image_delay->value();
+    num_label->setText(text);
 }
 
 void NewImageWindow::setMainWindow(MainWindow *main_w) {
@@ -51,12 +70,26 @@ void NewImageWindow::setMainWindow(MainWindow *main_w) {
 void NewImageWindow::openFile() {
     QString filename;
     QString path;
+    auto lwr = [](const QString &text) -> std::string {
+        std::string t;
+        std::string text1{text.toStdString()};
+        for(std::string::size_type i = 0; i < text1.length(); ++i) {
+            t += tolower(text1[i]);
+        }
+        return t;;
+    };
 
     if(main_window->pref_window->savePath())
         path = settings.value("image_file_path").toString();
 
     filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
+        std::string lwr_chkd = lwr(filename);
+        if(lwr_chkd.find(".png") != std::string::npos || lwr_chkd.find(".jpg") != std::string::npos || lwr_chkd.find(".bmp") != std::string::npos) {
+            video_image_delay->setEnabled(true);
+        } else {
+            video_image_delay->setEnabled(false);
+        }
         input_file->setText(filename);
         QString text;
         QTextStream stream(&text);
@@ -109,6 +142,18 @@ void NewImageWindow::videoStart() {
         else
             main_window->record_window->rec_info.load_start = false;
 
+
+        main_window->setImageDelay(video_image_delay->value());
+
+        QString msg;
+        QTextStream stream(&msg);
+        if(video_image_delay->isEnabled()) {
+            stream << "gui: Set IMAGE Mode Video Delay to: " << video_image_delay->value() << "\n";
+            main_window->debug_window->Log(msg);
+        } else {
+            main_window->setImageDelay(1);
+            main_window->debug_window->Log("gui: In Video Mode IMAGE Delay disabled.\n");   
+        }
         main_window->startNewAnimation(filename, outdir, prefix, fps);
         hide();
     } else {

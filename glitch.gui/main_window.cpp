@@ -507,7 +507,12 @@ bool MainWindow::startRecording(const QString &filename, const QString &codec_ty
 
 void MainWindow::writeFrame(cv::Mat &frame) {
     if(file_stream != NULL) {
-        write_ffmpeg(file_stream, frame);
+        if(display_window->getCurrentInputMode() == InputMode::IMAGE) {
+            for(int i = 0; i < video_speed; ++i)
+                write_ffmpeg(file_stream, frame);
+        } else {
+               write_ffmpeg(file_stream, frame);
+        }
     }
 }
 
@@ -854,4 +859,11 @@ void MainWindow::filterRelease() {
 
 void MainWindow::quitProgram() {
     QCoreApplication::exit();
+}
+
+void MainWindow::setImageDelay(int delay) {
+    if(delay >= 1)
+        video_speed = delay;
+    else
+        video_speed = 1;
 }
