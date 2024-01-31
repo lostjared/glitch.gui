@@ -164,10 +164,16 @@ MainWindow::MainWindow()  {
     record_control->setShortcut(tr("Ctrl+X"));
     record_menu->addAction(record_control);
 
+    record_reset = new QAction(tr("Reset"), this);
+    record_menu->addAction(record_reset);
+   record_reset->setEnabled(false);
+
+
     connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
     connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));  
     connect(record_control, SIGNAL(triggered()), this, SLOT(showControls()));
+    connect(record_reset, SIGNAL(triggered()), this, SLOT(recordReset()));
 
     image_menu = menuBar()->addMenu(tr("&Image"));
     image_save = new QAction(tr("&Save"));
@@ -572,6 +578,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
 
         std::string filename_chk = lwr(filename.toStdString());
         if(filename_chk.find(".avi") != std::string::npos || filename_chk.find(".mov") != std::string::npos || filename_chk.find(".mp4") != std::string::npos || filename_chk.find(".mkv") != std::string::npos) {
+            record_reset->setEnabled(true);
             cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             bar_position->setEnabled(true);
@@ -612,9 +619,8 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
             display_window->closeVideo();
             bar_position->setEnabled(false);
             setMinMax(0, 1);
+            record_reset->setEnabled(false);
             bar_position->setValue(0);
-            
-            cur_filename = filename.toStdString();
             toolbox_window->setOutputDirectory(outdir, prefix);
             display_window->setInputMode(InputMode::IMAGE);
             display_window->setGeometry(700, 100, 800, 600);
@@ -880,4 +886,9 @@ void MainWindow::setImageDelay(int delay) {
 
 void MainWindow::showRotateWindow() {
     if(rotate_window != nullptr) rotate_window->show();
+}
+
+void MainWindow::recordReset() {
+    display_window->reset();
+    debug_window->Log("glitch: Video reset...\n");
 }

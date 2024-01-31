@@ -260,6 +260,14 @@ void DisplayWindow::timeoutFunc() {
     }
 }
 
+void DisplayWindow::reset() {
+    if(cap.isOpened()) {
+        cap.set(cv::CAP_PROP_POS_FRAMES, 0);
+        frame_count = 0;
+
+    }
+}
+
 void DisplayWindow::setColorOffset(const cv::Vec3b &color) {
     color_offset[0] = color[0];
     color_offset[1] = color[1];
