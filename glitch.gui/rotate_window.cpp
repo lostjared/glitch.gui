@@ -4,6 +4,7 @@
 #include<QDialog>
 #include<QFileDialog>
 #include"ffmpeg_write.h"
+#include<QMessageBox>
 
 RotateWindow::RotateWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(400, 100, 315, 135);
@@ -59,5 +60,18 @@ void RotateWindow::selectDst() {
 void RotateWindow::rotateVideo() {
     if(value_set[0] && value_set[1]) {
         rotate_90(item_src->text().toStdString().c_str(), item_out->text().toStdString().c_str(), deg_rotate->currentText().toStdString().c_str());
+        QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("Rotate Video Completed...");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Information);
+        box.exec(); 
+    } else {
+        QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("Please fill out the form, source video and output location");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Critical);
+        box.exec(); 
     }
 }
