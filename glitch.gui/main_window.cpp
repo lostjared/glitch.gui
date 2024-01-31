@@ -22,6 +22,7 @@
 #include"mux_window.hpp"
 #include"plugin_program.hpp"
 #include"control_window.hpp"
+#include"rotate_window.hpp"
 #include<QCoreApplication>
 
 cv::Mat QImage2Mat(QImage const& src)
@@ -95,6 +96,9 @@ MainWindow::MainWindow()  {
 
     mux_window = new MuxWindow(this);
     mux_window->hide();
+
+    rotate_window = new RotateWindow(this);
+    rotate_window->hide();
     
 
     setFixedSize(640, 390);
@@ -226,6 +230,12 @@ MainWindow::MainWindow()  {
     connect(audio_mux, SIGNAL(triggered()), this, SLOT(menu_Audio()));
 
     audio_menu->addAction(audio_mux);
+
+    tools_menu = menuBar()->addMenu(tr("Tools"));
+    rotate_item = new QAction(tr("Rotate Video"));
+
+    tools_menu->addAction(rotate_item);
+    connect(rotate_item, SIGNAL(triggered()), this, SLOT(showRotateWindow()));    
 
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
@@ -866,4 +876,8 @@ void MainWindow::setImageDelay(int delay) {
         video_speed = delay;
     else
         video_speed = 1;
+}
+
+void MainWindow::showRotateWindow() {
+    if(rotate_window != nullptr) rotate_window->show();
 }
