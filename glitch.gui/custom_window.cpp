@@ -187,6 +187,7 @@ bool CustomWindow::createCustom(const QString &name) {
     }
     if(custom_data.size()==0)
         return false;
+
     QString fname = "Custom__" + name;
     cat_custom.push_back(std::make_pair(fname.toStdString(), custom_data));
     custom_setup_map(false);
@@ -211,11 +212,13 @@ void CustomWindow::setPlaylist() {
   QString path = "";
   QString filename = QFileDialog::getSaveFileName(this,tr("Save Playlist"), path, tr("Playlist Files (*.key *.txt"));
   if(filename != "") {
-
-    if(!cat_playlist.empty()) 
-        cat_playlist.erase(cat_playlist.begin(), cat_playlist.end());
-    if(!cat_playlist_index.empty())
-        cat_playlist_index.erase(cat_playlist_index.begin(), cat_playlist_index.end());
+        if(!cat_playlist.empty()) {
+            cat_playlist.erase(cat_playlist.begin(), cat_playlist.end());
+        }
+   
+        if(!cat_playlist_index.empty()) {
+                cat_playlist_index.erase(cat_playlist_index.begin(), cat_playlist_index.end());
+         }
 
         for(int i = 0; i < filter_custom->count(); ++i) {
             auto *item = filter_custom->item(i);
@@ -231,5 +234,5 @@ void CustomWindow::setPlaylist() {
         box.setIcon(QMessageBox::Icon::Information);
         box.exec();
         return;
-  }
+    }
 }
