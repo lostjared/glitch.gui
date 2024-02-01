@@ -32,15 +32,18 @@ void CustomEditWindow::removeCustom() {
     int index = filter_names->currentIndex();
     if(index >= 0) { 
         QString name = filter_names->itemText(index);
+        std::cout << "Removing: " << name.toStdString() << "\n";
         auto pos = cat_custom_index.find(name.toStdString());
         if(pos != cat_custom_index.end()) {
-            std::string name = pos->first;
             int spot = pos->second;
             std::vector<custom_filter>::iterator i = cat_custom.begin()+spot;
-            cat_custom.erase(i);
-            cat_custom_index.erase(pos);        
+            if(i != cat_custom.end()) {
+                cat_custom.erase(i);
+                cat_custom_index.erase(pos);        
+            }
         }
         save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
+        load_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
         updateFilterNames();
         main_window->debug_window->Log("gui: Removed custom filter: " + name + "\n");
     }  

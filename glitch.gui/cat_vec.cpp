@@ -755,6 +755,9 @@ void clear_custom() {
     if(!cat_custom.empty()) {
         cat_custom.erase(cat_custom.begin(), cat_custom.end());
     }
+    if(!cat_custom_index.empty()) {
+        cat_custom_index.erase(cat_custom_index.begin(), cat_custom_index.end());
+    }
 }
 
 void custom_setup_map(bool clear) {
