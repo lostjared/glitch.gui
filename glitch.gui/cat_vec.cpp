@@ -712,8 +712,11 @@ std::vector<std::string> cat_mirror {
 };
 
 std::vector<std::string> *vec_cat[] = { &cat_in_order, &cat_sorted, &cat_fast, &cat_glitch, &cat_mirror, 0 };
+std::vector<std::string> cat_playlist;
 std::vector<custom_filter> cat_custom;
 std::unordered_map<std::string, int> cat_custom_index;
+std::unordered_map<std::string, int> cat_playlist_index;
+
 
 void load_custom(std::string filename) {
     std::fstream file;
@@ -800,4 +803,39 @@ bool custom_exists(const std::string &s) {
     if(pos == cat_custom_index.end())
         return false;
     return true;
+}
+
+void load_playlist(std::string filename) {
+    std::fstream file;
+    file.open(filename, std::ios::in);
+    if(file.is_open()) {
+        if(!cat_playlist.empty()) 
+           cat_playlist.erase(cat_playlist.begin(), cat_playlist.end());
+
+        std::string line;
+        while(!file.eof()) {
+            std::getline(file, line);
+            if(file) 
+                cat_playlist.push_back(line);                
+        }
+        file.close();
+
+        if(!cat_playlist_index.empty())
+            cat_playlist_index.erase(cat_playlist_index.begin(), cat_playlist_index.end());
+
+        for(size_t i = 0; i < cat_playlist.size(); ++i) {
+            cat_playlist_index[cat_playlist[i]] = i;
+        }
+    }   
+}
+
+void save_playlist(std::string filename) {
+    std::fstream file;
+    file.open(filename, std::ios::out);
+    if(file.is_open()) {
+        for(auto &i : cat_playlist) {
+            file << i << "\n";
+        }
+        file.close();
+    }    
 }

@@ -166,7 +166,7 @@ MainWindow::MainWindow()  {
 
     record_reset = new QAction(tr("Reset"), this);
     record_menu->addAction(record_reset);
-   record_reset->setEnabled(false);
+    record_reset->setEnabled(false);
 
 
     connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
@@ -228,7 +228,17 @@ MainWindow::MainWindow()  {
 
     connect(filter_menu_release, SIGNAL(triggered()), this, SLOT(filterRelease()));
 
+    filter_menu->addSeparator();
 
+    filter_playlist_open = new QAction(tr("Load Playlist"), this);
+    filter_menu->addAction(filter_playlist_open);
+
+    filter_playlist_clear = new QAction(tr("Clear Playlist"), this);
+    filter_menu->addAction(filter_playlist_clear);
+
+    connect(filter_playlist_open, SIGNAL(triggered()), this, SLOT(playlistOpen()));
+    connect(filter_playlist_clear, SIGNAL(triggered()), this, SLOT(playlistClear()));
+    
     audio_menu = menuBar()->addMenu(tr("&Audio"));
     audio_mux = new QAction("M&ux Audio");
     audio_mux->setShortcut(tr("Ctrl+U"));
@@ -261,6 +271,7 @@ MainWindow::MainWindow()  {
     filter_cat->addItem(tr("New Filter"));
     filter_cat->addItem(tr("Custom"));
     filter_cat->addItem(tr("Plugin"));
+    filter_cat->addItem(tr("Playlist"));
     
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
     
@@ -382,6 +393,11 @@ void MainWindow::loadCategory(int index) {
             filter_list->addItem(a->at(i).first.c_str());
         }
 
+    } else if(index == 8) {
+        auto *a = &cat_playlist;
+        for(size_t i = 0; i < a->size(); ++i) {
+            filter_list->addItem(a->at(i).c_str());
+        }
     } else {
         std::vector<std::string> *v = vec_cat[index];
         for(int i = 0; i < static_cast<int>(v->size()); ++i) {
@@ -891,4 +907,38 @@ void MainWindow::showRotateWindow() {
 void MainWindow::recordReset() {
     display_window->reset();
     debug_window->Log("glitch: Video reset...\n");
+}
+
+void MainWindow::playlistOpen() {
+    QString path, filename;
+    if(pref_window->savePath())
+        path = settings.value("image_playlist_path").toString();
+
+   filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Playlist Files (*.key *.txt)"));
+ 
+    if(filename != "") {
+        
+       if(pref_window->savePath())
+            settings.setValue("image_playlist_path", filename);
+            load_playlist(filename.toStdString());
+            if(cat_playlist.size() > 0) {
+                filter_cat->setCurrentIndex(8);
+                //loadCategory(8);
+                QString text;
+                QTextStream stream(&text);
+                stream << "gui: Loaded playlist containing " << cat_playlist.size() << " filter(s).\n";
+                debug_window->Log(text);
+            }
+    }    
+}
+
+void MainWindow::playlistClear() {
+    if(!cat_playlist.empty()) {
+        cat_playlist.erase(cat_playlist.begin(), cat_playlist.end());
+    }
+    if(!cat_playlist_index.empty()) {
+        cat_playlist_index.erase(cat_playlist_index.begin(), cat_playlist_index.end());
+    }
+    debug_window->Log("gui: Playlist cleared");
+    loadCategory(0);
 }

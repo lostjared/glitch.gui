@@ -73,7 +73,7 @@ private:
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat, *record_control, *record_reset;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
-    QAction *filter_custom, *filter_edit, *filter_menu_release;
+    QAction *filter_custom, *filter_edit, *filter_menu_release, *filter_playlist_open, *filter_playlist_clear;
     QAction *rotate_item;
     QAction *audio_mux;
 
@@ -121,6 +121,8 @@ public slots:
     void quitProgram();
     void showRotateWindow();
     void recordReset();
+    void playlistOpen();
+    void playlistClear();
 };
 
 

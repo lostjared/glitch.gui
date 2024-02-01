@@ -4,15 +4,20 @@
 #include<vector>
 #include<string>
 #include<unordered_map>
+#include<fstream>
 
 extern std::vector<std::string> cat_in_order, cat_sorted, cat_fast, cat_glitch, cat_mirror;
 extern std::vector<std::string> *vec_cat[];
 using custom_filter = std::pair<std::string, std::vector<std::string>>;
 extern std::vector<custom_filter> cat_custom;
 extern std::unordered_map<std::string, int> cat_custom_index;
+extern std::vector<std::string> cat_playlist;
+extern std::unordered_map<std::string, int> cat_playlist_index;
 void build_lists(std::string filename);
 void load_custom(std::string filename);
 void save_custom(std::string filename);
+void load_playlist(std::string filename);
+void save_playlist(std::string filename);
 void clear_custom();
 bool custom_exists(const std::string &s);
 void custom_setup_map(bool clear);
