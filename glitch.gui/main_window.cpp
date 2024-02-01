@@ -325,10 +325,10 @@ MainWindow::MainWindow()  {
     filter_first_clear->setEnabled(true);
     
     filter_first = new QLabel(tr("First: None"), this);
-    filter_first->setGeometry(315+10, 35+25+10+35, 200, 30);
+    filter_first->setGeometry(315+10, 35+25+10, 200, 30);
 
     content_data = new QTextEdit(this);
-    content_data->setGeometry(315+10,135,300,165); 
+    content_data->setGeometry(315+10,105,300,200); 
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
     
