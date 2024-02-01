@@ -209,7 +209,8 @@ bool Layer::read(cv::Mat &frame) {
         return true;
     }
     if(!src_cap.read(frame)) {
-        src_cap.open(filename_.toStdString());
+        src_cap.set(cv::CAP_PROP_POS_FRAMES, 0);
+        src_cap.read(frame);
         if(!src_cap.isOpened()) {
             is_open = false;
             return false;
