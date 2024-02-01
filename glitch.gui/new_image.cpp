@@ -137,6 +137,18 @@ void NewImageWindow::videoStart() {
         QString filename = input_file->text();
         QString outdir = output_location->text();
 
+        if(video_record->checkState() == Qt::Checked) {
+            if(main_window->record_window->ready() == false) {
+                QMessageBox msgbox;    
+                msgbox.setWindowTitle(tr("Record Info not set"));
+                msgbox.setIcon(QMessageBox::Icon::Critical);
+                msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+                msgbox.setText(tr("You must select path for outputted videos click Select and choose a directory.\n"));
+                msgbox.exec();
+                return;
+            }
+        }
+
         if(video_record->checkState() == Qt::Checked)
             main_window->record_window->rec_info.load_start = true;
         else

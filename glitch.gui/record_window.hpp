@@ -31,6 +31,9 @@ public:
     RecordInfo rec_info;
     bool rec_info_set = false;
     QString fps_same;
+
+    bool ready();
+
 public slots:
     void saveSettings();
     void chkStateChanged();

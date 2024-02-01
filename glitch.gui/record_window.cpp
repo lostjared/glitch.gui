@@ -76,6 +76,12 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
+bool RecordWindow::ready() {
+    if(rec_info_set == true && path_selected == true)
+        return true;
+    return false;
+}
+
 void RecordWindow::setMainWindow(MainWindow *m) {
     main_window = m;
 }
