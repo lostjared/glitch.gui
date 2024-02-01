@@ -138,7 +138,7 @@ Layer::Layer(const QString &filename) {
 }
 
 bool Layer::open(const QString &filename) {
-
+    filename_ = filename;
     if(checkThere(filename.toStdString(), {".png", ".jpg", ".bmp"})) {
         type_ = LayerType::IMAGE;
         src_image = cv::imread(filename.toStdString());
