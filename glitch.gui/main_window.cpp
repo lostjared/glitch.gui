@@ -23,6 +23,7 @@
 #include"plugin_program.hpp"
 #include"control_window.hpp"
 #include"rotate_window.hpp"
+#include"layers_window.hpp"
 #include<QCoreApplication>
 
 cv::Mat QImage2Mat(QImage const& src)
@@ -100,6 +101,8 @@ MainWindow::MainWindow()  {
     rotate_window = new RotateWindow(this);
     rotate_window->hide();
     
+    layers_window = new LayersWindow(this);
+    layers_window->hide();
 
     setFixedSize(640, 390);
     setWindowTitle(tr(APP_NAME));
@@ -168,13 +171,16 @@ MainWindow::MainWindow()  {
     record_menu->addAction(record_reset);
     record_reset->setEnabled(false);
 
+    record_layers = new QAction(tr("Show Layers"), this);
+    record_menu->addAction(record_layers);
 
     connect(record_repeat, SIGNAL(triggered()), this, SLOT(toggle_repeat()));
     connect(record_set, SIGNAL(triggered()), this, SLOT(showRecord()));
     connect(record_rec, SIGNAL(triggered()), this, SLOT(recordVideo()));  
     connect(record_control, SIGNAL(triggered()), this, SLOT(showControls()));
     connect(record_reset, SIGNAL(triggered()), this, SLOT(recordReset()));
-
+    connect(record_layers, SIGNAL(triggered()), this, SLOT(recordLayers()));
+    
     image_menu = menuBar()->addMenu(tr("&Image"));
     image_save = new QAction(tr("&Save"));
     image_save->setShortcut(tr("Ctrl+S"));
@@ -948,4 +954,8 @@ void MainWindow::playlistClear() {
 void MainWindow::initPlaylist() {
     filter_cat->setCurrentIndex(8);
     filter_list->setCurrentIndex(0);
+}
+
+void MainWindow::recordLayers() {
+    layers_window->show();
 }

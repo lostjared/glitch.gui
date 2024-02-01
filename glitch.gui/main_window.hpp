@@ -31,6 +31,7 @@ class PrefWindow;
 class MuxWindow;
 class Control_Window;
 class RotateWindow;
+class LayersWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -67,12 +68,13 @@ public:
     MuxWindow *mux_window;
     Control_Window *control_window;
     RotateWindow *rotate_window;
+    LayersWindow *layers_window;
     int current_width = 0, current_height = 0; 
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu,*tools_menu, *help_menu, *audio_menu;
     QAction *file_open, *file_pref, *file_exit;
     QAction *edit_undo, *edit_redo;
-    QAction *record_set, *record_rec, *record_repeat, *record_control, *record_reset;
+    QAction *record_set, *record_rec, *record_repeat, *record_control, *record_reset, *record_layers;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
     QAction *filter_custom, *filter_edit, *filter_menu_release, *filter_playlist_open, *filter_playlist_clear;
     QAction *rotate_item;
@@ -124,6 +126,7 @@ public slots:
     void recordReset();
     void playlistOpen();
     void playlistClear();
+    void recordLayers();
 };
 
 
