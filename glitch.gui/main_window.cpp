@@ -920,15 +920,16 @@ void MainWindow::playlistOpen() {
         
        if(pref_window->savePath())
             settings.setValue("image_playlist_path", filename);
-            load_playlist(filename.toStdString());
-            if(cat_playlist.size() > 0) {
-                initPlaylist();
-                //loadCategory(8);
-                QString text;
-                QTextStream stream(&text);
-                stream << "gui: Loaded playlist containing " << cat_playlist.size() << " filter(s).\n";
-                debug_window->Log(text);
-            }
+        
+        load_playlist(filename.toStdString());
+         if(cat_playlist.size() > 0) {
+            initPlaylist();
+            //loadCategory(8);
+            QString text;
+            QTextStream stream(&text);
+            stream << "gui: Loaded playlist containing " << cat_playlist.size() << " filter(s).\n";
+            debug_window->Log(text);
+        }
     }    
 }
 
