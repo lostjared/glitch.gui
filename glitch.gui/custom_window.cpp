@@ -6,6 +6,8 @@
 #include"debug_window.hpp"
 #include"pref_window.hpp"
 #include<QMessageBox>
+#include<QFileDialog>
+
 
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(640, 480);
@@ -36,6 +38,11 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     btn_down->setGeometry(15+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_down, SIGNAL(clicked()), this, SLOT(move_Down()));
+
+    btn_playlist = new QPushButton(tr("Save Playlist"), this);
+    btn_playlist->setGeometry(15+100+5+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
+
+    connect(btn_playlist, SIGNAL(clicked()), this, SLOT(setPlaylist()));
 
     QLabel *f_name = new QLabel(tr("Name: "), this);
     f_name->setGeometry(25, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
@@ -187,4 +194,42 @@ bool CustomWindow::createCustom(const QString &name) {
     main_window->custom_edit->updateFilterNames();
     main_window->debug_window->Log("gui: Created new custom filter: " + fname + "\n");
     return true;
+}
+
+void CustomWindow::setPlaylist() {
+
+    if(filter_custom->count() <= 0) {
+        QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("Playlist Requires at least one filter...\n");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Information);
+        box.exec();
+        return;
+    }
+
+  QString path = "";
+  QString filename = QFileDialog::getSaveFileName(this,tr("Save Playlist"), path, tr("Playlist Files (*.key *.txt"));
+  if(filename != "") {
+
+    if(!cat_playlist.empty()) 
+        cat_playlist.erase(cat_playlist.begin(), cat_playlist.end());
+    if(!cat_playlist_index.empty())
+        cat_playlist_index.erase(cat_playlist_index.begin(), cat_playlist_index.end());
+
+        for(int i = 0; i < filter_custom->count(); ++i) {
+            auto *item = filter_custom->item(i);
+            cat_playlist.push_back(item->text().toStdString());
+        }
+        save_playlist(filename.toStdString());
+        main_window->initPlaylist();
+
+        QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("Playlist Saved and Loaded...\n");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Information);
+        box.exec();
+        return;
+  }
 }

@@ -922,7 +922,7 @@ void MainWindow::playlistOpen() {
             settings.setValue("image_playlist_path", filename);
             load_playlist(filename.toStdString());
             if(cat_playlist.size() > 0) {
-                filter_cat->setCurrentIndex(8);
+                initPlaylist();
                 //loadCategory(8);
                 QString text;
                 QTextStream stream(&text);
@@ -941,4 +941,9 @@ void MainWindow::playlistClear() {
     }
     debug_window->Log("gui: Playlist cleared");
     loadCategory(0);
+}
+
+void MainWindow::initPlaylist() {
+    filter_cat->setCurrentIndex(8);
+    filter_list->setCurrentIndex(0);
 }
