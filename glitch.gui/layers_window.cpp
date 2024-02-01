@@ -4,7 +4,7 @@
 #include<QFileDialog>
 #include "new_filter.hpp"
 
-class Layer_AlphaBlend50 : public FilterFunc {
+class Layer_AlphaBlend25 : public FilterFunc {
 public:
     void init() override {
 
@@ -14,6 +14,44 @@ public:
         layer_ = layer;
     }
 
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b &pix2 = resized.at<cv::Vec3b>(z, i);
+                        pix2 = resized.at<cv::Vec3b>(z, i);
+                        for(int q = 0; q < 3; ++q) {
+                            pix1[q] = ac::wrap_cast((0.75 * pix1[q]) + (0.25 * pix2[q]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+
+    }
+    ~Layer_AlphaBlend25() {
+
+    }
+private:
+    Layer *layer_;
+
+};
+
+class Layer_AlphaBlend50 : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
     void proc(cv::Mat &frame) override {
         cv::Mat layer1;
         if(layer_->hasNext()) {
@@ -41,9 +79,45 @@ public:
     }
 private:
     Layer *layer_;
-
 };
 
+
+class Layer_AlphaBlend75 : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b &pix2 = resized.at<cv::Vec3b>(z, i);
+                        pix2 = resized.at<cv::Vec3b>(z, i);
+                        for(int q = 0; q < 3; ++q) {
+                            pix1[q] = ac::wrap_cast((0.25 * pix1[q]) + (0.75 * pix2[q]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+
+    }
+    ~Layer_AlphaBlend75() {
+
+    }
+private:
+    Layer *layer_;
+};
 
 bool checkThere(std::string src, const std::vector<std::string> &keys) {
 
@@ -116,6 +190,10 @@ QString  Layer::getFilename() {
 }
 
 bool Layer::hasNext() {
+
+    if(is_open == false)
+        return false;
+
     if(type_ == LayerType::IMAGE)
         return true;
 
@@ -185,9 +263,17 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     layer_text->setGeometry(10,40, width()-20, 190);
     layer_text->setReadOnly(true);   
 
+    Layer_AlphaBlend25 *layer_blend25 = new Layer_AlphaBlend25();
+    layer_blend25->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_AlphaBlend25", layer_blend25});
+
     Layer_AlphaBlend50 *layer_blend50 = new Layer_AlphaBlend50();
     layer_blend50->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_AlphaBlend50", layer_blend50});
+
+    Layer_AlphaBlend75 *layer_blend75 = new Layer_AlphaBlend75();
+    layer_blend75->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_AlphaBlend75", layer_blend75});
 }
 
 void LayersWindow::setLayer() {
