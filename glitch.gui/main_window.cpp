@@ -632,6 +632,7 @@ void MainWindow::startNewAnimation(const QString &filename, const QString &outdi
         }
         cv::Mat src = cv::imread(filename.toStdString());
         if(!src.empty()) {
+            cur_filename = filename.toStdString();
             display_window->closeVideo();
             bar_position->setEnabled(false);
             setMinMax(0, 1);
