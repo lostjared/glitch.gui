@@ -23,8 +23,8 @@ public:
                 for(int z = 0; z < frame.rows; ++z) {
                     for(int i = 0; i < frame.cols; ++i) {
                         cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
-                        cv::Vec3b &pix2 = resized.at<cv::Vec3b>(z, i);
-                        pix2 = resized.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2;
+                        setvec(pix2,resized.at<cv::Vec3b>(z, i));
                         for(int q = 0; q < 3; ++q) {
                             pix1[q] = ac::wrap_cast((0.75 * pix1[q]) + (0.25 * pix2[q]));
                         }
@@ -61,8 +61,8 @@ public:
                 for(int z = 0; z < frame.rows; ++z) {
                     for(int i = 0; i < frame.cols; ++i) {
                         cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
-                        cv::Vec3b &pix2 = resized.at<cv::Vec3b>(z, i);
-                        pix2 = resized.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2;
+                        setvec(pix2,resized.at<cv::Vec3b>(z, i));
                         for(int q = 0; q < 3; ++q) {
                             pix1[q] = ac::wrap_cast((0.5 * pix1[q]) + (0.5 * pix2[q]));
                         }
@@ -99,8 +99,8 @@ public:
                 for(int z = 0; z < frame.rows; ++z) {
                     for(int i = 0; i < frame.cols; ++i) {
                         cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
-                        cv::Vec3b &pix2 = resized.at<cv::Vec3b>(z, i);
-                        pix2 = resized.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2;
+                        setvec(pix2,resized.at<cv::Vec3b>(z, i));
                         for(int q = 0; q < 3; ++q) {
                             pix1[q] = ac::wrap_cast((0.25 * pix1[q]) + (0.75 * pix2[q]));
                         }
