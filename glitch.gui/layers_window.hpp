@@ -6,7 +6,7 @@
 #include<QLabel>
 #include<QPushButton>
 #include<QTextEdit>
-
+#include<QComboBox>
 
 enum class LayerType { IMAGE, VIDEO };
 
@@ -44,13 +44,19 @@ class LayersWindow : public QDialog {
 public:
     LayersWindow(QWidget *parent = 0);
     Layer layer1;
+    Layer layer2;
+    Layer layer3;
+    std::vector<Layer *> layers;
 private:
     QLabel *layer_name;
     QTextEdit *layer_text;
     QPushButton *layer_set, *layer_clear;
+    QComboBox *layer_index;
+
 public slots:
     void setLayer();
     void clearLayer();
+    void setIndexLayer(int layer);
 };
 
 #endif

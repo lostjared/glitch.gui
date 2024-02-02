@@ -9,11 +9,9 @@ public:
     void init() override {
 
     }
-
     void setLayer(Layer *layer) {
         layer_ = layer;
     }
-
     void proc(cv::Mat &frame) override {
         cv::Mat layer1;
         if(layer_->hasNext()) {
@@ -228,6 +226,9 @@ void Layer::getInfo(int &w, int &h, double &f, int &fc, int &fi) {
 }
 
 QString Layer::getText() {
+        if(is_open == false) {
+            return "[Slot closed]";
+        }
         QString text;
         QTextStream stream(&text);
         int w = 0, h = 0, fc = 0, fi = 0;
@@ -247,8 +248,8 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Layers Window");
     setWindowIcon(QIcon(":/images/icon.png"));
 
-    layer_name = new QLabel(tr("Filename (iamge/video)"), this);
-    layer_name->setGeometry(10, 10, 200, 25);
+    //layer_name = new QLabel(tr("Filename (iamge/video)"), this);
+    //layer_name->setGeometry(10, 10, 200, 25);
 
     layer_set = new QPushButton(tr("Select"), this);
     layer_set->setGeometry(210, 10, 75, 25);
@@ -261,28 +262,78 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     connect(layer_clear, SIGNAL(clicked()), this, SLOT(clearLayer()));
 
     layer_text = new QTextEdit(this);
-    layer_text->setGeometry(10,40, width()-20, 190);
+    layer_text->setGeometry(10,40, width()-20, 180);
     layer_text->setReadOnly(true);   
 
-    Layer_AlphaBlend25 *layer_blend25 = new Layer_AlphaBlend25();
-    layer_blend25->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_AlphaBlend25", layer_blend25});
+    layer_index = new QComboBox(this);
+    layer_index->setGeometry(10, 10, 200, 25);
 
-    Layer_AlphaBlend50 *layer_blend50 = new Layer_AlphaBlend50();
-    layer_blend50->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_AlphaBlend50", layer_blend50});
+    layer_index->addItem("0: Clear");
+    layer_index->addItem("1: Clear");
+    layer_index->addItem("2: Clear");
 
-    Layer_AlphaBlend75 *layer_blend75 = new Layer_AlphaBlend75();
-    layer_blend75->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_AlphaBlend75", layer_blend75});
+    layer_index->setCurrentIndex(0);
+
+    layers.push_back(&layer1);
+    layers.push_back(&layer2);
+    layers.push_back(&layer3);
+
+    // 0
+
+    Layer_AlphaBlend25 *layer0_blend25 = new Layer_AlphaBlend25();
+    layer0_blend25->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_AlphaBlend25", layer0_blend25});
+
+    Layer_AlphaBlend50 *layer0_blend50 = new Layer_AlphaBlend50();
+    layer0_blend50->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_AlphaBlend50", layer0_blend50});
+
+    Layer_AlphaBlend75 *layer0_blend75 = new Layer_AlphaBlend75();
+    layer0_blend75->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_AlphaBlend75", layer0_blend75});
+
+    // 1
+
+    Layer_AlphaBlend25 *layer1_blend25 = new Layer_AlphaBlend25();
+    layer1_blend25->setLayer(&layer2);
+    new_filter_list.push_back({"New_Layer_1_AlphaBlend25", layer1_blend25});
+
+    Layer_AlphaBlend50 *layer1_blend50 = new Layer_AlphaBlend50();
+    layer1_blend50->setLayer(&layer2);
+    new_filter_list.push_back({"New_Layer_1_AlphaBlend50", layer1_blend50});
+
+    Layer_AlphaBlend75 *layer1_blend75 = new Layer_AlphaBlend75();
+    layer1_blend75->setLayer(&layer2);
+    new_filter_list.push_back({"New_Layer_1_AlphaBlend75", layer1_blend75});
+
+    // 2
+
+    Layer_AlphaBlend25 *layer2_blend25 = new Layer_AlphaBlend25();
+    layer2_blend25->setLayer(&layer3);
+    new_filter_list.push_back({"New_Layer_2_AlphaBlend25", layer2_blend25});
+
+    Layer_AlphaBlend50 *layer2_blend50 = new Layer_AlphaBlend50();
+    layer2_blend50->setLayer(&layer3);
+    new_filter_list.push_back({"New_Layer_2_AlphaBlend50", layer2_blend50});
+
+    Layer_AlphaBlend75 *layer2_blend75 = new Layer_AlphaBlend75();
+    layer2_blend75->setLayer(&layer3);
+    new_filter_list.push_back({"New_Layer_2_AlphaBlend75", layer2_blend75});
+
+    connect(layer_index, SIGNAL(currentIndexChanged(int)), this, SLOT(setIndexLayer(int)));
 }
 
 void LayersWindow::setLayer() {
     QString path = "";
     QString filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
-        if(layer1.open(filename)) {
-            layer_text->setHtml(layer1.getText());
+        int index = layer_index->currentIndex();
+        if(index >= 0 && layers[index]->open(filename)) {
+            layer_text->setHtml(layers[index]->getText());
+            QString text;
+            QTextStream stream(&text);
+            stream << index << ": " << filename;
+            layer_index->setItemText(index, text);
         } else {
             layer_text->setHtml("Loading <b>failed</b>...");
         }
@@ -290,7 +341,19 @@ void LayersWindow::setLayer() {
 }
 
 void LayersWindow::clearLayer() {
-    layer1.close();
-    layer_text->setHtml("Layer closed\n");
+    int index = layer_index->currentIndex();
+    if(index >= 0) {
+        layers[index]->close();
+        QString text;
+        QTextStream stream(&text);
+        stream << index << ": Clear";
+        layer_index->setItemText(index, text);
+        layer_text->setHtml("Layer closed\n");
+    }
+}
+
+void LayersWindow::setIndexLayer(int) {
+    int index = layer_index->currentIndex();
+    layer_text->setHtml(layers[index]->getText());
 }
 
