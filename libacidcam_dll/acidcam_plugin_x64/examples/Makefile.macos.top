@@ -3,7 +3,7 @@ CXX=g++
 #CXX=x86_64-w64-mingw32-g++
 
 LIBS= `pkg-config acidcam opencv4 --libs`
-CXXFLAGS= -O3 `pkg-config acidcam opencv4 --cflags`
+CXXFLAGS= -O3 `pkg-config acidcam opencv4 --cflags` -fPIC
 
 all: 
 	$(CXX) -std=c++17 -shared -o $(PLUGIN_NAME) $(LIBS) $(CXXFLAGS) plugin.cpp
