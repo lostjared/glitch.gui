@@ -8,6 +8,8 @@
 #include<QMessageBox>
 #include<sstream>
 
+extern std::string current_path;
+
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(1200, 100, 460, 220);
     setFixedSize(460, 220);
@@ -21,6 +23,9 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
 #elif defined(__linux__)
     ffmpeg_path->setText("/usr/bin/ffmpeg");
 #elif defined(__APPLE__)
+    //std::string p = current_path;
+    //p += "ffmpeg";
+    //ffmpeg_path->setText(p.c_str());
     ffmpeg_path->setText("/usr/local/bin/ffmpeg");
 #endif
 

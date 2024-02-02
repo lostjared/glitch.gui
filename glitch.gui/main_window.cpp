@@ -49,6 +49,9 @@ MainWindow::~MainWindow() {
     std::cout << "Releasing filter list..\n";
     release_filter_list();
 }
+#ifdef __APPLE__
+extern std::string current_path;
+#endif
 
 MainWindow::MainWindow()  {
     pref_window = new PrefWindow(this);
@@ -358,7 +361,12 @@ MainWindow::MainWindow()  {
     QString custom_text;
     debug_window->Log("gui: successfully initalized\n");
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    #ifdef __APPLE__
+    //load_plugins(current_path+"plugins", plugins);
     load_plugins("./plugins", plugins);
+    #else
+    load_plugins("./plugins", plugins);
+    #endif
     if(pref_window->loaded == false) {
         debug_window->Log("gui: Please select a location for saving custom filters in preferences window...\n");
     }

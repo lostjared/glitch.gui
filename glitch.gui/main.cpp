@@ -9,8 +9,14 @@
 #endif
 
 QSettings settings("LostSideDead", "glitch.gui");
+std::string current_path;
 
 int main(int argc, char **argv) {
+#ifdef __APPLE__
+    current_path = argv[0];
+    current_path = current_path.substr(0, current_path.rfind("/"));
+    current_path += "/../Resources/";
+#endif
 #ifdef _WIN32
     HANDLE hInput;
     DWORD prev_mode;
