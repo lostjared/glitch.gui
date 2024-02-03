@@ -117,13 +117,57 @@ private:
     Layer *layer_;
 };
 
+class Layer012_AlphaBlend : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer1, Layer *layer2, Layer *layer3) {
+        layer_[0] = layer1;
+        layer_[1] = layer2;
+        layer_[2] = layer3;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layers[3];
+        if(layer_[0]->hasNext() && layer_[1]->hasNext() && layer_[2]->hasNext()) {
+            if(layer_[0]->read(layers[0]) && layer_[1]->read(layers[1]) && layer_[2]->read(layers[2])) {
+                cv::Mat resized[3];
+                cv::resize(layers[0], resized[0], frame.size());
+                cv::resize(layers[1], resized[1], frame.size());
+                cv::resize(layers[2], resized[2], frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2[3];
+                        setvec(pix2[0],resized[0].at<cv::Vec3b>(z, i));
+                        setvec(pix2[1],resized[1].at<cv::Vec3b>(z, i));
+                        setvec(pix2[2],resized[2].at<cv::Vec3b>(z, i));
+                        
+                        for(int q = 0; q < 3; ++q) {
+                            pix1[q] = ac::wrap_cast((0.25 * pix1[q]) + (0.25 * pix2[0][q]) + (0.25 * pix2[1][q]) + (0.25 * pix2[2][q]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+
+    }
+    ~Layer012_AlphaBlend() {
+
+    }
+private:
+    Layer *layer_[3];
+};
+
+
 bool checkThere(std::string src, const std::vector<std::string> &keys) {
 
     std::string s;
     for(size_t i = 0; i < src.length(); ++i) {
          s += tolower(src[i]);
     }
-
     for(auto &i : keys) {
         if(s.find(i) != std::string::npos)
             return true;
@@ -327,6 +371,10 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     Layer_AlphaBlend75 *layer2_blend75 = new Layer_AlphaBlend75();
     layer2_blend75->setLayer(&layer3);
     new_filter_list.push_back({"New_Layer_2_AlphaBlend75", layer2_blend75});
+
+    Layer012_AlphaBlend *layer012_blend = new Layer012_AlphaBlend();
+    layer012_blend->setLayer(&layer1, &layer2, &layer3);
+    new_filter_list.push_back({"New_Layer_012_AlphaBlend", layer012_blend});
 
     connect(layer_index, SIGNAL(currentIndexChanged(int)), this, SLOT(setIndexLayer(int)));
     layer_text->setText("[Slot Closed]");
