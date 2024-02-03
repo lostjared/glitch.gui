@@ -135,6 +135,12 @@ Layer::Layer(const QString &filename) {
     open(filename);
 }
 
+Layer::~Layer() {
+    if(is_open) {
+        std::cout << "Releasing Layer: " << filename_.toStdString() << "\n";
+    }
+}
+
 bool Layer::open(const QString &filename) {
     filename_ = filename;
     if(checkThere(filename.toStdString(), {".png", ".jpg", ".bmp"})) {
@@ -323,6 +329,7 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     new_filter_list.push_back({"New_Layer_2_AlphaBlend75", layer2_blend75});
 
     connect(layer_index, SIGNAL(currentIndexChanged(int)), this, SLOT(setIndexLayer(int)));
+    layer_text->setText("[Slot Closed]");
 }
 
 void LayersWindow::setLayer() {

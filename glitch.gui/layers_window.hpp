@@ -14,7 +14,7 @@ class Layer {
 public:
     Layer() = default;
     Layer(const QString &filename);
-
+    ~Layer();
     bool open(const QString &filename);
     bool is_opened() const { return is_open; }
     void close();
