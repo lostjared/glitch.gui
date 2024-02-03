@@ -207,6 +207,7 @@ bool Layer::read(cv::Mat &frame) {
         return true;
     }
     if(!src_cap.read(frame)) {
+        frame_index = 0;
         src_cap.set(cv::CAP_PROP_POS_FRAMES, 0);
         src_cap.read(frame);
         if(!src_cap.isOpened()) {
@@ -214,6 +215,7 @@ bool Layer::read(cv::Mat &frame) {
             return false;
         }
     }
+    frame_index ++;
     return true;
 }
 
