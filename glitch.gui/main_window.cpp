@@ -290,7 +290,7 @@ MainWindow::MainWindow()  {
     filter_list->setEnabled(true);
     
     filter_list_view = new QListWidget(this);
-    filter_list_view->setGeometry(15, 35+25+10+35, 300, 200);
+    filter_list_view->setGeometry(315+10,105,300,200); 
     
     filter_search = new QLineEdit(this);
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
@@ -317,12 +317,12 @@ MainWindow::MainWindow()  {
     connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
 
     filter_set_custom = new QPushButton(tr("Custom"), this);
-    filter_set_custom->setGeometry(15+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-
+    filter_set_custom->setGeometry(15+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+    
     connect(filter_set_custom, SIGNAL(clicked()), this, SLOT(custom_Add()));
 
     filter_add_custom = new QPushButton(tr("Add"), this);
-    filter_add_custom->setGeometry(15+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
+    filter_add_custom->setGeometry(15+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_add_custom, SIGNAL(clicked()), this, SLOT(custom_filter_add()));
     
@@ -348,7 +348,7 @@ MainWindow::MainWindow()  {
     filter_first->setGeometry(315+10, 35+25+10, 200, 30);
 
     content_data = new QTextEdit(this);
-    content_data->setGeometry(315+10,105,300,200); 
+    content_data->setGeometry(15, 35+25+10+35, 300, 200);
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
     
@@ -719,7 +719,9 @@ void MainWindow::searchFilter() {
     filter_list_view->clear();
     for(int i = 0; i < filter_list->count(); ++i) {
         QString text = filter_list->itemText(i);
-        if(text.contains(search)) {
+        QString lwr_text = text.toLower();
+        QString s_text = search.toLower();
+        if(lwr_text.contains(s_text)) {
             if(text.toStdString().find("InOrder") == std::string::npos)
                 filter_list_view->addItem(text);
         }
