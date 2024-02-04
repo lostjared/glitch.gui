@@ -215,9 +215,7 @@ void DisplayWindow::timeoutFunc() {
             }
         }
     }
-
-    cv::Mat final_image;
-       
+    cv::Mat final_image;  
     if(current_filter != "") {
         if(fade) final_image = image.clone();
 

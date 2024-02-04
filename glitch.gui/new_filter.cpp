@@ -19,10 +19,9 @@ public:
         dir[1] = rand()%2;
         dir[2] = rand()%2;
     }
-    ~ColorXor1() {
-        // release
-        std::cout << "release..\n";
-    }
+    
+    ~ColorXor1() {}
+
     void proc(cv::Mat &frame) override {
         for(int z = 0; z < frame.rows; z++) {
             for(int i = 0; i < frame.cols; i++) {

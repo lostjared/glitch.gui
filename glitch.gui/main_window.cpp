@@ -44,9 +44,9 @@ QImage Mat2QImage(cv::Mat const& src)
 }
 
 MainWindow::~MainWindow() {
-    std::cout << "Releasing plugins..\n";
+    std::cout << "Releasing Plugins..\n";
     release_plugins(plugins);
-    std::cout << "Releasing filter list..\n";
+    std::cout << "Releasing New Filter List of Objects..\n";
     release_filter_list();
 }
 #ifdef __APPLE__
