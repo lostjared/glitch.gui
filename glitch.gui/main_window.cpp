@@ -878,6 +878,7 @@ void MainWindow::custom_Add() {
         QListWidgetItem *w = filter_list_view->item(cur_sel);
         custom_window->addItem(w->text());
     }
+    custom_window->show();
 }
 
 void MainWindow::file_Pref() {
@@ -894,6 +895,7 @@ void MainWindow::custom_filter_add() {
         QString text = filter_list->currentText();
         custom_window->addItem(text);
     }
+    custom_window->show();
 }
 
 void MainWindow::showControls() {
