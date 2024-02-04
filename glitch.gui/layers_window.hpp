@@ -39,10 +39,13 @@ protected:
     cv::VideoCapture src_cap;
 };
 
+class MainWindow;
+
 class LayersWindow : public QDialog {
     Q_OBJECT
 public:
     LayersWindow(QWidget *parent = 0);
+    void setMainWindow(MainWindow *m);
     Layer layer1;
     Layer layer2;
     Layer layer3;
@@ -52,6 +55,7 @@ private:
     QTextEdit *layer_text;
     QPushButton *layer_set, *layer_clear;
     QComboBox *layer_index;
+    MainWindow *main_window;
 
 public slots:
     void setLayer();

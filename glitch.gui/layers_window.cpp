@@ -3,6 +3,8 @@
 #include<QTextStream>
 #include<QFileDialog>
 #include "new_filter.hpp"
+#include"main_window.hpp"
+#include"pref_window.hpp"
 
 class Layer_AlphaBlend25 : public FilterFunc {
 public:
@@ -497,10 +499,23 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     layer_text->setText("[Slot Closed");
 }
 
+void LayersWindow::setMainWindow(MainWindow *m) {
+    main_window = m;
+}
+
 void LayersWindow::setLayer() {
     QString path = "";
+
+   if(main_window->pref_window->savePath())
+        path = settings.value("image_layer_path").toString();
+
     QString filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.png *.jpg *.bmp *.avi *.mov *.mp4 *.mkv)"));
     if(filename != "") {
+
+        if(main_window->pref_window->savePath())
+            settings.setValue("image_layer_path", filename);
+    
+
         int index = layer_index->currentIndex();
         if(index >= 0 && layers[index]->open(filename)) {
             layer_text->setHtml(layers[index]->getText());

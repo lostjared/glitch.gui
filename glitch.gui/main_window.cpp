@@ -105,6 +105,7 @@ MainWindow::MainWindow()  {
     rotate_window->hide();
     
     layers_window = new LayersWindow(this);
+    layers_window->setMainWindow(this);
     layers_window->hide();
 
     setFixedSize(640, 390);
