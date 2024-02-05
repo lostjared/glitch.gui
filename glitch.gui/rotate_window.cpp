@@ -33,7 +33,6 @@ RotateWindow::RotateWindow(QWidget *parent) : QDialog(parent) {
     deg_rotate = new QComboBox(this);
     deg_rotate->setGeometry(10, 100, 100, 25);
 
-    deg_rotate->addItem("transpose");
     deg_rotate->addItem("90");
     deg_rotate->addItem("-90");
     deg_rotate->addItem("180");
@@ -60,8 +59,13 @@ void RotateWindow::selectDst() {
  
 void RotateWindow::rotateVideo() {
     if(value_set[0] && value_set[1]) {
-        rotate_90(item_src->text().toStdString().c_str(), item_out->text().toStdString().c_str(), deg_rotate->currentText().toStdString().c_str());
         QMessageBox box;
+        box.setWindowTitle(tr(APP_NAME));
+        box.setText("This may take some time and program might lock up, watch the progress in the terminal window...");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Information);
+        box.exec(); 
+        rotate_90(item_src->text().toStdString().c_str(), item_out->text().toStdString().c_str(), deg_rotate->currentText().toStdString().c_str());
         box.setWindowTitle(tr(APP_NAME));
         box.setText("Rotate Video Completed...");
         box.setWindowIcon(QIcon(":/images/icon.png"));
