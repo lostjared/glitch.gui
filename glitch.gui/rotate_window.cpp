@@ -33,6 +33,7 @@ RotateWindow::RotateWindow(QWidget *parent) : QDialog(parent) {
     deg_rotate = new QComboBox(this);
     deg_rotate->setGeometry(10, 100, 100, 25);
 
+    deg_rotate->addItem("transpose");
     deg_rotate->addItem("90");
     deg_rotate->addItem("-90");
     deg_rotate->addItem("180");

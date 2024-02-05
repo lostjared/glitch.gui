@@ -94,7 +94,11 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
 
 void rotate_90(const char *output, const char *src, const char *deg) {
     std::ostringstream stream;
-    stream <<  ffmpeg_path << " -y -i \"" << output << "\" -c copy  -metadata:s:v:0 rotate=" << deg <<" \"" << src << "\"";
+    if(std::string(deg)!="transpose") {
+        stream << ffmpeg_path << " -y -i \"" << output << "\" -c copy  -metadata:s:v:0 rotate=" << deg <<" \"" << src << "\"";
+    } else {
+        stream << ffmpeg_path << " -y -i \"" << output << "\" -vf \"transpose=0\" \"" << src << "\"";
+    }
     std::cout << "acidcam: " << stream.str() << "\n";
 #ifndef _WIN32
     FILE *fptr = popen(stream.str().c_str(), "r");
