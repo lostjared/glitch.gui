@@ -27,3 +27,10 @@ enter directory of glitch.gui
     qmake6
     make -j8
     ./glitch.gui
+
+
+Example created with this software using source image from AiVision on Deep Dream Generator.
+
+![ScreenShot1](https://github.com/lostjared/glitch.gui/blob/main/images/plug.gif?raw=true "screenshot2")
+
+
