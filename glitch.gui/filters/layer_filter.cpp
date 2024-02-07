@@ -76,4 +76,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Layer_Fill_NotZero *layer_ne_zero = new Layer_Fill_NotZero();
     layer_ne_zero->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_Fill_NotZero", layer_ne_zero});
+
+    // FIll Zero
+    Layer_Fill_Zero *layer_zero = new Layer_Fill_Zero();
+    layer_zero->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_Fill_Zero", layer_zero});
+    
 }
