@@ -56,6 +56,12 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer01_fade->setLayer(&layer1, &layer2);
     new_filter_list.push_back({"New_Layer_01_Fade", layer01_fade});
 
+    // FadeXOR
+    Layer_AlphaBlendFade01 *layer01_fade_xor = new Layer_AlphaBlendFade01();
+    layer01_fade_xor->setXor(true);
+    layer01_fade_xor->setLayer(&layer1,&layer2);
+    new_filter_list.push_back({"New_Layer_01_Fade_Xor", layer01_fade_xor});
+
     // Diff
     Layer_Difference *layer_diff = new Layer_Difference();
     layer_diff->setLayer(&layer1);

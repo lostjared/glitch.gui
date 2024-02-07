@@ -218,6 +218,11 @@ public:
         inc = 0.01;
         dir = 1;
     }
+
+    void setXor(bool x) {
+        on = x;
+    }
+
     void setLayer(Layer *layer1, Layer *layer2) {
         layer_[0] = layer1;
         layer_[1] = layer2;
@@ -238,6 +243,8 @@ public:
                         for(int q = 0; q < 3; ++q) {
                             unsigned char value = cv::saturate_cast<uchar>((0.5 * pix2[0][q]) + (0.5 * pix2[1][q]));
                             pix1[q] = cv::saturate_cast<uchar>((alpha * pix1[q]) + ((1-alpha) * value));
+                            if(on == true)
+                                pix1[q] ^= value;
                         }
                     }
                 }
@@ -268,6 +275,7 @@ private:
     double alpha = 0.1;
     double inc = 0.01;
     int dir = 1;
+    bool on = false;
 };
 
 // Difference
