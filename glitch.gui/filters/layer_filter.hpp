@@ -366,6 +366,46 @@ private:
     FrameCollection collection;
 };
 
+// Fill != 0
+
+class Layer_Fill_NotZero : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        if(pix1[0] > 10 && pix1[1] > 10 && pix1[2] > 10) {
+                            setvec(pix1,resized.at<cv::Vec3b>(z, i));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+
+    }
+  
+    ~Layer_Fill_NotZero() {
+
+    }
+private:
+    Layer *layer_;
+
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

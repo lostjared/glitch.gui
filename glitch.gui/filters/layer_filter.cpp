@@ -72,4 +72,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer_diff_xor->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_Difference_Xor", layer_diff_xor});
 
+    // Fill != Zero
+    Layer_Fill_NotZero *layer_ne_zero = new Layer_Fill_NotZero();
+    layer_ne_zero->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_Fill_NotZero", layer_ne_zero});
 }
