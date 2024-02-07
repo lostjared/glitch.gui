@@ -81,7 +81,6 @@ private:
     Layer *layer_;
 };
 
-
 class Layer_AlphaBlend75 : public FilterFunc {
 public:
     void init() override {
@@ -269,6 +268,50 @@ private:
     double alpha = 0.1;
     double inc = 0.01;
     int dir = 1;
+};
+
+// Difference
+
+class Layer_Difference : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        collection.shiftFrames(frame);
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b &pix_f = collection.at(6)->at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2;
+                        setvec(pix2,resized.at<cv::Vec3b>(z, i));
+                        for(int q = 0; q < 3; ++q) {
+                            if(std::abs(pix1[q]-pix_f[q]) > 25) {
+                                pix1[q] = pix2[q];
+                            }                           
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+        collection.clear();
+    }
+    ~Layer_Difference() {
+    
+    }
+private:
+    Layer *layer_;
+    FrameCollection collection;
 };
 
 
@@ -494,6 +537,11 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     Layer_AlphaBlendFade01 *layer01_fade = new Layer_AlphaBlendFade01();
     layer01_fade->setLayer(&layer1, &layer2);
     new_filter_list.push_back({"New_Layer_01_Fade", layer01_fade});
+
+    // Diff
+    Layer_Difference *layer_diff = new Layer_Difference();
+    layer_diff->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_Difference", layer_diff});
 
     connect(layer_index, SIGNAL(currentIndexChanged(int)), this, SLOT(setIndexLayer(int)));
     layer_text->setText("[Slot Closed");
