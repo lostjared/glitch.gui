@@ -464,7 +464,7 @@ public:
                             cv::Vec3b p;
                             setvec(p,collection.frames[f].at<cv::Vec3b>(z, i));
                             if(std::abs((pix1[0]+pix1[1]+pix1[2])-(p[0]+p[1]+p[2])) > 50) {
-                                setvec(pix1, p);
+                                setvec(pix1, resized.at<cv::Vec3b>(z, i));
                                 break;
                             }
                         }
