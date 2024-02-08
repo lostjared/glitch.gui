@@ -442,6 +442,50 @@ private:
 
 };
 
+class Layer_Matrix_Diff : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        collection.shiftFrames(frame);
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        for(int f = 0; f < collection.size(); ++f) {
+                            cv::Vec3b p;
+                            setvec(p,collection.frames[f].at<cv::Vec3b>(z, i));
+                            if(std::abs((pix1[0]+pix1[1]+pix1[2])-(p[0]+p[1]+p[2])) > 50) {
+                                setvec(pix1, p);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+        ac::release_all_objects();
+    }
+  
+    ~Layer_Matrix_Diff() {
+
+    }
+private:
+    Layer *layer_;
+    ac::MatrixCollection<8> collection;
+
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
