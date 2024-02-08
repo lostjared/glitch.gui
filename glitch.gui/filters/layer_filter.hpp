@@ -486,7 +486,75 @@ private:
 
 };
 
-void add_layer_filters(Layer&,Layer&,Layer&);
+class Layer_Matrix_Color : public FilterFunc {
+public:
+    void init() override {
 
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        collection.shiftFrames(frame);
+        cv::Mat layer1;
+        cv::Mat *src[3];
+        src[0] = &collection.frames[0];
+        src[1] = &collection.frames[3];
+        src[2] = &collection.frames[6];
+
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b &lsrc = resized.at<cv::Vec3b>(z, i);
+                        for(int q = 0; q <3; ++q) {
+                            pix1[q] = cv::saturate_cast<uchar>((src[q]->at<cv::Vec3b>(z, i)[q]) + (0.25 * lsrc[q]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+        ac::release_all_objects();
+    }
+  
+    ~Layer_Matrix_Color() {
+
+    }
+private:
+    Layer *layer_;
+    ac::MatrixCollection<8> collection;
+
+};
+
+// Light
+class Light_Increase : public FilterFunc {
+public:
+    void init() override {
+    }
+    void proc(cv::Mat &frame) override {
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = cv::saturate_cast<uchar>((pixel[q]*1.25));
+                }
+            }
+        }
+    }
+    void clear() override {
+    }
+    ~Light_Increase() {
+
+    }
+private:
+
+};
+
+void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif

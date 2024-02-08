@@ -65,25 +65,33 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     // Diff
     Layer_Difference *layer_diff = new Layer_Difference();
     layer_diff->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_Difference", layer_diff});
+    new_filter_list.push_back({"New_Layer_0_Difference", layer_diff});
 
     // Diff Xor
     Layer_Difference_Xor *layer_diff_xor = new Layer_Difference_Xor();
     layer_diff_xor->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_Difference_Xor", layer_diff_xor});
+    new_filter_list.push_back({"New_Layer_0_Difference_Xor", layer_diff_xor});
 
     // Fill != Zero
     Layer_Fill_NotZero *layer_ne_zero = new Layer_Fill_NotZero();
     layer_ne_zero->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_Fill_NotZero", layer_ne_zero});
+    new_filter_list.push_back({"New_Layer_0_Fill_NotZero", layer_ne_zero});
 
     // FIll Zero
     Layer_Fill_Zero *layer_zero = new Layer_Fill_Zero();
     layer_zero->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_Fill_Zero", layer_zero});
+    new_filter_list.push_back({"New_Layer_0_Fill_Zero", layer_zero});
 
     Layer_Matrix_Diff  *layer_matrix = new Layer_Matrix_Diff();
     layer_matrix->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_Matrix_Diff", layer_matrix});
-    
+    new_filter_list.push_back({"New_Layer_0_Matrix_Diff", layer_matrix});
+
+    Layer_Matrix_Color *layer_mc = new Layer_Matrix_Color();
+    layer_mc->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_Matrix_Color", layer_mc});
+
+    // Other 
+    Light_Increase *light_inc = new Light_Increase();
+    new_filter_list.push_back({"New_Light_Increase", light_inc});
+   
 }
