@@ -17,7 +17,7 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     //layer_name->setGeometry(10, 10, 200, 25);
 
     layer_set = new QPushButton(tr("Select"), this);
-    layer_set->setGeometry(210, 10, 75, 25);
+    layer_set->setGeometry(215, 10, 75, 25);
 
     connect(layer_set, SIGNAL(clicked()), this, SLOT(setLayer()));
 
