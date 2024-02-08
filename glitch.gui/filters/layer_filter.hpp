@@ -385,7 +385,7 @@ public:
                 for(int z = 0; z < frame.rows; ++z) {
                     for(int i = 0; i < frame.cols; ++i) {
                         cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
-                        if(pix1[0] > 10 && pix1[1] > 10 && pix1[2] > 10) {
+                        if(pix1[0] > 4 && pix1[1] > 4 && pix1[2] > 4) {
                             setvec(pix1,resized.at<cv::Vec3b>(z, i));
                         }
                     }
@@ -422,7 +422,7 @@ public:
                 for(int z = 0; z < frame.rows; ++z) {
                     for(int i = 0; i < frame.cols; ++i) {
                         cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
-                        if(pix1[0] < 10 && pix1[1] < 10 && pix1[2] < 10) {
+                        if(pix1[0] < 4 && pix1[1] < 4 && pix1[2] < 4) {
                             setvec(pix1,resized.at<cv::Vec3b>(z, i));
                         }
                     }
