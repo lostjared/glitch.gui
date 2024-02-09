@@ -32,6 +32,7 @@ class MuxWindow;
 class Control_Window;
 class RotateWindow;
 class LayersWindow;
+class AboutWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -69,6 +70,7 @@ public:
     Control_Window *control_window;
     RotateWindow *rotate_window;
     LayersWindow *layers_window;
+    AboutWindow *about_window;
     int current_width = 0, current_height = 0; 
 private:
     QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu,*tools_menu, *help_menu, *audio_menu;

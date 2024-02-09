@@ -24,6 +24,8 @@
 #include"control_window.hpp"
 #include"rotate_window.hpp"
 #include"layers_window.hpp"
+#include"about_window.hpp"
+
 #include<QCoreApplication>
 
 cv::Mat QImage2Mat(QImage const& src)
@@ -107,6 +109,9 @@ MainWindow::MainWindow()  {
     layers_window = new LayersWindow(this);
     layers_window->setMainWindow(this);
     layers_window->hide();
+
+    about_window = new AboutWindow(this);
+    about_window->hide();
 
     setFixedSize(640, 390);
     setWindowTitle(tr(APP_NAME));
@@ -756,7 +761,8 @@ void MainWindow::helpAbout() {
     box.setText(text);
     box.setWindowIcon(QIcon(":/images/icon.png"));
     box.setIcon(QMessageBox::Icon::Information);
-    box.exec();
+    //box.exec();
+    about_window->show();
 }
 
 void MainWindow::firstSet() {
