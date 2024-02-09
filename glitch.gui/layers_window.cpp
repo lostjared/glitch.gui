@@ -43,7 +43,7 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     add_layer_filters(layer1,layer2,layer3);
 
     connect(layer_index, SIGNAL(currentIndexChanged(int)), this, SLOT(setIndexLayer(int)));
-    layer_text->setText("[Slot Closed");
+    layer_text->setText("[Slot Closed]");
 }
 
 void LayersWindow::setMainWindow(MainWindow *m) {
@@ -62,7 +62,6 @@ void LayersWindow::setLayer() {
         if(main_window->pref_window->savePath())
             settings.setValue("image_layer_path", filename);
     
-
         int index = layer_index->currentIndex();
         if(index >= 0 && layers[index]->open(filename)) {
             layer_text->setHtml(layers[index]->getText());
