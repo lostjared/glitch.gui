@@ -1,5 +1,7 @@
 #include"debug_window.hpp"
 #include<QIcon>
+#include<QTextStream>
+#include"version_info.hpp"
 // Debug Window constructor - (init)
 DebugWindow::DebugWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(10, 600, 1280, 320);
@@ -11,6 +13,11 @@ DebugWindow::DebugWindow(QWidget *parent) : QDialog(parent) {
     text_view->setGeometry(10, 10, 1280-20, 320-20);
     text_view->setReadOnly(true);
     text_view->setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); font-size: 20px;");
+    QString text;
+    QTextStream stream(&text);
+    stream << "gui: glitch.gui v" << APP_VERSION << " Loaded\n";
+    stream << "gui: " << APP_YEAR << " LostSideDead Software\n";
+    Log(text);
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
