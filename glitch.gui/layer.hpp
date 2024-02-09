@@ -10,6 +10,12 @@ enum class LayerType { IMAGE, VIDEO };
 class Layer {
 public:
     Layer() = default;
+    Layer(const Layer &l);
+    Layer(Layer &&l);
+
+    Layer &operator=(const Layer &l);
+    Layer &operator=(Layer &&l);
+    
     Layer(const QString &filename);
     ~Layer();
     bool open(const QString &filename);

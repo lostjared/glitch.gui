@@ -16,6 +16,42 @@ Layer::Layer(const QString &filename) {
     open(filename);
 }
 
+Layer::Layer(const Layer &l) : filename_{l.filename_}, type_{l.type_}, width{l.width}, height{l.height}, fps{l.fps}, frame_count{l.frame_count}, frame_index{l.frame_index}, is_open{l.is_open}, src_image{l.src_image}, src_cap{l.src_cap} {
+
+}
+
+Layer::Layer(Layer &&l) : filename_{std::move(l.filename_)}, type_{l.type_}, width{l.width}, height{l.height}, fps{l.fps}, frame_count{l.frame_count}, frame_index{l.frame_index}, is_open{l.is_open}, src_image{std::move(l.src_image)}, src_cap{std::move(l.src_cap)} {
+
+}
+
+Layer &Layer::operator=(const Layer &l) {
+    filename_ = l.filename_;
+    type_ = l.type_;
+    width = l.width;
+    height = l.height;
+    fps = l.fps;
+    frame_count = l.frame_count;
+    frame_index = l.frame_index;
+    is_open = l.is_open;
+    src_image = l.src_image;
+    src_cap = l.src_cap;
+    return *this;
+}
+
+Layer &Layer::operator=(Layer &&l) {
+    filename_ = std::move(l.filename_);
+    type_ = l.type_;
+    width = l.width;
+    height = l.height;
+    fps = l.fps;
+    frame_count = l.frame_count;
+    frame_index = l.frame_index;
+    is_open = l.is_open;
+    src_image = std::move(l.src_image);
+    src_cap = std::move(l.src_cap);
+    return *this;
+}
+
 Layer::~Layer() {
     if(is_open) {
         std::cout << "Releasing Layer: " << filename_.toStdString() << "\n";
