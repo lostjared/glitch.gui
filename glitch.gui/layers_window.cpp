@@ -13,9 +13,6 @@ LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Layers Window");
     setWindowIcon(QIcon(":/images/icon.png"));
 
-    //layer_name = new QLabel(tr("Filename (iamge/video)"), this);
-    //layer_name->setGeometry(10, 10, 200, 25);
-
     layer_set = new QPushButton(tr("Select"), this);
     layer_set->setGeometry(215, 10, 75, 25);
 
