@@ -33,4 +33,4 @@ Example created with this software using source image from AiVision on Deep Drea
 
 ![ScreenShot1](https://github.com/lostjared/glitch.gui/blob/main/images/plug.gif?raw=true "screenshot2")
 
-
+Video tutorial how to install and use on Ubuntu: https://youtu.be/GQFtQ0SeIAs
