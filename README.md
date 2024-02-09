@@ -12,7 +12,7 @@ How it works:
     use the arrow keys, s to save, d to stop/start, e to step or the GUI to move through the supplied distortion filters.
 
 Required libraries:
-   OpenCV 4, http://github.com/lostjared/libacidcam - libacidcam, Qt6
+   OpenCV 4, http://github.com/lostjared/libacidcam - libacidcam, Qt6, Qt6 Web Engine Widgets (on debian qt6-webengine-dev)
 
 To compile download and install libacidcam
 
