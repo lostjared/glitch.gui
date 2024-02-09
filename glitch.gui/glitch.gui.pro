@@ -15,8 +15,8 @@ QT += webenginewidgets
 # how to port your code away from it.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-LIBS += `pkg-config acidcam opencv4 --libs`
-QMAKE_CXXFLAGS += -O3 `pkg-config acidcam opencv4 --cflags`
+LIBS += `pkg-config acidcam opencv4 --libs` 
+QMAKE_CXXFLAGS += -O3 `pkg-config acidcam opencv4 --cflags` -D_HAS_WEBVIEW_H_
 # Input
 RESOURCES += resources.qrc
 HEADERS += main_window.hpp toolbox_window.hpp display_window.hpp version_info.hpp new_image.hpp debug_window.hpp cat_vec.hpp plugin_program.hpp new_filter.hpp filters/filters.hpp filters/colorxor2.hpp filters/frame_collection.hpp filters/trails.hpp filters/glitch.hpp record_window.hpp ffmpeg_write.h custom_window.hpp custom_edit.hpp pref_window.hpp mux_window.hpp control_window.hpp rotate_window.hpp layers_window.hpp layer.hpp filters/layer_filter.hpp about_window.hpp
