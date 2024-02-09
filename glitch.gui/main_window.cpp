@@ -761,8 +761,12 @@ void MainWindow::helpAbout() {
     box.setText(text);
     box.setWindowIcon(QIcon(":/images/icon.png"));
     box.setIcon(QMessageBox::Icon::Information);
-    //box.exec();
+#ifdef _HAS_WEBVIEW_H_
     about_window->show();
+#else
+       box.exec();
+#endif
+
 }
 
 void MainWindow::firstSet() {
