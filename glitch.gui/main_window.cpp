@@ -268,6 +268,16 @@ MainWindow::MainWindow()  {
     tools_menu->addAction(rotate_item);
     connect(rotate_item, SIGNAL(triggered()), this, SLOT(showRotateWindow()));    
 
+    window_menu = menuBar()->addMenu(tr("&Window"));
+    window_show_debug = new QAction(tr("Show Debug"), this);
+    window_menu->addAction(window_show_debug);
+    window_show_tool = new QAction(tr("Show Toolbox"), this);
+    window_menu->addAction(window_show_tool);
+
+    connect(window_show_debug, SIGNAL(triggered()), this, SLOT(showDebug()));
+    connect(window_show_tool, SIGNAL(triggered()), this, SLOT(showTools()));
+
+
     help_menu = menuBar()->addMenu(tr("&Help"));
     help_about = new QAction(tr("&About"), this);
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
@@ -981,4 +991,12 @@ void MainWindow::initPlaylist() {
 
 void MainWindow::recordLayers() {
     layers_window->show();
+}
+
+void MainWindow::showDebug() {
+    debug_window->show();
+}
+    
+void MainWindow::showTools() {
+    toolbox_window->show();
 }

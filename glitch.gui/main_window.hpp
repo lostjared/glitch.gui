@@ -73,7 +73,7 @@ public:
     AboutWindow *about_window;
     int current_width = 0, current_height = 0; 
 private:
-    QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu,*tools_menu, *help_menu, *audio_menu;
+    QMenu *file_menu, *edit_menu, *record_menu, *image_menu, *filter_menu,*tools_menu, *help_menu, *audio_menu, *window_menu;
     QAction *file_open, *file_pref, *file_exit;
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat, *record_control, *record_reset, *record_layers;
@@ -81,6 +81,7 @@ private:
     QAction *filter_custom, *filter_edit, *filter_menu_release, *filter_playlist_open, *filter_playlist_clear;
     QAction *rotate_item;
     QAction *audio_mux;
+    QAction *window_show_tool, *window_show_debug;
 
     QAction *help_about; 
     QImage image;
@@ -129,6 +130,8 @@ public slots:
     void playlistOpen();
     void playlistClear();
     void recordLayers();
+    void showDebug();
+    void showTools();
 };
 
 
