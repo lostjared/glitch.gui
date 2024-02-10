@@ -14,7 +14,7 @@ How it works:
 Required libraries:
    OpenCV 4, http://github.com/lostjared/libacidcam - libacidcam, Qt6, Qt6 Web Engine Widgets (on debian qt6-webengine-dev)
 
-To compile download and install libacidcam
+To compile for Linux download and install libacidcam
 
     git clone https://github.com/lostjared/libacidcam.git
     cd libacidcam
