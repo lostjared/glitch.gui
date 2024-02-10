@@ -35,6 +35,11 @@ Example created with this software using source image from AiVision on Deep Drea
 
 Video tutorials about how to install and use:
 
+
 on Ubuntu: https://youtu.be/GQFtQ0SeIAs 
 
+
 or on MacOS: https://youtu.be/NUDnHnl1Arc
+
+
+or on Newest MacOS Sonoma: https://youtu.be/LVwgHE24NkY
