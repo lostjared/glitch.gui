@@ -555,6 +555,33 @@ private:
 
 };
 
+// Light Echo
+class Light_Echo : public FilterFunc {
+public:
+    void init() override {
+    }
+    void proc(cv::Mat &frame) override {
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                cv::Vec3b pixel_val[2];
+                setvec(pixel_val[0], frame.at<cv::Vec3b>(z/2, i/2));
+                setvec(pixel_val[1], frame.at<cv::Vec3b>(z/4, i/4));
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = cv::saturate_cast<uchar>((pixel[q] * 0.5) + (pixel_val[0][q] * 0.25) + (pixel_val[1][q] * 0.25));
+                }
+            }
+        }
+    }
+    void clear() override {
+    }
+    ~Light_Echo() {
+    }
+private:
+};
+
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif

@@ -93,5 +93,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     // Other 
     Light_Increase *light_inc = new Light_Increase();
     new_filter_list.push_back({"New_Light_Increase", light_inc});
+
+    Light_Echo *light_echo = new Light_Echo();
+    new_filter_list.push_back({"New_Light_Echo", light_echo});
    
 }
