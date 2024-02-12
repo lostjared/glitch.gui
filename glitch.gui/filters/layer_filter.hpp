@@ -486,6 +486,66 @@ private:
 
 };
 
+// use same video for layer 0
+class Layer_Variable_Diff : public FilterFunc {
+public:
+    void init() override {
+        var = 16;
+        dir = 1;
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            collection.shiftFrames(frame);
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                ac::RSquare(resized);
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2;
+                        setvec(pix2, collection.frames[6].at<cv::Vec3b>(z, i));
+                        for(int q = 0; q < 3; ++q) {
+                            if(std::abs(pix1[q]-pix2[q]) > var) {
+                                pix1[q] = resized.at<cv::Vec3b>(z, i)[q];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(dir == 1) {
+            ++var;
+            if(var >= 32) {
+                var = 32;
+                dir = 0;
+            }
+        } else {
+            --var;
+            if(var <= 16) {
+                var = 16;
+                dir = 1;
+            }
+        }
+    }
+    void clear() override {
+        ac::release_all_objects();
+    }
+  
+    ~Layer_Variable_Diff() {
+
+    }
+private:
+    Layer *layer_;
+    int var = 16;
+    int dir = 1;
+    ac::MatrixCollection<8> collection;
+};
+
 class Layer_Matrix_Color : public FilterFunc {
 public:
     void init() override {
@@ -580,7 +640,28 @@ public:
 private:
 };
 
-
+class Light_Wrap : public FilterFunc {
+public:
+    void init() override {
+    }
+    void proc(cv::Mat &frame) override {
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                cv::Vec3b pixel_val[2];
+                setvec(pixel_val[0], frame.at<cv::Vec3b>(z/2, i/2));
+                setvec(pixel_val[1], frame.at<cv::Vec3b>(z/4, i/4));
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = ac::wrap_cast((pixel[q] * 0.5) + (pixel_val[0][q] * 0.5) + (pixel_val[1][q] * 0.5));
+                }
+            }
+        }
+    }
+    void clear() override {
+    }
+    ~Light_Wrap()  {}
+private:
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

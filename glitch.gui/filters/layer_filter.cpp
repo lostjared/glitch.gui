@@ -72,6 +72,11 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer_diff_xor->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Difference_Xor", layer_diff_xor});
 
+    //Variable Diff    
+    Layer_Variable_Diff *layer_var_diff = new  Layer_Variable_Diff();
+    layer_var_diff->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_Variable_Diff", layer_var_diff});
+
     // Fill != Zero
     Layer_Fill_NotZero *layer_ne_zero = new Layer_Fill_NotZero();
     layer_ne_zero->setLayer(&layer1);
@@ -96,5 +101,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     Light_Echo *light_echo = new Light_Echo();
     new_filter_list.push_back({"New_Light_Echo", light_echo});
-   
+
+    Light_Wrap *light_wrap = new Light_Wrap();
+    new_filter_list.push_back({"New_Light_Wrap", light_wrap});
+
+
 }
