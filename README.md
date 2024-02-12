@@ -10,6 +10,9 @@ How it works:
 
     Supply a example image or video file, start an animation press Save or the s key to save a snapshot
     use the arrow keys, s to save, d to stop/start, e to step or the GUI to move through the supplied distortion filters.
+Note:
+    Some of the filters might seem to do nothing on an image, thats why you must select a filter that causes the image to change press the first button
+    then select that filter that seemed to do nothing. The reason is, it requires an animation to preform its action.
 
 Required libraries:
    OpenCV 4, http://github.com/lostjared/libacidcam - libacidcam, Qt6, Qt6 Web Engine Widgets (on debian qt6-webengine-dev)
