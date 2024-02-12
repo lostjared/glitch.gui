@@ -244,14 +244,84 @@ public:
             }
         }
     }
+
     void clear() override {
         
     }
-    ~Layer012_ChannelMerge() {
-        
-    }
+    ~Layer012_ChannelMerge(){}
+    
 private:
     Layer *layer_[3];
+};
+
+//012 Slide Show
+
+class Layer012_SlideShow : public FilterFunc {
+public:
+    void init() override {
+        alpha = 0.2f;
+        index_val = 0;
+        dir = 1;
+    }
+    void setLayer(Layer *layer1, Layer *layer2, Layer *layer3) {
+        layer_[0] = layer1;
+        layer_[1] = layer2;
+        layer_[2] = layer3;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layers[3];
+        if(layer_[0]->hasNext() && layer_[1]->hasNext() && layer_[2]->hasNext()) {
+            if(layer_[0]->read(layers[0]) && layer_[1]->read(layers[1]) && layer_[2]->read(layers[2])) {
+                cv::Mat resized[3];
+                cv::resize(layers[0], resized[0], frame.size());
+                cv::resize(layers[1], resized[1], frame.size());
+                cv::resize(layers[2], resized[2], frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2[3];
+                        setvec(pix2[0],resized[0].at<cv::Vec3b>(z, i));
+                        setvec(pix2[1],resized[1].at<cv::Vec3b>(z, i));
+                        setvec(pix2[2],resized[2].at<cv::Vec3b>(z, i));
+                        for(int q = 0; q < 3 && index_val <= 2; ++q) {
+                            pix1[q] = ac::wrap_cast(( alpha * pix1[q] ) + ( (1-alpha ) * pix2[index_val][q]) );
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        if(dir == 1) {
+            alpha += 0.01f;
+            if(alpha >= 1.0f) {
+                alpha = 1.0f;
+                dir = 0;
+            }
+        } else if(dir == 0)
+          alpha -= 0.01f;
+          if(alpha <= 0.2f) {
+            alpha = 0.2f;
+            index_val ++;
+            if(index_val > 2) index_val = 0;   
+            dir = 1;         
+          }
+    }
+
+    void clear() override {
+        
+    }
+
+    ~Layer012_SlideShow() {
+
+    }
+  
+private:
+    Layer *layer_[3]; 
+    float alpha = 0.2f;
+    int dir = 1;
+    int index_val = 0;
+
 };
 
 // fade
@@ -260,6 +330,7 @@ class Layer_AlphaBlendFade01 : public FilterFunc {
 public:
     void init() override {
         alpha = 0.1;
+
         inc = 0.01;
         dir = 1;
     }
