@@ -43,6 +43,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer2_blend75->setLayer(&layer3);
     new_filter_list.push_back({"New_Layer_2_AlphaBlend75", layer2_blend75});
 
+    Layer_0_Intertwine *layer_inter = new Layer_0_Intertwine();
+    layer_inter->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_Intertwine", layer_inter});
+
     Layer012_AlphaBlend *layer012_blend = new Layer012_AlphaBlend();
     layer012_blend->setLayer(&layer1, &layer2, &layer3);
     new_filter_list.push_back({"New_Layer_012_AlphaBlend", layer012_blend});

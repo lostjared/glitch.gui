@@ -118,6 +118,63 @@ private:
     Layer *layer_;
 };
 
+// intertwine
+
+class Layer_0_Intertwine : public FilterFunc {
+public:
+    void init() override {
+        pos_col = 0;
+        max_col = 50;     
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2;
+                        setvec(pix2,resized.at<cv::Vec3b>(z, i));
+                        if(pos_col == 0) {
+                            setvec(pix1, pix2);
+                        }
+                        index_col ++;
+                        if(index_col >= max_col) {
+                            index_col = 0;
+                            pos_col = !pos_col;
+                        }
+                    }
+                }
+            }
+        }
+
+        max_col ++;
+        if(max_col > 100) {
+            max_col = 50;
+        }
+    }
+    void clear() override {
+        
+    }
+   
+    ~Layer_0_Intertwine() {
+        
+    }
+private:
+    Layer *layer_;
+    int index_col = 0;
+    int max_col = 50;
+    int pos_col = 0;
+};
+
+
+// Multilayer AlphaBlend
+
 class Layer012_AlphaBlend : public FilterFunc {
 public:
     void init() override {
