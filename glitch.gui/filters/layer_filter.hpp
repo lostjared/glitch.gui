@@ -9,7 +9,7 @@
 class Layer_AlphaBlend25 : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -34,20 +34,20 @@ public:
         }
     }
     void clear() override {
-
+        
     }
     ~Layer_AlphaBlend25() {
-
+        
     }
 private:
     Layer *layer_;
-
+    
 };
 
 class Layer_AlphaBlend50 : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -72,10 +72,10 @@ public:
         }
     }
     void clear() override {
-
+        
     }
     ~Layer_AlphaBlend50() {
-
+        
     }
 private:
     Layer *layer_;
@@ -84,7 +84,7 @@ private:
 class Layer_AlphaBlend75 : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -109,10 +109,10 @@ public:
         }
     }
     void clear() override {
-
+        
     }
     ~Layer_AlphaBlend75() {
-
+        
     }
 private:
     Layer *layer_;
@@ -121,7 +121,7 @@ private:
 class Layer012_AlphaBlend : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer1, Layer *layer2, Layer *layer3) {
         layer_[0] = layer1;
@@ -153,10 +153,10 @@ public:
         }
     }
     void clear() override {
-
+        
     }
     ~Layer012_AlphaBlend() {
-
+        
     }
 private:
     Layer *layer_[3];
@@ -165,7 +165,7 @@ private:
 class Layer012_AlphaBlend_Xor : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer1, Layer *layer2, Layer *layer3) {
         layer_[0] = layer1;
@@ -197,14 +197,14 @@ public:
                 }
             }
         }
-
-
+        
+        
     }
     void clear() override {
-
+        
     }
     ~Layer012_AlphaBlend_Xor() {
-
+        
     }
 private:
     Layer *layer_[3];
@@ -214,7 +214,7 @@ private:
 class Layer012_ChannelMerge : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer1, Layer *layer2, Layer *layer3) {
         layer_[0] = layer1;
@@ -245,10 +245,10 @@ public:
         }
     }
     void clear() override {
-
+        
     }
     ~Layer012_ChannelMerge() {
-
+        
     }
 private:
     Layer *layer_[3];
@@ -263,11 +263,11 @@ public:
         inc = 0.01;
         dir = 1;
     }
-
+    
     void setXor(bool x) {
         on = x;
     }
-
+    
     void setLayer(Layer *layer1, Layer *layer2) {
         layer_[0] = layer1;
         layer_[1] = layer2;
@@ -310,10 +310,10 @@ public:
         }
     }
     void clear() override {
-
+        
     }
     ~Layer_AlphaBlendFade01() {
-
+        
     }
 private:
     Layer *layer_[2];
@@ -328,7 +328,7 @@ private:
 class Layer_Difference : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -360,7 +360,7 @@ public:
         collection.clear();
     }
     ~Layer_Difference() {
-    
+        
     }
 private:
     Layer *layer_;
@@ -372,7 +372,7 @@ private:
 class Layer_Difference_Xor : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -404,7 +404,7 @@ public:
         collection.clear();
     }
     ~Layer_Difference_Xor() {
-    
+        
     }
 private:
     Layer *layer_;
@@ -416,7 +416,7 @@ private:
 class Layer_Fill_NotZero : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -439,21 +439,21 @@ public:
         }
     }
     void clear() override {
-
+        
     }
-  
+    
     ~Layer_Fill_NotZero() {
-
+        
     }
 private:
     Layer *layer_;
-
+    
 };
 
 class Layer_Fill_Zero : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -476,21 +476,21 @@ public:
         }
     }
     void clear() override {
-
+        
     }
-  
+    
     ~Layer_Fill_Zero() {
-
+        
     }
 private:
     Layer *layer_;
-
+    
 };
 
 class Layer_Matrix_Diff : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -521,14 +521,14 @@ public:
     void clear() override {
         ac::release_all_objects();
     }
-  
+    
     ~Layer_Matrix_Diff() {
-
+        
     }
 private:
     Layer *layer_;
     ac::MatrixCollection<8> collection;
-
+    
 };
 
 // use same video for layer 0
@@ -580,9 +580,9 @@ public:
     void clear() override {
         ac::release_all_objects();
     }
-  
+    
     ~Layer_Variable_Diff() {
-
+        
     }
 private:
     Layer *layer_;
@@ -594,7 +594,7 @@ private:
 class Layer_Matrix_Color : public FilterFunc {
 public:
     void init() override {
-
+        
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -606,7 +606,7 @@ public:
         src[0] = &collection.frames[0];
         src[1] = &collection.frames[3];
         src[2] = &collection.frames[6];
-
+        
         if(layer_->hasNext()) {
             if(layer_->read(layer1)) {
                 cv::Mat resized;
@@ -626,14 +626,124 @@ public:
     void clear() override {
         ac::release_all_objects();
     }
-  
+    
     ~Layer_Matrix_Color() {
-
+        
     }
 private:
     Layer *layer_;
     ac::MatrixCollection<8> collection;
+};
 
+// Pic Adjust
+
+class Layer_PictureAdjust : public FilterFunc {
+public:
+    void init() override {
+        
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &src_frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat frame;
+                cv::resize(layer1, frame, src_frame.size());
+                
+                if(collection.empty()) {
+                    srand(static_cast<unsigned int>(time(0)));
+                    collection.shiftFrames(frame);
+                }
+                else
+                    collection.shiftFrames(frame);
+                
+                
+                static bool flash = true;
+                if(flash) {
+                    static int offset = 0;
+                    int size_y = 0;
+                    
+                    size_y = rand()%frame.rows;
+                    
+                    for(int z = 0; z < frame.rows/2; ++z) {
+                        for(int i = 0; i < frame.cols; ++i) {
+                            cv::Vec3b &pixel = src_frame.at<cv::Vec3b>(z, i);
+                            int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                            if(cy >= 0 && cy < frame.rows) {
+                                cv::Vec3b pix;
+                                setvec(pix,collection.frames[offset].at<cv::Vec3b>(cy, i));
+                                for(int q = 0; q < 3; ++q) {
+                                    pixel[q] = ac::wrap_cast((0.5 * pixel[q] ) + (0.5 * pix[q]));
+                                }    
+                            }
+                        }
+                        size_y ++;
+                    }
+                    
+                    for(int z = frame.rows/2; z < frame.rows; ++z) {
+                        
+                        for(int i = 0; i < frame.cols; ++i) {
+                            cv::Vec3b &pixel = src_frame.at<cv::Vec3b>(z, i);
+                            int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                            if(cy >= 0 && cy < frame.rows) {
+                                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+                                for(int q = 0; q < 3; ++q) {
+                                    pixel[q] = ac::wrap_cast((0.5 * pixel[q] ) + (0.5 * pix[q]));
+                                }   
+                            }
+                        }
+                        size_y --;
+                    }
+                    
+                    if(++offset > (MAX-1)) {
+                        offset = 0;
+                    }
+                    
+                } else {
+                    static int dir = 1;
+                    static int offset = 0;
+                    static int div = 2;
+                    static int size_y = frame.rows/16;
+                    
+                    for(int z = 0; z < frame.rows; ++z) {
+                        for(int i = 0; i < frame.cols; ++i) {
+                            cv::Vec3b &pixel = src_frame.at<cv::Vec3b>(z, i);
+                            int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                            if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
+                                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+                                for(int q = 0; q < 3; ++q) {
+                                    pixel[q] = ac::wrap_cast((0.5 * pixel[q] ) + (0.5 * pix[q]));
+                                }   
+                            }
+                        }
+                        size_y ++;
+                        if(size_y > frame.rows*2)
+                            size_y = frame.rows/16;
+                    }
+                    
+                    if(++offset > (MAX-1)) {
+                        offset = 0;
+                    }
+                }
+                
+                flash = (flash == true) ? false : true;
+                
+            }
+        }
+    }
+    void clear() override {
+        ac::release_all_objects();
+    }
+    ~Layer_PictureAdjust() {
+        
+    }
+private:
+    Layer *layer_;
+    static constexpr int MAX=8;
+    ac::MatrixCollection<MAX> collection;
+    
 };
 
 // 
@@ -656,10 +766,10 @@ public:
     void clear() override {
     }
     ~Light_Increase() {
-
+        
     }
 private:
-
+    
 };
 
 // Light Echo

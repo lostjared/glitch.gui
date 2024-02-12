@@ -99,6 +99,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer_mc->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Matrix_Color", layer_mc});
 
+    Layer_PictureAdjust *pic_a = new Layer_PictureAdjust();
+    pic_a->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_Picture_Adjust", pic_a});
+
     // Other 
     Light_Increase *light_inc = new Light_Increase();
     new_filter_list.push_back({"New_Light_Increase", light_inc});
