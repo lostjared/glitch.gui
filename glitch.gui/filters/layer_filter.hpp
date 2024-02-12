@@ -198,11 +198,56 @@ public:
             }
         }
 
+
     }
     void clear() override {
 
     }
     ~Layer012_AlphaBlend_Xor() {
+
+    }
+private:
+    Layer *layer_[3];
+};
+
+// 012 Channel Merge
+class Layer012_ChannelMerge : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void setLayer(Layer *layer1, Layer *layer2, Layer *layer3) {
+        layer_[0] = layer1;
+        layer_[1] = layer2;
+        layer_[2] = layer3;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layers[3];
+        if(layer_[0]->hasNext() && layer_[1]->hasNext() && layer_[2]->hasNext()) {
+            if(layer_[0]->read(layers[0]) && layer_[1]->read(layers[1]) && layer_[2]->read(layers[2])) {
+                cv::Mat resized[3];
+                cv::resize(layers[0], resized[0], frame.size());
+                cv::resize(layers[1], resized[1], frame.size());
+                cv::resize(layers[2], resized[2], frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pix2[3];
+                        setvec(pix2[0],resized[0].at<cv::Vec3b>(z, i));
+                        setvec(pix2[1],resized[1].at<cv::Vec3b>(z, i));
+                        setvec(pix2[2],resized[2].at<cv::Vec3b>(z, i));
+                        pix1[0] = cv::saturate_cast<uchar>((0.25 * pix1[0]) + (0.75 * pix2[0][0]));
+                        pix1[1] = cv::saturate_cast<uchar>((0.25 * pix1[1]) + (0.75 * pix2[1][1]));
+                        pix1[2] = cv::saturate_cast<uchar>((0.25 * pix1[2]) + (0.75 * pix2[2][2]));
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+
+    }
+    ~Layer012_ChannelMerge() {
 
     }
 private:
@@ -590,6 +635,8 @@ private:
     ac::MatrixCollection<8> collection;
 
 };
+
+// 
 
 // Light
 class Light_Increase : public FilterFunc {

@@ -50,6 +50,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Layer012_AlphaBlend_Xor *layer012_blendx = new Layer012_AlphaBlend_Xor();
     layer012_blendx->setLayer(&layer1, &layer2, &layer3);
     new_filter_list.push_back({"New_Layer_012_AlphaBlend_Xor", layer012_blendx});
+
+    Layer012_ChannelMerge *layer012_merge = new Layer012_ChannelMerge();
+    layer012_merge->setLayer(&layer1, &layer2, &layer3);
+    new_filter_list.push_back({"New_Layer_012_ChannelMerge", layer012_merge});
  
     // Fade
     Layer_AlphaBlendFade01 *layer01_fade = new Layer_AlphaBlendFade01();
