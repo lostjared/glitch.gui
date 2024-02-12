@@ -702,9 +702,7 @@ public:
                     }
                     
                 } else {
-                    static int dir = 1;
                     static int offset = 0;
-                    static int div = 2;
                     static int size_y = frame.rows/16;
                     
                     for(int z = 0; z < frame.rows; ++z) {

@@ -81,6 +81,12 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer_var_diff->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Variable_Diff", layer_var_diff});
 
+  // Adjust
+    //Variable Diff    
+    Layer_PictureAdjust *layer_a = new  Layer_PictureAdjust();
+    layer_a->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_PictureAdjust", layer_a});
+
     // Fill != Zero
     Layer_Fill_NotZero *layer_ne_zero = new Layer_Fill_NotZero();
     layer_ne_zero->setLayer(&layer1);
@@ -98,10 +104,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Layer_Matrix_Color *layer_mc = new Layer_Matrix_Color();
     layer_mc->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Matrix_Color", layer_mc});
-
-    Layer_PictureAdjust *pic_a = new Layer_PictureAdjust();
-    pic_a->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_0_Picture_Adjust", pic_a});
 
     // Other 
     Light_Increase *light_inc = new Light_Increase();
