@@ -172,7 +172,6 @@ private:
 };
 
 
-// Multilayer AlphaBlend
 
 class Layer012_AlphaBlend : public FilterFunc {
 public:
@@ -945,6 +944,24 @@ public:
 private:
 };
 
+class MedianBlend_Low : public FilterFunc {
+public:
+    void init() override {
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat m;
+        cv::resize(frame, m, cv::Size(640, 480));
+        ac::MedianBlendMultiThreadByThree(m);
+        cv::resize(m, frame, frame.size());
+    }
+    void clear() override {
+    }
+    ~MedianBlend_Low()  {}
+private:
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
+
 
 #endif

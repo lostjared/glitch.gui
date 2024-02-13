@@ -123,5 +123,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Light_Wrap *light_wrap = new Light_Wrap();
     new_filter_list.push_back({"New_Light_Wrap", light_wrap});
 
+    MedianBlend_Low *m_low = new  MedianBlend_Low();
+    new_filter_list.push_back({"New_Low_MedianBlend", m_low});
 
 }
