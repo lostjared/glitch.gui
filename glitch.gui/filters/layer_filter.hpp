@@ -152,7 +152,6 @@ public:
                 }
             }
         }
-
         max_col ++;
         if(max_col > 100) {
             max_col = 50;

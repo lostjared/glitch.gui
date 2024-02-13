@@ -132,6 +132,7 @@ public slots:
     void recordLayers();
     void showDebug();
     void showTools();
+    void listDoubleClicked(QListWidgetItem *item);
 };
 
 

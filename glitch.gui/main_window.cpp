@@ -28,8 +28,7 @@
 
 #include<QCoreApplication>
 
-cv::Mat QImage2Mat(QImage const& src)
-{
+cv::Mat QImage2Mat(QImage const& src) {
     cv::Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
     cv::Mat result;
     cvtColor(tmp, result,cv::COLOR_BGR2RGB);
@@ -308,6 +307,8 @@ MainWindow::MainWindow()  {
     filter_list_view = new QListWidget(this);
     filter_list_view->setGeometry(315+10,105,300,200); 
     
+    connect(filter_list_view, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(listDoubleClicked(QListWidgetItem *)));
+
     filter_search = new QLineEdit(this);
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
     connect(filter_search, SIGNAL(returnPressed()), this, SLOT(searchFilter()));
@@ -999,4 +1000,8 @@ void MainWindow::showDebug() {
     
 void MainWindow::showTools() {
     toolbox_window->show();
+}
+
+void MainWindow::listDoubleClicked(QListWidgetItem *) {
+    setSearch();
 }
