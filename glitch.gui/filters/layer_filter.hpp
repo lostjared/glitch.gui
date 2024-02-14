@@ -960,6 +960,24 @@ public:
 private:
 };
 
+// Resize and Lower quality
+class StandardDef : public FilterFunc {
+public:
+    void init() override {
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat m;
+        cv::resize(frame, m, cv::Size(640, 480));
+        cv::resize(m, frame, frame.size());
+    }
+    void clear() override {
+    
+    }
+    ~StandardDef()  {}
+private:
+};
+
+
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

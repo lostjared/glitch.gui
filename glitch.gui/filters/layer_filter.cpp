@@ -126,4 +126,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     MedianBlend_Low *m_low = new  MedianBlend_Low();
     new_filter_list.push_back({"New_Low_MedianBlend", m_low});
 
+    StandardDef *std_def = new StandardDef();
+    new_filter_list.push_back({"New_Standad_Def", std_def});
+    
+
 }
