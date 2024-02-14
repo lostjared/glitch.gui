@@ -6,6 +6,7 @@
 #include"main_window.hpp"
 #include"pref_window.hpp"
 #include"filters/layer_filter.hpp"
+#include"debug_window.hpp"
 
 LayersWindow::LayersWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(500, 250, 385, 240);
@@ -69,6 +70,7 @@ void LayersWindow::setLayer() {
             QTextStream stream(&text);
             stream << index << ": " << filename;
             layer_index->setItemText(index, text);
+            main_window->debug_window->Log("gui: Layer set to: " + text + "\n");
         } else {
             layer_text->setHtml("Loading <b>failed</b>...");
         }
@@ -84,6 +86,7 @@ void LayersWindow::clearLayer() {
         stream << index << ": Clear";
         layer_index->setItemText(index, text);
         layer_text->setHtml("Layer closed\n");
+        main_window->debug_window->Log("gui: Layer set to: " + text + "\n");
     }
 }
 
