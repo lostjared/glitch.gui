@@ -132,5 +132,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     StandardDef *std_def = new StandardDef();
     new_filter_list.push_back({"New_Standad_Def", std_def});
 
+    ScalingDef *sc_def = new ScalingDef();
+    new_filter_list.push_back({"New_Scaling_Def", sc_def});
 
 }

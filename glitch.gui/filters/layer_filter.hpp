@@ -996,6 +996,42 @@ public:
 private:
 };
 
+// Scaling Def
+class ScalingDef : public FilterFunc {
+public:
+    void init() override {
+        scale_size = 320;
+        p = 320/4;
+        dir = 1;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat m;
+        cv::resize(frame, m, cv::Size(scale_size, scale_size));
+        cv::resize(m, frame, frame.size());
+        if(dir == 1) {
+            scale_size += p;
+            if(scale_size > 1920) {
+                dir = 0;
+            }
+        } else {
+            scale_size -= p;
+            if(scale_size <= 320) {
+                dir = 1;
+            }
+        }
+    }
+    void clear() override {
+    
+    }
+
+    ~ScalingDef() {}
+\
+private:
+    int scale_size = 320;
+    int p = 320/4;
+    int dir = 1;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
