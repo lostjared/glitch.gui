@@ -1019,7 +1019,9 @@ void MainWindow::listDoubleClicked(QListWidgetItem *) {
 void MainWindow::filter_Enabled() {
     if(filter_enabled->isChecked()) {
        display_window->disableFilters(true); 
+       debug_window->Log("gui: Filters Disabled.\n");
     }  else {
         display_window->disableFilters(false);
+        debug_window->Log("gui: Filters Enabled.\n");
     }
 }
