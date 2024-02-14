@@ -979,8 +979,6 @@ public:
 private:
 };
 
-
-
 // Resize and Lower quality
 class StandardDef : public FilterFunc {
 public:
@@ -998,9 +996,6 @@ public:
 private:
 };
 
-
-
 void add_layer_filters(Layer&,Layer&,Layer&);
-
 
 #endif
