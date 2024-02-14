@@ -754,6 +754,10 @@ void MainWindow::searchFilter() {
         }
     }
     filter_list_view->setCurrentRow(0);
+    QString textx;
+    QTextStream stream(&textx);
+    stream << "gui: Search returned " << filter_list_view->count() << " results.\n";
+    debug_window->Log(textx);
     
 }
 
