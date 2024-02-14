@@ -951,14 +951,35 @@ public:
     void proc(cv::Mat &frame) override {
         cv::Mat m;
         cv::resize(frame, m, cv::Size(640, 480));
-        ac::MedianBlendMultiThreadByThree(m);
-        cv::resize(m, frame, frame.size());
+        ac::MedianBlendMultiThreadByThree(m); 
+        cv::resize(m, frame, frame.size());   
     }
     void clear() override {
+        ac::release_all_objects();
     }
     ~MedianBlend_Low()  {}
 private:
 };
+
+// Metal Low
+class MetalBlend_Low : public FilterFunc {
+public:
+    void init() override {
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat m;
+        cv::resize(frame, m, cv::Size(640, 480));
+        ac::MetalMedianBlend(m);
+        cv::resize(m, frame, frame.size());
+    }
+    void clear() override {
+        ac::release_all_objects();
+    }
+    ~MetalBlend_Low()  {}
+private:
+};
+
+
 
 // Resize and Lower quality
 class StandardDef : public FilterFunc {
