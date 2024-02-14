@@ -378,6 +378,8 @@ MainWindow::MainWindow()  {
     content_data->setGeometry(15, 35+25+10+35, 300, 200);
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
+
+
     
     init_filter_list();
     init_filters_local();

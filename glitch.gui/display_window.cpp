@@ -296,6 +296,10 @@ void DisplayWindow::setFilterFirst(const std::string &first) {
 }
 
 void DisplayWindow::keyPressEvent(QKeyEvent *e) {
+
+    if(e->isAutoRepeat() == true)
+        return;
+
     switch(e->key()) {
         case Qt::Key_Up:
             if(main_window != nullptr)
