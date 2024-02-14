@@ -216,7 +216,7 @@ void DisplayWindow::timeoutFunc() {
         }
     }
     cv::Mat final_image;  
-    if(current_filter != "") {
+    if(current_filter != "" && disabled == false) {
         if(fade) final_image = image.clone();
 
         if(first_filter != "None")
@@ -227,7 +227,7 @@ void DisplayWindow::timeoutFunc() {
     }
     
     if(fade && !final_image.empty()) {        
-        if(fade_filter.length() > 0)
+        if(fade_filter.length() > 0 && disabled == false)
             New_CallFilter(fade_filter, final_image);
         
         ac::AlphaBlend(image, final_image, image, fade_f);
@@ -471,6 +471,10 @@ void DisplayWindow::closeVideo() {
     if(cap.isOpened()) {
         cap.release();
     }
+}
+
+void DisplayWindow::disableFilters(bool e) {
+    disabled = e;
 }
 
 std::ostream &operator<<(std::ostream &out, const InputMode &im) {

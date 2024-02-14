@@ -220,6 +220,16 @@ MainWindow::MainWindow()  {
     connect(image_ani, SIGNAL(triggered()), this, SLOT(image_Ani()));
 
     filter_menu = menuBar()->addMenu(tr("&Filter"));
+
+    filter_enabled = new QAction(tr("Disable Filters"), this);
+    filter_enabled->setCheckable(true);
+    filter_enabled->setChecked(false);
+
+    filter_menu->addAction(filter_enabled);
+    connect(filter_enabled, SIGNAL(triggered()), this, SLOT(filter_Enabled()));
+    
+    filter_menu->addSeparator();
+
     filter_custom = new QAction(tr("Custom Filter"), this);
     filter_custom->setShortcut(tr("CtrL+C"));
 
@@ -1004,4 +1014,12 @@ void MainWindow::showTools() {
 
 void MainWindow::listDoubleClicked(QListWidgetItem *) {
     setSearch();
+}
+
+void MainWindow::filter_Enabled() {
+    if(filter_enabled->isChecked()) {
+       display_window->disableFilters(true); 
+    }  else {
+        display_window->disableFilters(false);
+    }
 }

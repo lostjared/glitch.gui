@@ -65,6 +65,9 @@ public:
     void setVideoIndex(int pos);
     void closeVideo();
     void reset();
+
+    void disableFilters(bool e);
+
 public slots:
     void timeoutFunc();
     
@@ -94,6 +97,7 @@ private:
     bool save_png_file = false;
     std::string png_path;
     bool repeat = false;
+    bool disabled = false;
 };
 
 #endif

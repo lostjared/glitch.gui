@@ -78,7 +78,7 @@ private:
     QAction *edit_undo, *edit_redo;
     QAction *record_set, *record_rec, *record_repeat, *record_control, *record_reset, *record_layers;
     QAction *image_save, *image_step, *image_set_source, *image_ani;
-    QAction *filter_custom, *filter_edit, *filter_menu_release, *filter_playlist_open, *filter_playlist_clear;
+    QAction *filter_custom, *filter_edit, *filter_menu_release, *filter_playlist_open, *filter_playlist_clear, *filter_enabled;
     QAction *rotate_item;
     QAction *audio_mux;
     QAction *window_show_tool, *window_show_debug;
@@ -133,6 +133,7 @@ public slots:
     void showDebug();
     void showTools();
     void listDoubleClicked(QListWidgetItem *item);
+    void filter_Enabled();
 };
 
 
