@@ -2,9 +2,16 @@
 
 glitch.gui 
 
+
+Linux
+
 ![ScreenShot1](https://github.com/lostjared/glitch.gui/blob/main/images/image.jpg?raw=true "screenshot1")
 
+macOS
+
 ![ScreenShot2](https://github.com/lostjared/glitch.gui/blob/main/images/mac-ss.jpg?raw=true "screenshot2")
+
+Windows 
 
 ![ScreenShot3](https://github.com/lostjared/glitch.gui/blob/main/images/windows-ss.jpg?raw=true "screenshot3")
 
