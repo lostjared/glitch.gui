@@ -5,7 +5,7 @@ glitch.gui
 
 Linux
 
-![ScreenShot1](https://github.com/lostjared/glitch.gui/blob/main/images/linux.jpg?raw=true "screenshot1")
+![ScreenShot1](https://github.com/lostjared/glitch.gui/blob/main/images/linux-debian.jpg?raw=true "screenshot1")
 
 macOS
 
