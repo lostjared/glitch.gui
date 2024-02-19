@@ -2,7 +2,7 @@
 
 
 extern "C" void init() {
-    std::cout << "alpha_diamond1 initialized..\n";
+    std::cout << "gpt initialized..\n";
     srand(static_cast<unsigned int>(time(0)));
 }
 
