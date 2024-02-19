@@ -43,6 +43,9 @@ all:
 	make -C frame_square_col
 	make -C frame_stutter_filter
 	make -C glitch_x1
+	make -C gpt1
+	make -C gpt2
+	make -C invertflash
 	make -C line_across_side01
 	make -C line_across_side02
 	make -C line_across_side03

@@ -43,6 +43,9 @@ all:
 	make -C frame_square_col -f Makefile.macos
 	make -C frame_stutter_filter -f Makefile.macos
 	make -C glitch_x1 -f Makefile.macos
+	make -C gpt1 -f Makefile.macos
+	make -C gpt2 -f Makefile.macos
+	make -C invertflash -f Makefile.macos
 	make -C line_across_side01 -f Makefile.macos
 	make -C line_across_side02 -f Makefile.macos
 	make -C line_across_side03 -f Makefile.macos
