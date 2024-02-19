@@ -10,7 +10,6 @@ extern "C" void init() {
 }
 
 extern "C" void rls() {
-    // Placeholder for actual implementation.
     ac::release_all_objects();
 }
 
@@ -35,17 +34,10 @@ extern "C" void proc(cv::Mat &frame) {
             pix[1] = ac::pixelAt(collection.frames[4], z, i);
             pix[2] = ac::pixelAt(collection.frames[7], z, i);
             
-            // Check if the current pixel is significantly different from the corresponding pixel in the MatrixCollection
             if(cv::norm(pixel - pix[0]) > 10 || cv::norm(pixel - pix[1]) > 10 || cv::norm(pixel - pix[2]) > 10) {
-                // Generate a random color for the pixel
-
-
                 cv::Vec3b random_color = cv::Vec3b(rand() % 256, rand() % 256, rand() % 256);
                 pixel = random_color;
             }
         }
     }
-    
-    // Optional: Add an invert effect at the end if desired
-    // AddInvert(frame);
 }
