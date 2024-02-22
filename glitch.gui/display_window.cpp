@@ -238,14 +238,22 @@ void DisplayWindow::timeoutFunc() {
             fade = false;
         }
         display(image);
-        if(save_png_file == true) {
-            std::ostringstream stream;
-            stream << png_path << "/" << "png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
-            cv::imwrite(stream.str(), image);
-
+        if(save_png_file == true) {                            
+            cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
+             if(main_window->record_window->rec_info.stretch && image.size() != dst_size1) {
+                    cv::Mat resized;
+                    cv::resize(image, resized, dst_size1);
+                    std::ostringstream stream;
+                    stream << png_path << "/" << "resized.png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
+                    cv::imwrite(stream.str(), resized);
+               }
+                else {
+                    std::ostringstream stream;
+                    stream << png_path << "/" << "png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
+                    cv::imwrite(stream.str(), image);
+                }
         } else {
             if(main_window->isFileOpen()) {
-                
                 cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
                 if(main_window->record_window->rec_info.stretch && image.size() != dst_size1) {
                     cv::Mat resized;
@@ -261,10 +269,19 @@ void DisplayWindow::timeoutFunc() {
     } else {
         display(image);
         if(save_png_file == true) {
-            std::ostringstream stream;
-            stream << png_path << "/" << "png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
-            cv::imwrite(stream.str(), image);
-
+            cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
+             if(main_window->record_window->rec_info.stretch && image.size() != dst_size1) {
+                    cv::Mat resized;
+                    cv::resize(image, resized, dst_size1);
+                    std::ostringstream stream;
+                    stream << png_path << "/" << "resized.png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
+                    cv::imwrite(stream.str(), resized);
+               }
+                else {
+                    std::ostringstream stream;
+                    stream << png_path << "/" << "png.stream." << std::setfill('0') << std::setw(10) << png_count++ << ".png";
+                    cv::imwrite(stream.str(), image);
+                }
         } else {
                 cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
                 if(main_window->record_window->rec_info.stretch && image.size() != dst_size1) {

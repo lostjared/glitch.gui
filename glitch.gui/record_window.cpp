@@ -181,6 +181,23 @@ void RecordWindow::saveSettings() {
         case 2:
             rec_info.save_png = true;
             rec_info_set = true;
+            if(stretch_video->isChecked()) {
+                rec_info.stretch = true;
+                int w = stretch_width->text().toInt();
+                int h = stretch_height->text().toInt();
+                if(w > 32 && h > 32) {
+                    std::ostringstream stream;
+                    stream << w << "x" << h;
+                    rec_info.stretch = true;
+                    rec_info.stretch_dst = stream.str();
+                    rec_info.stretch_width = w;
+                    rec_info.stretch_height = h;
+                } else { 
+                    // Error message
+                }
+            } else {
+                rec_info.stretch = false;
+            }
             //main_window->enableRecord();
             hide();
             return;
