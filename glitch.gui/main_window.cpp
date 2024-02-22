@@ -519,6 +519,11 @@ void MainWindow::record() {
         if(info.save_png == false) {
             std::ostringstream res;
             int width = 0, height = 0;
+            if(record_window->rec_info.stretch) {
+                res << record_window->rec_info.stretch_width << "x" << record_window->rec_info.stretch_height;
+                info.dst = res.str();
+                info.src = res.str();
+            } else
             if(display_window->getResolution(width, height)) {
                 res << width << "x" << height;
                 info.dst = res.str();
@@ -538,7 +543,11 @@ void MainWindow::record() {
             static int index = 1;
             std::ostringstream filename;
             QString prefix = display_window->getPrefix();
-            filename << info.filename << "/" << prefix.toStdString() << ".Video" << index++ << "-" << time_data.toStdString() << "-" << current_width << "x" << current_height << ".mp4";
+            if(record_window->rec_info.stretch) {
+                filename << info.filename << "/" << prefix.toStdString() << ".Video" << index++ << "-" << time_data.toStdString() << "-" << record_window->rec_info.stretch_width << "x" << record_window->rec_info.stretch_height << ".mp4";
+            } else {
+                filename << info.filename << "/" << prefix.toStdString() << ".Video" << index++ << "-" << time_data.toStdString() << "-" << current_width << "x" << current_height << ".mp4";
+            }
             ffmpeg_path = info.ffmpeg_path;
             #ifdef _WIN32
             //QDir d(".");

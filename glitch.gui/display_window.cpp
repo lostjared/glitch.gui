@@ -177,6 +177,7 @@ void DisplayWindow::timeoutFunc() {
             image = m;
             int pos = cap.get(cv::CAP_PROP_POS_FRAMES);
             main_window->control_window->setPos(pos);
+
         } else {
 
             if(repeat == true) {
@@ -243,8 +244,17 @@ void DisplayWindow::timeoutFunc() {
             cv::imwrite(stream.str(), image);
 
         } else {
-            if(main_window->isFileOpen())
-               main_window->writeFrame(image);
+            if(main_window->isFileOpen()) {
+                cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
+                if(image.size() != dst_size1) {
+                    cv::Mat resized;
+                    cv::resize(image, resized, dst_size1);
+                    main_window->writeFrame(resized);
+                }
+                else {
+                   main_window->writeFrame(image);
+                }
+            }
         }
 
     } else {
@@ -255,8 +265,15 @@ void DisplayWindow::timeoutFunc() {
             cv::imwrite(stream.str(), image);
 
         } else {
-            if(main_window->isFileOpen())
-               main_window->writeFrame(image);
+                cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
+                if(image.size() != dst_size1) {
+                    cv::Mat resized;
+                    cv::resize(image, resized, dst_size1);
+                    main_window->writeFrame(resized);
+                }
+                else {
+                   main_window->writeFrame(image);
+                }
         }
     }
 }

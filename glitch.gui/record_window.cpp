@@ -55,6 +55,21 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     settings_save = new QPushButton(tr("Save"), this);
     settings_save->setGeometry(width()-125,height()-45, 100, 25);
 
+    stretch_video = new QCheckBox(tr("Stretch"), this);
+    stretch_video->setGeometry(25,height()-45, 100, 25);
+
+    stretch_width = new QLineEdit(this);
+    stretch_width->setGeometry(125,height()-45,75,25);
+    stretch_width->setText("1280");
+    stretch_width->setEnabled(false);
+
+    stretch_height = new QLineEdit(this);
+    stretch_height->setGeometry(125+75+10,height()-45, 75,25);
+    stretch_height->setText("720");
+    stretch_height->setEnabled(false);
+
+
+    connect(stretch_video, SIGNAL(clicked()), this, SLOT(stateChecked()));
     connect(settings_save, SIGNAL(clicked()), this, SLOT(saveSettings()));
 
     QLabel *ff_fps = new QLabel(tr("FPS: "), this);
@@ -79,6 +94,16 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
 
     connect(ffmpeg_file_set, SIGNAL(clicked()), this, SLOT(selectPath()));
     //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+}
+
+void RecordWindow::stateChecked() {
+    if(stretch_video->isChecked()) {
+        stretch_width->setEnabled(true);
+        stretch_height->setEnabled(true);
+    } else {
+        stretch_width->setEnabled(false);
+        stretch_height->setEnabled(false);
+    }
 }
 
 bool RecordWindow::ready() {
@@ -169,6 +194,23 @@ void RecordWindow::saveSettings() {
     } else {
         rec_info.fps = ffmpeg_fps->text().toStdString();
     }
+
+    if(stretch_video->isChecked()) {
+        int w = stretch_width->text().toInt();
+        int h = stretch_height->text().toInt();
+        if(w > 32 && h > 32) {
+            std::ostringstream stream;
+            stream << w << "x" << h;
+            rec_info.stretch = true;
+            rec_info.stretch_dst = stream.str();
+            rec_info.stretch_width = w;
+            rec_info.stretch_height = h;
+        }
+    } else {
+        rec_info.stretch = false;
+        rec_info.stretch_dst = "";
+    }
+
     rec_info_set = true;
     //main_window->enableRecord();
     main_window->debug_window->Log("gui: Updated record settings...\n");
