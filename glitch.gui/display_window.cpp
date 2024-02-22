@@ -245,8 +245,9 @@ void DisplayWindow::timeoutFunc() {
 
         } else {
             if(main_window->isFileOpen()) {
+                
                 cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
-                if(image.size() != dst_size1) {
+                if(main_window->record_window->rec_info.stretch && image.size() != dst_size1) {
                     cv::Mat resized;
                     cv::resize(image, resized, dst_size1);
                     main_window->writeFrame(resized);
@@ -266,7 +267,7 @@ void DisplayWindow::timeoutFunc() {
 
         } else {
                 cv::Size dst_size1(main_window->record_window->rec_info.stretch_width, main_window->record_window->rec_info.stretch_height);
-                if(image.size() != dst_size1) {
+                if(main_window->record_window->rec_info.stretch && image.size() != dst_size1) {
                     cv::Mat resized;
                     cv::resize(image, resized, dst_size1);
                     main_window->writeFrame(resized);
