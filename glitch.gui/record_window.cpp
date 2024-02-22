@@ -194,6 +194,13 @@ void RecordWindow::saveSettings() {
                     rec_info.stretch_height = h;
                 } else { 
                     // Error message
+                    QMessageBox msgbox;    
+                    msgbox.setWindowTitle(tr("Error invalid size"));
+                    msgbox.setIcon(QMessageBox::Icon::Critical);
+                    msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+                    msgbox.setText(tr("You must enter a valid resolution.\n"));
+                    msgbox.exec();
+                    return;
                 }
             } else {
                 rec_info.stretch = false;
@@ -222,6 +229,15 @@ void RecordWindow::saveSettings() {
             rec_info.stretch_dst = stream.str();
             rec_info.stretch_width = w;
             rec_info.stretch_height = h;
+        } else {
+             // Error message
+             QMessageBox msgbox;    
+             msgbox.setWindowTitle(tr("Error invalid size"));
+             msgbox.setIcon(QMessageBox::Icon::Critical);
+             msgbox.setWindowIcon(QIcon(":/images/icon.png"));
+             msgbox.setText(tr("You must enter a valid resolution.\n"));
+             msgbox.exec();
+            return;
         }
     } else {
         rec_info.stretch = false;
