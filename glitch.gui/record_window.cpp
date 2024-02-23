@@ -247,6 +247,9 @@ void RecordWindow::saveSettings() {
     rec_info_set = true;
     //main_window->enableRecord();
     main_window->debug_window->Log("gui: Updated record settings...\n");
+    if(rec_info.stretch) {
+        main_window->debug_window->Log("glitch: Video Stretch: Enabled...\n");
+    }
     hide();
 }
 
