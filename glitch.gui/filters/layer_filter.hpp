@@ -310,7 +310,6 @@ private:
 };
 
 //012 Slide Show
-
 class Layer012_SlideShow : public FilterFunc {
 public:
     void init() override {
@@ -353,14 +352,15 @@ public:
                 alpha = 1.0f;
                 dir = 0;
             }
-        } else if(dir == 0)
-          alpha -= 0.01f;
-          if(alpha <= 0.2f) {
-            alpha = 0.2f;
-            index_val ++;
-            if(index_val > 2) index_val = 0;   
-            dir = 1;         
-          }
+        } else if(dir == 0) {
+            alpha -= 0.01f;
+            if(alpha <= 0.2f) {
+                alpha = 0.2f;
+                index_val ++;
+                if(index_val > 2) index_val = 0;   
+                dir = 1;         
+            }
+        }
     }
 
     void clear() override {
