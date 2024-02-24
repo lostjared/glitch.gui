@@ -50,11 +50,6 @@ void list_devices() {
         std::cout << "acidcam: Error: could not read file...\n";
         exit(0);
     }
-    while(!feof(fptr)) {
-        char buf[1024];
-        fgets(buf, 1024, fptr);
-        std::cout << buf;
-    }
     pclose(fptr);
 #endif
 }
@@ -80,11 +75,6 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
         std::cerr << "Error: could not open ffmpeg\n";
         return;
     }
-    while(!feof(fptr)) {
-        char buf[256];
-        if(fgets(buf, 256, fptr) != NULL)
-            std::cout << buf;
-    }
 #ifndef _WIN32
     pclose(fptr);
 #else
@@ -108,11 +98,6 @@ void rotate_90(const char *output, const char *src, const char *deg) {
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
         return;
-    }
-    while(!feof(fptr)) {
-        char buf[256];
-        if(fgets(buf, 256, fptr) != NULL)
-            std::cout << buf;
     }
 #ifndef _WIN32
     pclose(fptr);
