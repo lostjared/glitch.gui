@@ -82,7 +82,7 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
     }
     while(!feof(fptr)) {
         char buf[256];
-        (void) fgets(buf, 256, fptr);
+        static_cast<void>(fgets(buf, 256, fptr));
         std::cout << buf;
     }
 #ifndef _WIN32
@@ -111,7 +111,7 @@ void rotate_90(const char *output, const char *src, const char *deg) {
     }
     while(!feof(fptr)) {
         char buf[256];
-        (void) fgets(buf, 256, fptr);
+        static_cast<void>(fgets(buf, 256, fptr));
         std::cout << buf;
     }
 #ifndef _WIN32
