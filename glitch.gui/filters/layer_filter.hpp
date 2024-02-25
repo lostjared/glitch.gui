@@ -1168,6 +1168,45 @@ private:
     LFO alpha;
 };
 
+class LFOWave : public FilterFunc {
+public:
+    void init() override {
+        amp.initValues(1.0, 0.1, 25.0, 50.0);
+        amp.setRandom(true);
+        speed.initValues(0.1, 0.1, 0.1, 2.0);
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat temp_frame = frame.clone();
+        double phase_shift_speed = speed.nextValue();
+        double phase_shift_x = time_counter * phase_shift_speed;
+        double phase_shift_y = time_counter * phase_shift_speed;
+        double frequency = 2 * 3.14 / 180.0;
+        double amplitude = amp.nextValue();
+        for(int y = 0; y < frame.rows; y++) {
+            for(int x = 0; x < frame.cols; x++) {
+            int dx = static_cast<int>(amplitude * sin(frequency * y + phase_shift_y));
+            int dy = static_cast<int>(amplitude * cos(frequency * x + phase_shift_x));
+            int new_x = x + dx;
+            int new_y = y + dy;
+            if(new_x >= 0 && new_x < frame.cols && new_y >= 0 && new_y < frame.rows) {
+                frame.at<cv::Vec3b>(y, x) = temp_frame.at<cv::Vec3b>(new_y, new_x);
+            }
+        }
+    }
+    // Increment the time counter for the next frame/call
+    time_counter++;
+
+    }
+    void clear() override {
+        
+    }
+    ~LFOWave() {}
+private: 
+    Knob amp;
+    Knob speed;
+    int time_counter = 0;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif

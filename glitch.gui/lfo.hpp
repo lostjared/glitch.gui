@@ -39,4 +39,48 @@ private:
     }
 };
 
+class Knob {
+public:
+    Knob() = default;
+
+    void setRandom(bool r) {
+        random_value = r;
+    }
+
+    void initValues(double v, double s, double min_, double max_) {
+        value_ = v;
+        speed = s;
+        min = min_;
+        max = max_;
+    }
+    double nextValue() {
+
+        double s = speed;
+
+        if(random_value) 
+            s = rand()%10 * 0.01f;
+
+        if(dir == 1) {
+            value_ += s;
+            if(value_ >= max) {
+                value_ = max;
+                dir = 0;
+            }       
+        } else {
+            value_ -= s;
+            if(value_ <= min) {
+                value_ = min;
+                dir = 1;
+            }
+        }
+        return value_;
+    }
+    double value() { return value_; }
+
+private:
+    double value_ = 1.0, speed = 0.1, min = 0.1, max = 2.0;
+    int dir = 1;
+    bool random_value = false;
+};
+
 #endif

@@ -128,5 +128,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     AlphaSin *asin = new AlphaSin();
     new_filter_list.push_back({"New_AlphaSin", asin});
+    
+    LFOWave *l_wav = new LFOWave();
+    new_filter_list.push_back({"New_LFOWave", l_wav});
 
 }
