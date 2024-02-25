@@ -15,25 +15,6 @@ extern "C" void clear() {
 }
 
 extern "C" void proc(cv::Mat &frame) {
-    /*
-    int num_regions = 10;
-    for(int i = 0; i < num_regions; i++) {
-        int x_start = rand() % frame.cols;
-        int y_start = rand() % frame.rows;
-        int region_width = std::min(50 + (rand() % 50), frame.cols - x_start);
-        int region_height = std::min(50 + (rand() % 50), frame.rows - y_start);
-        for(int y = y_start; y < (y_start + region_height); y++) {
-            for(int x = x_start; x < (x_start + region_width); x++) {
-                int dx = x_start + rand() % region_width;
-                int dy = y_start + rand() % region_height;
-                if(dx < frame.cols && dy < frame.rows) {
-                    cv::Vec3b color = frame.at<cv::Vec3b>(y, x);
-                    frame.at<cv::Vec3b>(dy, dx) = color;
-                }
-            }
-        }
-    }*/
-
     cv::Mat temp_frame = frame.clone();
     for(int y = 0; y < frame.rows; y++) {
         for(int x = 0; x < frame.cols; x++) {
