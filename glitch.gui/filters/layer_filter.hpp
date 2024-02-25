@@ -124,7 +124,7 @@ class Layer_0_Intertwine : public FilterFunc {
 public:
     void init() override {
         pos_col = 0;
-        max_col = 50;     
+        max_col = 50;
     }
     void setLayer(Layer *layer) {
         layer_ = layer;
@@ -160,7 +160,7 @@ public:
     void clear() override {
         
     }
-   
+    
     ~Layer_0_Intertwine() {
         
     }
@@ -299,7 +299,7 @@ public:
             }
         }
     }
-
+    
     void clear() override {
         
     }
@@ -345,7 +345,7 @@ public:
                 }
             }
         }
-
+        
         if(dir == 1) {
             alpha += 0.01f;
             if(alpha >= 1.0f) {
@@ -357,26 +357,26 @@ public:
             if(alpha <= 0.2f) {
                 alpha = 0.2f;
                 index_val ++;
-                if(index_val > 2) index_val = 0;   
-                dir = 1;         
+                if(index_val > 2) index_val = 0;
+                dir = 1;
             }
         }
     }
-
+    
     void clear() override {
         
     }
-
+    
     ~Layer012_SlideShow() {
-
+        
     }
-  
+    
 private:
-    Layer *layer_[3]; 
+    Layer *layer_[3];
     float alpha = 0.2f;
     int dir = 1;
     int index_val = 0;
-
+    
 };
 
 // fade
@@ -385,7 +385,7 @@ class Layer_AlphaBlendFade01 : public FilterFunc {
 public:
     void init() override {
         alpha = 0.1;
-
+        
         inc = 0.01;
         dir = 1;
     }
@@ -475,7 +475,7 @@ public:
                         for(int q = 0; q < 3; ++q) {
                             if(std::abs(pix1[q]-pix_f[q]) > 25) {
                                 pix1[q] = pix2[q];
-                            }                           
+                            }
                         }
                     }
                 }
@@ -519,7 +519,7 @@ public:
                         for(int q = 0; q < 3; ++q) {
                             if(std::abs(pix1[q]-pix_f[q]) > 25) {
                                 pix1[q] ^= pix2[q];
-                            }                           
+                            }
                         }
                     }
                 }
@@ -610,7 +610,124 @@ public:
     }
 private:
     Layer *layer_;
+};
+
+class Layer0_Wave : public FilterFunc {
+public:
+    void init() override {
+        
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                // -------------
+                
+                cv::Mat temp_frame = frame.clone();
+                // Parameters to customize the wave effect
+                double amplitude = 25.0; // Amplitude of the wave
+                double frequency = 2 * 3.14 / 180.0; // Frequency of the wave
+                double phase_shift_speed = 0.05; // Speed of the phase shift change
+                
+                // Update phase shift based on time_counter
+                double phase_shift_x = time_counter * phase_shift_speed;
+                double phase_shift_y = time_counter * phase_shift_speed;
+                
+                for(int y = 0; y < frame.rows; y++) {
+                    for(int x = 0; x < frame.cols; x++) {
+                        // Applying moving wave distortion with dynamic phase shifts
+                        int dx = static_cast<int>(amplitude * sin(frequency * y + phase_shift_y));
+                        int dy = static_cast<int>(amplitude * cos(frequency * x + phase_shift_x));
+                        int new_x = x + dx;
+                        int new_y = y + dy;
+                        
+                        if(new_x >= 0 && new_x < frame.cols && new_y >= 0 && new_y < frame.rows) {
+                            cv::Vec3b &pix1 = temp_frame.at<cv::Vec3b>(new_y, new_x);
+                            cv::Vec3b &pix2 = resized.at<cv::Vec3b>(new_y, new_x);
+                            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+                            for(int q = 0; q < 3; ++q) {
+                                pixel[q] = ac::wrap_cast((0.5 * pix1[q]) + (0.5 * pix2[q]));
+                            }
+                        }
+                    }
+                }
+                time_counter++;
+            }
+        }
+    }
+    void clear() override {
+        
+    }
     
+    ~Layer0_Wave() {
+    }
+private:
+    Layer *layer_;
+    int time_counter = 0;
+};
+
+class Layer0_XorWave : public FilterFunc {
+public:
+    void init() override {
+        
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                // -------------
+                
+                cv::Mat temp_frame = frame.clone();
+                // Parameters to customize the wave effect
+                double amplitude = 25.0; // Amplitude of the wave
+                double frequency = 2 * 3.14 / 180.0; // Frequency of the wave
+                double phase_shift_speed = 0.05; // Speed of the phase shift change
+                
+                // Update phase shift based on time_counter
+                double phase_shift_x = time_counter * phase_shift_speed;
+                double phase_shift_y = time_counter * phase_shift_speed;
+                
+                for(int y = 0; y < frame.rows; y++) {
+                    for(int x = 0; x < frame.cols; x++) {
+                        // Applying moving wave distortion with dynamic phase shifts
+                        int dx = static_cast<int>(amplitude * sin(frequency * y + phase_shift_y));
+                        int dy = static_cast<int>(amplitude * cos(frequency * x + phase_shift_x));
+                        int new_x = x + dx;
+                        int new_y = y + dy;
+                        
+                        if(new_x >= 0 && new_x < frame.cols && new_y >= 0 && new_y < frame.rows) {
+                            cv::Vec3b &pix1 = temp_frame.at<cv::Vec3b>(new_y, new_x);
+                            cv::Vec3b &pix2 = resized.at<cv::Vec3b>(new_y, new_x);
+                            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+                            for(int q = 0; q < 3; ++q) {
+                                pixel[q] ^= ac::wrap_cast((0.5 * pix1[q]) + (0.5 * pix2[q]));
+                            }
+                        }
+                    }
+                }
+                time_counter++;
+            }
+        }
+    }
+    void clear() override {
+        
+    }
+    
+    ~Layer0_XorWave() {
+    }
+private:
+    Layer *layer_;
+    int time_counter = 0;
 };
 
 class Layer_Matrix_Diff : public FilterFunc {
@@ -802,7 +919,7 @@ public:
                                 setvec(pix,collection.frames[offset].at<cv::Vec3b>(cy, i));
                                 for(int q = 0; q < 3; ++q) {
                                     pixel[q] = ac::wrap_cast((0.5 * pixel[q] ) + (0.5 * pix[q]));
-                                }    
+                                }
                             }
                         }
                         size_y ++;
@@ -817,7 +934,7 @@ public:
                                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
                                 for(int q = 0; q < 3; ++q) {
                                     pixel[q] = ac::wrap_cast((0.5 * pixel[q] ) + (0.5 * pix[q]));
-                                }   
+                                }
                             }
                         }
                         size_y --;
@@ -839,7 +956,7 @@ public:
                                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
                                 for(int q = 0; q < 3; ++q) {
                                     pixel[q] = ac::wrap_cast((0.5 * pixel[q] ) + (0.5 * pix[q]));
-                                }   
+                                }
                             }
                         }
                         size_y ++;
@@ -951,8 +1068,8 @@ public:
     void proc(cv::Mat &frame) override {
         cv::Mat m;
         cv::resize(frame, m, cv::Size(640, 480));
-        ac::MedianBlendMultiThreadByThree(m); 
-        cv::resize(m, frame, frame.size());   
+        ac::MedianBlendMultiThreadByThree(m);
+        cv::resize(m, frame, frame.size());
     }
     void clear() override {
         ac::release_all_objects();
@@ -990,7 +1107,7 @@ public:
         cv::resize(m, frame, frame.size());
     }
     void clear() override {
-    
+        
     }
     ~StandardDef()  {}
 private:
@@ -1021,11 +1138,11 @@ public:
         }
     }
     void clear() override {
-    
+        
     }
-
+    
     ~ScalingDef() {}
-\
+    \
 private:
     int scale_size = 320;
     int p = 320/4;

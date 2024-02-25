@@ -89,22 +89,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer_var_diff->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Variable_Diff", layer_var_diff});
 
-  // Adjust
-    //Variable Diff    
-    Layer_PictureAdjust *layer_a = new  Layer_PictureAdjust();
-    layer_a->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_0_PictureAdjust", layer_a});
-
-    // Fill != Zero
-    Layer_Fill_NotZero *layer_ne_zero = new Layer_Fill_NotZero();
-    layer_ne_zero->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_0_Fill_NotZero", layer_ne_zero});
-
-    // FIll Zero
-    Layer_Fill_Zero *layer_zero = new Layer_Fill_Zero();
-    layer_zero->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_0_Fill_Zero", layer_zero});
-
     Layer_Matrix_Diff  *layer_matrix = new Layer_Matrix_Diff();
     layer_matrix->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Matrix_Diff", layer_matrix});
@@ -113,6 +97,13 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     layer_mc->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Matrix_Color", layer_mc});
 
+    Layer0_Wave *wave = new Layer0_Wave();
+    wave->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_Wave", wave});
+    
+    Layer0_XorWave *wavex = new Layer0_XorWave();
+    wavex->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_XorWave", wavex});
     // Other 
     Light_Increase *light_inc = new Light_Increase();
     new_filter_list.push_back({"New_Light_Increase", light_inc});
