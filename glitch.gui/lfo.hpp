@@ -5,9 +5,16 @@
 
 class LFO {
 public:
+    LFO() = default;
+
     LFO(float frequency, float sampleRate) : mFrequency(frequency), mSampleRate(sampleRate) {
         updateIncrement();
     }
+
+    void setSample(float s) {
+        mSampleRate = s;
+    }
+
     void setFrequency(float frequency) {
         mFrequency = frequency;
         updateIncrement();

@@ -126,4 +126,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     ScalingDef *sc_def = new ScalingDef();
     new_filter_list.push_back({"New_Scaling_Def", sc_def});
 
+    AlphaSin *asin = new AlphaSin();
+    new_filter_list.push_back({"New_AlphaSin", asin});
+
 }

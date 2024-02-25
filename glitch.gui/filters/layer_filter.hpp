@@ -4,7 +4,7 @@
 #include"acidcam/ac.h"
 #include "../new_filter.hpp"
 #include "../layer.hpp"
-
+#include "../lfo.hpp"
 
 class Layer_AlphaBlend25 : public FilterFunc {
 public:
@@ -1137,6 +1137,35 @@ private:
     int scale_size = 320;
     int p = 320/4;
     int dir = 1;
+};
+
+
+class AlphaSin : public FilterFunc {
+public:
+    void init() override {
+        alpha.setSample(44100.0f);
+        alpha.setFrequency(255.0f);
+
+    }
+    void proc(cv::Mat &frame) override {
+
+        float a = alpha.nextSample();
+
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = ac::wrap_cast(pixel[q]*a);
+                }
+            }
+        }
+    }
+    void clear() override {
+        
+    }
+    ~AlphaSin() {}
+private:
+    LFO alpha;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
