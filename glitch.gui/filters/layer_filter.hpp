@@ -1466,10 +1466,10 @@ public:
                 cv::Mat mask = cv::Mat::zeros(frame.size(), CV_8UC1);
                 std::mt19937 rng(std::random_device{}());
                 for (size_t i = 0; i < contours.size(); i++) {
-                if (rng() % 2) {
-                    cv::drawContours(mask, contours, static_cast<int>(i), cv::Scalar(255), cv::FILLED);
-                }
-            }
+                    if (rng() % 2) {
+                        cv::drawContours(mask, contours, static_cast<int>(i), cv::Scalar(255), cv::FILLED);
+                    }
+                 }
                 cv::Mat resizedOverlay;
                 resizedOverlay = resized;
                 cv::Mat overlayResult;
