@@ -1302,6 +1302,38 @@ private:
     }
 };
 
+class GradientLFO : public FilterFunc {
+public:
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        applyLfoModulatedGradient(frame, time, frequency, sampleRate);
+        time += 2.0f;
+    }
+    void clear() override {}
+    ~GradientLFO() {}
+private:
+    float time = 0.0f;
+    float frequency = 0.1f;
+    float sampleRate = 30.0f; 
+    void applyLfoModulatedGradient(cv::Mat& frame, float time, float frequency, float sampleRate) {
+        auto lfo = [&](float time) -> float {
+            return (sinf(2.0f * CV_PI * frequency * time / sampleRate) + 1.0f) / 2.0f; 
+        };
+
+        float lfoValue = lfo(time);
+
+        for (int y = 0; y < frame.rows; ++y) {
+            for (int x = 0; x < frame.cols; ++x) {
+                float gradientValue = static_cast<float>(x) / frame.cols; 
+                gradientValue *= lfoValue; 
+                cv::Vec3b color = frame.at<cv::Vec3b>(y, x);
+                color[0] = cv::saturate_cast<uchar>(color[0] * (1.0 - gradientValue) + (gradientValue * 255));
+                frame.at<cv::Vec3b>(y, x) = color;
+            }
+        }
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
