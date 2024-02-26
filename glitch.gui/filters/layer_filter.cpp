@@ -104,6 +104,15 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Layer0_XorWave *wavex = new Layer0_XorWave();
     wavex->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_XorWave", wavex});
+    
+    Layer_Fill_NotZero *nz_fill = new Layer_Fill_NotZero();
+    nz_fill->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer0_Fill_NotZero", nz_fill});
+
+    Layer_Fill_Zero *z_fill = new Layer_Fill_Zero();
+    z_fill->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer0_Fill_Zero", z_fill});
+    
     // Other 
     Light_Increase *light_inc = new Light_Increase();
     new_filter_list.push_back({"New_Light_Increase", light_inc});
