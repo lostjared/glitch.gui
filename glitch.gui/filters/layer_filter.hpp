@@ -1414,6 +1414,34 @@ private:
     }
 };
 
+class ThreshEffect : public FilterFunc {
+public:
+    void proc(cv::Mat &frame) override {
+        cv::Mat gray, thresh;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::threshold(gray, thresh, 128, 255, cv::THRESH_BINARY);
+        std::vector<std::vector<cv::Point>> contours;
+        cv::findContours(thresh.clone(), contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+        cv::Mat glitchEffect = frame.clone();
+        std::mt19937 rng(std::random_device{}());
+        std::uniform_int_distribution<int> uniDist(-20, 20); 
+        for (size_t i = 0; i < contours.size(); i++) {
+            if (rng() % 2) { 
+                std::vector<cv::Point> movedContour;
+                for (auto &pt : contours[i]) {
+                    int dx = uniDist(rng); 
+                    int dy = uniDist(rng); 
+                    movedContour.push_back(cv::Point(pt.x + dx, pt.y + dy));
+                }
+                cv::drawContours(glitchEffect, std::vector<std::vector<cv::Point>>{movedContour}, -1, cv::Scalar(rand()%255, rand()%255, rand()%255), 2);
+            }
+        }
+        frame = glitchEffect;
+    }    
+    void init() override {}
+    void clear() override {}
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
