@@ -1342,6 +1342,13 @@ public:
         alpha[2].initValues(1.0, 0.03, 0.1, 2.0);
     }
     void proc(cv::Mat &frame) override {
+
+        /*
+        alpha[0].setSpeed(255.0 / (frame.rows * 3));
+        alpha[1].setSpeed(255.0 / (frame.rows * 3));
+        alpha[2].setSpeed(255.0 / (frame.rows * 3));
+        */
+                 
         for(int z = 0; z < frame.rows; ++z) {
             for(int i = 0; i < frame.cols; ++i) {
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);

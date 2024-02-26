@@ -60,6 +60,9 @@ public:
     void turnLeft(double x) {
         value_ -= x;
     }
+    void setSpeed(double s) {
+        speed = s;
+    }
 
     double nextValue() {
 
