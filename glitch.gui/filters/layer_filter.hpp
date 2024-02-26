@@ -1251,6 +1251,7 @@ private:
 class Scrambler : public FilterFunc {
 public:
     void init() override {
+        block_size.initValues(50, 4.0, 50.0, 100.0);
 
     }
     void proc(cv::Mat &frame) override {
@@ -1264,15 +1265,24 @@ private:
     float time = 0.0f;
     float frequency = 0.1f; 
     float sampleRate = 30.0f;
+    Knob block_size;
+    int blockSize = 25;
 
     void scrambleBlocks(cv::Mat& image, float time, float frequency, float sampleRate) {
-        int blockSize = 25; 
+        blockSize = block_size.nextValue();
         int blocksX = image.cols / blockSize;
         int blocksY = image.rows / blockSize;
+
+        blockSize = std::min(image.cols/ blocksX, image.rows / blocksY);
+
         std::vector<cv::Mat> blocks;
         for (int y = 0; y < blocksY; ++y) {
             for (int x = 0; x < blocksX; ++x) {
-                cv::Rect blockRect(x * blockSize, y * blockSize, blockSize, blockSize);
+                 int startX = x * blockSize;
+                int startY = y * blockSize;
+                int endX = std::min(startX + blockSize, image.cols);
+                int endY = std::min(startY + blockSize, image.rows);
+                cv::Rect blockRect(startX, startY, endX - startX, endY - startY);
                 blocks.push_back(image(blockRect).clone());
             }
         }
@@ -1282,6 +1292,8 @@ private:
         for (int y = 0; y < blocksY; ++y) {
             for (int x = 0; x < blocksX; ++x) {
                 cv::Rect blockRect(x * blockSize, y * blockSize, blockSize, blockSize);
+                if (blockRect.x + blockRect.width > image.cols) blockRect.width = image.cols - blockRect.x;
+                if (blockRect.y + blockRect.height > image.rows) blockRect.height = image.rows - blockRect.y;
                 blocks[y * blocksX + x].copyTo(image(blockRect));
             }
         }
