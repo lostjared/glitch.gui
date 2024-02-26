@@ -1212,13 +1212,16 @@ public:
         amp.setRandom(true);
         freq.setSample(44100.0f);
         freq.setFrequency(1.0f);
+        srand(static_cast<int>(time(0)));
+        frequency = 2 * 3.14 / 180.0;
+        freq_k.initValues(0.1, 0.001, 0.1, 25.0);
     }
     void proc(cv::Mat &frame) override {
         cv::Mat temp_frame = frame.clone();
         double phase_shift_speed = (rand()%10 * 0.1) + freq.nextSample();
         double phase_shift_x = time_counter * phase_shift_speed;
         double phase_shift_y = time_counter * phase_shift_speed;
-        double frequency = 2 * 3.14 / 180.0;
+        frequency += freq_k.nextValue();
         double amplitude = amp.nextValue();
          for(int y = 0; y < frame.rows; y++) {
             for(int x = 0; x < frame.cols; x++) {
@@ -1239,9 +1242,10 @@ public:
     ~Wave_Freq() {}
 private: 
     Knob amp;
-    Knob speed;
+    Knob freq_k;
     LFO freq;
     int time_counter = 0;
+    double frequency = 0;
 }; 
 
 
