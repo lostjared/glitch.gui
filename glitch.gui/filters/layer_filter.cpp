@@ -153,4 +153,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     AlphaKnobs *a_k = new AlphaKnobs();
     new_filter_list.push_back({"New_Alpha_Knobs", a_k});
 
+    DynamicGradientOverlay *dg = new DynamicGradientOverlay();
+    new_filter_list.push_back({"New_DynamicGradientOverlay", dg});
+
 }

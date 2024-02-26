@@ -1367,6 +1367,53 @@ private:
     Knob alpha[3];
 };
 
+// thanks GPT for helping me understand this :)
+class DynamicGradientOverlay : public FilterFunc {
+public:
+    DynamicGradientOverlay() : colorShiftLFO(0.1f, 30.0f) {
+        opacityKnob.initValues(0.5, 0.01, 0.1, 0.9); 
+    }
+
+    void proc(cv::Mat &frame) override {
+        applyDynamicGradient(frame, time);
+        time += 1.0f; 
+    }
+
+    void clear() override {
+
+    }
+    void init() override {
+       opacityKnob.initValues(0.5, 0.01, 0.1, 0.9); 
+    }
+
+private:
+    float time = 0.0f;
+    LFO colorShiftLFO;
+    Knob opacityKnob; 
+
+    void applyDynamicGradient(cv::Mat& frame, float) {
+        cv::Mat gradient = frame.clone();
+        float hueShift = colorShiftLFO.nextSample() * 0.5f + 0.5f;
+
+        for (int y = 0; y < gradient.rows; ++y) {
+            uchar intensity = static_cast<uchar>(255 * (static_cast<float>(y) / gradient.rows));
+            cv::Vec3b color = hsvToBgr(hueShift * 180, 255, intensity);
+            for (int x = 0; x < gradient.cols; ++x) {
+                gradient.at<cv::Vec3b>(y, x) = color;
+            }
+        }
+        double alpha = opacityKnob.nextValue(); // Use Knob to determine alpha dynamically
+        cv::addWeighted(frame, 1 - alpha, gradient, alpha, 0, frame);
+    }
+
+    cv::Vec3b hsvToBgr(float hue, float saturation, float value) {
+        cv::Mat hsv(1, 1, CV_8UC3, cv::Scalar(hue, saturation, value));
+        cv::Mat bgr;
+        cv::cvtColor(hsv, bgr, cv::COLOR_HSV2BGR);
+        return bgr.at<cv::Vec3b>(0, 0);
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
