@@ -1248,6 +1248,49 @@ private:
     double frequency = 0;
 }; 
 
+class Scrambler : public FilterFunc {
+public:
+    void init() override {
+
+    }
+    void proc(cv::Mat &frame) override {
+        scrambleBlocks(frame, time, frequency, sampleRate);
+        time += 1.0f;
+    }
+    void clear() override {}
+    ~Scrambler() {}    
+private:
+
+    float time = 0.0f;
+    float frequency = 0.1f; 
+    float sampleRate = 30.0f;
+
+    void scrambleBlocks(cv::Mat& image, float time, float frequency, float sampleRate) {
+        int blockSize = 25; 
+        int blocksX = image.cols / blockSize;
+        int blocksY = image.rows / blockSize;
+        std::vector<cv::Mat> blocks;
+        for (int y = 0; y < blocksY; ++y) {
+            for (int x = 0; x < blocksX; ++x) {
+                cv::Rect blockRect(x * blockSize, y * blockSize, blockSize, blockSize);
+                blocks.push_back(image(blockRect).clone());
+            }
+        }
+        float lfoValue = lfo(time, frequency, sampleRate);
+        int shift = static_cast<int>((lfoValue + 1) * (blocks.size() - 1) / 2); 
+        std::rotate(blocks.begin(), blocks.begin() + shift, blocks.end());
+        for (int y = 0; y < blocksY; ++y) {
+            for (int x = 0; x < blocksX; ++x) {
+                cv::Rect blockRect(x * blockSize, y * blockSize, blockSize, blockSize);
+                blocks[y * blocksX + x].copyTo(image(blockRect));
+            }
+        }
+    }
+
+    float lfo(float time, float frequency, float sampleRate) {
+        return sinf(2.0f * CV_PI * frequency * time / sampleRate);
+    }
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
