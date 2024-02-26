@@ -1442,6 +1442,47 @@ public:
     void clear() override {}
 };
 
+class ThreshEffect_Layer : public FilterFunc {
+public:
+
+    void initLayer(Layer *l) {
+        layer_ = l;
+    }
+
+    void init() override {}
+    void clear() override {}
+
+    void proc(cv::Mat &frame) override {
+       if(layer_->hasNext()) {
+            cv::Mat layerx;
+            if(layer_->read(layerx)) {
+                cv::Mat resized;
+                cv::resize(layerx, resized, frame.size());
+                cv::Mat gray, thresh, overlayImage;
+                cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+                cv::threshold(gray, thresh, 128, 255, cv::THRESH_BINARY);
+                std::vector<std::vector<cv::Point>> contours;
+                cv::findContours(thresh.clone(), contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+                cv::Mat mask = cv::Mat::zeros(frame.size(), CV_8UC1);
+                std::mt19937 rng(std::random_device{}());
+                for (size_t i = 0; i < contours.size(); i++) {
+                if (rng() % 2) {
+                    cv::drawContours(mask, contours, static_cast<int>(i), cv::Scalar(255), cv::FILLED);
+                }
+            }
+                cv::Mat resizedOverlay;
+                resizedOverlay = resized;
+                cv::Mat overlayResult;
+                frame.copyTo(overlayResult);
+                resizedOverlay.copyTo(overlayResult, mask);
+                frame = overlayResult;
+            }
+        } 
+    }
+private:
+    Layer *layer_;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
