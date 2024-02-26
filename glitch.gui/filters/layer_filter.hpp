@@ -1334,6 +1334,32 @@ private:
     }
 };
 
+class AlphaKnobs : public FilterFunc {
+public:
+    void init() override {
+        alpha[0].initValues(1.0, 0.01, 0.1, 2.0);
+        alpha[1].initValues(2.0, 0.02, 0.1, 2.0);
+        alpha[2].initValues(1.0, 0.03, 0.1, 2.0);
+    }
+    void proc(cv::Mat &frame) override {
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q) {
+                    double val = alpha[q].nextValue();
+                    pixel[q] = ac::wrap_cast((255-pixel[q]) * val);
+                }
+            }
+        }
+    }
+    void clear() override {
+        
+    }
+    ~AlphaKnobs() {}
+private:
+    Knob alpha[3];
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
