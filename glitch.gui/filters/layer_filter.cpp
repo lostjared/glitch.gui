@@ -141,4 +141,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     LFOWave *l_wav = new LFOWave();
     new_filter_list.push_back({"New_LFOWave", l_wav});
 
+    Wave_Freq *f_wav = new Wave_Freq();
+    new_filter_list.push_back({"New_Wave_Freq", f_wav});
+
 }
