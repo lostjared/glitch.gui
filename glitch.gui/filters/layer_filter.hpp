@@ -1272,13 +1272,11 @@ private:
         blockSize = block_size.nextValue();
         int blocksX = image.cols / blockSize;
         int blocksY = image.rows / blockSize;
-
         blockSize = std::min(image.cols/ blocksX, image.rows / blocksY);
-
         std::vector<cv::Mat> blocks;
         for (int y = 0; y < blocksY; ++y) {
             for (int x = 0; x < blocksX; ++x) {
-                 int startX = x * blockSize;
+                int startX = x * blockSize;
                 int startY = y * blockSize;
                 int endX = std::min(startX + blockSize, image.cols);
                 int endY = std::min(startY + blockSize, image.rows);

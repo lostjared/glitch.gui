@@ -53,6 +53,14 @@ public:
         min = min_;
         max = max_;
     }
+
+    void turnRight(double x) {
+        value_ += x;
+    }
+    void turnLeft(double x) {
+        value_ -= x;
+    }
+
     double nextValue() {
 
         double s = speed;
