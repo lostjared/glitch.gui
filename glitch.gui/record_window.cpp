@@ -18,6 +18,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     QLabel *ff_lbl = new QLabel(tr("FFMpeg path:"), this);
     ff_lbl->setGeometry(25, 25, 100, 25);
     ffmpeg_path = new QLineEdit(this);
+    ffmpeg_path->setToolTip(tr("Set path for FFmpeg executable"));
 #if defined(_WIN32)
     ffmpeg_path->setText("ffmpeg");
 #elif defined(__linux__)
@@ -41,6 +42,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     QLabel *ff_type = new QLabel(tr("Codec: "), this);
     ff_type->setGeometry(25, 75, 50, 25);
     ffmpeg_type = new QComboBox(this);
+    ffmpeg_type->setToolTip(tr("Codec to use for encoding of video"));
     ffmpeg_type->setGeometry(25+50, 75, 100, 25);
     ffmpeg_type->addItem(tr("x264"));
     ffmpeg_type->addItem(tr("x265"));
@@ -49,23 +51,28 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     lbl_crf->setGeometry(180, 75, 50, 25);
 
     ffmpeg_crf = new QLineEdit(this);
+    ffmpeg_crf->setToolTip(tr("How much compression to use"));
     ffmpeg_crf->setText("24");
     ffmpeg_crf->setGeometry(180+50+5, 75, 100, 25);
 
     settings_save = new QPushButton(tr("Save"), this);
+    settings_save->setToolTip(tr("Save Settings"));
     settings_save->setGeometry(width()-125,height()-45, 100, 25);
 
     stretch_video = new QCheckBox(tr("Stretch"), this);
+    stretch_video->setToolTip(tr("Do you wish to stretch this vieo"));
     stretch_video->setGeometry(25,height()-45, 100, 25);
 
     stretch_width = new QLineEdit(this);
     stretch_width->setGeometry(125,height()-45,75,25);
     stretch_width->setText("1280");
+    stretch_width->setToolTip(tr("Stretch Width"));
     stretch_width->setEnabled(false);
 
     stretch_height = new QLineEdit(this);
     stretch_height->setGeometry(125+75+10,height()-45, 75,25);
     stretch_height->setText("720");
+    stretch_height->setToolTip(tr("Stretch height"));
     stretch_height->setEnabled(false);
 
 
@@ -76,6 +83,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ff_fps->setGeometry(25, 105, 50, 25);
 
     ffmpeg_fps = new QLineEdit(this);
+    ffmpeg_fps->setToolTip(tr("Frames Per Second"));
     ffmpeg_fps->setGeometry(75, 105, 100, 25);
     ffmpeg_fps->setText(tr("30"));
 
@@ -90,6 +98,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_file = new QLabel(tr("Select File Path"), this);
     ffmpeg_file->setGeometry(25,105+25+5, 300, 25);
     ffmpeg_file_set = new QPushButton(tr("Select"), this);
+    ffmpeg_file_set->setToolTip(tr("Select Path"));
     ffmpeg_file_set->setGeometry(25+310,105+25+5,100,25);
 
     connect(ffmpeg_file_set, SIGNAL(clicked()), this, SLOT(selectPath()));
