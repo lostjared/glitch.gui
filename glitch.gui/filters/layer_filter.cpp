@@ -163,4 +163,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     ThreshEffect *t_e = new ThreshEffect();
     new_filter_list.push_back({"New_ThreshEffect", t_e});
 
+    CartoonEffect *car = new CartoonEffect();
+    new_filter_list.push_back({"New_Slow_CartoonEffect", car});
 }

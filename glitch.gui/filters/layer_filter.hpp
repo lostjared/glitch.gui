@@ -1483,6 +1483,30 @@ private:
     Layer *layer_;
 };
 
+class CartoonEffect : public FilterFunc {
+public:
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        cv::Mat dst;
+        cartoonEffect(frame, dst);
+        frame = dst;
+    }
+private:
+    void cartoonEffect(const cv::Mat& src, cv::Mat& dst) {
+        cv::Mat resized, edges, imgColor;
+        float resizeScale = 0.2; 
+        cv::resize(src, resized, cv::Size(), resizeScale, resizeScale, cv::INTER_LINEAR);
+        cv::cvtColor(resized, edges, cv::COLOR_BGR2GRAY);
+        cv::medianBlur(edges, edges, 5);
+        cv::adaptiveThreshold(edges, edges, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 9, 2);
+        cv::cvtColor(edges, edges, cv::COLOR_GRAY2BGR);
+        cv::pyrMeanShiftFiltering(resized, imgColor, 10, 25, 2);
+        cv::bitwise_and(imgColor, edges, dst);
+        cv::resize(dst, dst, src.size(), 0, 0, cv::INTER_LINEAR);
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
