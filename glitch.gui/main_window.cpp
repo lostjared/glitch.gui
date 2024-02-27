@@ -25,7 +25,6 @@
 #include"rotate_window.hpp"
 #include"layers_window.hpp"
 #include"about_window.hpp"
-
 #include<QCoreApplication>
 
 cv::Mat QImage2Mat(QImage const& src) {
@@ -295,6 +294,7 @@ MainWindow::MainWindow()  {
     setGeometry(375,100,640,480);
     
     filter_cat = new QComboBox(this);
+    filter_cat->setToolTip(tr("Filter Categories"));
     filter_cat->setGeometry(15, 35, 300, 25);
     
     filter_cat->addItem(tr("In order"));
@@ -310,55 +310,66 @@ MainWindow::MainWindow()  {
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
     
     filter_list = new QComboBox(this);
+    filter_list->setToolTip(tr("List of Filters"));
     filter_list->setGeometry(15, 35+35, 300, 25);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     filter_list->setEnabled(true);
     
     filter_list_view = new QListWidget(this);
+    filter_list_view->setToolTip(tr("Filter List View"));
     filter_list_view->setGeometry(315+10,105,300,200); 
     
     connect(filter_list_view, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(listDoubleClicked(QListWidgetItem *)));
 
     filter_search = new QLineEdit(this);
+    filter_search->setToolTip(tr("Search for a filter"));
     filter_search->setGeometry(300+15+10, 35, 300-75, 30);
     connect(filter_search, SIGNAL(returnPressed()), this, SLOT(searchFilter()));
     
     filter_search_button = new QPushButton(tr("Search"), this);
+    filter_search_button->setToolTip(tr("Search for a Filter"));
     filter_search_button->setGeometry(300+15+10+225+10, 35, 70, 30);
     
     connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
     
     filter_search_set = new QPushButton(tr("Select"), this);
+    filter_search_set->setToolTip(tr("Set Current Filter"));
     filter_search_set->setGeometry(15, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
-    
+
     filter_first_set = new QPushButton(tr("&First"), this);
+    filter_first_set->setToolTip(tr("Set as First called Filter"));
     filter_first_set->setGeometry(15+70+10, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_first_set, SIGNAL(clicked()), this, SLOT(firstSet()));
     
     filter_first_clear = new QPushButton(tr("&Clear"), this);
+    filter_first_clear->setToolTip(tr("Clear first called Filter"));
     filter_first_clear->setGeometry(15+70+10+70+10, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
 
     filter_set_custom = new QPushButton(tr("Custom"), this);
+    filter_set_custom->setToolTip(tr("Set current select search item to Custom Filter"));
     filter_set_custom->setGeometry(15+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_set_custom, SIGNAL(clicked()), this, SLOT(custom_Add()));
 
     filter_add_custom = new QPushButton(tr("Add"), this);
+    filter_add_custom->setToolTip(tr("Add Current Select Filter to Custom Filter"));
     filter_add_custom->setGeometry(15+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
     
     connect(filter_add_custom, SIGNAL(clicked()), this, SLOT(custom_filter_add()));
     
     filter_release = new QPushButton(tr("Release"), this);
+    filter_release->setToolTip(tr("Release Stored Frames"));
     filter_release->setGeometry(15+70+10+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
 
     connect(filter_release, SIGNAL(clicked()), this, SLOT(filterRelease()));
 
     filter_btn_exit = new QPushButton(tr("Exit"), this);
+    filter_btn_exit->setToolTip(tr("Exit the program"));
     filter_btn_exit->setGeometry(15+70+10+70+10+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
 
     connect(filter_btn_exit, SIGNAL(clicked()), this, SLOT(quitProgram()));
@@ -375,6 +386,7 @@ MainWindow::MainWindow()  {
     filter_first->setGeometry(315+10, 35+25+10, 200, 30);
 
     content_data = new QTextEdit(this);
+    content_data->setToolTip(tr("Current Information for Process"));
     content_data->setGeometry(15, 35+25+10+35, 300, 200);
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
