@@ -1550,6 +1550,7 @@ private:
         cv::add(foreground, dst, dst, mask);
     }
 };
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
