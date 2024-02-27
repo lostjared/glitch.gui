@@ -1495,7 +1495,7 @@ public:
 private:
     void cartoonEffect(const cv::Mat& src, cv::Mat& dst) {
         cv::Mat resized, edges, imgColor;
-        float resizeScale = 0.2; 
+        float resizeScale = 0.5; 
         cv::resize(src, resized, cv::Size(), resizeScale, resizeScale, cv::INTER_LINEAR);
         cv::cvtColor(resized, edges, cv::COLOR_BGR2GRAY);
         cv::medianBlur(edges, edges, 5);
