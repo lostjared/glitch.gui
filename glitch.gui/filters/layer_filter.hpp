@@ -1507,6 +1507,49 @@ private:
     }
 };
 
+
+
+class BackgroundReplacementEffect : public FilterFunc {
+public:
+    void setLayer(Layer *layer_x) {
+        layer_ = layer_x;
+    }
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        if(layer_ != nullptr && layer_->hasNext()) {
+            cv::Mat layer_n;
+            if(layer_->read(layer_n)) {
+                cv::resize(layer_n, newBg, frame.size());
+                cv::Mat dst;
+                backgroundReplacement(frame, dst);
+                frame = dst;
+            }
+        }
+    }
+private:
+    Layer *layer_;
+    cv::Mat newBg; 
+    void backgroundReplacement(const cv::Mat& src, cv::Mat& dst) {
+        cv::Mat hsv;
+        cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
+        cv::Scalar lowerGreen(35, 50, 50);
+        cv::Scalar upperGreen(85, 255, 255);
+        cv::Mat mask;
+        cv::inRange(hsv, lowerGreen, upperGreen, mask);
+        cv::bitwise_not(mask, mask);
+        cv::Mat backgroundResized;
+        if (newBg.size() != src.size()) {
+            cv::resize(newBg, backgroundResized, src.size(), 0, 0, cv::INTER_LINEAR);
+        } else {
+            backgroundResized = newBg;
+        }
+        cv::Mat foreground;
+        src.copyTo(foreground, mask);
+        backgroundResized.copyTo(dst, ~mask);
+        cv::add(foreground, dst, dst, mask);
+    }
+};
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif

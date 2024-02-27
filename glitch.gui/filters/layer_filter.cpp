@@ -116,7 +116,11 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     ThreshEffect_Layer *t_l = new ThreshEffect_Layer ();
     t_l->initLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Threshold_Rand", t_l});
-    
+
+    BackgroundReplacementEffect *bg_rx = new BackgroundReplacementEffect();
+    bg_rx->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_GreenScreen", bg_rx});
+
     // Other 
     Light_Increase *light_inc = new Light_Increase();
     new_filter_list.push_back({"New_Light_Increase", light_inc});
@@ -165,4 +169,5 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     CartoonEffect *car = new CartoonEffect();
     new_filter_list.push_back({"New_Slow_CartoonEffect", car});
+
 }
