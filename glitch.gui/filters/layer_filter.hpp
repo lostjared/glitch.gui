@@ -1528,7 +1528,7 @@ public:
         }
     }
 private:
-    Layer *layer_;
+    Layer *layer_ = nullptr;
     cv::Mat newBg; 
     void backgroundReplacement(const cv::Mat& src, cv::Mat& dst) {
         cv::Mat hsv;
