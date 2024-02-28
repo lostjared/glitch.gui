@@ -10,6 +10,7 @@ Control_Window::Control_Window(QWidget *parent) : QDialog(parent) {
     setWindowIcon(QIcon(":/images/icon.png"));
     
     ctrl_pos = new QScrollBar(Qt::Horizontal, this);
+    ctrl_pos->setToolTip(tr("Duration within Video scrollbar"));
     ctrl_pos->setGeometry(25, 25, 400, 25);
     ctrl_pos->setEnabled(false);
 
@@ -19,6 +20,7 @@ Control_Window::Control_Window(QWidget *parent) : QDialog(parent) {
     ctrl_txt->setGeometry(445, 25, 100, 25);
 
     ctrl_set = new QPushButton(tr("Set Pos"), this);
+    ctrl_set->setToolTip(tr("Set location within video"));
     ctrl_set->setGeometry(545, 25, 100, 25);
 
     connect(ctrl_set, SIGNAL(clicked()), this, SLOT(setIndex()));
