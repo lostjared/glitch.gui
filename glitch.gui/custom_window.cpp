@@ -12,34 +12,43 @@
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     setFixedSize(640, 480);
     filter_cat = new QComboBox(this);
+    filter_cat->setToolTip(tr("Filter CategorieS"));
     filter_cat->setGeometry(15, 15, (640-15-15), 25);
     filter = new QComboBox(this);
+    filter->setToolTip(tr("List of Filters"));
     filter->setGeometry(15, 15+25+5, (640-15-15), 25);
 
     filter_custom = new QListWidget(this);
+    filter_custom->setToolTip(tr("List of Selected Filters"));
     filter_custom->setGeometry(15, 15+25+5+25+5, (640-15-15), 300);
 
     btn_add = new QPushButton(tr("Add"), this);
+    btn_add->setToolTip(tr("Add to List"));
     btn_add->setGeometry(15, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_add, SIGNAL(clicked()), this, SLOT(addFilter()));
 
     btn_rmv = new QPushButton(tr("Remove"), this);
+    btn_rmv->setToolTip(tr("Remove from List"));
+
     btn_rmv->setGeometry(15+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_rmv, SIGNAL(clicked()), this, SLOT(rmvFilter()));
 
     btn_up = new QPushButton(tr("Move Up"), this);
+    btn_up->setToolTip(tr("Move Selected Filter up in List"));
     btn_up->setGeometry(15+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_up, SIGNAL(clicked()), this, SLOT(move_Up()));
 
     btn_down = new QPushButton(tr("Move Down"), this);
+    btn_down->setToolTip(tr("Move Select Filter Down in List"));
     btn_down->setGeometry(15+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_down, SIGNAL(clicked()), this, SLOT(move_Down()));
 
     btn_playlist = new QPushButton(tr("Save Playlist"), this);
+    btn_playlist->setToolTip(tr("Save as Playlist"));
     btn_playlist->setGeometry(15+100+5+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
 
     connect(btn_playlist, SIGNAL(clicked()), this, SLOT(setPlaylist()));
@@ -48,10 +57,13 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     f_name->setGeometry(25, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
 
     filter_name = new QLineEdit(this);
+    filter_name->setToolTip(tr("Filter name"));
     filter_name->setGeometry(50+25+5, 15+25+5+25+5+300+5+25+5+10+5, 200, 25);
 
     btn_set = new QPushButton(tr("Set Filter"), this);
     btn_set->setGeometry(640-125-5, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
+    btn_set->setToolTip(tr("Add as new Custom Filter"));
+
 
     connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCategory(int)));
