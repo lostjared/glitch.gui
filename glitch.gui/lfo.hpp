@@ -42,7 +42,7 @@ private:
 class Knob {
 public:
     Knob() = default;
-
+    
     void setRandom(bool r) {
         random_value = r;
     }
@@ -52,6 +52,18 @@ public:
         speed = s;
         min = min_;
         max = max_;
+    }
+
+    void initValues(double v, double s, double min_, double max_, int d) {
+        value_ =v;
+        speed = s;
+        min = min_;
+        max = max_;
+        dir = d;
+    }
+
+    void setDirection(int d) {
+        dir = d;
     }
 
     void turnRight(double x) {
@@ -65,9 +77,7 @@ public:
     }
 
     double nextValue() {
-
         double s = speed;
-
         if(random_value) 
             s = rand()%10 * 0.01f;
 

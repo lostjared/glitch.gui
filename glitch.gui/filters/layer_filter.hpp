@@ -1647,6 +1647,46 @@ private:
     Knob off;
 };
 
+class Layer_0_DualAlphaDir : public FilterFunc {
+public:
+    void setLayer(Layer *layer_x) {
+        layer_ = layer_x;
+         k_front.initValues(1.0, 0.2, 1.0, 3.0);
+         k_layer.initValues(3.0, 0.2, 1.0, 3.0, 1);
+
+    }
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        if(layer_ != nullptr && layer_->hasNext()) {
+            cv::Mat layer_n;
+            cv::Mat resized;
+            if(layer_->read(layer_n)) {
+                double off_val = k_front.nextValue();
+                double off_val2 = k_layer.nextValue();
+
+                cv::resize(layer_n, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b pixel = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pixel_r = resized.at<cv::Vec3b>(z, i);
+                        for(int q =0;  q < 3; ++q) {
+                            double value1 = (pixel[q]*off_val);
+                            double value2 = (pixel_r[q]*off_val2);
+                            pixel[q] = ac::wrap_cast(value1+value2);
+                        }
+                         frame.at<cv::Vec3b>(z, i) = pixel;
+                    }
+                }
+            }
+        }
+    }
+private:
+    Layer *layer_ = nullptr;
+    Knob k_front;
+    Knob k_layer;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
