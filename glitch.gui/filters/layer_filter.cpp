@@ -171,6 +171,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     new_filter_list.push_back({"New_Slow_CartoonEffect", car});
     
     FilmGrain *film_g = new FilmGrain();
-    new_filter_list.push_back({"New_Film_Grain", film_g});
+    new_filter_list.push_back({"New_Slow_Film_Grain", film_g});
 
 }
