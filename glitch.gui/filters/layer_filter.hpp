@@ -1581,7 +1581,7 @@ private:
     std::normal_distribution<double> distribution;
 };
 
-class Layer_0_DualAlphaBlend : public FilterFunc {
+class Layer_0_DualAlphaScale : public FilterFunc {
 public:
     void setLayer(Layer *layer_x) {
         layer_ = layer_x;

@@ -121,7 +121,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     bg_rx->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_GreenScreen", bg_rx});
 
-    Layer_0_DualAlphaBlend *l0_b = new Layer_0_DualAlphaBlend();
+    Layer_0_DualAlphaScale *l0_b = new Layer_0_DualAlphaScale();
     l0_b->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_DualAlphaScale", l0_b});
 
