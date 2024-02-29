@@ -90,6 +90,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     ffmpeg_same = new QCheckBox(this);
     ffmpeg_same->setGeometry(185,105,120,25);
     ffmpeg_same->setText(tr("Same as Source"));
+    ffmpeg_same->setToolTip(tr("Use same rate as input file"));
     ffmpeg_same->setChecked(true);
     ffmpeg_fps->setEnabled(false);
 
