@@ -5,6 +5,7 @@
 #include "../new_filter.hpp"
 #include "../layer.hpp"
 #include "../lfo.hpp"
+#include<random>
 
 class Layer_AlphaBlend25 : public FilterFunc {
 public:
@@ -1549,6 +1550,35 @@ private:
         backgroundResized.copyTo(dst, ~mask);
         cv::add(foreground, dst, dst, mask);
     }
+};
+
+class FilmGrain : public FilterFunc {
+public:
+    FilmGrain() : distribution(0.0, 25.0) { 
+        random_engine.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    }
+
+    void init() override {
+    }
+
+    void proc(cv::Mat &frame) override {
+        for (int y = 0; y < frame.rows; y++) {
+            for (int x = 0; x < frame.cols; x++) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+                for (int c = 0; c < frame.channels(); c++) {
+                    double grain = distribution(random_engine);
+                    int newValue = cv::saturate_cast<uchar>(pixel[c] + grain);
+                    pixel[c] = static_cast<uchar>(newValue);
+                }
+            }
+        }
+    }
+
+    void clear() override {}
+    ~FilmGrain() {}
+private:
+    std::default_random_engine random_engine;
+    std::normal_distribution<double> distribution;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
