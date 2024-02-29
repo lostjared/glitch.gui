@@ -1581,6 +1581,39 @@ private:
     std::normal_distribution<double> distribution;
 };
 
+class Layer_0_DualAlphaBlend : public FilterFunc {
+public:
+    void setLayer(Layer *layer_x) {
+        layer_ = layer_x;
+        off.initValues(1.0, 0.2, 1.0, 2.0);
+    }
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        if(layer_ != nullptr && layer_->hasNext()) {
+            cv::Mat layer_n;
+            cv::Mat resized;
+            if(layer_->read(layer_n)) {
+                double off_val = off.nextValue();
+                cv::resize(layer_n, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b pixel = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b pixel_r = resized.at<cv::Vec3b>(z, i);
+                        for(int q = 0; q < 3; ++q) {
+                            pixel[q] = ac::wrap_cast((pixel[q]+pixel_r[q])*off_val);
+                         }
+                         frame.at<cv::Vec3b>(z, i) = pixel;
+                    }
+                }
+            }
+        }
+    }
+private:
+    Layer *layer_ = nullptr;
+    Knob off;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
