@@ -1,5 +1,6 @@
 #include"layer_filter.hpp"
-
+// all these pointers are released on clean up
+// see: release_filter_list() called on MainWindow destructor 
 void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
   // 0
 
@@ -124,6 +125,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Layer_0_DualAlphaScale *l0_b = new Layer_0_DualAlphaScale();
     l0_b->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_DualAlphaScale", l0_b});
+
+    Layer_0_DualAlphaBlend *layer_d = new Layer_0_DualAlphaBlend();
+    layer_d->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_DualAlphaBlend", layer_d});
 
     // Other 
     Light_Increase *light_inc = new Light_Increase();
