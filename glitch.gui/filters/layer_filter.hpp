@@ -1764,9 +1764,13 @@ public:
             if(layer_->read(frame2)) {
                 cv::resize(frame2, frame2, frame.size());
                 cv::Mat edges, gray;
-                cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY); 
+                cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
                 cv::Canny(gray, edges, 100, 200); 
-                frame2.copyTo(frame, edges);
+                cv::Mat dilatedEdges;
+                int dilationSize = 2; 
+                cv::Mat element = cv::getStructuringElement(cv::MORPH_RECT,cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1),cv::Point(dilationSize, dilationSize));
+                cv::dilate(edges, dilatedEdges, element);
+                frame2.copyTo(frame, dilatedEdges);
             }
         }
     }
