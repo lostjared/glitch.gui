@@ -132,7 +132,11 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     Layer_0_DualAlphaDir *layer_dir = new Layer_0_DualAlphaDir();
     layer_dir->setLayer(&layer1);
-    new_filter_list.push_back({"New_Layer_0_DUalAlphaDir", layer_dir});
+    new_filter_list.push_back({"New_Layer_0_DualAlphaDir", layer_dir});
+
+    Layer_0_EdgeFilter *l_ed = new  Layer_0_EdgeFilter();
+    l_ed->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_EdgeFilter", l_ed});
 
     // Other 
     Light_Increase *light_inc = new Light_Increase();
@@ -195,4 +199,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     BilateralNoiseReduction *b_n = new  BilateralNoiseReduction();
     new_filter_list.push_back({"New_BilateralNoiseReduction", b_n});
 
+    BlackEdgeFilter *b_e_f = new BlackEdgeFilter();
+    new_filter_list.push_back({"New_BlackEdgeFilter", b_e_f});
 }

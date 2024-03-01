@@ -1735,6 +1735,45 @@ public:
 };
 
 
+class BlackEdgeFilter : public FilterFunc {
+public:
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        cv::Mat edges, edgesInverted;
+        cv::Mat gray;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::Canny(gray, edges, 100, 200); 
+        cv::bitwise_not(edges, edgesInverted);
+        cv::Mat blackEdges(frame.size(), frame.type(), cv::Scalar::all(0));
+        frame.copyTo(blackEdges, edgesInverted);
+        frame = blackEdges;
+    }
+};
+
+class Layer_0_EdgeFilter : public FilterFunc {
+public:
+    void setLayer(Layer *l) {
+        layer_ = l;
+    }
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        if(layer_ != nullptr && layer_->hasNext()) {
+            cv::Mat frame2;
+            if(layer_->read(frame2)) {
+                cv::resize(frame2, frame2, frame.size());
+                cv::Mat edges, gray;
+                cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY); 
+                cv::Canny(gray, edges, 100, 200); 
+                frame2.copyTo(frame, edges);
+            }
+        }
+    }
+private:
+    Layer *layer_ = nullptr;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
