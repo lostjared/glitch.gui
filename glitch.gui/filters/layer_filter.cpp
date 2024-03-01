@@ -138,6 +138,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     l_ed->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_EdgeFilter", l_ed});
 
+    Layer_0_GlitchBleed *l_gb = new Layer_0_GlitchBleed();
+    l_gb->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_GlitchBleed", l_gb});
+    
     // Other 
     Light_Increase *light_inc = new Light_Increase();
     new_filter_list.push_back({"New_Light_Increase", light_inc});
@@ -201,4 +205,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     BlackEdgeFilter *b_e_f = new BlackEdgeFilter();
     new_filter_list.push_back({"New_BlackEdgeFilter", b_e_f});
+
+    
 }

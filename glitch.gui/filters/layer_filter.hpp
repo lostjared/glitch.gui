@@ -1778,6 +1778,77 @@ private:
     Layer *layer_ = nullptr;
 };
 
+class Layer_0_GlitchBleed : public FilterFunc {
+public:
+    Layer_0_GlitchBleed() : gen(rd()), dist(1, 4), distRow(0, 5), distHeight(1, 75) {
+        init();
+    }
+
+    void setLayer(Layer *l) {
+        layer_ = l;
+    }
+
+    void init() override {
+        for (int i = 0; i < 5; ++i) {
+            knobs[i].initValues(0.1 * i, 0.1, 0.1, 1.0);
+        }
+        wait = 60 * dist(gen); // Initialize wait with a random value
+    }
+
+    void clear() override {}
+
+    void proc(cv::Mat &frame) override {
+        if (layer_ != nullptr && layer_->hasNext()) {
+            cv::Mat frame2;
+            if (layer_->read(frame2)) {
+                cv::resize(frame2, frame2, frame.size());
+                if (++delay > wait) {
+                    set_num = dist(gen);
+                    delay = 0;
+                    wait = 60 * dist(gen);
+                }
+                int num = set_num;
+                for (int i = 0; i < num; ++i) {
+                    fillRect(i, frame, frame2, rand_(0, frame.rows - 50), distHeight(gen));
+                }
+            }
+        }
+    }
+    
+private:
+    Layer *layer_ = nullptr;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist; 
+    std::uniform_int_distribution<> distRow;
+    std::uniform_int_distribution<> distHeight;
+
+    void fillRect(int index, cv::Mat &frame, const cv::Mat &cp, int y1, int y2) {
+        int offset_x = distRow(gen);
+        double alpha = knobs[index].nextValue();
+        double invAlpha = 1 - alpha;
+        for (int z = y1; z < y1 + y2; ++z) {
+            for (int i = offset_x; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                const cv::Vec3b &pix2 = cp.at<cv::Vec3b>(z, i);
+                for (int q = 0; q < 3; ++q) {
+                    pixel[q] = static_cast<uchar>(alpha * pixel[q] + invAlpha * pix2[q]);
+                }
+            }
+        }
+    }
+
+    int rand_(int min, int max) {
+        std::uniform_int_distribution<> distr(min, max);
+        return distr(gen);
+    }
+
+    Knob knobs[5];
+    int set_num = 1;
+    int delay = 0;
+    int wait;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
