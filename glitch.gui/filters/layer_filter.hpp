@@ -1877,6 +1877,48 @@ private:
   
 };
 
+class New_MedianBlend : public FilterFunc {
+public:
+
+    New_MedianBlend() : gen{rd()}, dist(3, 7) {
+
+    }
+
+    void init() override { }
+    void clear() override { collection.clear(); }
+    
+    void proc(cv::Mat &frame) override{
+        int r = dist(gen);
+        for(int m = 0; m < r; ++m) {
+            cv::medianBlur(frame, frame, 5);
+        }
+        collection.shiftFrames(frame);     
+        if (collection.size() < collection.capacity()) return;
+        for (int z = 0; z < frame.rows; ++z) {
+            for (int i = 0; i < frame.cols; ++i) {
+                cv::Scalar value(0, 0, 0);
+                for (int j = 0; j < static_cast<int>(collection.size()); ++j) {
+                    cv::Vec3b pixel = collection[j].at<cv::Vec3b>(z, i);
+                    for (int q = 0; q < 3; ++q) {
+                        value[q] += pixel[q];
+                    }
+                }
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int j = 0; j < 3; ++j) {
+                   int val = 1+static_cast<int>(value[j]);
+                    pixel[j] = static_cast<unsigned char>(pixel[j] ^ val);
+                }
+            }
+        }
+    }
+private:
+    New_MatrixCollection<8> collection;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif

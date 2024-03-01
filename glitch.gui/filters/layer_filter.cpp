@@ -208,5 +208,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     AlphaRandom *al_r = new AlphaRandom();
     new_filter_list.push_back({"New_AlphaRandom", al_r});
-    
+
+    New_MedianBlend *n_med = new New_MedianBlend ();
+    new_filter_list.push_back({"New_MedianBlend", n_med});   
 }

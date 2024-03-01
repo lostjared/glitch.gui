@@ -104,4 +104,31 @@ private:
     bool random_value = false;
 };
 
+template<size_t N>
+class New_MatrixCollection {
+public:
+    std::vector<cv::Mat> frames;
+    New_MatrixCollection() {
+        frames.reserve(N);
+    }
+    void shiftFrames(const cv::Mat& newFrame) {
+        if (frames.size() >= N) {
+            frames.erase(frames.begin());
+        }
+        frames.push_back(newFrame.clone());
+    }
+    void clear() {
+        if(!frames.empty())
+            frames.erase(frames.begin(), frames.end());
+    }
+    size_t size() const {
+        return frames.size();
+    }
+    size_t capacity() const { return N; }
+    const cv::Mat& operator[](size_t index) const {
+        return frames[index];
+    }
+};
+
+
 #endif

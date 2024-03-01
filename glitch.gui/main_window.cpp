@@ -507,7 +507,8 @@ void MainWindow::stopRecording() {
     } else if(record_window->rec_info.save_png == true) {
         display_window->savePNG(false, "");
         debug_window->Log("glitch: Stopping PNG sequence\n");
-    } 
+    }
+    New_CallFilterClear(display_window->getCurrentFilter().toStdString());
     ac::release_all_objects();
     record_rec->setText(tr("Record"));
     toolbox_window->setRecordText(true);
@@ -567,6 +568,7 @@ void MainWindow::record() {
             #endif
             if(startRecording(filename.str().c_str(), info.codec.c_str(), info.dst.c_str(), info.crf.c_str(), fps)) {
                 record_rec->setText(tr("Stop Recording"));
+                New_CallFilterClear(display_window->getCurrentFilter().toStdString());
                 toolbox_window->setRecordText(false);
                 QString output;
                 QTextStream stream(&output);
