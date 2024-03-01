@@ -1687,6 +1687,30 @@ private:
     Knob k_layer;
 };
 
+class WaterColor : public FilterFunc {
+public:
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        cv::Mat dst;
+        wcEffect(frame, dst);
+        frame = dst;
+    }
+private:
+    void wcEffect(const cv::Mat& frame, cv::Mat& watercolor) {
+        cv::Mat blurred;
+        cv::medianBlur(frame, blurred, 7);
+        cv::Mat gray, edges;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::Canny(gray, edges, 50, 150);
+        cv::Mat edgesInv = 255 - edges;
+        cv::cvtColor(edgesInv, edgesInv, cv::COLOR_GRAY2BGR);
+        cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2,2));
+        cv::dilate(edgesInv, edgesInv, kernel);
+        cv::bitwise_and(blurred, edgesInv, watercolor);
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
