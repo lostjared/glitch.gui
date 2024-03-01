@@ -1849,6 +1849,34 @@ private:
     int wait;
 };
 
+class AlphaRandom : public FilterFunc {
+public:
+
+    AlphaRandom() : gen{rd()}, dist(1.0, 3.0) { }
+    void init() override {}
+    void clear() override {}
+    
+    void proc(cv::Mat &frame) override{
+        double alpha = rand_();
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] =  ac::wrap_cast(pixel[q]*alpha);
+                }
+            }
+        }
+    }
+
+    double rand_() { return dist(gen); }
+
+private:
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> dist;
+  
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
