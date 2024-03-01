@@ -189,4 +189,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     WaterColor *wc = new WaterColor();
     new_filter_list.push_back({"New_Soft_WaterColor", wc});
 
+    MedianNoiseReduction *m_n = new MedianNoiseReduction();
+    new_filter_list.push_back({"New_MedianNoiseReduction", m_n});
+
+    BilateralNoiseReduction *b_n = new  BilateralNoiseReduction();
+    new_filter_list.push_back({"New_BilateralNoiseReduction", b_n});
+
 }

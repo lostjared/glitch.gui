@@ -1711,6 +1711,30 @@ private:
     }
 };
 
+class MedianNoiseReduction : public FilterFunc {
+public:
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        cv::medianBlur(frame, frame, 5);
+    }
+};
+
+class BilateralNoiseReduction : public FilterFunc {
+public:
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        if (frame.type() != CV_8UC1 && frame.type() != CV_8UC3) {
+            frame.convertTo(frame, CV_8UC3);
+        }
+        cv::Mat temp;
+        cv::bilateralFilter(frame, temp, 9, 75, 75); 
+        frame = temp;
+    }
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
