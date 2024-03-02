@@ -132,5 +132,12 @@ void New_CallFilterClear(std::string name) {
             FilterList *l = pos->second;
             l->filter->clear();
         }
+    } else if(name.find("Custom_") != std::string::npos) {
+        int index = cat_custom_index[name];
+        auto &lst = cat_custom[index].second;
+        for(size_t i = 0; i < lst.size(); ++i) {
+            std::string &name_index = lst[i];
+            New_CallFilterClear(name_index); 
+        } 
     }
 }
