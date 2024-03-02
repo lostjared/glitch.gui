@@ -1918,6 +1918,33 @@ private:
     std::uniform_int_distribution<> dist;
 };
 
+class New_ColorScale : public FilterFunc {
+public:
+
+    void init() override {
+        for(int i = 0; i < 3; ++i) {
+            knobs[i].initValues(i*0.2, 0.01, 0.1, 1.0);
+        }
+    }
+    void clear() override {
+        init();        
+    }
+    
+    void proc(cv::Mat &frame) override{
+        cv::Scalar vals(knobs[0].nextValue(), knobs[1].nextValue(), knobs[2].nextValue());
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = cv::saturate_cast<uchar>(pixel[q]*vals[q]);
+                }
+            }
+        }
+    }
+
+private:
+    Knob knobs[3];
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

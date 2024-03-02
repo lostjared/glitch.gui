@@ -517,7 +517,6 @@ void MainWindow::stopRecording() {
 
 void MainWindow::record() {
 
-
     RecordInfo &info = record_window->rec_info;
 
     if(info.save_png == true) {

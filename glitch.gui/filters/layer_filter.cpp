@@ -210,5 +210,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     new_filter_list.push_back({"New_AlphaRandom", al_r});
 
     New_MedianBlend *n_med = new New_MedianBlend ();
-    new_filter_list.push_back({"New_MedianBlend", n_med});   
+    new_filter_list.push_back({"New_MedianBlend", n_med});  
+
+    New_ColorScale *n_cxor = new New_ColorScale();
+    new_filter_list.push_back({"New_ColorScale", n_cxor}); 
 }
