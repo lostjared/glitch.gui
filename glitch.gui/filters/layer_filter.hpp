@@ -1921,9 +1921,11 @@ private:
 class New_ColorScale : public FilterFunc {
 public:
 
+    New_ColorScale() : gen{rd()}, dist(0.1, 1.0) { }
+
     void init() override {
         for(int i = 0; i < 3; ++i) {
-            knobs[i].initValues(i*0.2, 0.01, 0.1, 1.0);
+            knobs[i].initValues(dist(gen),0.01, 0.1, 1.0);
         }
     }
     void clear() override {
@@ -1944,6 +1946,9 @@ public:
 
 private:
     Knob knobs[3];
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> dist;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
