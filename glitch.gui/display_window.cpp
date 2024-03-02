@@ -96,7 +96,6 @@ void DisplayWindow::setCurrentFilter(const std::string &f) {
     }
     if(current_filter.find("New_") != std::string::npos || current_filter.find("Custom_") != std::string::npos || current_filter.find(".acidcam") != std::string::npos) {
         New_CallFilterClear(current_filter);
-        std::cout << "Cleared: "<< current_filter << "\n";
     }
     current_filter = f;
     /// release objects
