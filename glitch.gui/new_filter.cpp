@@ -122,7 +122,9 @@ void New_CallFilterClear(std::string name) {
          else {
             int index = fptr->second;
             Plugin_Program *prog = plugins[index].second;
-            prog->f_clear();
+            if(prog->init == true) {
+                prog->f_clear();
+            }
          }
     } 
     else
@@ -130,7 +132,8 @@ void New_CallFilterClear(std::string name) {
         auto pos = new_filter_map.find(name);
         if(pos != new_filter_map.end()) {
             FilterList *l = pos->second;
-            l->filter->clear();
+            if(l->filter->init_ == true)
+                l->filter->clear();
         }
     } else if(name.find("Custom_") != std::string::npos) {
         int index = cat_custom_index[name];
