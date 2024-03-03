@@ -221,7 +221,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     ColorGradientShift *c_shift60 = new ColorGradientShift(60);
     new_filter_list.push_back({"New_ColorGradientShift60", c_shift60});
 
-    GradientBoxes *grad_box = new GradientBoxes (3, 3, 30.0f);
-    new_filter_list.push_back({"New_GradientBoxes", grad_box});
-    
+    GradientBoxes *grad_box30 = new GradientBoxes (3, 3, 30.0f);
+    new_filter_list.push_back({"New_GradientBoxes30", grad_box30});
+
+    GradientBoxes *grad_box60 = new GradientBoxes (3, 3, 60.0f);
+    new_filter_list.push_back({"New_GradientBoxes60", grad_box60});
 }
