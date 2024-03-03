@@ -226,4 +226,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     GradientBoxes *grad_box60 = new GradientBoxes (3, 3, 60.0f);
     new_filter_list.push_back({"New_GradientBoxes60", grad_box60});
+
+    FrameStoreSmash *smash = new FrameStoreSmash(2);
+    new_filter_list.push_back({"New_FrameSmash", smash});
 }

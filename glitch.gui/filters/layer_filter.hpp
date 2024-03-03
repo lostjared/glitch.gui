@@ -2050,6 +2050,66 @@ private:
     }
 };
 
+class FrameStoreSmash : public FilterFunc {
+public:
+    explicit FrameStoreSmash(int squareSize = 25) : gen(rd()), squareSize(squareSize), maxSquaresPerFrame(300) {}
+    struct Rectangle {
+        int x, y, width, height;
+        Rectangle() : x{0}, y{0}, width{0}, height{0} {}
+        Rectangle(int _x, int _y, int _w, int _h) : x{_x}, y{_y}, width{_w}, height{_h} {}
+    };
+    void init() override {
+        cap_ = false;
+        rects.clear();
+    }
+    void proc(cv::Mat &frame) override {
+        if (!cap_) {
+            captured = frame.clone();
+            cap_ = true;
+            initSquares(frame);
+        }
+        removeSquares();
+        if (rects.empty()) {
+            cap_ = false; 
+            return; 
+        }
+        for (const auto &rect : rects) {
+            copyRect(captured, frame, rect);
+        }
+    }
+private:
+    bool cap_ = false;
+    cv::Mat captured;
+    std::vector<Rectangle> rects;
+    std::random_device rd;
+    std::mt19937 gen;
+    int squareSize;
+    int maxSquaresPerFrame; 
+    void initSquares(const cv::Mat &frame) {
+        int cols = frame.cols / squareSize;
+        int rows = frame.rows / squareSize;
+        for (int y = 0; y < rows; ++y) {
+            for (int x = 0; x < cols; ++x) {
+                rects.emplace_back(x * squareSize, y * squareSize, squareSize, squareSize);
+            }
+        }
+    }
+    void removeSquares() {
+        std::shuffle(rects.begin(), rects.end(), gen); 
+        int removeCount = std::uniform_int_distribution<>(1, maxSquaresPerFrame)(gen); 
+        removeCount = std::min(removeCount, static_cast<int>(rects.size())); 
+        rects.erase(rects.end() - removeCount, rects.end()); 
+    }
+
+    void copyRect(const cv::Mat &src, cv::Mat &dst, const Rectangle &rc) {
+        cv::Rect roi(rc.x, rc.y, rc.width, rc.height);
+        if (roi.x + roi.width <= src.cols && roi.y + roi.height <= src.rows) { 
+            src(roi).copyTo(dst(roi));
+        }
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
+
 
 #endif
