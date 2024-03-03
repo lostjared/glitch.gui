@@ -1989,6 +1989,67 @@ private:
     }
 };
 
+class GradientBoxes : public FilterFunc {
+private:
+    struct BoxGradient {
+        cv::Scalar startColor;
+        cv::Scalar endColor;
+        double shiftSpeed;
+        BoxGradient() : startColor(cv::Scalar::all(0)), endColor(cv::Scalar::all(0)), shiftSpeed(0.005) {}
+        void update(float elapsedTime) {
+            double hueStart = fmod((std::sin(elapsedTime * shiftSpeed) + 1) * 90, 180); // Range is 0 to 180
+            double hueEnd = fmod((std::sin(elapsedTime * shiftSpeed + 3.14159) + 1) * 90, 180); // Offset sine wave
+            cv::Mat hsvStart(1, 1, CV_8UC3, cv::Scalar(hueStart, 255, 255));
+            cv::Mat hsvEnd(1, 1, CV_8UC3, cv::Scalar(hueEnd, 255, 255));
+            cv::cvtColor(hsvStart, hsvStart, cv::COLOR_HSV2BGR);
+            cv::cvtColor(hsvEnd, hsvEnd, cv::COLOR_HSV2BGR);
+            startColor = hsvStart.at<cv::Vec3b>(0, 0);
+            endColor = hsvEnd.at<cv::Vec3b>(0, 0);
+        }
+    };
+    std::vector<BoxGradient> gradients;
+    int gridRows;
+    int gridCols;
+public:
+    GradientBoxes(int rows, int cols, float fps) : gridRows(rows), gridCols(cols), frame_rate(fps), current_frames(0) {
+        gradients.resize(gridRows * gridCols);
+    }
+
+    void init() override {
+    }
+
+    void proc(cv::Mat &frame) override {
+        float elapsedTime = current_frames / frame_rate;
+        for (auto& grad : gradients) {
+            grad.update(elapsedTime);
+        }
+        int boxWidth = frame.cols / gridCols;
+        int boxHeight = frame.rows / gridRows;
+        cv::Mat frame_copy = frame.clone();
+        for (int row = 0; row < gridRows; ++row) {
+            for (int col = 0; col < gridCols; ++col) {
+                cv::Rect boxRect(col * boxWidth, row * boxHeight, boxWidth, boxHeight);
+                drawGradientBox(frame_copy, boxRect, gradients[row * gridCols + col]);
+            }
+        }
+        cv::addWeighted(frame_copy, 0.5, frame, 0.5, 0.0, frame);
+        current_frames++;
+    }
+private:
+    float frame_rate;
+    long long current_frames;
+    void drawGradientBox(cv::Mat &frame, const cv::Rect &box, const BoxGradient &gradient) {
+        for (int y = box.y; y < box.y + box.height; ++y) {
+            for (int x = box.x; x < box.x + box.width; ++x) {
+                double alpha = static_cast<double>(x - box.x) / box.width;
+                cv::Scalar col = gradient.startColor * (1.0 - alpha) + gradient.endColor * alpha;
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+                pixel = cv::Vec3b(static_cast<uchar>(col[0]), static_cast<uchar>(col[1]), static_cast<uchar>(col[2]));
+            }
+        }
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
