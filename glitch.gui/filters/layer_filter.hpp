@@ -2073,6 +2073,11 @@ public:
             cap_ = false; 
             return; 
         }
+
+        if(captured.size() != frame.size()) {
+            cv::resize(captured, frame, frame.size());
+        }
+
         for (const auto &rect : rects) {
             copyRect(captured, frame, rect);
         }
