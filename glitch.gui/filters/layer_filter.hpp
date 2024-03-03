@@ -1946,7 +1946,7 @@ private:
 
 class ColorGradientShift : public FilterFunc {
 public:
-    ColorGradientShift() {
+    ColorGradientShift(float fps) : frameRate(fps) {
         startColor = cv::Scalar(255, 0, 0); 
 
         endColor = cv::Scalar(0, 0, 255); 
@@ -1963,7 +1963,7 @@ public:
     }
 private:
     cv::Scalar startColor, endColor;
-    float frameRate = 30; 
+    float frameRate; 
     long long frameCount = 0; 
 
     void updateColors(float videoTimeInSeconds) {

@@ -215,7 +215,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     New_ColorScale *n_cxor = new New_ColorScale();
     new_filter_list.push_back({"New_ColorScale", n_cxor}); 
 
-    ColorGradientShift *c_shift = new ColorGradientShift();
-    new_filter_list.push_back({"New_ColorGradientShift", c_shift});
+    ColorGradientShift *c_shift30 = new ColorGradientShift(30);
+    new_filter_list.push_back({"New_ColorGradientShift30", c_shift30});
+    
+    ColorGradientShift *c_shift60 = new ColorGradientShift(60);
+    new_filter_list.push_back({"New_ColorGradientShift60", c_shift60});
     
 }
