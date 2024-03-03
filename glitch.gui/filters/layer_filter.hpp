@@ -6,6 +6,8 @@
 #include "../layer.hpp"
 #include "../lfo.hpp"
 #include<random>
+#include<chrono>
+#include<cmath>
 
 class Layer_AlphaBlend25 : public FilterFunc {
 public:
@@ -1949,6 +1951,46 @@ private:
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_real_distribution<> dist;
+};
+
+class ColorGradientShift : public FilterFunc {
+public:
+    ColorGradientShift() {
+        startColor = cv::Scalar(255, 0, 0); 
+        endColor = cv::Scalar(0, 0, 255); 
+    }
+    void init() override {}
+    void clear() override {}
+    void proc(cv::Mat &frame) override {
+        updateColors();
+        cv::Mat gradient(frame.size(), CV_8UC3);
+        createDynamicGradient(gradient);
+        cv::addWeighted(frame, 0.5, gradient, 0.5, 0.0, frame);
+    }
+private:
+    cv::Scalar startColor, endColor;
+    void updateColors() {
+        auto time = std::chrono::system_clock::now();
+        auto since_epoch = time.time_since_epoch();
+        auto seconds = std::chrono::duration_cast<std::chrono::seconds>(since_epoch).count();
+        double hueStart = (std::sin(seconds * 0.1) + 1) * 90; 
+        double hueEnd = (std::sin(seconds * 0.1 + 3.14159) + 1) * 90; 
+        cv::Mat hsvStart(1, 1, CV_8UC3, cv::Scalar(hueStart, 255, 255));
+        cv::Mat hsvEnd(1, 1, CV_8UC3, cv::Scalar(hueEnd, 255, 255));
+        cv::cvtColor(hsvStart, hsvStart, cv::COLOR_HSV2BGR);
+        cv::cvtColor(hsvEnd, hsvEnd, cv::COLOR_HSV2BGR);
+        startColor = hsvStart.at<cv::Vec3b>(0, 0);
+        endColor = hsvEnd.at<cv::Vec3b>(0, 0);
+    }
+    void createDynamicGradient(cv::Mat &gradient) {
+        for (int x = 0; x < gradient.cols; x++) {
+            double alpha = static_cast<double>(x) / gradient.cols;
+            cv::Scalar col = startColor * (1.0 - alpha) + endColor * alpha;
+            for (int y = 0; y < gradient.rows; y++) {
+                gradient.at<cv::Vec3b>(y, x) = cv::Vec3b(static_cast<uchar>(col[0]), static_cast<uchar>(col[1]), static_cast<uchar>(col[2]));
+            }
+        }
+    }
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
