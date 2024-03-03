@@ -2066,6 +2066,7 @@ public:
         if (!cap_) {
             captured = frame.clone();
             cap_ = true;
+            maxSquaresPerFrame = frame.cols;
             initSquares(frame);
         }
         removeSquares();
@@ -2073,14 +2074,17 @@ public:
             cap_ = false; 
             return; 
         }
-
-        if(captured.size() != frame.size()) {
-            cv::resize(captured, frame, frame.size());
-        }
-
         for (const auto &rect : rects) {
-            copyRect(captured, frame, rect);
+           if(captured.size() != frame.size()) {
+                cap_ = false;
+                return;
+            } else {
+                 copyRect(captured, frame, rect);
+            }
         }
+    }
+    void clear() override {
+        cap_ = false;
     }
 private:
     bool cap_ = false;
@@ -2101,7 +2105,7 @@ private:
     }
     void removeSquares() {
         std::shuffle(rects.begin(), rects.end(), gen); 
-        int removeCount = std::uniform_int_distribution<>(1, maxSquaresPerFrame)(gen); 
+        int removeCount = std::uniform_int_distribution<>(1,maxSquaresPerFrame)(gen); 
         removeCount = std::min(removeCount, static_cast<int>(rects.size())); 
         rects.erase(rects.end() - removeCount, rects.end()); 
     }
@@ -2113,6 +2117,7 @@ private:
         }
     }
 };
+
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

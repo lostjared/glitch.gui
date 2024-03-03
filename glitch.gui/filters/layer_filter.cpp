@@ -228,5 +228,5 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     new_filter_list.push_back({"New_GradientBoxes60", grad_box60});
 
     FrameStoreSmash *smash = new FrameStoreSmash(2);
-    new_filter_list.push_back({"New_FrameSmash", smash});
+    new_filter_list.push_back({"New_Very_Slow_FrameSmash", smash});
 }
