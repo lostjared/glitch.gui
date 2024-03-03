@@ -1948,24 +1948,27 @@ class ColorGradientShift : public FilterFunc {
 public:
     ColorGradientShift() {
         startColor = cv::Scalar(255, 0, 0); 
+
         endColor = cv::Scalar(0, 0, 255); 
     }
     void init() override {}
     void clear() override {}
     void proc(cv::Mat &frame) override {
-        updateColors();
-        cv::Mat gradient(frame.size(), CV_8UC3);
-        createDynamicGradient(gradient);
-        cv::addWeighted(frame, 0.5, gradient, 0.5, 0.0, frame);
+       float video_t = frameCount / frameRate;
+       updateColors(video_t);
+       cv::Mat gradient(frame.size(), CV_8UC3);
+       createDynamicGradient(gradient);
+       cv::addWeighted(frame, 0.5, gradient, 0.5, 0.0, frame);
+       frameCount ++;
     }
 private:
     cv::Scalar startColor, endColor;
-    void updateColors() {
-        auto time = std::chrono::system_clock::now();
-        auto since_epoch = time.time_since_epoch();
-        auto seconds = std::chrono::duration_cast<std::chrono::seconds>(since_epoch).count();
-        double hueStart = (std::sin(seconds * 0.1) + 1) * 90; 
-        double hueEnd = (std::sin(seconds * 0.1 + 3.14159) + 1) * 90; 
+    float frameRate = 30; 
+    long long frameCount = 0; 
+
+    void updateColors(float videoTimeInSeconds) {
+        double hueStart = (std::sin(videoTimeInSeconds * 0.1) + 1) * 90; // Ranges from 0 to 180
+        double hueEnd = (std::sin(videoTimeInSeconds * 0.1 + 3.14159) + 1) * 90; // Offset sine wave
         cv::Mat hsvStart(1, 1, CV_8UC3, cv::Scalar(hueStart, 255, 255));
         cv::Mat hsvEnd(1, 1, CV_8UC3, cv::Scalar(hueEnd, 255, 255));
         cv::cvtColor(hsvStart, hsvStart, cv::COLOR_HSV2BGR);
@@ -1973,7 +1976,6 @@ private:
         startColor = hsvStart.at<cv::Vec3b>(0, 0);
         endColor = hsvEnd.at<cv::Vec3b>(0, 0);
     }
-    
     void createDynamicGradient(cv::Mat &gradient) {
         cv::Mat gradientF(gradient.size(), CV_32FC3);
         for (int x = 0; x < gradientF.cols; x++) {
