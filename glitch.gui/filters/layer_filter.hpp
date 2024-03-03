@@ -1973,14 +1973,17 @@ private:
         startColor = hsvStart.at<cv::Vec3b>(0, 0);
         endColor = hsvEnd.at<cv::Vec3b>(0, 0);
     }
+    
     void createDynamicGradient(cv::Mat &gradient) {
-        for (int x = 0; x < gradient.cols; x++) {
-            double alpha = static_cast<double>(x) / gradient.cols;
+        cv::Mat gradientF(gradient.size(), CV_32FC3);
+        for (int x = 0; x < gradientF.cols; x++) {
+            double alpha = static_cast<double>(x) / (gradientF.cols - 1); 
             cv::Scalar col = startColor * (1.0 - alpha) + endColor * alpha;
-            for (int y = 0; y < gradient.rows; y++) {
-                gradient.at<cv::Vec3b>(y, x) = cv::Vec3b(static_cast<uchar>(col[0]), static_cast<uchar>(col[1]), static_cast<uchar>(col[2]));
+            for (int y = 0; y < gradientF.rows; y++) {
+                gradientF.at<cv::Vec3f>(y, x) = cv::Vec3f(static_cast<float>(col[0]), static_cast<float>(col[1]), static_cast<float>(col[2]));
             }
-        }
+        }   
+        gradientF.convertTo(gradient, CV_8UC3);
     }
 };
 
