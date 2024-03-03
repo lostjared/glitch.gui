@@ -1881,14 +1881,9 @@ private:
 
 class New_MedianBlend : public FilterFunc {
 public:
-
-    New_MedianBlend() : gen{rd()}, dist(3, 7) {
-
-    }
-
+    New_MedianBlend() : gen{rd()}, dist(3, 7) {}
     void init() override { }
-    void clear() override { collection.clear(); }
-    
+    void clear() override { collection.clear(); }    
     void proc(cv::Mat &frame) override{
         int r = dist(gen);
         for(int m = 0; m < r; ++m) {
@@ -1922,9 +1917,7 @@ private:
 
 class New_ColorScale : public FilterFunc {
 public:
-
     New_ColorScale() : gen{rd()}, dist(0.1, 1.0) { }
-
     void init() override {
         for(int i = 0; i < 3; ++i) {
             knobs[i].initValues(dist(gen),0.01, 0.1, 1.0);
@@ -1933,7 +1926,6 @@ public:
     void clear() override {
         init();        
     }
-    
     void proc(cv::Mat &frame) override{
         cv::Scalar vals(knobs[0].nextValue(), knobs[1].nextValue(), knobs[2].nextValue());
         for(int z = 0; z < frame.rows; ++z) {
@@ -1945,7 +1937,6 @@ public:
             }
         }
     }
-
 private:
     Knob knobs[3];
     std::random_device rd;
