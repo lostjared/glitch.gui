@@ -203,7 +203,8 @@ void CustomWindow::move_Down() {
 }
 
 void CustomWindow::loadCategory(int index) {
-    filter->clear();
+    if(filter->count() > 0)
+            filter->clear();
        if(index == 5) {
         auto *a = &new_filter_list;
         for(int i = 0; i < static_cast<int>(a->size()); ++i) {
@@ -233,7 +234,7 @@ void CustomWindow::loadCategory(int index) {
                 filter->addItem(v->at(i).c_str());
         }
     }
-    filter->setCurrentIndex(0);
+    //filter->setCurrentIndex(0);
 }
 
 void CustomWindow::changeCategory(int) {
