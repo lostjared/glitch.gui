@@ -252,10 +252,6 @@ void CustomWindow::changeCustom(int) {
             for(auto it = a.begin(); it != a.end(); ++it) {
                 std::ostringstream stream;
                 stream << it->name;
-                /*std::string cval = it->color.getColorValue();
-                if(cval.length() > 0) {
-                    stream << ":" << cval;
-                }*/
                 filter_custom->addItem(stream.str().c_str());
             }
             filter_name->setText(filter->itemText(custom_index));                
@@ -286,7 +282,16 @@ void CustomWindow::setFilter() {
 bool CustomWindow::createCustom(const QString &name) {
     if(name.length() == 0) 
         return false;
-    
+
+    if(name.toStdString().find("Custom__") != std::string::npos) {
+        QMessageBox box;
+        box.setWindowTitle(APP_NAME);
+        box.setText("Invalid name for Custom Filter");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Warning);
+        box.exec();
+        return false;
+    }
     
     if(custom_exists(name.toStdString()) || custom_exists("Custom__" + name.toStdString())) {
         QMessageBox box;
@@ -312,6 +317,8 @@ bool CustomWindow::createCustom(const QString &name) {
     save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
     main_window->custom_edit->updateFilterNames();
     main_window->debug_window->Log("gui: Created new custom filter: " + fname + "\n");
+    filter_cat->setCurrentIndex(6);
+    loadCategory(6);
     return true;
 }
 
@@ -319,7 +326,20 @@ void CustomWindow::updateFilter() {
 
     if(filter_custom->count() == 0) return;
 
+    QString filter_n = filter_name->text();
+    for(int i = 0; i < filter_custom->count(); ++i) {
+        if(filter_n == filter_custom->item(i)->text()) {
+            QMessageBox box;
+            box.setWindowTitle(tr(APP_NAME));
+            box.setText("Cannot use Custom inside same Custom would cause infinite recursion: " + filter_n);
+            box.setWindowIcon(QIcon(":/images/icon.png"));
+            box.setIcon(QMessageBox::Icon::Information);
+            box.exec();
+            return;
+        }
+    }
     if(custom_exists(filter_name->text().toStdString())) {
+        std::cout << "updating....\n";
         std::vector<Custom_Filter> custom_data;
         for(int i = 0; i < filter_custom->count(); ++i) {
             auto data = filter_custom->item(i);
@@ -340,10 +360,10 @@ void CustomWindow::updateFilter() {
             custom_setup_map(false);
             save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
             main_window->custom_edit->updateFilterNames();
-            main_window->debug_window->Log("gui: Updated custom filter: " + fname + "\n");
         } else {
             std::cout << "pos == -1\n";
         }
+        main_window->debug_window->Log("gui: Updated custom filter: " + fname + "\n");
     } else {
         QMessageBox box;
         box.setWindowTitle(APP_NAME);
