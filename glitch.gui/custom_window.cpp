@@ -68,27 +68,18 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     btn_update->setGeometry(640-225-15, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
     btn_update->setToolTip(tr("Update custom"));
 
-
     chk_r = new QCheckBox(tr("Red"), this);
     chk_r->setGeometry(15,15+25+5+25+5+300+5+25+5+10+5+25+20,50, 25);
-    chk_r->setToolTip("Use R Channel");
     //chk_r->setChecked(true);
     chk_r->setToolTip(tr("Restore Red Channel After Filter"));
-
     chk_g = new QCheckBox(tr("Green"), this);
     chk_g->setGeometry(65,15+25+5+25+5+300+5+25+5+10+5+25+20,60, 25);
-    chk_g->setToolTip("Use G Channel");
     //chk_g->setChecked(true);
     chk_g->setToolTip(tr("Restore Green Channel After Filter"));
-
-
     chk_b = new QCheckBox(tr("Blue"), this);
     chk_b->setGeometry(65+50+15,15+25+5+25+5+300+5+25+5+10+5+25+20,60,25);
-    chk_b->setToolTip("Use R Channel");
     chk_b->setToolTip(tr("Restore Blue Channel After Filter"));
-
     //chk_b->setChecked(true);
-
     connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCategory(int)));
     setWindowTitle("Create Custom Filter");
