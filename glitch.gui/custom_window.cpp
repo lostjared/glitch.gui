@@ -359,7 +359,7 @@ void CustomWindow::updateFilter() {
             cat_custom[pos] = std::make_pair(fname.toStdString(), custom_data);
             custom_setup_map(false);
             save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
-            main_window->custom_edit->updateFilterNames();
+            //main_window->custom_edit->updateFilterNames();
         } else {
             std::cout << "pos == -1\n";
         }
