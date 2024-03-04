@@ -84,8 +84,9 @@ void New_CallReplace(const std::string &name,cv::Mat &frame,ColorType &c) {
     cv::split(frame, origCh);  
     New_CallFilter(name, frame); 
     cv::split(frame, procCh); 
-    if(c.red == 1)
+    if(c.red == 1) {
         procCh[2] = origCh[2];  
+    }
     if(c.green == 1)
         procCh[1] = origCh[1];
     if(c.blue == 1)

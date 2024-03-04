@@ -116,6 +116,10 @@ QString CustomWindow::getRGB() {
 
 
 void CustomWindow::addItem(const QString &text) {
+
+    if(text == filter_name->text()) 
+        return;
+
    QString value = getRGB();
     QString ftext;
     if(value.length() > 0) {
@@ -137,6 +141,11 @@ void CustomWindow::addFilter() {
     int index = filter->currentIndex();
     if(index >= 0) {
         QString val = filter->itemText(index);
+
+        if(val == filter_name->text()) 
+            return;
+
+
         QString value = getRGB();
         QString ftext;
         if(value.length() > 0) {
@@ -303,6 +312,9 @@ bool CustomWindow::createCustom(const QString &name) {
 }
 
 void CustomWindow::updateFilter() {
+
+    if(filter_custom->count() == 0) return;
+
     if(custom_exists(filter_name->text().toStdString())) {
         std::vector<Custom_Filter> custom_data;
         for(int i = 0; i < filter_custom->count(); ++i) {
@@ -310,7 +322,7 @@ void CustomWindow::updateFilter() {
             custom_data.push_back(Custom_Filter(data->text().toStdString()));
         }
         QString fname = filter_name->text();
-        auto find_pos = [&]() {
+        auto find_pos = [&]() -> int {
             for(int i = 0; i < static_cast<int>(cat_custom.size()); ++i) {
                 if(cat_custom[i].first == fname.toStdString()) {
                     return i;
