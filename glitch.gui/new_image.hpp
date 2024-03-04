@@ -17,6 +17,7 @@ public:
     void setMainWindow(MainWindow *main_w);
     bool fileOpen();
     float getFPS(const QString &filename, int &width, int &height);
+    void enableStart(bool b);
 public slots:
     void openRecordOptions();
     void changedPos(int value);

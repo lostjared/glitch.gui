@@ -173,6 +173,7 @@ void NewImageWindow::videoStart() {
             main_window->debug_window->Log("gui: In Video Mode IMAGE Delay disabled.\n");   
         }
         main_window->startNewAnimation(filename, outdir, prefix, fps);
+        
         hide();
     } else {
         QMessageBox box;
@@ -186,6 +187,10 @@ void NewImageWindow::videoStart() {
 void NewImageWindow::openRecordOptions() {
     if(video_record->checkState() == Qt::Checked) 
         main_window->record_window->show();
+}
+
+void NewImageWindow::enableStart(bool b) {
+    video_start->setEnabled(b);
 }
 
 float NewImageWindow::getFPS(const QString &filename, int &width, int &height) {

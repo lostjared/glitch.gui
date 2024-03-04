@@ -512,7 +512,7 @@ void MainWindow::stopRecording() {
     ac::release_all_objects();
     record_rec->setText(tr("Record"));
     toolbox_window->setRecordText(true);
-       
+    newimage_window->enableStart(true);
 }
 
 void MainWindow::record() {
@@ -572,7 +572,8 @@ void MainWindow::record() {
                 QString output;
                 QTextStream stream(&output);
                 stream << "glitch: Now recording to " << filename.str().c_str() << " @ " << info.fps.c_str() << " FPS / " << info.codec.c_str() << " / CRF: " << info.crf.c_str() << "\n";
-                debug_window->Log(output); 
+                debug_window->Log(output);
+                newimage_window->enableStart(false); 
             }   
         } 
      } else {
@@ -588,6 +589,7 @@ void MainWindow::record() {
 bool MainWindow::startRecording(const QString &filename, const QString &codec_type,const QString &dst_res, const QString &crf, const QString &fps) {
     if(file_stream == NULL) {
         file_stream = open_ffmpeg(filename.toStdString().c_str(), codec_type.toStdString().c_str(),dst_res.toStdString().c_str(), fps.toStdString().c_str(), crf.toStdString().c_str());
+        newimage_window->enableStart(false);
         if(!file_stream) {
             std::cerr << "Could not open pipe to FFmpeg\n";
             QMessageBox msgbox;
