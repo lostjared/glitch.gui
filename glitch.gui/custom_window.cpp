@@ -111,6 +111,9 @@ QString CustomWindow::getRGB() {
         value += "B";
     }        
 
+    if(chk_r->isChecked() && chk_g->isChecked() && chk_b->isChecked()) 
+        return "";
+
     return value;
 }
 
