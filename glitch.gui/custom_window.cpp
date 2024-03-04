@@ -237,7 +237,13 @@ void CustomWindow::changeCustom(int) {
         if(custom_index >= 0) {
             auto a =cat_custom[custom_index].second;
             for(auto it = a.begin(); it != a.end(); ++it) {
-                filter_custom->addItem(it->name.c_str());
+                std::ostringstream stream;
+                stream << it->name;
+                /*std::string cval = it->color.getColorValue();
+                if(cval.length() > 0) {
+                    stream << ":" << cval;
+                }*/
+                filter_custom->addItem(stream.str().c_str());
             }
             filter_name->setText(filter->itemText(custom_index));                
         }
@@ -319,9 +325,16 @@ void CustomWindow::updateFilter() {
             save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
             main_window->custom_edit->updateFilterNames();
             main_window->debug_window->Log("gui: Updated custom filter: " + fname + "\n");
+        } else {
+            std::cout << "pos == -1\n";
         }
     } else {
-        // error not fuond
+        QMessageBox box;
+        box.setWindowTitle(APP_NAME);
+        box.setText("Error custom name not defined");
+        box.setWindowIcon(QIcon(":/images/icon.png"));
+        box.setIcon(QMessageBox::Icon::Warning);
+        box.exec();
     }
 }
 

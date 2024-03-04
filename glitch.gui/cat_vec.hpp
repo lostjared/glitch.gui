@@ -5,6 +5,7 @@
 #include<string>
 #include<unordered_map>
 #include<fstream>
+#include<iostream>
 
 extern std::vector<std::string> cat_in_order, cat_sorted, cat_fast, cat_glitch, cat_mirror;
 extern std::vector<std::string> *vec_cat[];
@@ -48,7 +49,7 @@ public:
     ColorType color;
     Custom_Filter(const std::string &n) {
         // convert n to name/colortype
-        if(n.find(":") == std::string::npos) {
+        if(n.find(":") == std::string::npos || n.find("Custom__") != std::string::npos) {
             color.off = true;
             name = n;
         } else {

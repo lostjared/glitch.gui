@@ -784,11 +784,11 @@ void save_custom(std::string filename) {
         file << name << "=";
         for(size_t z = 0; z < cat_custom[i].second.size()-1; ++z) {
            std::string &name = cat_custom[i].second[z].name;
-           std::string values = cat_custom[i].second[z].color.getColorValue();
-           file << name << values << ",";
+           //std::string values = cat_custom[i].second[z].color.getColorValue();
+           file << name << ",";
         }
-        std::string v = cat_custom[i].second[cat_custom[i].second.size()-1].color.getColorValue(); 
-        file << cat_custom[i].second[cat_custom[i].second.size()-1].name << v << "\n";
+        //std::string v = cat_custom[i].second[cat_custom[i].second.size()-1].color.getColorValue(); 
+        file << cat_custom[i].second[cat_custom[i].second.size()-1].name << "\n";
       }
 
     file.close();
