@@ -234,7 +234,7 @@ void CustomWindow::loadCategory(int index) {
                 filter->addItem(v->at(i).c_str());
         }
     }
-    //filter->setCurrentIndex(0);
+    filter->setCurrentIndex(0);
 }
 
 void CustomWindow::changeCategory(int) {
