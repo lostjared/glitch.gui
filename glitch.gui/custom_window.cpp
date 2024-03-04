@@ -10,7 +10,7 @@
 
 
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
-    setFixedSize(640, 480);
+    setFixedSize(640, 510);
     filter_cat = new QComboBox(this);
     filter_cat->setToolTip(tr("Filter CategorieS"));
     filter_cat->setGeometry(15, 15, (640-15-15), 25);
@@ -64,6 +64,26 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     btn_set->setGeometry(640-125-5, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
     btn_set->setToolTip(tr("Add as new Custom Filter"));
 
+    btn_update = new QPushButton(tr("Update"), this);
+    btn_update->setGeometry(640-225-15, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
+    btn_update->setToolTip(tr("Update custom"));
+
+
+    chk_r = new QCheckBox(tr("Red"), this);
+    chk_r->setGeometry(15,15+25+5+25+5+300+5+25+5+10+5+25+20,50, 25);
+    chk_r->setToolTip("Use R Channel");
+    //chk_r->setChecked(true);
+
+    chk_g = new QCheckBox(tr("Green"), this);
+    chk_g->setGeometry(65,15+25+5+25+5+300+5+25+5+10+5+25+20,60, 25);
+    chk_g->setToolTip("Use G Channel");
+    //chk_g->setChecked(true);
+
+
+    chk_b = new QCheckBox(tr("Blue"), this);
+    chk_b->setGeometry(65+50+15,15+25+5+25+5+300+5+25+5+10+5+25+20,60,25);
+    chk_b->setToolTip("Use R Channel");
+    //chk_b->setChecked(true);
 
     connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCategory(int)));
@@ -78,8 +98,34 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     loadCategory(0);
 }
 
+QString CustomWindow::getRGB() {
+    QString value = "";
+    if(chk_r->isChecked()) {
+        value += "R";
+    }
+    if(chk_g->isChecked()) {
+        value += "G";
+    }
+    if(chk_b->isChecked()) {
+        value += "B";
+    }        
+
+    return value;
+}
+
+
 void CustomWindow::addItem(const QString &text) {
-    filter_custom->addItem(text);
+   QString value = getRGB();
+    QString ftext;
+    if(value.length() > 0) {
+        ftext = text + ":" + value;
+    } else {
+        ftext = text;
+    } 
+    if(text.toStdString().find("Custom__") != std::string::npos)
+        filter_custom->addItem(text);
+    else
+        filter_custom->addItem(ftext);
 }
 
 void CustomWindow::setMainWindow(MainWindow *m) {
@@ -90,7 +136,14 @@ void CustomWindow::addFilter() {
     int index = filter->currentIndex();
     if(index >= 0) {
         QString val = filter->itemText(index);
-        filter_custom->addItem(val);     
+        QString value = getRGB();
+        QString ftext;
+        if(value.length() > 0) {
+            ftext = val + ":" + value;
+         } else {
+            ftext = val;
+        }
+        filter_custom->addItem(ftext);     
         main_window->debug_window->Log("gui: Added " + val + " to custom.\n");   
     }
 }
@@ -192,10 +245,10 @@ bool CustomWindow::createCustom(const QString &name) {
         return false;
     }
     
-    std::vector<std::string> custom_data;
+    std::vector<Custom_Filter> custom_data;
     for(int i = 0; i < filter_custom->count(); ++i) {
         auto data = filter_custom->item(i);
-        custom_data.push_back(data->text().toStdString());
+        custom_data.push_back(Custom_Filter(data->text().toStdString()));
     }
     if(custom_data.size()==0)
         return false;

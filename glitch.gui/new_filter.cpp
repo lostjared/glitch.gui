@@ -74,6 +74,26 @@ void add_new_filter(const FilterList &lst) {
     new_filter_list.push_back(lst);
 }
 
+
+void New_CallReplace(const std::string &name,cv::Mat &frame,ColorType &c) {
+    if(c.off == true) {
+        New_CallFilter(name, frame);
+        return;
+    }
+    std::vector<cv::Mat> origCh(3), procCh(3);
+    cv::split(frame, origCh);  
+    New_CallFilter(name, frame); 
+    cv::split(frame, procCh); 
+    if(c.red == 1)
+        procCh[0] = origCh[0];  
+    if(c.green == 1)
+        procCh[1] = origCh[1];
+    if(c.blue == 1)
+        procCh[2] = origCh[2];
+    cv::merge(procCh, frame); 
+}
+
+
 void New_CallFilter(std::string name, cv::Mat &frame) {
 
     if(name.find(".acidcam")  != std::string::npos) {
@@ -95,8 +115,13 @@ void New_CallFilter(std::string name, cv::Mat &frame) {
         int index = cat_custom_index[name];
         auto &lst = cat_custom[index].second;
         for(size_t i = 0; i < lst.size(); ++i) {
-            std::string &name_index = lst[i];
-            New_CallFilter(name_index, frame); 
+            std::string &name_index = lst[i].name;
+            auto cpos = name_index.find(":");
+            if(cpos != std::string::npos)
+                name_index = name_index.substr(0, cpos);
+
+            ColorType &c = lst[i].color;
+            New_CallReplace(name_index, frame, c); 
         }
     } else if(name.find("New_") == std::string::npos) {
         ac::CallFilter(name, frame);
@@ -139,7 +164,7 @@ void New_CallFilterClear(std::string name) {
         int index = cat_custom_index[name];
         auto &lst = cat_custom[index].second;
         for(size_t i = 0; i < lst.size(); ++i) {
-            std::string &name_index = lst[i];
+            std::string &name_index = lst[i].name;
             New_CallFilterClear(name_index); 
         } 
     }

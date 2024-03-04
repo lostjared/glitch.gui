@@ -735,15 +735,16 @@ void load_custom(std::string filename) {
             if(pos == std::string::npos) break;
             name = line.substr(0, pos);
             line = line.substr(pos+1, line.length());
-            std::vector<std::string> names;
+            std::vector<Custom_Filter> names;
             while(line.find(",") != std::string::npos) {
                 std::string name1;
                 auto pos = line.find(",");
                 name1 = line.substr(0, pos);
                 line = line.substr(pos+1, line.length());
-                names.push_back(name1);
+                names.push_back(Custom_Filter(name1));
             }
-            names.push_back(line);
+
+            names.push_back(Custom_Filter(line));
             cat_custom.push_back(std::make_pair(name, names));
         }
     }
@@ -782,10 +783,12 @@ void save_custom(std::string filename) {
         std::string &name = cat_custom[i].first;
         file << name << "=";
         for(size_t z = 0; z < cat_custom[i].second.size()-1; ++z) {
-           std::string &name = cat_custom[i].second[z];
-           file << name << ",";
+           std::string &name = cat_custom[i].second[z].name;
+           std::string values = cat_custom[i].second[z].color.getColorValue();
+           file << name << values << ",";
         }
-        file << cat_custom[i].second[cat_custom[i].second.size()-1] << "\n";
+        std::string v = cat_custom[i].second[cat_custom[i].second.size()-1].color.getColorValue(); 
+        file << cat_custom[i].second[cat_custom[i].second.size()-1].name << v << "\n";
       }
 
     file.close();

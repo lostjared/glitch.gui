@@ -5,6 +5,7 @@
 #include<QComboBox>
 #include<QListWidget>
 #include<QLineEdit>
+#include<QCheckBox>
 
 class MainWindow;
 
@@ -16,6 +17,7 @@ public:
     void loadCategory(int cat);
     bool createCustom(const QString &name); 
     void addItem(const QString &text);
+    QString getRGB();
 public slots:
     void addFilter();
     void rmvFilter();
@@ -29,7 +31,8 @@ private:
     QComboBox *filter, *filter_cat, *filter_name_combo;
     QListWidget *filter_custom;
     QLineEdit *filter_name;
-    QPushButton *btn_add, *btn_rmv, *btn_up, *btn_down, *btn_set, *btn_playlist;
+    QPushButton *btn_add, *btn_rmv, *btn_up, *btn_down, *btn_set, *btn_playlist, *btn_update;
+    QCheckBox *chk_r, *chk_g, *chk_b;
 };
 
 #endif
