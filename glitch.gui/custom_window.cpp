@@ -67,6 +67,8 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     btn_update = new QPushButton(tr("Update"), this);
     btn_update->setGeometry(640-225-15, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
     btn_update->setToolTip(tr("Update custom"));
+    
+    connect(btn_update, SIGNAL(clicked()), this, SLOT(updateFilter()));
 
     chk_r = new QCheckBox(tr("Red"), this);
     chk_r->setGeometry(15,15+25+5+25+5+300+5+25+5+10+5+25+20,50, 25);
@@ -82,6 +84,8 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     //chk_b->setChecked(true);
     connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCategory(int)));
+    connect(filter, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCustom(int)));
+
     setWindowTitle("Create Custom Filter");
 
     filter_cat->addItem(tr("In order"));
@@ -90,6 +94,8 @@ CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
     filter_cat->addItem(tr("Glitch"));
     filter_cat->addItem(tr("Mirror"));
     filter_cat->addItem(tr("New Filter"));
+    filter_cat->addItem(tr("Custom"));
+    filter_cat->addItem(tr("Plugin"));
     loadCategory(0);
 }
 
@@ -186,10 +192,26 @@ void CustomWindow::move_Down() {
 
 void CustomWindow::loadCategory(int index) {
     filter->clear();
-    if(index == 5) {
+       if(index == 5) {
         auto *a = &new_filter_list;
         for(int i = 0; i < static_cast<int>(a->size()); ++i) {
             filter->addItem(a->at(i).name);
+        }
+    } else if(index == 6) {
+        auto *a = &cat_custom;
+        for(int i = 0; i < static_cast<int>(a->size()); ++i) {
+            filter->addItem(a->at(i).first.c_str());
+        }  
+    } else if(index == 7) {
+        auto *a = &plugins;
+        for(size_t i = 0; i < a->size(); ++i) {
+            filter->addItem(a->at(i).first.c_str());
+        }
+
+    } else if(index == 8) {
+        auto *a = &cat_playlist;
+        for(size_t i = 0; i < a->size(); ++i) {
+            filter->addItem(a->at(i).c_str());
         }
     } else {
         std::vector<std::string> *v = vec_cat[index];
@@ -206,6 +228,22 @@ void CustomWindow::changeCategory(int) {
     int index = filter_cat->currentIndex();
     loadCategory(index);
 }
+
+void CustomWindow::changeCustom(int) {
+    int index = filter_cat->currentIndex();
+    if(index == 6) {
+        filter_custom->clear();
+        int custom_index = filter->currentIndex();
+        if(custom_index >= 0) {
+            auto a =cat_custom[custom_index].second;
+            for(auto it = a.begin(); it != a.end(); ++it) {
+                filter_custom->addItem(it->name.c_str());
+            }
+            filter_name->setText(filter->itemText(custom_index));                
+        }
+    }
+}
+
 
 void CustomWindow::setFilter() {
     QString name = filter_name->text();
@@ -230,7 +268,8 @@ bool CustomWindow::createCustom(const QString &name) {
     if(name.length() == 0) 
         return false;
     
-    if(custom_exists("Custom__" + name.toStdString())) {
+    
+    if(custom_exists(name.toStdString()) || custom_exists("Custom__" + name.toStdString())) {
         QMessageBox box;
         box.setWindowTitle(APP_NAME);
         box.setText("Error custom name already defined");
@@ -255,6 +294,35 @@ bool CustomWindow::createCustom(const QString &name) {
     main_window->custom_edit->updateFilterNames();
     main_window->debug_window->Log("gui: Created new custom filter: " + fname + "\n");
     return true;
+}
+
+void CustomWindow::updateFilter() {
+    if(custom_exists(filter_name->text().toStdString())) {
+        std::vector<Custom_Filter> custom_data;
+        for(int i = 0; i < filter_custom->count(); ++i) {
+            auto data = filter_custom->item(i);
+            custom_data.push_back(Custom_Filter(data->text().toStdString()));
+        }
+        QString fname = filter_name->text();
+        auto find_pos = [&]() {
+            for(int i = 0; i < static_cast<int>(cat_custom.size()); ++i) {
+                if(cat_custom[i].first == fname.toStdString()) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+        int pos = find_pos();
+        if(pos != -1) {
+            cat_custom[pos] = std::make_pair(fname.toStdString(), custom_data);
+            custom_setup_map(false);
+            save_custom(main_window->pref_window->custom_path_lbl->text().toStdString());
+            main_window->custom_edit->updateFilterNames();
+            main_window->debug_window->Log("gui: Updated custom filter: " + fname + "\n");
+        }
+    } else {
+        // error not fuond
+    }
 }
 
 void CustomWindow::setPlaylist() {

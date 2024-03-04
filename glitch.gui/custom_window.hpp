@@ -24,7 +24,9 @@ public slots:
     void move_Up();
     void move_Down();
     void changeCategory(int cat);
+    void changeCustom(int custom);
     void setFilter();
+    void updateFilter();
     void setPlaylist();
 private:
     MainWindow *main_window = nullptr;
