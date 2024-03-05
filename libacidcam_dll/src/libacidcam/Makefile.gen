@@ -1,0 +1,18 @@
+#generic Makefile
+
+OBJ=$(patsubst %.cpp,%.o,$(wildcard source/*.cpp))
+CFLAGS= -std=c++11 -O2 -IC:\gui\opencv\include -IC:\gui` -DNO_SCREEN_GRAB
+LDFLAGS= C:\gui\opencv\x64\mingw\lib/libopencv*a
+source/%.o: source/%.cpp
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+libacidcam.so: $(OBJ)
+	$(CXX) -std=c++11  -shared -o libacidcam.dll $(OBJ)  $(LDFLAGS)
+
+all: libacidcam.so
+
+.PHONY: clean
+clean:
+	rm -f source/*.o libacidcam.dll
+
+
