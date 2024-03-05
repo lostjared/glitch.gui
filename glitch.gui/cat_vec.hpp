@@ -53,7 +53,7 @@ public:
             color.off = true;
             name = n;
         } else {
-            name = n.substr(0, n.find(";"));
+            name = n;//.substr(0, n.find(";"));
             std::string colors = n.substr(n.find(":")+1, n.length());
             if(colors.length() == 0) {
                 color.off = true;
