@@ -1782,9 +1782,7 @@ private:
 
 class Layer_0_GlitchBleed : public FilterFunc {
 public:
-    Layer_0_GlitchBleed() : gen(rd()), dist(1, 4), distRow(0, 5), distHeight(1, 75) {
-        init();
-    }
+    Layer_0_GlitchBleed() : gen(rd()), dist(1, 4), distRow(0, 5), distHeight(1, 75) {} 
 
     void setLayer(Layer *l) {
         layer_ = l;
@@ -1829,12 +1827,14 @@ private:
         int offset_x = distRow(gen);
         double alpha = knobs[index].nextValue();
         double invAlpha = 1 - alpha;
-        for (int z = y1; z < y1 + y2; ++z) {
+        for (int z = y1; z < y1 + y2 && z < frame.rows ++z) {
             for (int i = offset_x; i < frame.cols; ++i) {
-                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-                const cv::Vec3b &pix2 = cp.at<cv::Vec3b>(z, i);
-                for (int q = 0; q < 3; ++q) {
-                    pixel[q] = static_cast<uchar>(alpha * pixel[q] + invAlpha * pix2[q]);
+                if(i >= 0 && i < frame.cols && z >= 0 && z < frame.rows) {
+                    cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                    const cv::Vec3b &pix2 = cp.at<cv::Vec3b>(z, i);
+                    for (int q = 0; q < 3; ++q) {
+                        pixel[q] = static_cast<uchar>(alpha * pixel[q] + invAlpha * pix2[q]);
+                    }
                 }
             }
         }
