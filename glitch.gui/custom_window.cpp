@@ -151,9 +151,9 @@ void CustomWindow::addFilter() {
 
         QString value = getRGB();
         QString ftext;
-        if(value.length() > 0) {
+        if(value.length() > 0 && val.toStdString().find("Custom__") == std::string::npos) {
             ftext = val + ":" + value;
-         } else {
+        } else {
             ftext = val;
         }
         filter_custom->addItem(ftext);     
