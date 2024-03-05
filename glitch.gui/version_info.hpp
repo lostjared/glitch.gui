@@ -1,6 +1,6 @@
 #ifndef _VERSION_INFO_H_
 #define _VERSION_INFO_H_
-#define APP_VERSION "0.29.0"
+#define APP_VERSION "0.30.0"
 #define APP_NAME "glitch.gui"
 #define AUTHOR_NAME "Jared Bruni"
 #define APP_YEAR "(C) 2023-2024"
