@@ -252,6 +252,11 @@ void CustomWindow::changeCustom(int) {
             for(auto it = a.begin(); it != a.end(); ++it) {
                 std::ostringstream stream;
                 stream << it->name;
+
+                if(it->name.find(":") == std::string::npos && (it->color.red || it->color.green || it->color.blue)) {
+                    stream << ":" << it->color.getColorValue();
+                }
+
                 filter_custom->addItem(stream.str().c_str());
             }
             filter_name->setText(filter->itemText(custom_index));                
