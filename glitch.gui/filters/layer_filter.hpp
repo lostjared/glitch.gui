@@ -1827,7 +1827,7 @@ private:
         int offset_x = distRow(gen);
         double alpha = knobs[index].nextValue();
         double invAlpha = 1 - alpha;
-        for (int z = y1; z < y1 + y2 && z < frame.rows ++z) {
+        for (int z = y1; z < y1 + y2 && z < frame.rows; ++z) {
             for (int i = offset_x; i < frame.cols; ++i) {
                 if(i >= 0 && i < frame.cols && z >= 0 && z < frame.rows) {
                     cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
