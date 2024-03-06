@@ -2260,10 +2260,8 @@ public:
     void clear() override { collection.clear(); }    
     void proc(cv::Mat &frame) override{
         if(layer_[0] == nullptr || layer_[1] == nullptr || layer_[2] == nullptr) {
-            std::cout << "Layers\n";
             return;
         }
-        
         cv::Mat resized[3];
         for(int j = 0; j < 3; ++j) {
             if(!layer_[j]->hasNext()) {
