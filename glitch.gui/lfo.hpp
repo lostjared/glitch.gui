@@ -96,16 +96,14 @@ using Knob = KnobT<double>;
 
 class KnobRandom : public KnobT<double> {
 public:
-    KnobRandom() = default;
-    
+    KnobRandom() : gen{rd()}, dist(0, 10) {}
     void setRandom(bool r) {
         random_value = r;
-    }
-    
+    } 
     double nextValue() {
         double s = speed;
         if(random_value) {
-            s = (rand()%10 * 0.1);
+            s = (dist(gen) * 0.1);
         }
         if(dir == 1) {
             value_ += s;
@@ -124,6 +122,10 @@ public:
     }
 private:
     bool random_value = false;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
+  
 };
 
 template<size_t N>
