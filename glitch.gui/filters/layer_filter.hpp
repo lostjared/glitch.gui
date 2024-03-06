@@ -2118,6 +2118,27 @@ private:
     }
 };
 
+class Flash : public FilterFunc {
+public:
+    Flash() : gen{rd()}, dist(0, 255) {}
+    void init() override {
+
+    }
+    void proc(cv::Mat &frame) override {
+        on = !on;
+        if(on == false)
+            return;
+        cv::Scalar color(dist(gen), dist(gen), dist(gen));        
+        cv::Mat image(frame.size(), CV_8UC3, color);
+        frame = image.clone();
+    }
+    void clear() {}
+private:
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
+    bool on = false;
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

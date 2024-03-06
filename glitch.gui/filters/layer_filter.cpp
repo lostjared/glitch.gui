@@ -229,4 +229,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     FrameStoreSmash *smash = new FrameStoreSmash(4);
     new_filter_list.push_back({"New_Very_Slow_FrameSmash", smash});
+
+    Flash *flash = new Flash();
+    new_filter_list.push_back({"New_Better_Random_Strobe", flash});
 }
