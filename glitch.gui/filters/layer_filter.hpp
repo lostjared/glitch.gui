@@ -1203,7 +1203,7 @@ public:
     }
     ~LFOWave() {}
 private: 
-    Knob amp;
+    KnobRandom amp;
     Knob speed;
     int time_counter = 0;
 };
@@ -1244,7 +1244,7 @@ public:
     }
     ~Wave_Freq() {}
 private: 
-    Knob amp;
+    KnobRandom amp;
     Knob freq_k;
     LFO freq;
     int time_counter = 0;
