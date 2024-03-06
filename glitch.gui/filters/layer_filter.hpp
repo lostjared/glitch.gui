@@ -2194,7 +2194,6 @@ public:
     void clear() override { }
 
     void proc(cv::Mat &frame) override {
-
         onv = !onv;
         if(onv == false)
             return;
@@ -2243,7 +2242,6 @@ private:
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_int_distribution<> dist;
-
 };
 
 class New_MedianBlend3 : public FilterFunc {
@@ -2304,6 +2302,66 @@ private:
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_int_distribution<> dist;
+};
+
+class Layer_012_AlphaBlendConcat : public FilterFunc {
+public:
+    Layer_012_AlphaBlendConcat() : gen{rd()}, dist(0.1, 1.0) {}
+    
+    void setLayers(Layer *_l1, Layer *_l2, Layer *_l3) {
+        layer_[0] = _l1;
+        layer_[1] = _l2;
+        layer_[2] = _l3;
+    }
+
+    void init() override {
+        for(int j = 0;  j < 3; ++j) {
+            knobs[j].initValues(dist(gen), 0.1, 0.1, 2.0);
+        }
+    }
+
+    void clear() override {}
+
+    void proc(cv::Mat &frame) override {
+
+        if(layer_[0] == nullptr || layer_[1] == nullptr || layer_[2] == nullptr)
+            return;
+
+        cv::Mat resized[3];
+        double alpha[3];
+        for(int j = 0; j < 3; ++j) {
+            if(!layer_[j]->hasNext())
+                return;
+
+            cv::Mat cur_frame;
+            if(!layer_[j]->read(cur_frame)) 
+                return;
+
+            cv::resize(cur_frame, resized[j], frame.size());
+            alpha[j] = knobs[j].nextValue();
+        }
+
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                cv::Vec3b pix[3];
+                pix[0] = resized[0].at<cv::Vec3b>(z, i);
+                pix[1] = resized[1].at<cv::Vec3b>(z, i);
+                pix[2] = resized[2].at<cv::Vec3b>(z, i);
+
+                for(int j = 0; j < 3; ++j) {
+                    pixel[j] = ac::wrap_cast(pixel[j]+((alpha[0]*pix[0][j]) + (alpha[1]*pix[1][j]) + (alpha[2]*pix[2][j])));
+                }
+            }
+        }
+    }
+
+private:
+    Layer *layer_[3] = {nullptr};
+    Knob knobs[3];
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> dist;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
