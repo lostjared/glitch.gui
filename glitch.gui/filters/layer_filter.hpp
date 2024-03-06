@@ -2267,7 +2267,6 @@ public:
         cv::Mat resized[3];
         for(int j = 0; j < 3; ++j) {
             if(!layer_[j]->hasNext()) {
-                std::cout << "hasNext()\n";
                 return;
             }
             cv::Mat clayer;
