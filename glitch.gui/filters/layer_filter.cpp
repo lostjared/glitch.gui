@@ -78,9 +78,12 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     l_3->setLayers(&layer1, &layer2, &layer3);
     l_3->setMode(2);
     new_filter_list.push_back({"New_Layer_012_Random", l_3});
+
+    New_MedianBlend3 *mb3 = new New_MedianBlend3();
+    mb3->setLayers(&layer1, &layer2, &layer3);
+    new_filter_list.push_back({"New_Layer_012_MedianBlend3", mb3});
     
- 
-    // Fade
+     // Fade
     Layer_AlphaBlendFade01 *layer01_fade = new Layer_AlphaBlendFade01();
     layer01_fade->setLayer(&layer1, &layer2);
     new_filter_list.push_back({"New_Layer_01_Fade", layer01_fade});

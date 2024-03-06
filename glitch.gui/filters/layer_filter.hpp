@@ -2246,6 +2246,69 @@ private:
 
 };
 
+class New_MedianBlend3 : public FilterFunc {
+public:
+    New_MedianBlend3() : gen{rd()}, dist(3, 7) {}
+    
+    void setLayers(Layer *_l1, Layer *_l2, Layer *_l3) {
+        layer_[0] = _l1;
+        layer_[1] = _l2;
+        layer_[2] = _l3;
+    }
+
+    void init() override { }
+    void clear() override { collection.clear(); }    
+    void proc(cv::Mat &frame) override{
+        if(layer_[0] == nullptr || layer_[1] == nullptr || layer_[2] == nullptr) {
+            std::cout << "Layers\n";
+            return;
+        }
+        
+        cv::Mat resized[3];
+        for(int j = 0; j < 3; ++j) {
+            if(!layer_[j]->hasNext()) {
+                std::cout << "hasNext()\n";
+                return;
+            }
+            cv::Mat clayer;
+            if(layer_[j]->read(clayer)) {
+                cv::resize(clayer, resized[j], frame.size());
+            }
+        }
+        int r = dist(gen);
+        for(int m = 0; m < r; ++m) {
+            cv::medianBlur(frame, frame, 5);
+        }
+        collection.shiftFrames(frame);     
+        for(int j = 0; j < 3; ++j) {
+            collection.shiftFrames(resized[j]);
+        }
+        if (collection.size() < collection.capacity()) return;
+        for (int z = 0; z < frame.rows; ++z) {
+            for (int i = 0; i < frame.cols; ++i) {
+                cv::Scalar value(0, 0, 0);
+                for (int j = 0; j < static_cast<int>(collection.size()); ++j) {
+                    cv::Vec3b pixel = collection[j].at<cv::Vec3b>(z, i);
+                    for (int q = 0; q < 3; ++q) {
+                        value[q] += pixel[q];
+                    }
+                }
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int j = 0; j < 3; ++j) {
+                   int val = 1+static_cast<int>(value[j]);
+                    pixel[j] = static_cast<unsigned char>(pixel[j] ^ val);
+                }
+            }
+        }
+    }
+private:
+    New_MatrixCollection<8> collection;
+    Layer *layer_[3] = {nullptr};
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
