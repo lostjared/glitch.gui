@@ -2132,11 +2132,41 @@ public:
         cv::Mat image(frame.size(), CV_8UC3, color);
         frame = image.clone();
     }
-    void clear() {}
+    void clear() override {}
 private:
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_int_distribution<> dist;
+    bool on = false;
+};
+
+class Layer_0_Swap : public FilterFunc {
+public:
+    Layer_0_Swap() {}
+    void setLayer(Layer *l_) {
+        layer_ = l_;
+    }
+    void init() override {
+
+    }
+    void proc(cv::Mat &frame) override {
+
+        on = !on;
+        if(on == false)
+            return;
+
+        if(layer_ != nullptr && layer_->hasNext()) {
+            cv::Mat resized;
+            if(layer_->read(resized)) {
+                cv::resize(resized, resized, frame.size());
+                frame = resized;                
+            }
+        }
+
+    }
+    void clear() override {}
+private:
+    Layer *layer_ = nullptr;
     bool on = false;
 };
 
