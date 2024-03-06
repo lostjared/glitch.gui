@@ -63,6 +63,22 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     Layer012_SlideShow *layer012_s = new Layer012_SlideShow();
     layer012_s->setLayer(&layer1, &layer2, &layer3);
     new_filter_list.push_back({"New_Layer_012_SlideShow", layer012_s});
+
+    Layer_012_Index *l_1 = new Layer_012_Index();
+    l_1->setLayers(&layer1, &layer2, &layer3);
+    l_1->setMode(0);
+    new_filter_list.push_back({"New_Layer_012_Increment", l_1});
+
+    Layer_012_Index *l_2 = new Layer_012_Index();
+    l_2->setLayers(&layer1, &layer2, &layer3);
+    l_2->setMode(1);
+    new_filter_list.push_back({"New_Layer_012_Shuffle", l_2});
+       
+    Layer_012_Index *l_3 = new Layer_012_Index();
+    l_3->setLayers(&layer1, &layer2, &layer3);
+    l_3->setMode(2);
+    new_filter_list.push_back({"New_Layer_012_Random", l_3});
+    
  
     // Fade
     Layer_AlphaBlendFade01 *layer01_fade = new Layer_AlphaBlendFade01();

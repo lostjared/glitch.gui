@@ -2167,6 +2167,85 @@ private:
     bool on = false;
 };
 
+class Layer_012_Index : public FilterFunc {
+public:
+    Layer_012_Index() : gen{rd()}, dist(0, 2) {
+        layers.push_back(0);
+        layers.push_back(1);
+        layers.push_back(2);
+    }
+
+    void setLayers(Layer *l1, Layer *l2, Layer *l3) {
+        layer_[0] = l1;
+        layer_[1] = l2;
+        layer_[2] = l3;
+    }
+
+    void setMode(int m) {
+        mode = m;
+    }
+
+    void init() override { 
+        index = 0;
+        mode = 0;
+        sindex = 0;
+    }
+
+    void clear() override { }
+
+    void proc(cv::Mat &frame) override {
+
+        onv = !onv;
+        if(onv == false)
+            return;
+
+        if(layer_[0] != nullptr && layer_[1] != nullptr && layer_[2] != nullptr) {
+            int f_pos = 0;
+            switch(mode) {
+                case 0: 
+                f_pos = index++;
+                if(index > 2) 
+                    index = 0;
+                break;
+                case 1:
+                   if(sindex >= 0&& sindex <= 2) {
+                        f_pos = layers[sindex];
+                   }
+                   sindex++;
+                   if(sindex > 2) {
+                        std::shuffle(layers.begin(), layers.end(), rd);
+                        sindex = 0;
+                   }                    
+                break;
+                case 2: 
+                    f_pos = dist(gen);
+                break;
+            }
+
+            if(layer_[f_pos]->hasNext()) {
+                cv::Mat new_l;
+                if(layer_[f_pos]->read(new_l)) {
+                    cv::Mat resized;
+                    cv::resize(new_l, resized, frame.size());
+                    frame = resized;
+                    return;                    
+                }
+            }
+        }
+    }
+private:
+    Layer *layer_[3] = {nullptr};
+    std::vector<int> layers;
+    int index = 0;
+    int sindex = 0;
+    int mode = 0;
+    bool onv = false;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
+
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
