@@ -2313,11 +2313,12 @@ public:
         layer_[2] = _l3;
     }
     void init() override {
+        std::cout << "Layer_012_AlphaBlendConcat init, setting values\n";
         for(int j = 0;  j < 3; ++j) {
             knobs[j].initValues(dist(gen), 0.1, 0.1, 2.0);
         }
     }
-    void clear() override {}
+    void clear() override { init(); }
     void proc(cv::Mat &frame) override {
         if(layer_[0] == nullptr || layer_[1] == nullptr || layer_[2] == nullptr)
             return;
@@ -2347,7 +2348,6 @@ public:
             }
         }
     }
-
 private:
     Layer *layer_[3] = {nullptr};
     Knob knobs[3];
