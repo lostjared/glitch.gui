@@ -2213,7 +2213,7 @@ public:
                    }
                    sindex++;
                    if(sindex > 2) {
-                        std::shuffle(layers.begin(), layers.end(), rd);
+                        std::shuffle(layers.begin(), layers.end(), gen);
                         sindex = 0;
                    }                    
                 break;
