@@ -93,7 +93,7 @@ void ac::release_all_objects() {
         }
         frames_released = true;
         std::ostringstream stream;
-        stream << "acidcam: Released: " << total << " Matrix objects...\nIf this is happening often consider increasing maxmium frames in the Preferences Window.\n";
+        stream << "acidcam: Released: " << total << " Matrix objects...\n";
         std::cout<<stream.str() << "\n";
         log_print(stream.str());
         setAllocatedFrames(0);
