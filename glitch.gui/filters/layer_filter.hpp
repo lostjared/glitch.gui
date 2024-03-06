@@ -2130,7 +2130,7 @@ public:
             return;
         cv::Scalar color(dist(gen), dist(gen), dist(gen));        
         cv::Mat image(frame.size(), CV_8UC3, color);
-        frame = image.clone();
+        frame = image;
     }
     void clear() override {}
 private:
@@ -2150,11 +2150,9 @@ public:
 
     }
     void proc(cv::Mat &frame) override {
-
         on = !on;
         if(on == false)
             return;
-
         if(layer_ != nullptr && layer_->hasNext()) {
             cv::Mat resized;
             if(layer_->read(resized)) {
@@ -2162,7 +2160,6 @@ public:
                 frame = resized;                
             }
         }
-
     }
     void clear() override {}
 private:
