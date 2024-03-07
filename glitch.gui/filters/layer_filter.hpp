@@ -2364,20 +2364,6 @@ private:
     bool dir = false;
 };
 
-class Layer_012_AlphaBlend_Merge : public FilterFunc {
-public:
-    Layer_012_AlphaBlend_Merge() { }
-    void init() override {}
-    void proc(cv::Mat &frame) override {
-        cv::Mat frame_copy = frame.clone();
-        New_CallFilter("New_Layer_012_AlphaBlendConcat", frame_copy);
-        cv::addWeighted(frame, 0.5, frame_copy, 0.5, 0, frame);
-    }
-    void clear() override { }
-private:
-
-};
-
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
