@@ -83,6 +83,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     mb3->setLayers(&layer1, &layer2, &layer3);
     new_filter_list.push_back({"New_Layer_012_MedianBlend3", mb3});
 
+    // concat variations
     Layer_012_AlphaBlendConcat *l_1c = new Layer_012_AlphaBlendConcat();
     l_1c->setLayers(&layer1, &layer2, &layer3);
     new_filter_list.push_back({"New_Layer_012_AlphaBlendConcat", l_1c});
@@ -98,7 +99,14 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     l_1c3->setOverflow(true);
     new_filter_list.push_back({"New_Layer_012_AlphaBlendConcatCap", l_1c3});
 
-     // Fade
+    Layer_012_AlphaBlendConcat *l_1c4 = new Layer_012_AlphaBlendConcat();
+    l_1c4->setLayers(&layer1, &layer2, &layer3);
+    l_1c4->setRandomDir(true);
+    l_1c4->setRandomNot(true);
+    new_filter_list.push_back({"New_Layer_012_AlphaBlendConcatNot", l_1c4});
+    // end variations
+
+    // Fade
     Layer_AlphaBlendFade01 *layer01_fade = new Layer_AlphaBlendFade01();
     layer01_fade->setLayer(&layer1, &layer2);
     new_filter_list.push_back({"New_Layer_01_Fade", layer01_fade});

@@ -2306,11 +2306,17 @@ private:
 
 class Layer_012_AlphaBlendConcat : public FilterFunc {
 public:
+
     Layer_012_AlphaBlendConcat() : gen{rd()}, dist(0.1, 1.0), dist_inc(0.01, 0.1), dist_max(1.5, 2.0), idist(0, 1) {}
+
     void setLayers(Layer *_l1, Layer *_l2, Layer *_l3) {
         layer_[0] = _l1;
         layer_[1] = _l2;
         layer_[2] = _l3;
+    }
+
+    void setRandomNot(bool n) {
+        random_not = n;
     }
     void setRandomDir(bool rand_dir) {
         dir = rand_dir;
@@ -2318,6 +2324,7 @@ public:
     void setOverflow(bool m) {
         overflow_max = m;
     }
+    
     void init() override {
         std::cout << "Layer_012_AlphaBlendConcat init, setting values\n";
         for(int j = 0;  j < 3; ++j) {
@@ -2342,6 +2349,10 @@ public:
                 return;
 
             cv::resize(cur_frame, resized[j], frame.size());
+
+            if(random_not == true && rand()%2 == 0)
+                cv::bitwise_not(resized[j], resized[j]);
+
             alpha[j] = knobs[j].nextValue();
         }
         for(int z = 0; z < frame.rows; ++z) {
@@ -2369,6 +2380,7 @@ private:
     std::uniform_int_distribution<> idist;
     bool dir = false;
     bool overflow_max  = false;
+    bool random_not = false;
 };
 
 
