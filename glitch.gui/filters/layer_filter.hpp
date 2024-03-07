@@ -2315,6 +2315,9 @@ public:
     void setRandomDir(bool rand_dir) {
         dir = rand_dir;
     }
+    void setOverflow(bool m) {
+        overflow_max = m;
+    }
     void init() override {
         std::cout << "Layer_012_AlphaBlendConcat init, setting values\n";
         for(int j = 0;  j < 3; ++j) {
@@ -2349,7 +2352,10 @@ public:
                 pix[1] = resized[1].at<cv::Vec3b>(z, i);
                 pix[2] = resized[2].at<cv::Vec3b>(z, i);
                 for(int j = 0; j < 3; ++j) {
-                    pixel[j] = ac::wrap_cast(pixel[j]+((alpha[0]*pix[0][j]) + (alpha[1]*pix[1][j]) + (alpha[2]*pix[2][j])));
+                    if(overflow_max == false)
+                        pixel[j] = ac::wrap_cast(pixel[j]+((alpha[0]*pix[0][j]) + (alpha[1]*pix[1][j]) + (alpha[2]*pix[2][j])));
+                    else 
+                        pixel[j] = ac::wrap_cast( (pixel[j] * 0.4) + (( (alpha[0]*pix[0][j])*0.2 + (alpha[1]*pix[1][j])*0.2 + (alpha[2]*pix[2][j])*0.2 ) * 0.9 ) );
                 }
             }
         }
@@ -2362,6 +2368,7 @@ private:
     std::uniform_real_distribution<> dist, dist_inc, dist_max;
     std::uniform_int_distribution<> idist;
     bool dir = false;
+    bool overflow_max  = false;
 };
 
 
