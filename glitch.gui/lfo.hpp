@@ -1,7 +1,8 @@
 #ifndef _LFO_H__P
 #define _LFO_H__P
 
-#include <cmath>
+#include<cmath>
+#include<iostream>
 
 class LFO {
 public:
@@ -49,7 +50,7 @@ public:
         min = min_;
         max = max_;
     }
-    void initValues(T v, T s, T min_, T max_, T d) {
+    void initValues(T v, T s, T min_, T max_, int d) {
         value_ =v;
         speed = s;
         min = min_;

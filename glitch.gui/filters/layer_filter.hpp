@@ -2306,16 +2306,22 @@ private:
 
 class Layer_012_AlphaBlendConcat : public FilterFunc {
 public:
-    Layer_012_AlphaBlendConcat() : gen{rd()}, dist(0.1, 1.0) {}
+    Layer_012_AlphaBlendConcat() : gen{rd()}, dist(0.1, 1.0), idist(0, 1) {}
     void setLayers(Layer *_l1, Layer *_l2, Layer *_l3) {
         layer_[0] = _l1;
         layer_[1] = _l2;
         layer_[2] = _l3;
     }
+    void setRandomDir(bool rand_dir) {
+        dir = rand_dir;
+    }
     void init() override {
         std::cout << "Layer_012_AlphaBlendConcat init, setting values\n";
         for(int j = 0;  j < 3; ++j) {
-            knobs[j].initValues(dist(gen), 0.1, 0.1, 2.0);
+            if(dir == true) 
+                knobs[j].initValues(dist(gen), 0.1, 0.1, 1.5, idist(gen));
+            else
+                knobs[j].initValues(dist(gen), 0.1, 0.1, 2.0);
         }
     }
     void clear() override { init(); }
@@ -2354,6 +2360,8 @@ private:
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_real_distribution<> dist;
+    std::uniform_int_distribution<> idist;
+    bool dir = false;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
