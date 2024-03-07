@@ -383,15 +383,13 @@ MainWindow::MainWindow()  {
     filter_first_clear->setEnabled(true);
     
     filter_first = new QLabel(tr("First: None"), this);
-    filter_first->setGeometry(315+10, 35+25+10, 200, 30);
+    filter_first->setGeometry(315+10, 35+25+10, 300, 30);
 
     content_data = new QTextEdit(this);
     content_data->setToolTip(tr("Current Information for Process"));
     content_data->setGeometry(15, 35+25+10+35, 300, 200);
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
-
-
     
     init_filter_list();
     init_filters_local();
@@ -589,7 +587,6 @@ void MainWindow::record() {
 bool MainWindow::startRecording(const QString &filename, const QString &codec_type,const QString &dst_res, const QString &crf, const QString &fps) {
     if(file_stream == NULL) {
         file_stream = open_ffmpeg(filename.toStdString().c_str(), codec_type.toStdString().c_str(),dst_res.toStdString().c_str(), fps.toStdString().c_str(), crf.toStdString().c_str());
-        newimage_window->enableStart(false);
         if(!file_stream) {
             std::cerr << "Could not open pipe to FFmpeg\n";
             QMessageBox msgbox;
