@@ -91,6 +91,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     l_1c2->setLayers(&layer1, &layer2, &layer3);
     l_1c2->setRandomDir(true);
     new_filter_list.push_back({"New_Layer_012_AlphaBlendConcatDir", l_1c2});
+
+    Layer_012_AlphaBlend_Merge *l_m = new Layer_012_AlphaBlend_Merge();
+    new_filter_list.push_back({"New_Layer_012_AlphaBlend_Merge", l_m});
    
      // Fade
     Layer_AlphaBlendFade01 *layer01_fade = new Layer_AlphaBlendFade01();
