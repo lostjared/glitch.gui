@@ -2306,7 +2306,7 @@ private:
 
 class Layer_012_AlphaBlendConcat : public FilterFunc {
 public:
-    Layer_012_AlphaBlendConcat() : gen{rd()}, dist(0.1, 1.0), dist_max(1.5, 2.0), idist(0, 1) {}
+    Layer_012_AlphaBlendConcat() : gen{rd()}, dist(0.1, 1.0), dist_inc(0.01, 0.1), dist_max(1.5, 2.0), idist(0, 1) {}
     void setLayers(Layer *_l1, Layer *_l2, Layer *_l3) {
         layer_[0] = _l1;
         layer_[1] = _l2;
@@ -2319,7 +2319,7 @@ public:
         std::cout << "Layer_012_AlphaBlendConcat init, setting values\n";
         for(int j = 0;  j < 3; ++j) {
             if(dir == true) 
-                knobs[j].initValues(dist(gen), 0.1, 0.1, dist_max(gen), idist(gen));
+                knobs[j].initValues(dist(gen), dist_inc(gen), 0.1, dist_max(gen), idist(gen));
             else
                 knobs[j].initValues(dist(gen), 0.1, 0.1, 2.0);
         }
@@ -2359,7 +2359,7 @@ private:
     Knob knobs[3];
     std::random_device rd;
     std::mt19937 gen;
-    std::uniform_real_distribution<> dist, dist_max;
+    std::uniform_real_distribution<> dist, dist_inc, dist_max;
     std::uniform_int_distribution<> idist;
     bool dir = false;
 };
