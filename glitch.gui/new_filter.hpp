@@ -10,8 +10,11 @@ public:
     virtual ~FilterFunc() = default;
     virtual void init() = 0;
     virtual void proc(cv::Mat &frame) = 0;
-    virtual void clear() { }
+    virtual void clear() { }  
     bool init_ = false;
+    void operator()(cv::Mat &frame) {
+        proc(frame);
+    }
 };
 
 struct FilterList {
