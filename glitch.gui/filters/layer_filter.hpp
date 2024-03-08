@@ -2498,7 +2498,7 @@ public:
     FunhouseMirror() {}
     void init() override { 
         frequency.initValues(2.0, 0.2, 2.0, 10.0);
-        amp.initValues(20, 1, 40, 20);
+        amp.initValues(20, 1, 20, 40);
     }
     void proc(cv::Mat &frame) override { 
         cv::Mat output;
