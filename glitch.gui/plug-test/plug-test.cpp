@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
     } else {
-        std::cout << "use: videofile.mp4 plugin.acidcam\n";
+        std::cout << "use: plugin.acidcam videofile.mp4\n";
         exit(0);
     }
 }
