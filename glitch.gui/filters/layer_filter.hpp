@@ -2497,7 +2497,7 @@ class FunhouseMirror : public FilterFunc {
 public:
     FunhouseMirror() {}
     void init() override { 
-        frequency.initValues(2.0, 0.1, 2.0, 10.0);
+        frequency.initValues(2.0, 0.2, 2.0, 10.0);
         amp.initValues(20, 1, 40, 20);
     }
     void proc(cv::Mat &frame) override { 
