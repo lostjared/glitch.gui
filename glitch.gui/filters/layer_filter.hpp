@@ -2475,9 +2475,7 @@ private:
         double centerX = inputImage.cols / 2.0;
         double centerY = inputImage.rows / 2.0;
         double radius = std::min(centerX, centerY);
-
         double distortion = distortion_.nextValue();
-
         for (int y = 0; y < inputImage.rows; y++) {
             for (int x = 0; x < inputImage.cols; x++) {
                 double deltaX = (x - centerX) / radius;
@@ -2489,13 +2487,68 @@ private:
                 outputImage.at<cv::Vec3b>(y, x) = inputImage.at<cv::Vec3b>(srcY, srcX);
             }
         }
-
         return outputImage;
     }
     
     Knob distortion_; 
 };
 
+class FunhouseMirror : public FilterFunc {
+public:
+    FunhouseMirror() {}
+    void init() override { 
+        frequency.initValues(2.0, 0.1, 2.0, 10.0);
+        amp.initValues(20, 1, 40, 20);
+    }
+    void proc(cv::Mat &frame) override { 
+        cv::Mat output;
+        switch(effect) {
+            case 0:
+                mirrorEffectHorizontal(frame, output);
+            break;
+            case 1:
+               mirrorEffectVertical(frame, output);
+            break;
+        }
+        frame = output;
+    }
+    void setEffect(int e) { effect = e; }
+    void clear() override {}
+private:
+    void mirrorEffectHorizontal(cv::Mat &src, cv::Mat &dst) {
+        if (src.empty()) {
+            return;
+        }
+        dst = src.clone();
+        double waveFrequency = frequency.nextValue(); 
+        double waveAmplitude = amp.nextValue(); 
+        for (int y = 0; y < src.rows; y++) {
+            for (int x = 0; x < src.cols; x++) {
+                int newX = x + static_cast<int>(std::sin(static_cast<double>(y) / src.rows * waveFrequency * 2.0 * CV_PI) * waveAmplitude);
+                newX = std::min(std::max(newX, 0), src.cols - 1);
+                dst.at<cv::Vec3b>(y, newX) = src.at<cv::Vec3b>(y, x);
+            }
+        }
+    }
+    void mirrorEffectVertical(cv::Mat &src, cv::Mat &dst) {
+        if (src.empty()) {
+            return;
+        }
+        dst = src.clone();
+        double waveFrequency = frequency.nextValue();
+        double waveAmplitude = amp.nextValue(); 
+        for (int y = 0; y < src.rows; y++) {
+            for (int x = 0; x < src.cols; x++) {
+                int newY = y + static_cast<int>(std::sin(static_cast<double>(x) / src.cols * waveFrequency * 2.0 * CV_PI) * waveAmplitude);
+                newY = std::min(std::max(newY, 0), src.rows - 1);
+                dst.at<cv::Vec3b>(newY, x) = src.at<cv::Vec3b>(y, x);
+            }
+        }
+    }
+    Knob frequency;  
+    KnobT<int> amp;
+    int effect = 0;
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
