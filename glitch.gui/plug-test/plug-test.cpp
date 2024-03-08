@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
                 }
                 prog->f_proc(frame);
                 cv::imshow("plug-test", frame);
-                if(cv::pollKey() == 'q') {
+                if(cv::waitKey(10) == 27) {
                     active = false;
                     break;
                 }
