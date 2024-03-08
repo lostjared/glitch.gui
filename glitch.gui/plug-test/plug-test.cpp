@@ -43,5 +43,8 @@ int main(int argc, char **argv) {
             std::cerr << "Error capture device could not load plug.data.mp4\n";
             exit(EXIT_FAILURE);
         }
+    } else {
+        std::cout << "use: videofile.mp4 plugin.acidcam\n";
+        exit(0);
     }
 }
