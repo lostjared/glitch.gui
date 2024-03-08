@@ -282,4 +282,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     PencilSketchFilter *pencil = new PencilSketchFilter();
     new_filter_list.push_back({"New_Pencil_Sketch", pencil});
+
+    OldPhotograph *old_p = new OldPhotograph();
+    new_filter_list.push_back({"New_Old_Photograph", old_p});
+
 }

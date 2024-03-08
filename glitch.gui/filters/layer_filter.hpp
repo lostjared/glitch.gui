@@ -2402,6 +2402,60 @@ public:
 private:
 };
 
+class OldPhotograph : public FilterFunc {
+public:
+    OldPhotograph() {}
+    void init() override {
+
+    }
+    void proc(cv::Mat &frame) override {
+       Sepia(frame);
+       Vignette(frame);
+    }
+    void clear() override { }
+private:
+    void Sepia(cv::Mat &image) {
+        if (image.empty()) {
+            return;
+        }
+        for (int y = 0; y < image.rows; y++) {
+            for (int x = 0; x < image.cols; x++) {
+                cv::Vec3b pixel = image.at<cv::Vec3b>(y, x);
+                uchar blue = pixel[0];
+                uchar green = pixel[1];
+                uchar red = pixel[2];
+                uchar newRed = std::min(255, int(0.393 * red + 0.769 * green + 0.189 * blue));
+                uchar newGreen = std::min(255, int(0.349 * red + 0.686 * green + 0.168 * blue));
+                uchar newBlue = std::min(255, int(0.272 * red + 0.534 * green + 0.131 * blue));
+                image.at<cv::Vec3b>(y, x) = cv::Vec3b(newBlue, newGreen, newRed);
+           }
+        }
+    }
+    void Vignette(cv::Mat& src) {
+        int w = src.cols;
+        int h = src.rows;
+        cv::Mat mask(src.size(), CV_32F, cv::Scalar(1));
+        cv::Point center = cv::Point(w / 2, h / 2);
+        double maxDist = std::sqrt(center.x*center.x + center.y*center.y);
+        for(int i = 0; i < h; ++i) {
+            for(int j = 0; j < w; ++j) {
+                double dist = std::sqrt((i - center.y) * (i - center.y) + (j - center.x) * (j - center.x));
+                double scale = 0.5 * (1.0 + std::cos(dist/maxDist * 3.14159265));
+                mask.at<float>(i,j) = std::max(scale, 0.0);
+            }
+        }
+        cv::Mat srcFloat;
+        src.convertTo(srcFloat, CV_32FC3);
+        std::vector<cv::Mat> channels(3);
+        cv::split(srcFloat, channels);
+        for (auto& channel : channels) {
+            channel = channel.mul(mask);
+        }
+        cv::merge(channels, srcFloat);
+        srcFloat.convertTo(src, CV_8UC3);
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
