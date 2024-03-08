@@ -2456,6 +2456,47 @@ private:
     }
 };
 
+class FishEyeLens : public FilterFunc {
+public:
+    FishEyeLens() = default;
+    void init() override { 
+        distortion_.initValues(0.0001, 0.01, 0.0001, 2.0);
+    }
+
+    void proc(cv::Mat &frame) override {
+        frame = fisheyeEffect(frame);
+    }
+    void clear() override {}
+
+private:
+
+    cv::Mat fisheyeEffect(const cv::Mat &inputImage) {
+        cv::Mat outputImage = cv::Mat::zeros(inputImage.size(), inputImage.type());
+        double centerX = inputImage.cols / 2.0;
+        double centerY = inputImage.rows / 2.0;
+        double radius = std::min(centerX, centerY);
+
+        double distortion = distortion_.nextValue();
+
+        for (int y = 0; y < inputImage.rows; y++) {
+            for (int x = 0; x < inputImage.cols; x++) {
+                double deltaX = (x - centerX) / radius;
+                double deltaY = (y - centerY) / radius;
+                double distanceSquared = deltaX * deltaX + deltaY * deltaY;
+                double factor = 1.0 / (1.0 + distortion * distanceSquared);
+                int srcX = std::clamp(int(centerX + deltaX * factor * radius), 0, inputImage.cols - 1);
+                int srcY = std::clamp(int(centerY + deltaY * factor * radius), 0, inputImage.rows - 1);
+                outputImage.at<cv::Vec3b>(y, x) = inputImage.at<cv::Vec3b>(srcY, srcX);
+            }
+        }
+
+        return outputImage;
+    }
+    
+    Knob distortion_; 
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

@@ -286,4 +286,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     OldPhotograph *old_p = new OldPhotograph();
     new_filter_list.push_back({"New_Old_Photograph", old_p});
 
+    FishEyeLens *fish_eye = new FishEyeLens();
+    new_filter_list.push_back({"New_FishEye_Lens", fish_eye});
 }
