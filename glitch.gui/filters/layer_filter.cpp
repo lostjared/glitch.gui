@@ -297,4 +297,13 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     fun_mirror_v->setEffect(1);
     new_filter_list.push_back({"New_FunhouseMirror_Vertical", fun_mirror_v});
 
+    FunhouseMirror *fun_mirror_h2 = new FunhouseMirror();
+    fun_mirror_h2->setEffect(0);
+    fun_mirror_h2->setGrowType(0);
+    new_filter_list.push_back({"New_FunhouseMirror_Horizontal_Grow", fun_mirror_h2});
+
+    FunhouseMirror *fun_mirror_v2 = new FunhouseMirror();
+    fun_mirror_v2->setEffect(1);
+    fun_mirror_v2->setGrowType(1);
+    new_filter_list.push_back({"New_FunhouseMirror_Vertical_Grow", fun_mirror_v2});
 }

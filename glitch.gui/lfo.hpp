@@ -43,45 +43,45 @@ private:
 template<typename T>
 class KnobT {
 public:
-    KnobT() : value_{}, speed{}, min{}, max{} {}
-    KnobT(const KnobT<T> &type) : value_{type.value_}, speed{type.speed}, min{type.min}, max{type.max} {}
-    KnobT(KnobT<T> &&type) : value_{type.value_}, speed{type.speed}, min{type.min}, max{type.max} {}
+    KnobT() : value_{}, speed{}, min_{}, max_{} {}
+    KnobT(const KnobT<T> &type) : value_{type.value_}, speed{type.speed}, min_{type.min}, max_{type.max} {}
+    KnobT(KnobT<T> &&type) : value_{type.value_}, speed{type.speed}, min_{type.min}, max_{type.max} {}
     
-    KnobT(T v, T s, T min_, T max_) {
-        initvalues(v, s, min_, max_);
+    KnobT(T v, T s, T min_x, T max_x) {
+        initvalues(v, s, min_x, max_x);
     }
     
-    KnobT(T v, T s, T min_, T max_, int d) {
-        initValues(v, s, min_, max_, d);
+    KnobT(T v, T s, T min_x, T max_x, int d) {
+        initValues(v, s, min_x, max_x, d);
     }
     
     KnobT<T> operator=(const KnobT<T> &type) {
         value_ = type.value_;
         speed = type.speed;
-        min = type.min;
-        max = type.max;
+        min_ = type.min_;
+        max_ = type.max_;
         return *this;
     }
 
     KnobT<T> operator=(KnobT<T> &&type) {
         value_ = type.value_;
         speed = type.speed;
-        min = type.min;
-        max = type.max;
+        min_ = type.min_;
+        max_ = type.max_;
         return *this;
     }
 
-    void initValues(T v, T s, T min_, T max_) {
+    void initValues(T v, T s, T min_x, T max_x) {
         value_ = v;
         speed = s;
-        min = min_;
-        max = max_;
+        min_ = min_x;
+        max_ = max_x;
     }
-    void initValues(T v, T s, T min_, T max_, int d) {
+    void initValues(T v, T s, T min_x, T max_x, int d) {
         value_ =v;
         speed = s;
-        min = min_;
-        max = max_;
+        min_ = min_x;
+        max_ = max_x;
         dir = d;
     }
     void setDirection(int d) {
@@ -98,17 +98,16 @@ public:
     }
     T nextValue() {
         T s = speed;
-
         if(dir == 1) {
             value_ += s;
-            if(value_ >= max) {
-                value_ = max;
+            if(value_ >= max_) {
+                value_ = max_;
                 dir = 0;
             }       
         } else {
             value_ -= s;
-            if(value_ <= min) {
-                value_ = min;
+            if(value_ <= min_) { 
+                value_ = min_;
                 dir = 1;
             }
         }
@@ -116,7 +115,7 @@ public:
     }
     T value() { return value_; }
 protected:
-    T value_, speed, min, max;
+    T value_, speed, min_, max_;
     int dir = 1;
 };
 
@@ -135,14 +134,14 @@ public:
         }
         if(dir == 1) {
             value_ += s;
-            if(value_ >= max) {
-                value_ = max;
+            if(value_ >= max_) {
+                value_ = max_;
                 dir = 0;
             }       
         } else {
             value_ -= s;
-            if(value_ <= min) {
-                value_ = min;
+            if(value_ <= min_) {
+                value_ = min_;
                 dir = 1;
             }
         }
@@ -154,6 +153,50 @@ private:
     std::mt19937 gen;
     std::uniform_int_distribution<> dist;
 };
+
+class KnobGrow : public KnobT<double> {
+public:
+    KnobGrow() : grow_{} {}
+    void setMaxGrow(double grow) {
+        grow_ = grow;
+        start_max = max_;
+    }
+
+    double nextValue() {
+        double s = speed;
+        if(dir == 1) {
+            value_ += s;
+            if(value_ >= max_) {
+                value_ = max_;
+                dir = 0;
+                if(g_max == 1) {
+                    max_ += s;
+                    if(max_ >= grow_) {
+                        g_max = 0;
+                    }
+                } else {
+                    max_ -= s;
+                    if(max_ <= start_max) {
+                        max_ = start_max;
+                        g_max = 1;
+                    }
+                }
+            }
+        } else {
+            value_ -= s;
+            if(value_ <= min_ || value_ <= 0) {
+                value_ = min_;
+                dir = 1;
+            }
+        }
+        return value_;
+    }
+private:
+    double grow_;
+    double start_max;
+    int g_max = 1;
+};
+
 
 template<size_t N>
 class New_MatrixCollection {

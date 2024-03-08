@@ -2499,6 +2499,8 @@ public:
     void init() override { 
         frequency.initValues(2.0, 0.2, 2.0, 10.0);
         amp.initValues(20, 1, 20, 40);
+        grow_v.initValues(2.0, 0.2, 2.0, 10.0);
+        grow_v.setMaxGrow(15.0);
     }
     void proc(cv::Mat &frame) override { 
         cv::Mat output;
@@ -2513,6 +2515,7 @@ public:
         frame = output;
     }
     void setEffect(int e) { effect = e; }
+    void setGrowType(int t) { grow_type = t; }
     void clear() override {}
 private:
     void mirrorEffectHorizontal(cv::Mat &src, cv::Mat &dst) {
@@ -2520,7 +2523,7 @@ private:
             return;
         }
         dst = src.clone();
-        double waveFrequency = frequency.nextValue(); 
+        double waveFrequency = (grow_type == 0) ? frequency.nextValue() : grow_v.nextValue(); 
         double waveAmplitude = amp.nextValue(); 
         for (int y = 0; y < src.rows; y++) {
             for (int x = 0; x < src.cols; x++) {
@@ -2535,7 +2538,7 @@ private:
             return;
         }
         dst = src.clone();
-        double waveFrequency = frequency.nextValue();
+        double waveFrequency = (grow_type == 0) ? frequency.nextValue() : grow_v.nextValue();
         double waveAmplitude = amp.nextValue(); 
         for (int y = 0; y < src.rows; y++) {
             for (int x = 0; x < src.cols; x++) {
@@ -2547,7 +2550,8 @@ private:
     }
     Knob frequency;  
     KnobT<int> amp;
-    int effect = 0;
+    int effect = 0, grow_type = 0;
+    KnobGrow grow_v;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
