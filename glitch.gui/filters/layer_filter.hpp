@@ -2324,7 +2324,7 @@ public:
     void setOverflow(bool m) {
         overflow_max = m;
     }
-    
+
     void init() override {
         std::cout << "Layer_012_AlphaBlendConcat init, setting values\n";
         for(int j = 0;  j < 3; ++j) {
@@ -2383,6 +2383,24 @@ private:
     bool random_not = false;
 };
 
+class PencilSketchFilter : public FilterFunc {
+public:
+    PencilSketchFilter() {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        cv::Mat gray;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::Mat grayInv;
+        cv::bitwise_not(gray, grayInv);
+        cv::Mat blurImg;
+        cv::GaussianBlur(grayInv, blurImg, cv::Size(21, 21), 0, 0);
+        cv::Mat sketch;
+        cv::divide(gray, 255-blurImg, sketch, 256.0);
+        cv::cvtColor(sketch, frame, cv::COLOR_GRAY2BGR);
+    }
+    void clear() override {}
+private:
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

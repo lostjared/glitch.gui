@@ -279,4 +279,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     Flash *flash = new Flash();
     new_filter_list.push_back({"New_Better_Random_Strobe", flash});
+
+    PencilSketchFilter *pencil = new PencilSketchFilter();
+    new_filter_list.push_back({"New_Pencil_Sketch", pencil});
 }
