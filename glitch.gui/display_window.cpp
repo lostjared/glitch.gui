@@ -14,7 +14,8 @@ DisplayWindow::DisplayWindow(QWidget *parent) : QDialog(parent) {
     setGeometry(700, 0, 640, 480);
     setWindowTitle("Display Window");
     setWindowIcon(QIcon(":/images/icon.png"));
-    
+    setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+ 
     image_label = new QLabel(this);
     image_label->setGeometry(0, 0, 640, 480);
     // don't use debug_window not initalized yet
