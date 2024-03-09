@@ -310,4 +310,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     RGB_Shift *rgb_s = new RGB_Shift ();
     new_filter_list.push_back({"New_RGB_Shift", rgb_s});
 
+    CropEdges *crop_e = new CropEdges();
+    new_filter_list.push_back({"New_CropEdges", crop_e});
+
 }
