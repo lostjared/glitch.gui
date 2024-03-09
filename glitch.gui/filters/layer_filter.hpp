@@ -2571,7 +2571,7 @@ public:
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
                 int shifted_val = i + value;
                 if (shifted_val >= frame.cols) 
-                    shifted_val -= frame.cols;
+                    continue;
                 cv::Vec3b pix = frame_copy.at<cv::Vec3b>(z, shifted_val);
                 pixel[index] = pix[index];
             }
