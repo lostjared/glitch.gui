@@ -2554,6 +2554,43 @@ private:
     KnobGrow grow_v;
 };
 
+class RGB_Shift : public FilterFunc {
+public:
+    RGB_Shift() : gen{rd()}, dist(30, 40) {}
+    void init() override { 
+        shift.initValues(dist(gen), 1.0, 30.0, 40.0);
+    }
+
+    void proc(cv::Mat &frame) override {
+        if(frame.cols < 240)
+            return;
+        cv::Mat frame_copy = frame.clone();
+        double value = shift.value();
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                int shifted_val = i + value;
+                if (shifted_val >= frame.cols) 
+                    shifted_val -= frame.cols;
+                cv::Vec3b pix = frame_copy.at<cv::Vec3b>(z, shifted_val);
+                pixel[index] = pix[index];
+            }
+        }
+        if(++index > 2) 
+            index = 0;
+    }
+    void clear() override {
+        init();
+    }
+private:
+    Knob shift;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
+    int index = 0;
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

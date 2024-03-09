@@ -306,4 +306,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     fun_mirror_v2->setEffect(1);
     fun_mirror_v2->setGrowType(1);
     new_filter_list.push_back({"New_FunhouseMirror_Vertical_Grow", fun_mirror_v2});
+    
+    RGB_Shift *rgb_s = new RGB_Shift ();
+    new_filter_list.push_back({"New_RGB_Shift", rgb_s});
+
 }
