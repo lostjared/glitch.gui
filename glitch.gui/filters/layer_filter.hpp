@@ -5,6 +5,7 @@
 #include "../new_filter.hpp"
 #include "../layer.hpp"
 #include "../lfo.hpp"
+#include "../cv_fractal.hpp"
 #include<random>
 #include<chrono>
 #include<cmath>
@@ -2607,7 +2608,26 @@ public:
         }
     }
     void clear() override {}
+};
 
+class Fractal : public FilterFunc {
+public:
+    Fractal() = default;
+    void init() override {
+        zoom_knob.initValues(1.0, 1.0, 1.0, 2000.0);
+        fractal.initParameters(-0.743643887032151,0.142625924205330,1.0,100,4);
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat frac_frame;
+        frac_frame.create(frame.size(), CV_8UC3);
+        fractal.setZoom(zoom_knob.nextValue());
+        fractal.draw(frac_frame);
+        cv::addWeighted(frame, 0.5, frac_frame, 0.5, 0, frame);
+    }  
+    void clear() override {}
+private:
+    cv_fract::CV_Fractal fractal;
+    Knob zoom_knob;
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);

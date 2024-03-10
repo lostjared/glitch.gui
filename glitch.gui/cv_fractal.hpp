@@ -18,9 +18,12 @@ namespace cv_fract {
     }
     class CV_Fractal {
     public:
-        CV_Fractal() = default;    
+        CV_Fractal() {
+            loadPalette();
+        }
         CV_Fractal(double center_real_, double center_imag_, double zoom, int iterations_, int thread_count_) {
             initParameters(center_real_, center_imag_, zoom, iterations_, thread_count_);
+            loadPalette();
         }
         void initParameters(double center_real_, double center_imag_, double zoom, int iterations_, int thread_count_) {
             center_real = center_real_;
@@ -32,8 +35,12 @@ namespace cv_fract {
                 MAX_ITER = iterations;
             else 
                 std::cerr << "Error invalid iterations\n";
-            loadPalette();
         }
+
+        void setZoom(double z) {
+            zoom_ = z;
+        }
+
         void draw(cv::Mat &frame) {
              double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
              double range_real = 4.0 / zoom_; 
@@ -43,6 +50,16 @@ namespace cv_fract {
              double im_start = center_imag - range_imag / 2;
              double im_end = center_imag + range_imag / 2;
              DrawFractal(frame, start, end, im_start, im_end, tc);
+        }
+        void draw_s(cv::Mat &frame) {
+             double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
+             double range_real = 4.0 / zoom_; 
+             double range_imag = range_real / aspect_ratio;
+             double start = center_real - range_real / 2;
+             double end = center_real + range_real / 2;
+             double im_start = center_imag - range_imag / 2;
+             double im_end = center_imag + range_imag / 2;
+             DrawFractal(frame, start, end, im_start, im_end);
         }
     private:
         double center_real, center_imag;
@@ -95,6 +112,26 @@ namespace cv_fract {
             };
             UseMultipleThreads(frame, thread_count, callback);
         }  
+
+        void DrawFractal(cv::Mat &frame, double start, double end, double im_start, double im_end) {
+            int width=frame.cols, height=frame.rows;
+            for(int z = 0; z <  height; ++z) {
+                for(int i = 0; i < width; ++i) {
+                    cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                    double w = (double(i)/double(width));
+                    double h = (double(z)/double(height));
+                    std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
+                    int n = mandelbrot(c);
+                    if (n == MAX_ITER) {
+                        pixel[0] = 0;
+                         pixel[1] = 0;
+                         pixel[2] = 0;
+                     } else {
+                        pixel = color_palette[n];
+                    }
+               }
+            }
+        }
     };   
 }
 
