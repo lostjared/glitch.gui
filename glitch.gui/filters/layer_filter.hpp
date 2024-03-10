@@ -2460,10 +2460,14 @@ private:
 class FishEyeLens : public FilterFunc {
 public:
     FishEyeLens() = default;
-    void init() override { 
-        distortion_.initValues(0.0001, 0.01, 0.0001, 2.0);
+    FishEyeLens(double d) {
+        distortion_.initValues(0.0001,d, 0.0001, 2.0);
     }
-
+    void setFixed(double d) {
+        distortion_.initValues(d, 0.001, 0.0001, 2.0);
+        fixed_ = true;
+    }
+    void init() override {}
     void proc(cv::Mat &frame) override {
         frame = fisheyeEffect(frame);
     }
@@ -2476,7 +2480,7 @@ private:
         double centerX = inputImage.cols / 2.0;
         double centerY = inputImage.rows / 2.0;
         double radius = std::min(centerX, centerY);
-        double distortion = distortion_.nextValue();
+        double distortion = (fixed_ == true) ? distortion_.value() : distortion_.nextValue();
         for (int y = 0; y < inputImage.rows; y++) {
             for (int x = 0; x < inputImage.cols; x++) {
                 double deltaX = (x - centerX) / radius;
@@ -2490,8 +2494,8 @@ private:
         }
         return outputImage;
     }
-    
     Knob distortion_; 
+    bool fixed_ = false;
 };
 
 class FunhouseMirror : public FilterFunc {
