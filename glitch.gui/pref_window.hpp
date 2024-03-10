@@ -23,15 +23,14 @@ public:
     bool savePath() const;
     QString custom_path;
     bool loaded = false;
-
 public slots:
     void pref_Save();
     void pref_Cancel();
     void pref_setPath();
-
+   
 private:
     MainWindow *main_window;
-
+    QLineEdit *frac_real, *frac_imag, *frac_zoom, *frac_iter;
 };
 
 #endif

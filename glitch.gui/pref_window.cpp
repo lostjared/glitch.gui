@@ -38,7 +38,24 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     if(fname != "") {
         custom_path_lbl->setText(fname);
         loaded = true;
-    } 
+    }
+    QLabel *lbl_1 = new QLabel(tr("Fractal Real: "), this);
+    lbl_1->setGeometry(25, 100, 100, 25);
+    frac_real = new QLineEdit(this);
+    frac_real->setGeometry(125, 100, 100, 25);
+    QLabel *lbl_2 = new QLabel(tr("Fractal Imag: "), this);
+    lbl_2->setGeometry(250, 100, 100, 25);
+    frac_imag = new QLineEdit(this);
+    frac_imag->setGeometry(400, 100, 100, 25);
+    QLabel *lbl_3 =new QLabel(tr("Fractal Zoom: "), this);
+    lbl_3->setGeometry(25, 130, 100, 25);
+    frac_zoom = new QLineEdit(this);
+    frac_zoom->setGeometry(125, 130, 100, 25);
+    QLabel *lbl_4 = new QLabel(tr("Iterations: "), this);
+    lbl_4->setGeometry(250, 130, 100, 25);
+    frac_iter = new QLineEdit(this);
+    frac_iter->setGeometry(400, 130, 100,25);
+
 }
 
 void PrefWindow::setMainWindow(MainWindow *m) {
