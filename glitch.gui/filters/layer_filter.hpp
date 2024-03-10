@@ -2617,6 +2617,12 @@ public:
         zoom_knob.initValues(1.0, 100.0, 1.0, 25000.0);
         fractal.initParameters(-0.743643887032151,0.142625924205330,1.0,120,4);
     }
+
+    void initValues(double z_real, double z_imag, double z_zoom, int iter, double speed, double z_max) {
+        fractal.initParameters(z_real, z_imag, z_zoom, iter, 4);
+        zoom_knob.initValues(z_zoom, speed, 1.0, z_max);
+    }
+
     void resize(bool resize_frame) {
         resize_ = resize_frame;
     }

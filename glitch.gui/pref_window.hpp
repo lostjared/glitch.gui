@@ -30,7 +30,7 @@ public slots:
    
 private:
     MainWindow *main_window;
-    QLineEdit *frac_real, *frac_imag, *frac_zoom, *frac_iter;
+    QLineEdit *frac_real, *frac_imag, *frac_zoom, *frac_iter, *frac_speed, *frac_max;
 };
 
 #endif

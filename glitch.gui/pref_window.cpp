@@ -3,6 +3,8 @@
 #include"main_window.hpp"
 #include"cat_vec.hpp"
 #include"custom_edit.hpp"
+#include"new_filter.hpp"
+#include"filters/layer_filter.hpp"
 #include<QFileDialog>
 
 PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
@@ -55,6 +57,15 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     lbl_4->setGeometry(250, 130, 100, 25);
     frac_iter = new QLineEdit(this);
     frac_iter->setGeometry(400, 130, 100,25);
+    QLabel *lbl_5 = new QLabel(tr("Zoom Speed"), this);
+    lbl_5->setGeometry(25, 160, 100, 25);
+    frac_speed = new QLineEdit(this);
+    frac_speed->setGeometry(125, 160, 100, 25);
+    QLabel *lbl_6 = new QLabel(tr("Max Zoom"), this);
+    lbl_6->setGeometry(250, 160, 100, 25);
+    frac_max = new QLineEdit(this);
+    frac_max->setGeometry(400, 160, 100, 25);
+
 
     frac_real->setText("-0.743643887032151");
     frac_real->setToolTip(tr("Center Real"));
@@ -64,7 +75,10 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     frac_zoom->setToolTip(tr("Fractal Zoom"));
     frac_iter->setText("100");
     frac_iter->setToolTip(tr("Fractal Iterations"));
-
+    frac_speed->setText("100");
+    frac_speed->setToolTip(tr("Speed of Zoom for animation"));
+    frac_max->setText("250000");
+    frac_max->setToolTip(tr("Max depth of zoom"));
 }
 
 void PrefWindow::setMainWindow(MainWindow *m) {
@@ -72,7 +86,30 @@ void PrefWindow::setMainWindow(MainWindow *m) {
 }
 
 void PrefWindow::pref_Save() {
-    settings.setValue("chk_path", chk_path->isChecked());   
+    settings.setValue("chk_path", chk_path->isChecked());  
+    auto findIn = [&](const std::string &n) -> int {
+        for(size_t i = 0; i < new_filter_list.size(); ++i) {
+            if(new_filter_list[i].name == n)
+                return i;
+        }
+        return -1;
+    };
+    int filter_f = findIn("New_Low_Fractal");
+    if(filter_f != -1) {
+        Fractal *f = dynamic_cast<Fractal *>(new_filter_list[filter_f].filter);
+        double z_real = atof(frac_real->text().toStdString().c_str());
+        double z_imag = atof(frac_imag->text().toStdString().c_str());
+        double z_zoom = atof(frac_zoom->text().toStdString().c_str());
+        int iter = frac_iter->text().toInt();
+        double z_speed = atof(frac_speed->text().toStdString().c_str());
+        double z_max = atof(frac_max->text().toStdString().c_str());
+        f->initValues(z_real, z_imag, z_zoom, iter, z_speed, z_max);
+        filter_f = findIn("New_SuperSlow_Fractal");
+        if(filter_f != -1) {
+            f = dynamic_cast<Fractal *>(new_filter_list[filter_f].filter);
+            f->initValues(z_real, z_imag, z_zoom, iter, z_speed, z_max);
+        }
+    }
     hide(); 
     main_window->debug_window->Log("gui: Preferences saved.\n");
 }
