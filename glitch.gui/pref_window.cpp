@@ -56,6 +56,15 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     frac_iter = new QLineEdit(this);
     frac_iter->setGeometry(400, 130, 100,25);
 
+    frac_real->setText("-0.743643887032151");
+    frac_real->setToolTip(tr("Center Real"));
+    frac_imag->setText("0.142625924205330");
+    frac_imag->setToolTip(tr("Center Imag:"));
+    frac_zoom->setText("1");
+    frac_zoom->setToolTip(tr("Fractal Zoom"));
+    frac_iter->setText("100");
+    frac_iter->setToolTip(tr("Fractal Iterations"));
+
 }
 
 void PrefWindow::setMainWindow(MainWindow *m) {
