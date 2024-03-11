@@ -48,6 +48,7 @@ MainWindow::~MainWindow() {
     release_plugins(plugins);
     std::cout << "Releasing New Filter List of Objects..\n";
     release_filter_list();
+    std::cout << "glitch-gui: Shutdown Successful... Exiting \n";
 }
 #ifdef __APPLE__
 extern std::string current_path;

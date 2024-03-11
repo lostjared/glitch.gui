@@ -40,5 +40,7 @@ int main(int argc, char **argv) {
 #ifdef _WIN32
     SetConsoleMode(hInput, prev_mode);
 #endif
+    std::cout << "glitch-gui: Shutdown Successful... Exiting \n";
+
     return 0;
 }
