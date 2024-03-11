@@ -295,8 +295,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     FishEyeLens *fish_eye_f = new FishEyeLens(0.5);
     fish_eye_f->setFixed(0.5);
     new_filter_list.push_back({"New_FishEye_Lens_Fixed", fish_eye_f});
-
-    
+ 
     FunhouseMirror *fun_mirror_h = new FunhouseMirror();
     fun_mirror_h->setEffect(0);
     new_filter_list.push_back({"New_FunhouseMirror_Horizontal", fun_mirror_h});
@@ -304,6 +303,17 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     FunhouseMirror *fun_mirror_v = new FunhouseMirror();
     fun_mirror_v->setEffect(1);
     new_filter_list.push_back({"New_FunhouseMirror_Vertical", fun_mirror_v});
+
+   FunhouseMirror *fun_mirror_h1 = new FunhouseMirror();
+    fun_mirror_h1->setEffect(0);
+    fun_mirror_h1->setSpeed(0.001);
+    new_filter_list.push_back({"New_FunhouseMirror_Horizontal_Slow", fun_mirror_h1});
+
+    FunhouseMirror *fun_mirror_v1 = new FunhouseMirror();
+    fun_mirror_v1->setEffect(1);
+    fun_mirror_v1->setSpeed(0.001);
+    new_filter_list.push_back({"New_FunhouseMirror_Vertical_Slow", fun_mirror_v1});
+
 
     FunhouseMirror *fun_mirror_h2 = new FunhouseMirror();
     fun_mirror_h2->setEffect(0);

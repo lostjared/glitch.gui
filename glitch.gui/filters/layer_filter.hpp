@@ -2500,13 +2500,13 @@ private:
 
 class FunhouseMirror : public FilterFunc {
 public:
-    FunhouseMirror() {}
-    void init() override { 
+    FunhouseMirror() {
         frequency.initValues(2.0, 0.2, 2.0, 10.0);
         amp.initValues(20, 1, 20, 40);
         grow_v.initValues(2.0, 0.2, 2.0, 10.0);
         grow_v.setMaxGrow(15.0);
     }
+    void init() override {}
     void proc(cv::Mat &frame) override { 
         cv::Mat output;
         switch(effect) {
@@ -2522,6 +2522,12 @@ public:
     void setEffect(int e) { effect = e; }
     void setGrowType(int t) { grow_type = t; }
     void clear() override {}
+    void setSpeed(double d) {
+        frequency.initValues(2.0, d, 2.0, 10.0);
+        amp.initValues(20, 1, 20, 40);
+        grow_v.initValues(2.0, d, 2.0, 10.0);
+        grow_v.setMaxGrow(15.0);
+    }
 private:
     void mirrorEffectHorizontal(cv::Mat &src, cv::Mat &dst) {
         if (src.empty()) {
