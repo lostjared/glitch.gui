@@ -336,5 +336,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     Fractal *frac_r = new Fractal();
     frac_r->resize(true);
-    new_filter_list.push_back({"New_Low_Fractal", frac_r});   
+    new_filter_list.push_back({"New_Low_Fractal", frac_r});  
+
+    PopArt *pop = new PopArt();
+    new_filter_list.push_back({"New_PopArt", pop});
 }

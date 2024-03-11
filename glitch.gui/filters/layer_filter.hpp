@@ -2658,6 +2658,33 @@ private:
     bool resize_ = false;
 };
 
+class PopArt : public FilterFunc {
+public:
+    PopArt() {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        frame = popArtEffect(frame);
+    }
+    void clear() override {}
+private:
+    cv::Mat popArtEffect(const cv::Mat& src) {
+        cv::Mat img, dst, colorTransformed;
+        cv::cvtColor(src, img, cv::COLOR_BGR2HSV);
+        img.convertTo(img, CV_32F); 
+        const int div = 64;
+        img = img / div;
+        img.convertTo(img, CV_8U); 
+        img = img * div;
+        std::vector<cv::Mat> hsvChannels(3);
+        cv::split(img, hsvChannels); 
+        hsvChannels[1] = hsvChannels[1] * 1.5;
+        cv::min(hsvChannels[1], 255, hsvChannels[1]);
+        cv::merge(hsvChannels, colorTransformed);
+        cv::cvtColor(colorTransformed, dst, cv::COLOR_HSV2BGR);
+        return dst;
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
