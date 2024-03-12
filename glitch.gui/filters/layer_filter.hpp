@@ -2722,9 +2722,9 @@ private:
 class Ripple : public FilterFunc {
 public:
     Ripple(float wavelength = 20.0f, float amplitude = 10.0f, float phaseShift = 0.0f) {
-        wave_length.initValues(wavelength, 0.1, 1.0, 30.0);
-        amp.initValues(amplitude, 0.1, 1.0, 30.0);
-        phase_shift.initValues(phaseShift, 0.1, 0.0f, 3.0);
+        wave_length.initValues(wavelength, 0.1f, 1.0f, 30.0f);
+        amp.initValues(amplitude, 0.1f, 1.0f, 30.0f);
+        phase_shift.initValues(phaseShift, 0.1f, 0.0f, 3.0f);
     }
     void init() override {}
     void proc(cv::Mat &frame) override {
