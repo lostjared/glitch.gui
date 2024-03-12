@@ -2801,6 +2801,34 @@ private:
     }   
 };
 
+class PixelSort_RGB : public FilterFunc {
+public:
+    PixelSort_RGB() {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        pixelSort(frame);
+    }
+    void clear() override {}
+private:
+    void pixelSort(cv::Mat &frame) {
+        for(int z = 0; z < frame.rows; ++z) {
+            std::vector<cv::Vec3b> pixels;
+            for(int i = 0; i < frame.cols; ++i) {
+                pixels.push_back(frame.at<cv::Vec3b>(z, i));
+            }
+            std::sort(pixels.begin(), pixels.end(), [](cv::Vec3b &v1, cv::Vec3b &v2) {
+                int len1 = v1[0] + v1[1] + v1[2];
+                int len2 = v2[0] + v2[1] + v2[2];
+                return len1 < len2;
+            });
+            for(int i = 0; i < frame.cols; ++i) {
+                frame.at<cv::Vec3b>(z, i) = pixels[i];
+            }            
+        }
+    }
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

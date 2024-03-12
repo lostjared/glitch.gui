@@ -355,4 +355,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     VanGoghEffect *vge = new VanGoghEffect();
     new_filter_list.push_back({"New_VanGoghEffect", vge});
 
+    PixelSort_RGB *p_rgb = new PixelSort_RGB();
+    new_filter_list.push_back({"New_PixelSort_RGB", p_rgb});
+
 }
