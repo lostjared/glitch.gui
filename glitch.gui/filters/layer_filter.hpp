@@ -2869,6 +2869,46 @@ private:
     }
 };
 
+class TwirlEffect : public FilterFunc {
+public:
+    TwirlEffect(cv::Point2f center = cv::Point2f(-1, -1)) : center(center) {
+        strength_x.initValues(1.0, 0.1, 0.1, 10.0);
+    }
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyTwirlEffect(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    Knob strength_x; 
+    cv::Point2f center;
+
+    void applyTwirlEffect(cv::Mat &frame) {
+        float strength = strength_x.nextValue();
+        if (center.x == -1 && center.y == -1) {
+            center = cv::Point2f(frame.cols / 2.0f, frame.rows / 2.0f);
+        }
+        cv::Mat result = frame.clone();
+        for (int y = 0; y < frame.rows; y++) {
+            for (int x = 0; x < frame.cols; x++) {
+                cv::Point2f p(x, y);
+                cv::Point2f delta = p - center;
+                float radius = cv::sqrt(delta.x*delta.x + delta.y*delta.y);
+                float angle = std::atan2(delta.y, delta.x) + strength * (radius / std::max(frame.cols, frame.rows));
+                int srcX = cv::saturate_cast<int>(center.x + radius * std::cos(angle));
+                int srcY = cv::saturate_cast<int>(center.y + radius * std::sin(angle));
+                if (srcX >= 0 && srcX < frame.cols && srcY >= 0 && srcY < frame.rows) {
+                    result.at<cv::Vec3b>(y, x) = frame.at<cv::Vec3b>(srcY, srcX);
+                }
+            }
+        }
+        frame = result;
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

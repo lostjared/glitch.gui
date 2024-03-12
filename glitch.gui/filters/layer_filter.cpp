@@ -360,4 +360,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     KaleidoscopeEffect *kale = new KaleidoscopeEffect();
     new_filter_list.push_back({"New_Kaleidoscope", kale});
+
+   TwirlEffect *twirl_e = new TwirlEffect();
+    new_filter_list.push_back({"New_TwirlEffect", twirl_e});
 }
