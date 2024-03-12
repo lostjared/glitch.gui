@@ -2760,6 +2760,47 @@ private:
     }
 };
 
+class VanGoghEffect : public FilterFunc {
+public:
+    VanGoghEffect() {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            vanGoghEffect(frame);
+            starryNightColors(frame);
+        }
+    }
+    void clear() override {}
+private:
+    void vanGoghEffect(cv::Mat &frame) {
+        cv::Mat img, edges, edgeEnhanced;
+        cv::bilateralFilter(frame, img, 9, 75, 75);
+        cv::Canny(img, edges, 100, 200);
+        cv::cvtColor(edges, edges, cv::COLOR_GRAY2BGR);
+        edgeEnhanced = img - edges;
+        frame = edgeEnhanced;
+    }
+    void starryNightColors(cv::Mat &frame) {
+        cv::Mat hsvImage;
+        cv::cvtColor(frame, hsvImage, cv::COLOR_BGR2HSV);
+        for (int y = 0; y < hsvImage.rows; ++y) {
+            for (int x = 0; x < hsvImage.cols; ++x) {
+                cv::Vec3b &pixel = hsvImage.at<cv::Vec3b>(y, x);
+                if (pixel[0] >= 90 && pixel[0] <= 140) { 
+                    pixel[1] = cv::saturate_cast<uchar>(pixel[1] * 1.5); 
+                    pixel[2] = cv::saturate_cast<uchar>(std::min(255.0, pixel[2] * 1.1));
+                }
+                if (pixel[0] >= 20 && pixel[0] <= 30) { 
+                    pixel[1] = cv::saturate_cast<uchar>(pixel[1] * 1.5); 
+                    pixel[2] = cv::saturate_cast<uchar>(std::min(255.0, pixel[2] * 1.2)); 
+                }
+            }
+        }
+        cv::cvtColor(hsvImage, frame, cv::COLOR_HSV2BGR);
+        frame.convertTo(frame, -1, 1.3, 15); 
+    }   
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
