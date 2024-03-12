@@ -2687,7 +2687,11 @@ private:
 class SlitScan : public FilterFunc {
 public:
     SlitScan(int slitHeight = 1, int outputWidthx = 640, int outputHeightx= 480) : slitHeight(slitHeight), outputWidth(outputWidthx), outputHeight(outputHeightx), currentPosition(0) {}
-    void init() override {}
+    void init() override {
+        currentPosition = 0;
+        if(!slitScanImg.empty())
+            slitScanImg.release();
+    }
     void proc(cv::Mat& frame) override {
         if (frame.empty()) return;
         cv::Size orig = frame.size();
@@ -2706,7 +2710,7 @@ public:
         slitScanImg.copyTo(frame);
         cv::resize(frame, frame, orig);
     }
-    void clear() override {}
+    void clear() override { init(); }
 private:
     int slitHeight;
     int outputWidth;
