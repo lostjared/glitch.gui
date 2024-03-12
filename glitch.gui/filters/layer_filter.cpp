@@ -358,4 +358,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     PixelSort_RGB *p_rgb = new PixelSort_RGB();
     new_filter_list.push_back({"New_PixelSort_RGB", p_rgb});
 
+    KaleidoscopeEffect *kale = new KaleidoscopeEffect();
+    new_filter_list.push_back({"New_Kaleidoscope", kale});
 }

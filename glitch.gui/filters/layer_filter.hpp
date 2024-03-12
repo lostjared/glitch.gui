@@ -2830,6 +2830,44 @@ private:
     }
 };
 
+class KaleidoscopeEffect : public FilterFunc {
+public:
+    KaleidoscopeEffect(int segments = 8) : segments(segments) {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyKaleidoscopeEffect(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    int segments; 
+    void applyKaleidoscopeEffect(cv::Mat &frame) {
+        cv::Mat result = frame.clone();
+        double angle = 360.0 / segments;
+        cv::Point center(frame.cols/2, frame.rows/2 );
+        int radius = std::min(center.x, center.y);
+        cv::Mat mask = cv::Mat::zeros(frame.size(), CV_8U);
+        std::vector<cv::Point> polyPoints;
+        polyPoints.push_back(center);
+        polyPoints.push_back(cv::Point(center.x + radius * cos((-angle/2) * CV_PI / 180.0),
+                                       center.y + radius * sin((-angle/2) * CV_PI / 180.0)));
+        polyPoints.push_back(cv::Point(center.x + radius * cos((angle/2) * CV_PI / 180.0),
+                                       center.y + radius * sin((angle/2) * CV_PI / 180.0)));
+
+        cv::fillConvexPoly(mask, polyPoints, cv::Scalar(255));
+        for (int i = 0; i < segments; ++i) {
+            cv::Mat rotated, rotatedMask;
+            float currentAngle = (angle * i) + (angle / 2); 
+            cv::Mat rotationMatrix = cv::getRotationMatrix2D(center, currentAngle, 1.0);
+            cv::warpAffine(frame, rotated, rotationMatrix, frame.size());
+            cv::warpAffine(mask, rotatedMask, rotationMatrix, mask.size());
+            rotated.copyTo(result, rotatedMask);
+        }
+        frame = result;
+    }
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
