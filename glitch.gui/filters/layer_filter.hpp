@@ -2719,6 +2719,47 @@ private:
     cv::Mat slitScanImg; 
 };
 
+class Ripple : public FilterFunc {
+public:
+    Ripple(float wavelength = 20.0f, float amplitude = 10.0f, float phaseShift = 0.0f) {
+        wave_length.initValues(wavelength, 0.1, 1.0, 30.0);
+        amp.initValues(amplitude, 0.1, 1.0, 30.0);
+        phase_shift.initValues(phaseShift, 0.1, 0.0f, 3.0);
+    }
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            ripple(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    KnobT<float> wave_length;
+    KnobT<float> amp;
+    KnobT<float> phase_shift;
+
+    void ripple(cv::Mat &frame) {
+        float wavelength = wave_length.nextValue();
+        float amplitude = amp.nextValue();
+        float phaseShift = phase_shift.nextValue();
+        cv::Mat dst = frame.clone();
+        int rows = frame.rows;
+        int cols = frame.cols;
+        for (int y = 0; y < rows; ++y) {
+            for (int x = 0; x < cols; ++x) {
+                float newX = x + amplitude * std::sin(2.0 * CV_PI * y / wavelength + phaseShift);
+                float newY = y + amplitude * std::sin(2.0 * CV_PI * x / wavelength + phaseShift);
+                if (newX >= 0 && newX < cols && newY >= 0 && newY < rows) {
+                    cv::Vec3b pixelValue = frame.at<cv::Vec3b>(cv::Point(newX, newY));
+                    dst.at<cv::Vec3b>(cv::Point(x, y)) = pixelValue;
+                }
+            }
+        }
+        frame = std::move(dst);
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

@@ -349,4 +349,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     SlitScan *scan2 = new SlitScan(2, 1280, 720);
     new_filter_list.push_back({"New_SlitScan_1280", scan2});
 
+    Ripple *rip = new Ripple();
+    new_filter_list.push_back({"New_Ripple", rip});
+
 }
