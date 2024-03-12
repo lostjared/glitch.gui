@@ -417,7 +417,9 @@ MainWindow::MainWindow()  {
     QTextStream ps(&plug_out);
     ps << "gui: Loaded " << plugins.size() << " plugin(s).\n";;
     debug_window->Log(plug_out);
-
+    plug_out = "";
+    ps << "gui: Loaded " << count_filters() << " total filter(s).\n";
+    debug_window->Log(plug_out);
     bar_position = new QProgressBar(this);
     bar_position->setGeometry(10, 355, width()-20, 20);
     bar_position->show();

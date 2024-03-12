@@ -86,6 +86,7 @@ void save_playlist(std::string filename);
 void clear_custom();
 bool custom_exists(const std::string &s);
 void custom_setup_map(bool clear);
+int count_filters();
 
 
 #endif

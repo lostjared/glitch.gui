@@ -1,6 +1,7 @@
 #include"cat_vec.hpp"
 #include"acidcam/ac.h"
-
+#include "new_filter.hpp"
+#include"plugin_program.hpp"
 #include<algorithm>
 #include<fstream>
 
@@ -717,6 +718,14 @@ std::vector<custom_filter> cat_custom;
 std::unordered_map<std::string, int> cat_custom_index;
 std::unordered_map<std::string, int> cat_playlist_index;
 
+int count_filters() {
+    int cnt = 0;
+    cnt += vec_cat[0]->size();
+    cnt += new_filter_list.size();
+    cnt += plugins.size();
+    cnt += cat_custom.size();
+    return cnt;
+}
 
 void load_custom(std::string filename) {
     std::fstream file;
