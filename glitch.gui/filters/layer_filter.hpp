@@ -2684,6 +2684,37 @@ private:
     }
 };
 
+class SlitScan : public FilterFunc {
+public:
+    SlitScan(int slitHeight = 1, int outputWidthx = 640, int outputHeightx= 480) : slitHeight(slitHeight), outputWidth(outputWidthx), outputHeight(outputHeightx), currentPosition(0) {}
+    void init() override {}
+    void proc(cv::Mat& frame) override {
+        if (frame.empty()) return;
+        cv::Size orig = frame.size();
+        cv::resize(frame, frame, cv::Size(outputWidth, outputHeight));
+        if(slitScanImg.empty()) {
+            slitScanImg = frame.clone();
+        }
+        cv::Rect roi(0, currentPosition, frame.cols, slitHeight);
+        if (currentPosition + slitHeight <= frame.rows) { 
+            cv::Mat slit = frame(roi);
+            slit.copyTo(slitScanImg(roi));
+            currentPosition += slitHeight;
+        } else {
+            currentPosition = 0; 
+        }
+        slitScanImg.copyTo(frame);
+        cv::resize(frame, frame, orig);
+    }
+    void clear() override {}
+private:
+    int slitHeight;
+    int outputWidth;
+    int outputHeight;
+    int currentPosition;
+    cv::Mat slitScanImg; 
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

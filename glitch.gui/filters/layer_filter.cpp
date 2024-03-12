@@ -343,4 +343,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     PopArt *pop1 = new PopArt(3.0, 128);
     new_filter_list.push_back({"New_PopArt_Strong", pop1});
+
+    SlitScan *scan1 = new SlitScan();
+    new_filter_list.push_back({"New_SlitScan_640", scan1});
+    SlitScan *scan2 = new SlitScan(2, 1280, 720);
+    new_filter_list.push_back({"New_SlitScan_1280", scan2});
+
 }
