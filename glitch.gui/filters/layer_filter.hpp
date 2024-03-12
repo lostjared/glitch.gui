@@ -2660,27 +2660,26 @@ private:
 
 class PopArt : public FilterFunc {
 public:
-    PopArt() {}
+    PopArt(float sat_mult = 1.5f, int quant_div = 64) : sat_mult(sat_mult), quant_div(quant_div) {}
     void init() override {}
-    void proc(cv::Mat &frame) override {
-        frame = popArtEffect(frame);
+    void proc(cv::Mat& frame) override {
+        if (!frame.empty()) {
+            frame = popArtEffect(frame);
+        }
     }
     void clear() override {}
 private:
+    float sat_mult;
+    int quant_div;
     cv::Mat popArtEffect(const cv::Mat& src) {
-        cv::Mat img, dst, colorTransformed;
+        cv::Mat img, dst, color_tf;
         cv::cvtColor(src, img, cv::COLOR_BGR2HSV);
-        img.convertTo(img, CV_32F); 
-        const int div = 64;
-        img = img / div;
-        img.convertTo(img, CV_8U); 
-        img = img * div;
-        std::vector<cv::Mat> hsvChannels(3);
-        cv::split(img, hsvChannels); 
-        hsvChannels[1] = hsvChannels[1] * 1.5;
-        cv::min(hsvChannels[1], 255, hsvChannels[1]);
-        cv::merge(hsvChannels, colorTransformed);
-        cv::cvtColor(colorTransformed, dst, cv::COLOR_HSV2BGR);
+        img = img / quant_div * quant_div + quant_div / 2;
+        std::vector<cv::Mat> hsv_ch(3);
+        cv::split(img, hsv_ch);
+        hsv_ch[1] = cv::min(hsv_ch[1] * sat_mult, 255.0f);
+        cv::merge(hsv_ch, color_tf);
+        cv::cvtColor(color_tf, dst, cv::COLOR_HSV2BGR);
         return dst;
     }
 };
