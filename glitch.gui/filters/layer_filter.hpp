@@ -1,3 +1,5 @@
+/* some of the later filters in this file where written with the help of Ai */
+
 #ifndef _LAYER_FILTER_H_
 #define _LAYER_FILTER_H_
 
