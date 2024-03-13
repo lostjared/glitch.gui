@@ -2872,7 +2872,7 @@ private:
 class TwirlEffect : public FilterFunc {
 public:
     TwirlEffect(cv::Point2f center = cv::Point2f(-1, -1)) : center(center) {
-        strength_x.initValues(1.0, 0.1, 0.1, 10.0);
+        strength_x.initValues(1.0, 0.1, -30.0, 30.0);
     }
     void init() override {}
     void proc(cv::Mat &frame) override {
