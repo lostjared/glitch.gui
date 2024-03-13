@@ -33,9 +33,7 @@ void Plug_CallFilterClear(std::string name);
 
 template<typename T>
 void setvec(T &dst, const T &src) {
-    dst[0] = src[0];
-    dst[1] = src[1];
-    dst[2] = src[2];
+    dst = src;
 }
 
 #endif
