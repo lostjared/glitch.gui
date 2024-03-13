@@ -2912,7 +2912,7 @@ private:
 class InfiniteZoom : public FilterFunc {
 public:
     InfiniteZoom()  {
-            zoom_f.initValues(1.0, 0.01, 1.0, 2.0);
+            zoom_f.initValues(1.0f, 0.01f, 1.0f, 2.0f);
     }
     void init() override {}
     void proc(cv::Mat &frame) override {
