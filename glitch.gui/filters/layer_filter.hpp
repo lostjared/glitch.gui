@@ -2909,6 +2909,43 @@ private:
     }
 };
 
+class InfiniteZoom : public FilterFunc {
+public:
+    InfiniteZoom()  {
+            zoom_f.initValues(1.0, 0.01, 1.0, 2.0);
+    }
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (frame.empty()) return;
+        applyInfiniteZoom(frame);
+    }
+    void clear() override {}
+
+private:
+    float zoomFactor;
+    KnobT<float> zoom_f;
+
+    void applyInfiniteZoom(cv::Mat &frame) {
+        cv::Mat originalFrame = frame.clone();
+        cv::Mat resizedFrame, croppedFrame;
+        zoomFactor = zoom_f.nextValue();        
+        cv::Size newSize(static_cast<int>(originalFrame.cols / zoomFactor), static_cast<int>(originalFrame.rows / zoomFactor));
+        cv::resize(originalFrame, resizedFrame, newSize);
+        int offsetX = (resizedFrame.cols - originalFrame.cols) / 2;
+        int offsetY = (resizedFrame.rows - originalFrame.rows) / 2;
+        offsetX = std::max(offsetX, 0);
+        offsetY = std::max(offsetY, 0);
+        cv::Rect roi(offsetX, offsetY, std::min(originalFrame.cols, resizedFrame.cols), std::min(originalFrame.rows, resizedFrame.rows));
+        croppedFrame = resizedFrame(roi);
+        if (croppedFrame.size() != originalFrame.size()) {
+            croppedFrame.copyTo(originalFrame(cv::Rect(0, 0, croppedFrame.cols, croppedFrame.rows)));
+        } else {
+            croppedFrame.copyTo(originalFrame);
+        }
+        cv::addWeighted(frame, 0.5, originalFrame, 0.5, 0.0, frame);
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 

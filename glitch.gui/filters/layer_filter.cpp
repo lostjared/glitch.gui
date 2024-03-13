@@ -363,4 +363,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
    TwirlEffect *twirl_e = new TwirlEffect();
     new_filter_list.push_back({"New_TwirlEffect", twirl_e});
+
+    InfiniteZoom *inf_z = new InfiniteZoom();
+    new_filter_list.push_back({"New_Infinite_Zoom", inf_z});
 }
