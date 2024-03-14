@@ -42,23 +42,23 @@ namespace cv_fract {
         }
 
         void draw(cv::Mat &frame) {
-             double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
-             double range_real = 4.0 / zoom_; 
-             double range_imag = range_real / aspect_ratio;
-             double start = center_real - range_real / 2;
-             double end = center_real + range_real / 2;
-             double im_start = center_imag - range_imag / 2;
-             double im_end = center_imag + range_imag / 2;
+             const double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
+             const double range_real = 4.0 / zoom_; 
+             const double range_imag = range_real / aspect_ratio;
+             const double start = center_real - range_real / 2;
+             const double end = center_real + range_real / 2;
+             const double im_start = center_imag - range_imag / 2;
+             const double im_end = center_imag + range_imag / 2;
              DrawFractal(frame, start, end, im_start, im_end, tc);
         }
         void draw_s(cv::Mat &frame) {
-             double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
-             double range_real = 4.0 / zoom_; 
-             double range_imag = range_real / aspect_ratio;
-             double start = center_real - range_real / 2;
-             double end = center_real + range_real / 2;
-             double im_start = center_imag - range_imag / 2;
-             double im_end = center_imag + range_imag / 2;
+             const double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
+             const double range_real = 4.0 / zoom_; 
+             const double range_imag = range_real / aspect_ratio;
+             const double start = center_real - range_real / 2;
+             const double end = center_real + range_real / 2;
+             const double im_start = center_imag - range_imag / 2;
+             const double im_end = center_imag + range_imag / 2;
              DrawFractal(frame, start, end, im_start, im_end);
         }
     private:
@@ -89,7 +89,7 @@ namespace cv_fract {
             return n;
         }
 
-        void drawPixel(int width, int height, cv::Vec3b &pixel, int i, int z, double start, double end, double im_start, double im_end) {
+        void drawPixel(const int &width, const int &height, cv::Vec3b &pixel, const int &i, const int &z, const double &start, const double &end, const double &im_start, const double &im_end) {
             double w = (double(i)/double(width));
             double h = (double(z)/double(height));
             std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
@@ -102,7 +102,7 @@ namespace cv_fract {
                 pixel = color_palette[n];
             }
         }
-        void DrawFractal(cv::Mat &frame, double start, double end, double im_start, double im_end, int thread_count) {
+        void DrawFractal(cv::Mat &frame, const double &start, const double &end, const double &im_start, const double &im_end, int thread_count) {
           static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
                 for(int z = offset; z <  offset+size; ++z) {
                     for(int i = 0; i < cols; ++i) {
@@ -113,7 +113,7 @@ namespace cv_fract {
             };
             UseMultipleThreads(frame, thread_count, callback);
         }  
-        void DrawFractal(cv::Mat &frame, double start, double end, double im_start, double im_end) {
+        void DrawFractal(cv::Mat &frame,const double &start, const double &end, const double &im_start, const double &im_end) {
             int width=frame.cols, height=frame.rows;
             for(int z = 0; z <  height; ++z) {
                 for(int i = 0; i < width; ++i) {
