@@ -94,10 +94,10 @@ namespace cv_fract {
         }
 
         void drawPixel(const int &width, const int &height, cv::Vec3b &pixel, const int &i, const int &z, const double &start, const double &end, const double &im_start, const double &im_end) {
-            double w = (double(i)/double(width));
-            double h = (double(z)/double(height));
+            const double w = (double(i)/double(width));
+            const double h = (double(z)/double(height));
             const std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
-            int n = mandelbrot(c);
+            const int n = mandelbrot(c);
              if (n == MAX_ITER) {
                 pixel[0] = 0;
                 pixel[1] = 0;
