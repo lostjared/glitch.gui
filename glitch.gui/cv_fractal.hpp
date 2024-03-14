@@ -41,7 +41,7 @@ namespace cv_fract {
             zoom_ = z;
         }
 
-        void resetPallette() {
+        void resetPalette() {
             loadPalette();            
         }
 
