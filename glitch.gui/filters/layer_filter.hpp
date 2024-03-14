@@ -2959,6 +2959,54 @@ private:
 
 };
 
+class CrystalBallEffect : public FilterFunc {
+public:
+    CrystalBallEffect(float radius = 0.5, cv::Point2f center = cv::Point2f(-1, -1)) 
+        : radius(radius), center(center) {
+        if (center == cv::Point2f(-1, -1)) {
+            centerSet = false;
+        } else {
+            centerSet = true;
+        }
+    }
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyCrystalBallEffect(frame);
+        }
+    }
+    void clear() override {}
+private:
+    float radius; 
+    cv::Point2f center; 
+    bool centerSet;
+
+    void applyCrystalBallEffect(cv::Mat &frame) {
+        if (!centerSet) {
+            center = cv::Point2f(frame.cols / 2.0f, frame.rows / 2.0f);
+        }
+        cv::Mat result = frame.clone();
+        float maxRadius = std::min(frame.cols, frame.rows) * radius;
+        for (int y = 0; y < frame.rows; ++y) {
+            for (int x = 0; x < frame.cols; ++x) {
+                cv::Point2f p(x, y);
+                cv::Point2f delta = p - center;
+                float dist = cv::sqrt(delta.x * delta.x + delta.y * delta.y);
+                if (dist < maxRadius) {
+                    float scaleFactor = 1.0 - std::sqrt(dist / maxRadius);
+                    int newX = static_cast<int>(center.x + delta.x * scaleFactor);
+                    int newY = static_cast<int>(center.y + delta.y * scaleFactor);
+                    newX = std::min(std::max(newX, 0), frame.cols - 1);
+                    newY = std::min(std::max(newY, 0), frame.rows - 1);
+                    result.at<cv::Vec3b>(y, x) = frame.at<cv::Vec3b>(cv::Point(newX, newY));
+                }
+            }
+        }
+        frame = result;
+    }
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
