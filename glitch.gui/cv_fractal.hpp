@@ -41,6 +41,10 @@ namespace cv_fract {
             zoom_ = z;
         }
 
+        void resetPallette() {
+            loadPalette();            
+        }
+
         void draw(cv::Mat &frame) {
              const double aspect_ratio = static_cast<double>(frame.cols) / frame.rows;
              const double range_real = 4.0 / zoom_; 
