@@ -37,7 +37,7 @@ namespace cv_fract {
                 std::cerr << "Error invalid iterations\n";
         }
 
-        void setZoom(double z) {
+        void setZoom(const double &z) {
             zoom_ = z;
         }
 
