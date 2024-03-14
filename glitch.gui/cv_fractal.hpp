@@ -68,7 +68,6 @@ namespace cv_fract {
         int tc; 
         int MAX_ITER=80;
         std::vector<cv::Vec3b> color_palette;
-
         void loadPalette() {
             std::srand(time(0));
             color_palette.resize(MAX_ITER);
@@ -90,46 +89,37 @@ namespace cv_fract {
             return n;
         }
 
+        void drawPixel(int width, int height, cv::Vec3b &pixel, int i, int z, double start, double end, double im_start, double im_end) {
+            double w = (double(i)/double(width));
+            double h = (double(z)/double(height));
+            std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
+            int n = mandelbrot(c);
+             if (n == MAX_ITER) {
+                pixel[0] = 0;
+                pixel[1] = 0;
+                pixel[2] = 0;
+            } else {
+                pixel = color_palette[n];
+            }
+        }
         void DrawFractal(cv::Mat &frame, double start, double end, double im_start, double im_end, int thread_count) {
-           int width=frame.cols, height=frame.rows;
-           static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
+          static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
                 for(int z = offset; z <  offset+size; ++z) {
                     for(int i = 0; i < cols; ++i) {
                         cv::Vec3b &pixel = frame->at<cv::Vec3b>(z, i);
-                        double w = (double(i)/double(width));
-                        double h = (double(z)/double(height));
-                        std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
-                        int n = mandelbrot(c);
-                        if (n == MAX_ITER) {
-                            pixel[0] = 0;
-                            pixel[1] = 0;
-                            pixel[2] = 0;
-                        } else {
-                            pixel = color_palette[n];
-                        }
+                        drawPixel(frame->cols, frame->rows, pixel, i, z, start, end, im_start, im_end);
                     }
                 }
             };
             UseMultipleThreads(frame, thread_count, callback);
         }  
-
         void DrawFractal(cv::Mat &frame, double start, double end, double im_start, double im_end) {
             int width=frame.cols, height=frame.rows;
             for(int z = 0; z <  height; ++z) {
                 for(int i = 0; i < width; ++i) {
                     cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-                    double w = (double(i)/double(width));
-                    double h = (double(z)/double(height));
-                    std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
-                    int n = mandelbrot(c);
-                    if (n == MAX_ITER) {
-                        pixel[0] = 0;
-                         pixel[1] = 0;
-                         pixel[2] = 0;
-                     } else {
-                        pixel = color_palette[n];
-                    }
-               }
+                    drawPixel(frame.cols, frame.rows, pixel, i, z, start, end, im_start, im_end);
+                }
             }
         }
     };   
