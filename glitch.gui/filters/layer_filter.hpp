@@ -2961,13 +2961,15 @@ private:
 
 class CrystalBallEffect : public FilterFunc {
 public:
-    CrystalBallEffect(float radius = 0.5, cv::Point2f center = cv::Point2f(-1, -1)) 
+    CrystalBallEffect(float radius = 0.5, cv::Point2f center = cv::Point2f(-1, -1), bool increase_ = false) 
         : radius(radius), center(center) {
         if (center == cv::Point2f(-1, -1)) {
             centerSet = false;
         } else {
             centerSet = true;
         }
+        rad.initValues(radius, 0.01, 0.1, 2.0);
+        increase = increase_;
     }
     void init() override {}
     void proc(cv::Mat &frame) override {
@@ -2977,11 +2979,14 @@ public:
     }
     void clear() override {}
 private:
+    KnobT<float> rad;
     float radius; 
     cv::Point2f center; 
     bool centerSet;
+    bool increase;
 
     void applyCrystalBallEffect(cv::Mat &frame) {
+        radius = (increase == true) ? rad.nextValue() : rad.value();
         if (!centerSet) {
             center = cv::Point2f(frame.cols / 2.0f, frame.rows / 2.0f);
         }
@@ -2999,6 +3004,43 @@ private:
                     newX = std::min(std::max(newX, 0), frame.cols - 1);
                     newY = std::min(std::max(newY, 0), frame.rows - 1);
                     result.at<cv::Vec3b>(y, x) = frame.at<cv::Vec3b>(cv::Point(newX, newY));
+                }
+            }
+        }
+        frame = result;
+    }
+};
+
+
+class StretchSqueezeEffect : public FilterFunc {
+public:
+    StretchSqueezeEffect(float strength = 0.5) : strength(strength) {
+        strength_.initValues(strength, 0.01, 0.1, 2.0);
+
+    }
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyStretchSqueezeEffect(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    float strength; 
+    KnobT<float> strength_;
+
+    void applyStretchSqueezeEffect(cv::Mat &frame) {
+        strength = strength_.nextValue();
+        cv::Mat result = frame.clone();
+        int center_y = frame.rows / 2;
+
+        for (int y = 0; y < frame.rows; ++y) {
+            float factor = 1 + strength * (static_cast<float>(y - center_y) / center_y);
+            for (int x = 0; x < frame.cols; ++x) {
+                int srcY = static_cast<int>(center_y + (y - center_y) / factor);
+                if (srcY >= 0 && srcY < frame.rows) {
+                    result.at<cv::Vec3b>(y, x) = frame.at<cv::Vec3b>(srcY, x);
                 }
             }
         }

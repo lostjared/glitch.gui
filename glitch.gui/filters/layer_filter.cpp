@@ -367,8 +367,17 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     InfiniteZoom *inf_z = new InfiniteZoom();
     new_filter_list.push_back({"New_Infinite_Zoom", inf_z});
 
-    CrystalBallEffect *cball = new CrystalBallEffect();
+    CrystalBallEffect *cball = new CrystalBallEffect(0.5f, cv::Point2f(-1, -1), false);
     new_filter_list.push_back({"New_CrystalBall_Effect", cball});
+
+    CrystalBallEffect *cball_i = new CrystalBallEffect(0.5f, cv::Point2f(-1, -1), true);
+    new_filter_list.push_back({"New_CrystalBall_Increase_Effect", cball_i});
+
+    CrystalBallEffect *cball_f = new CrystalBallEffect(1.0f, cv::Point2f(-1, -1), false);
+    new_filter_list.push_back({"New_CrystalBall_Fixed_Effect", cball_f});
+
+    StretchSqueezeEffect *stretch_s = new  StretchSqueezeEffect();
+    new_filter_list.push_back({"New_Stretch_Squeeze", stretch_s});
 
     ColorMap *color_map_autumn = new ColorMap(cv::COLORMAP_AUTUMN);
     new_filter_list.push_back({"New_ColorMap_AUTUMN", color_map_autumn});
