@@ -382,66 +382,68 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});
 
-    ColorMap *color_map_autumn = new ColorMap(cv::COLORMAP_AUTUMN);
+
+    ColorMap *color_map_autumn = new ColorMap(0);
     new_filter_list.push_back({"New_ColorMap_AUTUMN", color_map_autumn});
 
-    ColorMap *color_map_bone = new ColorMap(cv::COLORMAP_BONE);
+    ColorMap *color_map_bone = new ColorMap(1);
     new_filter_list.push_back({"New_ColorMap_BONE", color_map_bone});
 
-    ColorMap *color_map_jet = new ColorMap(cv::COLORMAP_JET);
+    ColorMap *color_map_jet = new ColorMap(2);
     new_filter_list.push_back({"New_ColorMap_JET", color_map_jet});
 
-    ColorMap *color_map_winter = new ColorMap(cv::COLORMAP_WINTER);
+    ColorMap *color_map_winter = new ColorMap(3);
     new_filter_list.push_back({"New_ColorMap_WINTER", color_map_winter});
 
-    ColorMap *color_map_rainbow = new ColorMap(cv::COLORMAP_RAINBOW);
+    ColorMap *color_map_rainbow = new ColorMap(4);
     new_filter_list.push_back({"New_ColorMap_RAINBOW", color_map_rainbow});
 
-    ColorMap *color_map_ocean = new ColorMap(cv::COLORMAP_OCEAN);
+    ColorMap *color_map_ocean = new ColorMap(5);
     new_filter_list.push_back({"New_ColorMap_OCEAN", color_map_ocean});
 
-    ColorMap *color_map_summer = new ColorMap(cv::COLORMAP_SUMMER);
+    ColorMap *color_map_summer = new ColorMap(6);
     new_filter_list.push_back({"New_ColorMap_SUMMER", color_map_summer});
 
-    ColorMap *color_map_spring = new ColorMap(cv::COLORMAP_SPRING);
+    ColorMap *color_map_spring = new ColorMap(7);
     new_filter_list.push_back({"New_ColorMap_SPRING", color_map_spring});
 
-    ColorMap *color_map_cool = new ColorMap(cv::COLORMAP_COOL);
+    ColorMap *color_map_cool = new ColorMap(8);
     new_filter_list.push_back({"New_ColorMap_COOL", color_map_cool});
 
-    ColorMap *color_map_hsv = new ColorMap(cv::COLORMAP_HSV);
+    ColorMap *color_map_hsv = new ColorMap(9);
     new_filter_list.push_back({"New_ColorMap_HSV", color_map_hsv});
 
-    ColorMap *color_map_pink = new ColorMap(cv::COLORMAP_PINK);
+    ColorMap *color_map_pink = new ColorMap(10);
     new_filter_list.push_back({"New_ColorMap_PINK", color_map_pink});
 
-    ColorMap *color_map_hot = new ColorMap(cv::COLORMAP_HOT);
+    ColorMap *color_map_hot = new ColorMap(11);
     new_filter_list.push_back({"New_ColorMap_HOT", color_map_hot});
 
-    ColorMap *color_map_parula = new ColorMap(cv::COLORMAP_PARULA);
+    ColorMap *color_map_parula = new ColorMap(12);
     new_filter_list.push_back({"New_ColorMap_PARULA", color_map_parula});
 
-    ColorMap *color_map_magma = new ColorMap(cv::COLORMAP_MAGMA);
+    ColorMap *color_map_magma = new ColorMap(13);
     new_filter_list.push_back({"New_ColorMap_MAGMA", color_map_magma});
 
-    ColorMap *color_map_inferno = new ColorMap(cv::COLORMAP_INFERNO);
+    ColorMap *color_map_inferno = new ColorMap(14);
     new_filter_list.push_back({"New_ColorMap_INFERNO", color_map_inferno});
 
-    ColorMap *color_map_plasma = new ColorMap(cv::COLORMAP_PLASMA);
+    ColorMap *color_map_plasma = new ColorMap(15);
     new_filter_list.push_back({"New_ColorMap_PLASMA", color_map_plasma});
 
-    ColorMap *color_map_viridis = new ColorMap(cv::COLORMAP_VIRIDIS);
+    ColorMap *color_map_viridis = new ColorMap(16);
     new_filter_list.push_back({"New_ColorMap_VIRIDIS", color_map_viridis});
 
-    ColorMap *color_map_cividis = new ColorMap(cv::COLORMAP_CIVIDIS);
+    ColorMap *color_map_cividis = new ColorMap(17);
     new_filter_list.push_back({"New_ColorMap_CIVIDIS", color_map_cividis});
     
-    ColorMap *color_map_twilight = new ColorMap(cv::COLORMAP_TWILIGHT);
+    ColorMap *color_map_twilight = new ColorMap(18);
     new_filter_list.push_back({"New_ColorMap_TWILIGHT", color_map_twilight});
 
-    ColorMap *color_map_twilight_shifted = new ColorMap(cv::COLORMAP_TWILIGHT_SHIFTED);
+    ColorMap *color_map_twilight_shifted = new ColorMap(19);
     new_filter_list.push_back({"New_ColorMap_TWILIGHT_SHIFTED", color_map_twilight_shifted});
 
-    ColorMap *color_map_turbo = new ColorMap(cv::COLORMAP_TURBO);
+    ColorMap *color_map_turbo = new ColorMap(20);
     new_filter_list.push_back({"New_ColorMap_TURBO", color_map_turbo});
+  
 }
