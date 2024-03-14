@@ -421,7 +421,7 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     ColorMap *color_map_parula = new ColorMap(12);
     new_filter_list.push_back({"New_ColorMap_PARULA", color_map_parula});
-
+#ifndef _WIN32
     ColorMap *color_map_magma = new ColorMap(13);
     new_filter_list.push_back({"New_ColorMap_MAGMA", color_map_magma});
 
@@ -445,5 +445,5 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     ColorMap *color_map_turbo = new ColorMap(20);
     new_filter_list.push_back({"New_ColorMap_TURBO", color_map_turbo});
-  
+#endif
 }
