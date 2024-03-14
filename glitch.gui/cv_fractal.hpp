@@ -21,11 +21,11 @@ namespace cv_fract {
         CV_Fractal() {
             loadPalette();
         }
-        CV_Fractal(double center_real_, double center_imag_, double zoom, int iterations_, int thread_count_) {
+        CV_Fractal(const double &center_real_, const double &center_imag_, const double &zoom, const int &iterations_, const int &thread_count_) {
             initParameters(center_real_, center_imag_, zoom, iterations_, thread_count_);
             loadPalette();
         }
-        void initParameters(double center_real_, double center_imag_, double zoom, int iterations_, int thread_count_) {
+        void initParameters(const double &center_real_, const double &center_imag_, const double &zoom, const int &iterations_, const int &thread_count_) {
             center_real = center_real_;
             center_imag = center_imag_;
             zoom_ = zoom;
