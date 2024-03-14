@@ -3048,6 +3048,43 @@ private:
     }
 };
 
+class RGB_Real_Increase : public FilterFunc {
+public:
+    RGB_Real_Increase() : gen{rd()}, dist(1.0, 255.0), dist_int(0, 1) {}
+
+    void initRGB() {
+        for(int i = 0; i < 3; ++i) {
+            rgb[i].initValues(dist(gen), 0.1, 1.0, 255.0,dist_int(gen));
+        }
+    }
+
+    void init() override {
+        initRGB();
+    }
+
+    void proc(cv::Mat &frame) override {
+        double values[3] = { rgb[0].nextValue(), rgb[1].nextValue(), rgb[2].nextValue() };
+        for(int z = 0; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = cv::saturate_cast<uchar>(values[q]+pixel[q]);
+                }
+            }
+        }    
+    }
+
+    void clear() override {
+        initRGB();
+    }
+private:
+    Knob rgb[3];
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> dist;
+    std::uniform_int_distribution<> dist_int;
+
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
