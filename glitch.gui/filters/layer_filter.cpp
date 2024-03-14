@@ -366,4 +366,8 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     InfiniteZoom *inf_z = new InfiniteZoom();
     new_filter_list.push_back({"New_Infinite_Zoom", inf_z});
+
+    ColorMap *color_map1 = new ColorMap(0);
+    new_filter_list.push_back({"New_ColorMap_0", color_map1});
+
 }

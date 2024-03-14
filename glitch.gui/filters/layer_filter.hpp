@@ -2946,6 +2946,19 @@ private:
     }
 };
 
+class ColorMap : public FilterFunc {
+public:
+    ColorMap(int color_map = 0) : color_map(color_map) { }    
+    void init() override {}
+    void proc(cv::Mat &frame) {
+         cv::applyColorMap(frame, frame, color_map);
+    }
+    void clear() {}
+private:
+    int color_map = 0;
+
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
