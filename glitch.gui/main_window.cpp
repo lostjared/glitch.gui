@@ -391,6 +391,7 @@ MainWindow::MainWindow()  {
     content_data->setGeometry(15, 35+25+10+35, 300, 200);
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
+    content_data->setStyleSheet("font-size: 12px;");
     
     init_filter_list();
     init_filters_local();
@@ -473,7 +474,7 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
     if(isFileOpen())
         stream << "[ Recording ] - ";
 
-    stream << "path [" << fn.c_str() << "]" << "\n info [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
+    stream << "path [" << fn.c_str() << "]" << "\ninfo [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
     return text;
 }
 
@@ -639,7 +640,7 @@ void MainWindow::setInfo(const cv::Mat &frame) {
         double fc_ = display_window->getCap().get(cv::CAP_PROP_FRAME_COUNT);
         stream << "Video stream Frame Count: " << static_cast<int>(fc_) << "\n";
         double per = static_cast<double>(display_window->getFrameCount())/fc_ * 100.00;
-        stream << " Video stream: " << static_cast<int>(per) << "%\n";       
+        stream << "Video stream: " << static_cast<int>(per) << "%\n";       
         bar_position->setEnabled(true);
         setMinMax(0, static_cast<int>(fc_));
         bar_position->setValue(display_window->getFrameCount());
