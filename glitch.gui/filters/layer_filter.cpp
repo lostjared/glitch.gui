@@ -331,9 +331,6 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     CropEdges *crop_e = new CropEdges();
     new_filter_list.push_back({"New_CropEdges", crop_e});
 
-    Fractal *frac = new Fractal();
-    new_filter_list.push_back({"New_SuperSlow_Fractal", frac});
-
     Fractal *frac_r = new Fractal();
     frac_r->resize(true);
     new_filter_list.push_back({"New_Low_Fractal", frac_r});  
