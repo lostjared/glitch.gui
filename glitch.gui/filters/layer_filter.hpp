@@ -2951,13 +2951,14 @@ public:
     ColorMap(int color_map = 0) : color_map(color_map) { }    
     void init() override {}
     void proc(cv::Mat &frame) override {
-        cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
-        cv::applyColorMap(frame, frame, color_map);
+        cv::Mat gray, colored;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::applyColorMap(gray, colored, color_map);
+        frame = colored;
     }
     void clear() override {}
 private:
     int color_map = 0;
-
 };
 
 class CrystalBallEffect : public FilterFunc {
