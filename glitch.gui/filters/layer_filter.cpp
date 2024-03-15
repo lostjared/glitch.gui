@@ -385,9 +385,11 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     MorphologicalWarpEffect *warp_e = new MorphologicalWarpEffect();
     new_filter_list.push_back({"New_MorphologicalWarp", warp_e});
     
-
     InfraredEffect *infra_red = new InfraredEffect();
     new_filter_list.push_back({"New_Infrared", infra_red});    
+
+    StarburstEffect *star_b = new StarburstEffect();
+    new_filter_list.push_back({"New_StarBurst", star_b});
 
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});

@@ -3172,6 +3172,33 @@ private:
     }
 };
 
+class StarburstEffect : public FilterFunc {
+public:
+    StarburstEffect(cv::Point lightSource = cv::Point(-1, -1), int intensity = 100) 
+        : lightSource(lightSource), intensity(intensity) {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyStarburstEffect(frame);
+        }
+    }
+    void clear() override {}
+private:
+    cv::Point lightSource; 
+    int intensity;
+    void applyStarburstEffect(cv::Mat &frame) {
+        if (lightSource.x == -1 && lightSource.y == -1) {
+          lightSource = cv::Point(frame.cols - 50, 50); 
+        }
+        intensity = std::abs(std::sin(cv::getTickCount() / cv::getTickFrequency()) * 1200);
+        cv::Mat overlay = cv::Mat::zeros(frame.size(), frame.type());
+        double radius = intensity;
+        cv::circle(overlay, lightSource, radius, cv::Scalar(255, 255, 255), -1, cv::LINE_AA);
+        cv::addWeighted(frame, 0.5, overlay, 0.5, 0, frame);
+    }
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
