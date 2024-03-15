@@ -2951,7 +2951,8 @@ public:
     ColorMap(int color_map = 0) : color_map(color_map) { }    
     void init() override {}
     void proc(cv::Mat &frame) override {
-         cv::applyColorMap(frame, frame, color_map);
+        cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
+        cv::applyColorMap(frame, frame, color_map);
     }
     void clear() override {}
 private:
@@ -3147,6 +3148,27 @@ private:
 
     KnobT<int> warp;
 
+};
+
+class InfraredEffect : public FilterFunc {
+public:
+    InfraredEffect() {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyInfraredEffect(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    void applyInfraredEffect(cv::Mat &frame) {
+        cv::Mat gray;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::Mat inverted = 255 - gray;
+        cv::applyColorMap(inverted, frame, cv::COLORMAP_PINK);
+        frame.convertTo(frame, -1, 1.5, 0); 
+    }
 };
 
 void add_layer_filters(Layer&,Layer&,Layer&);
