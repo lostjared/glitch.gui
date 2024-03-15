@@ -3061,7 +3061,7 @@ public:
     void init() override {
         initRGB();
     }
-
+    
     void proc(cv::Mat &frame) override {
         double values[3] = { rgb[0].nextValue(), rgb[1].nextValue(), rgb[2].nextValue() };
         for(int z = 0; z < frame.rows; ++z) {
@@ -3073,7 +3073,6 @@ public:
             }
         }    
     }
-
     void clear() override {
         initRGB();
     }
@@ -3086,7 +3085,42 @@ private:
 
 };
 
+class MirrorBallEffect : public FilterFunc {
+public:
+    MirrorBallEffect() {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyMirrorBallEffect(frame);
+        }
+    }
+    void clear() override {}
+private:
+    void applyMirrorBallEffect(cv::Mat &frame) {
+        cv::Mat output = frame.clone();
+        cv::Point2f center(frame.cols / 2.0f, frame.rows / 2.0f);
+        float maxDist = cv::norm(center); 
+
+        for (int y = 0; y < frame.rows; y++) {
+            for (int x = 0; x < frame.cols; x++) {
+                cv::Point2f delta(x - center.x, y - center.y);
+                float dist = cv::norm(delta);
+                float normDist = dist / maxDist;
+                float scaleFactor = 1.0f - std::cos(normDist * CV_PI / 2.0f);
+                cv::Point2f srcPos = center + scaleFactor * delta;
+                srcPos.x = cv::min(cv::max(srcPos.x, 0.0f), static_cast<float>(frame.cols - 1));
+                srcPos.y = cv::min(cv::max(srcPos.y, 0.0f), static_cast<float>(frame.rows - 1));
+                cv::Vec3b color = frame.at<cv::Vec3b>(cv::Point(static_cast<int>(srcPos.x), static_cast<int>(srcPos.y)));
+                output.at<cv::Vec3b>(y, x) = color;
+            }
+        }
+
+        frame = output;
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
+
 
 
 #endif

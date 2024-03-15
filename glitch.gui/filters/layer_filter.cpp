@@ -379,9 +379,11 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     StretchSqueezeEffect *stretch_s = new  StretchSqueezeEffect();
     new_filter_list.push_back({"New_Stretch_Squeeze", stretch_s});
 
+    MirrorBallEffect *mirror_b = new MirrorBallEffect();
+    new_filter_list.push_back({"New_MirrorBall", mirror_b});
+    
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});
-
 
     ColorMap *color_map_autumn = new ColorMap(0);
     new_filter_list.push_back({"New_ColorMap_AUTUMN", color_map_autumn});
