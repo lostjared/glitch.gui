@@ -391,7 +391,7 @@ MainWindow::MainWindow()  {
     content_data->setGeometry(15, 35+25+10+35, 300, 200);
     content_data->setReadOnly(true);
     content_data->setText("Content-Data");
-    content_data->setStyleSheet("font-size: 12px;");
+    content_data->setStyleSheet("font-size: 13px;");
     
     init_filter_list();
     init_filters_local();
@@ -474,7 +474,20 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
     if(isFileOpen())
         stream << "[ Recording ] - ";
 
-    stream << "path [" << fn.c_str() << "]" << "\ninfo [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
+    auto pos1 = fn.rfind("/");
+    auto pos2 = fn.rfind("\\");
+
+    std::string fn_ = fn;
+
+    if(pos1 != std::string::npos && pos2 == std::string::npos) {
+        fn_ = fn.substr(pos1+1, fn.length()-pos1);
+    }    
+
+    if(pos1 == std::string::npos && pos2 != std::string::npos) {
+        fn_ = fn.substr(pos2+1, fn.length()-pos2);
+    }
+
+    stream << "file [" << fn_.c_str() << "]" << "\ninfo [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
     return text;
 }
 
