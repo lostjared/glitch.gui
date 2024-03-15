@@ -3198,6 +3198,53 @@ private:
     }
 };
 
+class LensFlareEffect : public FilterFunc {
+public:
+    LensFlareEffect(cv::Point lightSource = cv::Point(-1, -1), int intensity = 100)
+        : lightSource(lightSource), intensity(intensity) {
+            intense.initValues(intensity, 1, intensity, 300);
+        }
+
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyLensFlareEffect(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    cv::Point lightSource;
+    int intensity;
+    KnobT<int> intense;
+
+    void applyLensFlareEffect(cv::Mat &frame) {
+        cv::Mat source = frame.clone();
+        intensity = intense.nextValue();
+        if (lightSource.x == -1 && lightSource.y == -1) {
+            lightSource = cv::Point(frame.cols / 4, frame.rows / 4);
+        }
+        addGlow(frame, lightSource, intensity);
+        addStreaks(frame, lightSource, intensity, 4); 
+        cv::addWeighted(frame, 0.5, source, 0.5, 0, frame);
+    }
+
+    void addGlow(cv::Mat &frame, cv::Point source, int intensity) {
+        float radius = intensity * 2.0f; 
+        cv::circle(frame, source, radius, cv::Scalar(255, 255, 255), -1, cv::LINE_AA);
+    }
+
+    void addStreaks(cv::Mat &frame, cv::Point source, int intensity, int count) {
+        float length = intensity * 5.0f; 
+        float angleStep = CV_PI * 2 / count;
+        for (int i = 0; i < count; ++i) {
+            float angle = i * angleStep;
+            cv::Point end(source.x + length * cos(angle), source.y + length * sin(angle));
+            cv::line(frame, source, end, cv::Scalar(255, 255, 255), intensity / 20, cv::LINE_AA); 
+        }
+    }
+};
+
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
