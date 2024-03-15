@@ -381,6 +381,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
 
     MirrorBallEffect *mirror_b = new MirrorBallEffect();
     new_filter_list.push_back({"New_MirrorBall", mirror_b});
+
+    MorphologicalWarpEffect *warp_e = new MorphologicalWarpEffect();
+    new_filter_list.push_back({"New_MorphologicalWarp", warp_e});
     
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});

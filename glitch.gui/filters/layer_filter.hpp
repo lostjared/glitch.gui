@@ -3119,6 +3119,36 @@ private:
     }
 };
 
+class MorphologicalWarpEffect : public FilterFunc {
+public:
+    MorphologicalWarpEffect() {}
+    void init() override {
+        warp.initValues(5, 1, 5, 50);
+    }
+    void proc(cv::Mat &frame) override {
+        if (!frame.empty()) {
+            applyMorphologicalWarp(frame);
+        }
+    }
+    void clear() override {}
+
+private:
+    void applyMorphologicalWarp(cv::Mat &frame) {
+        cv::Mat warped;
+        int morph_size = warp.nextValue(); 
+        cv::Mat element = cv::getStructuringElement(cv::MORPH_ELLIPSE,
+                      cv::Size(2 * morph_size + 1, 2 * morph_size + 1),
+                      cv::Point(morph_size, morph_size));
+        cv::erode(frame, warped, element);
+        cv::dilate(warped, warped, element); 
+        double alpha = 0.5;
+        cv::addWeighted(frame, alpha, warped, 1 - alpha, 0.0, frame);
+    }
+
+    KnobT<int> warp;
+
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
