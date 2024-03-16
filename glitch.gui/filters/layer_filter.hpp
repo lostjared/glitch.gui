@@ -3245,6 +3245,30 @@ private:
     }
 };
 
+class AnimatedColorMapEffect : public FilterFunc {
+public:
+    AnimatedColorMapEffect(int max = 10) : max_maps{max} , map_index{0} {}
+    void init() override {}
+    void proc(cv::Mat &frame) override { 
+
+        cv::Mat gray;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::Mat mapped;
+        cv::applyColorMap(gray, mapped, map_index);
+
+        ++map_index;
+
+        if(map_index > max_maps)
+            map_index = 0;
+        
+        frame = mapped;
+    }
+
+    void clear() override { }
+private:
+    int max_maps, map_index;
+};
+
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 

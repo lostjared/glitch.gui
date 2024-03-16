@@ -476,13 +476,17 @@ QString MainWindow::contentData(const std::string &fn, const cv::Mat &frame) {
 
     auto pos1 = fn.rfind("/");
     auto pos2 = fn.rfind("\\");
+    
     std::string fn_ = fn;
+    
     if(pos1 != std::string::npos && pos2 == std::string::npos) {
         fn_ = fn.substr(pos1+1, fn.length()-pos1);
     }    
+    
     if(pos1 == std::string::npos && pos2 != std::string::npos) {
         fn_ = fn.substr(pos2+1, fn.length()-pos2);
     }
+
     stream << "File [" << fn_.c_str() << "]" << "\nInfo [" << frame.cols << "x" << frame.rows << " channels: " << frame.channels() << "]\n";
     return text;
 }

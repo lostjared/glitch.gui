@@ -391,6 +391,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     LensFlareEffect *lens_f = new LensFlareEffect();
     new_filter_list.push_back({"New_LensFlare", lens_f});
 
+    AnimatedColorMapEffect  *ac_map = new AnimatedColorMapEffect ();
+    new_filter_list.push_back({"New_ColorMap_Effect", ac_map});
+
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});
 
