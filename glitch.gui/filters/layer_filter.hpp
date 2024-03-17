@@ -2609,13 +2609,15 @@ public:
     void init() override { }
     void proc(cv::Mat &frame) override { 
         cv::Mat frame_copy;
-        int col_expand = frame.cols/4;
-        int row_expand = frame.rows/4;
-        cv::resize(frame, frame_copy, cv::Size(frame.cols+(col_expand), frame.rows+(row_expand)));
-         for(int z = 0; z < frame.rows; ++z) {
-            for(int i = 0; i < frame.cols; ++i) {
-                if(i < frame.cols && i+col_expand < frame_copy.cols && z < frame.rows && z < frame_copy.rows)
-                    frame.at<cv::Vec3b>(z, i)  = frame_copy.at<cv::Vec3b>(z, i+(col_expand/2));
+        if(!frame.empty()) {
+            int col_expand = frame.cols/4;
+            int row_expand = frame.rows/4;
+            cv::resize(frame, frame_copy, cv::Size(frame.cols+(col_expand), frame.rows+(row_expand)));
+            for(int z = 0; z < frame.rows; ++z) {
+                for(int i = 0; i < frame.cols; ++i) {
+                    if(i < frame.cols && i+col_expand < frame_copy.cols && z < frame.rows && z < frame_copy.rows)
+                        frame.at<cv::Vec3b>(z, i)  = frame_copy.at<cv::Vec3b>(z, i+(col_expand/2));
+                }
             }
         }
     }
