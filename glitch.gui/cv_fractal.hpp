@@ -7,7 +7,7 @@
 namespace cv_fract {
     template<typename F>
     void UseMultipleThreads(cv::Mat &frame, int cores, F func) {
-        int size = frame.rows/cores;
+        const int size = frame.rows/cores;
         std::vector<std::thread> values;
         for(int i = 0; i < cores; ++i) {
             values.push_back(std::thread(func, &frame, i*size, frame.cols, size));
@@ -76,9 +76,9 @@ namespace cv_fract {
             std::srand(time(0));
             color_palette.resize(MAX_ITER);
             for(int i = 0; i < MAX_ITER; ++i) {
-                unsigned char r = std::rand() % 256;
-                unsigned char g = std::rand() % 256;
-                unsigned char b = std::rand() % 256;
+                const unsigned char r = std::rand() % 256;
+                const unsigned char g = std::rand() % 256;
+                const unsigned char b = std::rand() % 256;
                 color_palette[i] = cv::Vec3b(b, g, r);
             }
         }
@@ -107,7 +107,7 @@ namespace cv_fract {
             }
         }
         void DrawFractal(cv::Mat &frame, const double &start, const double &end, const double &im_start, const double &im_end, int thread_count) {
-          static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
+          static auto callback = [&](cv::Mat *frame, const int offset, const int cols, const int size) {
                 for(int z = offset; z <  offset+size; ++z) {
                     for(int i = 0; i < cols; ++i) {
                         cv::Vec3b &pixel = frame->at<cv::Vec3b>(z, i);
@@ -118,9 +118,8 @@ namespace cv_fract {
             UseMultipleThreads(frame, thread_count, callback);
         }  
         void DrawFractal(cv::Mat &frame,const double &start, const double &end, const double &im_start, const double &im_end) {
-            int width=frame.cols, height=frame.rows;
-            for(int z = 0; z <  height; ++z) {
-                for(int i = 0; i < width; ++i) {
+            for(int z = 0; z < frame.rows; ++z) {
+                for(int i = 0; i < frame.cols; ++i) {
                     cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
                     drawPixel(frame.cols, frame.rows, pixel, i, z, start, end, im_start, im_end);
                 }
