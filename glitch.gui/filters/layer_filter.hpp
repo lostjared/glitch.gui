@@ -2640,6 +2640,7 @@ public:
     }
     void proc(cv::Mat &frame) override {
         cv::Mat frac_frame;
+        fractal.resetPalette();
         if(resize_ == false) {
             frac_frame.create(frame.size(), CV_8UC3);
             fractal.setZoom(zoom_knob.nextValue());

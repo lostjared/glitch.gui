@@ -3,6 +3,7 @@
 #include<opencv2/opencv.hpp>
 #include<complex>
 #include<thread>
+#include<random>
 
 namespace cv_fract {
     template<typename F>
@@ -18,10 +19,10 @@ namespace cv_fract {
     }
     class CV_Fractal {
     public:
-        CV_Fractal() {
+        CV_Fractal() : gen{rd()}, dist_int(0, 255) {
             loadPalette();
         }
-        CV_Fractal(const double &center_real_, const double &center_imag_, const double &zoom, const int &iterations_, const int &thread_count_) {
+        CV_Fractal(const double &center_real_, const double &center_imag_, const double &zoom, const int &iterations_, const int &thread_count_) : gen{rd()}, dist_int(0, 255)  {
             initParameters(center_real_, center_imag_, zoom, iterations_, thread_count_);
             loadPalette();
         }
@@ -72,13 +73,16 @@ namespace cv_fract {
         int tc; 
         int MAX_ITER=80;
         std::vector<cv::Vec3b> color_palette;
+        std::random_device rd;
+        std::mt19937 gen;
+        std::uniform_int_distribution<> dist_int;
+
         void loadPalette() {
-            std::srand(time(0));
             color_palette.resize(MAX_ITER);
             for(int i = 0; i < MAX_ITER; ++i) {
-                const unsigned char r = std::rand() % 256;
-                const unsigned char g = std::rand() % 256;
-                const unsigned char b = std::rand() % 256;
+                const unsigned char r = dist_int(gen);
+                const unsigned char g = dist_int(gen);
+                const unsigned char b = dist_int(gen);
                 color_palette[i] = cv::Vec3b(b, g, r);
             }
         }
