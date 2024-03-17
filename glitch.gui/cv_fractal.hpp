@@ -6,7 +6,7 @@
 
 namespace cv_fract {
     template<typename F>
-    void UseMultipleThreads(cv::Mat &frame, int cores, F func) {
+    void UseMultipleThreads(cv::Mat &frame, const int &cores, F func) {
         const int size = frame.rows/cores;
         std::vector<std::thread> values;
         for(int i = 0; i < cores; ++i) {
@@ -106,8 +106,8 @@ namespace cv_fract {
                 pixel = color_palette[n];
             }
         }
-        void DrawFractal(cv::Mat &frame, const double &start, const double &end, const double &im_start, const double &im_end, int thread_count) {
-          static auto callback = [&](cv::Mat *frame, const int offset, const int cols, const int size) {
+        void DrawFractal(cv::Mat &frame, const double &start, const double &end, const double &im_start, const double &im_end, const int &thread_count) {
+          static auto callback = [&](cv::Mat *frame, const int &offset, const int &cols, const int &size) {
                 for(int z = offset; z <  offset+size; ++z) {
                     for(int i = 0; i < cols; ++i) {
                         cv::Vec3b &pixel = frame->at<cv::Vec3b>(z, i);
