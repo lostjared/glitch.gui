@@ -62,6 +62,9 @@ void release_filter_list() {
 //      std::cout << "Releasing: " << new_filter_list[i].name << "\n";
         delete new_filter_list[i].filter;
     }
+    // prevent dangling pointers
+    if(!new_filter_list.empty())
+        new_filter_list.erase(new_filter_list.begin(), new_filter_list.end());
 }
 
 
