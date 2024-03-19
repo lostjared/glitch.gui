@@ -65,6 +65,8 @@ void release_filter_list() {
     // prevent dangling pointers
     if(!new_filter_list.empty())
         new_filter_list.erase(new_filter_list.begin(), new_filter_list.end());
+    if(!new_filter_map.empty())
+        new_filter_map.erase(new_filter_map.begin(), new_filter_map.end());
 }
 
 
