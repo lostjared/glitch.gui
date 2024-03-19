@@ -397,6 +397,12 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});
 
+    BackgroundSubtractionFilter *bg_sub = new BackgroundSubtractionFilter(false);
+    new_filter_list.push_back({"New_Background_Subtract", bg_sub});
+
+    BackgroundSubtractionFilter *bg_sub_b = new BackgroundSubtractionFilter(true);
+    new_filter_list.push_back({"New_Background_Subtract_Blend", bg_sub_b});
+
     ColorMap *color_map_autumn = new ColorMap(0);
     new_filter_list.push_back({"New_ColorMap_AUTUMN", color_map_autumn});
 

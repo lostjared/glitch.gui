@@ -2646,12 +2646,12 @@ public:
         if(resize_ == false) {
             frac_frame.create(frame.size(), CV_8UC3);
             fractal.setZoom(zoom_knob.nextValue());
-            fractal.draw(frac_frame);
+            fractal.draw(frac_frame); // uses threads
             cv::addWeighted(frame, 0.5, frac_frame, 0.5, 0, frame);
         } else {
             frac_frame.create(cv::Size(640, 360), CV_8UC3);
             fractal.setZoom(zoom_knob.nextValue());
-            fractal.draw(frac_frame);
+            fractal.draw(frac_frame); // uses threads
             cv::resize(frac_frame, frac_frame, frame.size());
             cv::addWeighted(frame, 0.5, frac_frame, 0.5, 0, frame);
         }
@@ -3268,6 +3268,37 @@ private:
     int max_maps, map_index;
 };
 
+class BackgroundSubtractionFilter : public FilterFunc {
+public:
+    BackgroundSubtractionFilter(bool blend) : blend{blend} {
+        pMOG2 = cv::createBackgroundSubtractorMOG2();
+    }
+    
+   void init() override {}
+    
+  void proc(cv::Mat &frame) override {
+        cv::Mat fgMask;
+        pMOG2->apply(frame, fgMask, learningRate);
+        cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
+        cv::dilate(fgMask, fgMask, kernel, cv::Point(-1, -1), 2);
+        cv::morphologyEx(fgMask, fgMask, cv::MORPH_CLOSE, kernel);
+        cv::medianBlur(fgMask, fgMask, 5);
+        cv::Mat foreground;
+        frame.copyTo(foreground, fgMask);
+        if(blend)
+            cv::addWeighted(frame, 0.5, foreground, 0.5, 0, frame);
+        else
+             frame = foreground;
+    }
+
+    
+    void clear() override {}
+
+private:
+    cv::Ptr<cv::BackgroundSubtractorMOG2> pMOG2;
+    double learningRate = -1; 
+    bool blend = false;
+};
 
 void add_layer_filters(Layer&,Layer&,Layer&);
 
