@@ -4,6 +4,7 @@
 #include"acidcam/ac.h"
 #include<vector>
 #include"filters/frame_collection.hpp"
+#include<memory>
 
 class FilterFunc {
 public:
