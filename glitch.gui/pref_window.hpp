@@ -27,10 +27,14 @@ public slots:
     void pref_Save();
     void pref_Cancel();
     void pref_setPath();
+    void grab_color1();
+    void grab_color2();
    
 private:
     MainWindow *main_window;
     QLineEdit *frac_real, *frac_imag, *frac_zoom, *frac_iter, *frac_speed, *frac_max;
+    QLabel *color_start, *color_stop;
+    QPushButton *color_start_btn, *color_stop_btn;
 };
 
 #endif

@@ -1517,6 +1517,7 @@ private:
 
 class BackgroundReplacementEffect : public FilterFunc {
 public:
+    BackgroundReplacementEffect() : low_color(35, 50, 50), high_color(85,255,255) {}
     void setLayer(Layer *layer_x) {
         layer_ = layer_x;
     }
@@ -1533,14 +1534,21 @@ public:
             }
         }
     }
+    void setLow(const cv::Scalar &color1) {
+        low_color = color1;
+    }
+    void setHigh(const cv::Scalar &color2) {
+        high_color = color2;
+    }
 private:
     Layer *layer_ = nullptr;
     cv::Mat newBg; 
+    cv::Scalar low_color, high_color;
     void backgroundReplacement(const cv::Mat& src, cv::Mat& dst) {
         cv::Mat hsv;
         cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
-        cv::Scalar lowerGreen(35, 50, 50);
-        cv::Scalar upperGreen(85, 255, 255);
+        cv::Scalar lowerGreen(low_color);
+        cv::Scalar upperGreen(high_color);
         cv::Mat mask;
         cv::inRange(hsv, lowerGreen, upperGreen, mask);
         cv::bitwise_not(mask, mask);

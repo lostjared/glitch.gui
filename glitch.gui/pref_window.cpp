@@ -6,6 +6,7 @@
 #include"new_filter.hpp"
 #include"filters/layer_filter.hpp"
 #include<QFileDialog>
+#include<QColorDialog>
 
 PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     setFixedSize(640, 480);
@@ -79,6 +80,83 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     frac_speed->setToolTip(tr("Speed of Zoom for animation"));
     frac_max->setText("250000");
     frac_max->setToolTip(tr("Max depth of zoom"));
+   //cv::Scalar lowerGreen(35, 50, 50);
+   ///cv::Scalar upperGreen(85, 255, 255);
+    QColor color(50,50,35);
+    QVariant variant = color;
+    QString color_var = variant.toString();
+    QColor color2(255, 255, 85);
+    variant = color2;
+    QString color_var2 = variant.toString();   
+    color_start = new QLabel(this);
+    color_start->setGeometry(25,250, 50, 25);
+    color_start->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
+    color_start_btn = new QPushButton("...", this);
+    color_start_btn->setGeometry(80,250,25,25);
+    QLabel *tmp_lbl = new QLabel(tr(" to "), this);
+    tmp_lbl->setGeometry(110,250,25,25);
+    color_stop = new QLabel(this);
+    color_stop->setStyleSheet("QLabel { background-color: " + color_var2 + "; }");
+    color_stop->setGeometry(140,250,50,25);
+    color_stop_btn = new QPushButton("...", this);
+    color_stop_btn->setGeometry(140+50+5, 250, 25, 25);
+    QLabel *tmp_lbl2 = new QLabel(tr("Chroma Key: "), this);
+    tmp_lbl2->setGeometry(25, 215, 100, 25);
+
+    connect(color_start_btn, SIGNAL(clicked()), this, SLOT(grab_color1()));
+    connect(color_stop_btn, SIGNAL(clicked()), this, SLOT(grab_color2()));
+}
+
+void PrefWindow::grab_color1() {
+    QColorDialog *dialog = new QColorDialog(this);
+    QColor color=  dialog->getColor();
+    QVariant variant = color;
+    QString color_var = variant.toString();
+    cv::Scalar color_s (color.blue(), color.green(), color.red());
+    color_start->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
+    auto findIn = [&](const std::string &n) -> int {
+        for(size_t i = 0; i < new_filter_list.size(); ++i) {
+            if(new_filter_list[i].name == n)
+                return i;
+        }
+        return -1;
+    };
+    int filter_f = findIn("New_Layer_0_GreenScreen");
+    if(filter_f != -1) {
+        try {
+            BackgroundReplacementEffect *bg_e = dynamic_cast<BackgroundReplacementEffect *>(new_filter_list[filter_f].filter);
+            bg_e->setLow(color_s);
+        } catch(...) {
+
+        }
+    }
+
+}
+
+void PrefWindow::grab_color2() {
+    QColorDialog *dialog = new QColorDialog(this);
+    QColor color=  dialog->getColor();
+    QVariant variant = color;
+    QString color_var = variant.toString();
+    cv::Scalar color_s (color.blue(), color.green(), color.red());
+    color_stop->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
+        auto findIn = [&](const std::string &n) -> int {
+        for(size_t i = 0; i < new_filter_list.size(); ++i) {
+            if(new_filter_list[i].name == n)
+                return i;
+        }
+        return -1;
+    };
+    int filter_f = findIn("New_Layer_0_GreenScreen");
+    if(filter_f != -1) {
+        try {
+            BackgroundReplacementEffect *bg_e = dynamic_cast<BackgroundReplacementEffect *>(new_filter_list[filter_f].filter);
+            bg_e->setHigh(color_s);
+        } 
+        catch(...) {
+
+        }
+    }
 }
 
 void PrefWindow::setMainWindow(MainWindow *m) {

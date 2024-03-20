@@ -58,6 +58,7 @@ void init_filter_list() {
 
 // if need to be released
 void release_filter_list() {
+
      for(int i = 0; i < static_cast<int>(new_filter_list.size()); ++i) {
 //      std::cout << "Releasing: " << new_filter_list[i].name << "\n";
         delete new_filter_list[i].filter;
