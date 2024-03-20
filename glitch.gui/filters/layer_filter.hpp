@@ -599,7 +599,7 @@ public:
                 for(int z = 0; z < frame.rows; ++z) {
                     for(int i = 0; i < frame.cols; ++i) {
                         cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
-                        if(pix1[0] < 4 && pix1[1] < 4 && pix1[2] < 4) {
+                        if(pix1[0] < 25 && pix1[1] < 25 && pix1[2] < 25) {
                             setvec(pix1,resized.at<cv::Vec3b>(z, i));
                         }
                     }
@@ -1534,6 +1534,7 @@ public:
             }
         }
     }
+
     void setLow(const cv::Scalar &color1) {
         low_color = color1;
     }
@@ -1562,6 +1563,65 @@ private:
         src.copyTo(foreground, mask);
         backgroundResized.copyTo(dst, ~mask);
         cv::add(foreground, dst, dst, mask);
+    }
+};
+
+class GreenScreenEffect : public FilterFunc {
+public:
+    GreenScreenEffect() : low(35, 100, 50), high(85, 255, 255) {}
+    void init() override {}
+    void setLayer(Layer *layer_) {
+        layer = layer_;
+    }
+    
+    void setLow(const cv::Scalar &l) {
+        low = l;
+    }
+    void setHigh(const cv::Scalar &h) {
+        high = h;
+    }
+
+    void proc(cv::Mat &frame) override {
+        if(layer == nullptr) return;
+        cv::Mat mat;
+        if(layer->hasNext() && layer->read(mat)) {
+            cv::Mat mask, result;
+            cv::Mat resized;
+            cv::resize(mat, resized, frame.size());
+            chromaKeyMask(frame, mask);
+            refineMask(mask);
+            frame.copyTo(result, mask);
+            for(int z = 0; z < frame.rows; ++z) {
+                for(int i = 0; i < frame.cols; ++i) {
+                    cv::Vec3b pixel = result.at<cv::Vec3b>(z, i);
+                    cv::Vec3b &pix = frame.at<cv::Vec3b>(z, i);
+                    if(pixel == cv::Vec3b(0, 0, 0)) {
+                        cv::Vec3b src1 = frame.at<cv::Vec3b>(z, i);
+                        cv::Vec3b src2 = resized.at<cv::Vec3b>(z, i);
+                        for(int q = 0; q < 3; ++q) {
+                            pix[q] = ac::wrap_cast( (0.5 * src1[q]) + (0.5 * src2[q]) );
+                        }
+                    } else {
+                        pix = cv::Vec3b(0, 0, 0);
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {}
+
+private:
+    cv::Scalar low, high;
+    Layer *layer = nullptr;
+    void chromaKeyMask(const cv::Mat &frame, cv::Mat &mask) {
+        cv::Mat hsvFrame;
+        cv::cvtColor(frame, hsvFrame, cv::COLOR_BGR2HSV);
+        cv::inRange(hsvFrame, low, high, mask);
+    }
+    void refineMask(cv::Mat &mask) {
+        cv::erode(mask, mask, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+        cv::dilate(mask, mask, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+        cv::medianBlur(mask, mask, 7);
     }
 };
 

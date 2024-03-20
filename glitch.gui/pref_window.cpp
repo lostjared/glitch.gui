@@ -132,6 +132,16 @@ void PrefWindow::grab_color1() {
 
         }
     }
+    filter_f = findIn("New_Layer_0_GreenScreen_Opposite");
+    if(filter_f != -1) {
+        try {
+            GreenScreenEffect *g_e = dynamic_cast<GreenScreenEffect *>(new_filter_list[filter_f].filter);
+            g_e->setLow(color_s);
+        }
+        catch(...) {
+
+        }
+    }
 
 }
 
@@ -148,6 +158,16 @@ void PrefWindow::grab_color2() {
             BackgroundReplacementEffect *bg_e = dynamic_cast<BackgroundReplacementEffect *>(new_filter_list[filter_f].filter);
             bg_e->setHigh(color_s);
         } 
+        catch(...) {
+
+        }
+    }
+    filter_f = findIn("New_Layer_0_GreenScreen_Opposite");
+    if(filter_f != -1) {
+        try {
+            GreenScreenEffect *g_e = dynamic_cast<GreenScreenEffect *>(new_filter_list[filter_f].filter);
+            g_e->setHigh(color_s);
+        }
         catch(...) {
 
         }
