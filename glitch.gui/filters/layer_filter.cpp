@@ -401,6 +401,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     RGB_Real_Increase *r_real = new RGB_Real_Increase();
     new_filter_list.push_back({"New_Real_Inc", r_real});
 
+    AugmentedSketchesEffect *aug_s = new AugmentedSketchesEffect();
+    new_filter_list.push_back({"New_Augmented_Sketch", aug_s});
+
     BackgroundSubtractionFilter *bg_sub = new BackgroundSubtractionFilter(false);
     new_filter_list.push_back({"New_Background_Subtract", bg_sub});
 

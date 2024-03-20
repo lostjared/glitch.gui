@@ -3368,6 +3368,32 @@ private:
     bool blend = false;
 };
 
+class AugmentedSketchesEffect : public FilterFunc {
+public:
+    AugmentedSketchesEffect() : lastPosition(-1, -1) {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        cv::Mat sketchFrame = createSketch(frame);
+        frame = sketchFrame; 
+    }
+    void clear() override {}
+private:
+    cv::Point lastPosition;
+    cv::Mat createSketch(const cv::Mat &frame) {
+        cv::Mat gray, edges, dilatedEdges, sketchFrame;
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::GaussianBlur(gray, gray, cv::Size(5, 5), 0);
+        cv::Canny(gray, edges, 30, 90);
+        cv::Mat dilationKernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+        cv::dilate(edges, dilatedEdges, dilationKernel);
+        cv::bitwise_not(dilatedEdges, edges);
+        cv::cvtColor(edges, sketchFrame, cv::COLOR_GRAY2BGR);
+        return sketchFrame;
+    }
+
+};
+
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 
