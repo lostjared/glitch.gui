@@ -618,6 +618,38 @@ private:
     Layer *layer_;
 };
 
+class Layer_Fill_White : public FilterFunc {
+public:
+    void init() override {
+        
+    }
+    void setLayer(Layer *layer) {
+        layer_ = layer;
+    }
+    void proc(cv::Mat &frame) override {
+        cv::Mat layer1;
+        if(layer_->hasNext()) {
+            if(layer_->read(layer1)) {
+                cv::Mat resized;
+                cv::resize(layer1, resized, frame.size());
+                for(int z = 0; z < frame.rows; ++z) {
+                    for(int i = 0; i < frame.cols; ++i) {
+                        cv::Vec3b &pix1 = frame.at<cv::Vec3b>(z, i);
+                        if(pix1[0] > 225 && pix1[1] > 225 && pix1[2] > 225) {
+                            setvec(pix1,resized.at<cv::Vec3b>(z, i));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void clear() override {
+        
+    }
+private:
+    Layer *layer_;
+};
+
 class Layer0_Wave : public FilterFunc {
 public:
     void init() override {
@@ -3390,12 +3422,8 @@ private:
         cv::cvtColor(edges, sketchFrame, cv::COLOR_GRAY2BGR);
         return sketchFrame;
     }
-
 };
 
-
 void add_layer_filters(Layer&,Layer&,Layer&);
-
-
 
 #endif

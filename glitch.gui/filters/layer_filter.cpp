@@ -156,6 +156,10 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     z_fill->setLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Fill_Zero", z_fill});
 
+    Layer_Fill_White *w_fill = new Layer_Fill_White();
+    w_fill->setLayer(&layer1);
+    new_filter_list.push_back({"New_Layer_0_Fill_White", w_fill});
+    
     ThreshEffect_Layer *t_l = new ThreshEffect_Layer ();
     t_l->initLayer(&layer1);
     new_filter_list.push_back({"New_Layer_0_Threshold_Rand", t_l});
