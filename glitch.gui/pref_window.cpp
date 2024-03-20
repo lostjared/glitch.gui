@@ -80,8 +80,6 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     frac_speed->setToolTip(tr("Speed of Zoom for animation"));
     frac_max->setText("250000");
     frac_max->setToolTip(tr("Max depth of zoom"));
-   //cv::Scalar lowerGreen(35, 50, 50);
-   ///cv::Scalar upperGreen(85, 255, 255);
     QColor color(50,50,35);
     QVariant variant = color;
     QString color_var = variant.toString();
