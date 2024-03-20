@@ -80,6 +80,8 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     frac_speed->setToolTip(tr("Speed of Zoom for animation"));
     frac_max->setText("250000");
     frac_max->setToolTip(tr("Max depth of zoom"));
+   //cv::Scalar lowerGreen(35, 50, 50);
+   ///cv::Scalar upperGreen(85, 255, 255);
     QColor color(50,50,35);
     QVariant variant = color;
     QString color_var = variant.toString();
@@ -105,6 +107,15 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
     connect(color_stop_btn, SIGNAL(clicked()), this, SLOT(grab_color2()));
 }
 
+int PrefWindow::findIn(const std::string &n) {
+    for(size_t i = 0; i < new_filter_list.size(); ++i) {
+       if(new_filter_list[i].name == n)
+            return i;
+    }
+    return -1;
+}
+
+
 void PrefWindow::grab_color1() {
     QColorDialog *dialog = new QColorDialog(this);
     QColor color=  dialog->getColor();
@@ -112,13 +123,6 @@ void PrefWindow::grab_color1() {
     QString color_var = variant.toString();
     cv::Scalar color_s (color.blue(), color.green(), color.red());
     color_start->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
-    auto findIn = [&](const std::string &n) -> int {
-        for(size_t i = 0; i < new_filter_list.size(); ++i) {
-            if(new_filter_list[i].name == n)
-                return i;
-        }
-        return -1;
-    };
     int filter_f = findIn("New_Layer_0_GreenScreen");
     if(filter_f != -1) {
         try {
@@ -138,13 +142,6 @@ void PrefWindow::grab_color2() {
     QString color_var = variant.toString();
     cv::Scalar color_s (color.blue(), color.green(), color.red());
     color_stop->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
-        auto findIn = [&](const std::string &n) -> int {
-        for(size_t i = 0; i < new_filter_list.size(); ++i) {
-            if(new_filter_list[i].name == n)
-                return i;
-        }
-        return -1;
-    };
     int filter_f = findIn("New_Layer_0_GreenScreen");
     if(filter_f != -1) {
         try {
@@ -163,13 +160,6 @@ void PrefWindow::setMainWindow(MainWindow *m) {
 
 void PrefWindow::pref_Save() {
     settings.setValue("chk_path", chk_path->isChecked());  
-    auto findIn = [&](const std::string &n) -> int {
-        for(size_t i = 0; i < new_filter_list.size(); ++i) {
-            if(new_filter_list[i].name == n)
-                return i;
-        }
-        return -1;
-    };
     int filter_f = findIn("New_Low_Fractal");
     if(filter_f != -1) {
         Fractal *f = dynamic_cast<Fractal *>(new_filter_list[filter_f].filter);
