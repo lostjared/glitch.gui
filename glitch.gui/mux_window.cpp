@@ -13,7 +13,7 @@ MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
     file_source->setGeometry(25, 25, 300, 25);
     file_copy = new QLabel("[ Audio to Copy ]", this);
     file_copy->setGeometry(25, 60, 300, 25);
-    file_dest = new QLabel("[ Destination FIle ]", this);
+    file_dest = new QLabel("[ Destination File ]", this);
     file_dest->setGeometry(25, 60+25+5, 300, 25);
 
     select_source = new QPushButton(tr("Select File"), this);
@@ -36,20 +36,26 @@ MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
 void MuxWindow::select_Source() {
     QString path = "";
     QString filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.mov *.mp4 *.mkv)"));
-    file_source->setText(filename);
-    values_set[0] = true;
+    if(filename != "") {
+        file_source->setText(filename);
+        values_set[0] = true;
+    }
 }
 void MuxWindow::select_Copy() {
     QString path = "";
     QString filename = QFileDialog::getOpenFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.mov *.mp4 *.mkv)"));
-    file_copy->setText(filename);
-    values_set[1] = true;
+    if(filename != "") {
+        file_copy->setText(filename);
+        values_set[1] = true;
+    }
 }
 void MuxWindow::select_Dest() {
     QString path = "";
     QString filename = QFileDialog::getSaveFileName(this,tr("Open Image/Video"), path, tr("Image/Video Files (*.mp4 *.mov *.mkv)"));
-    file_dest->setText(filename);
-    values_set[2] = true;
+    if(filename != "") {
+        file_dest->setText(filename);
+        values_set[2] = true;
+    }
 }
 void MuxWindow::mux_Files() {
     if(values_set[0] && values_set[1] && values_set[2]) {
