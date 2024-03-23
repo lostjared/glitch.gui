@@ -56,6 +56,6 @@ int main(int argc, char **argv) {
     MainWindow main_window;
     main_window.show();
     app.exec();
-    std::cout << "glitch-gui: Shutdown Successful... Exiting \n";
+    std::cout << "glitch-gui: Shutdown Successful...\n";
    return 0;
 }
