@@ -11,18 +11,18 @@
 QSettings settings("LostSideDead", "glitch.gui");
 std::string current_path;
 
-
-class ScopedRAII {
+// RAII 
+class ScopedConsoleSettings {
 public:
-    ScopedRAII() {
-        std::cout << "Setting Console Mode Settings...\n";
+    ScopedConsoleSettings() {
+        std::cout << "Setting Console Mode Setings...\n";
 #ifdef _WIN32
         hInput = GetStdHandle(STD_INPUT_HANDLE);
         GetConsoleMode(hInput, &prev_mode); 
         SetConsoleMode(hInput, ENABLE_EXTENDED_FLAGS | (prev_mode & ~ENABLE_QUICK_EDIT_MODE));
 #endif
     }
-    ~ScopedRAII() {
+    ~ScopedConsoleSettings() {
         std::cout << "Restoring Console Settings...\n";
 #ifdef _WIN32
         SetConsoleMode(hInput, prev_mode);
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
     srand(static_cast<unsigned int>(time(0)));
     std::cout << APP_NAME << " v" << APP_VERSION << "\n";
     std::cout << APP_YEAR << " LostSideDead Software. GPL v3.\nLoading...\n";
-    ScopedRAII scopedConsoleMode;
+    ScopedConsoleSettings scopedConsoleMode;
     ac::init();
     ac::setMaxAllocated(325);
     std::cout << "libacidcam v" << ac::version << " succesfully loaded...\n";
