@@ -414,6 +414,9 @@ void add_layer_filters(Layer &layer1, Layer &layer2, Layer &layer3) {
     BackgroundSubtractionFilter *bg_sub_b = new BackgroundSubtractionFilter(true);
     new_filter_list.push_back({"New_Background_Subtract_Blend", bg_sub_b});
 
+    MultipleExposureEffect *mul_exp = new MultipleExposureEffect(32);
+    new_filter_list.push_back({"New_MultipleExposure", mul_exp});
+
     ColorMap *color_map_autumn = new ColorMap(0);
     new_filter_list.push_back({"New_ColorMap_AUTUMN", color_map_autumn});
 

@@ -3424,6 +3424,41 @@ private:
     }
 };
 
+class MultipleExposureEffect : public FilterFunc {
+public:
+    MultipleExposureEffect(size_t bufferLength = 4) : bufferLength(bufferLength) {}
+    void init() override {}
+    void proc(cv::Mat &frame) override {
+        addToBuffer(frame);
+        frame = blendBuffer();
+    }
+    void clear() override {
+        frameBuffer.clear();
+    }
+
+private:
+    std::deque<cv::Mat> frameBuffer;
+    size_t bufferLength;
+
+    void addToBuffer(const cv::Mat &frame) {
+        cv::Mat currentFrame;
+        frame.copyTo(currentFrame);
+        if (frameBuffer.size() >= bufferLength) {
+            frameBuffer.pop_front();
+        }
+        frameBuffer.push_back(currentFrame);
+    }
+
+    cv::Mat blendBuffer() {
+        cv::Mat blended = cv::Mat::zeros(frameBuffer.front().size(), frameBuffer.front().type());
+        float weight = 1.0f / static_cast<float>(frameBuffer.size());
+        for (const auto& frame : frameBuffer) {
+            cv::addWeighted(blended, 1.0, frame, weight, 0.0, blended);
+        }
+        return blended;
+    }
+};
+
 void add_layer_filters(Layer&,Layer&,Layer&);
 
 #endif
