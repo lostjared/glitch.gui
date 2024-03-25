@@ -64,7 +64,7 @@ MainWindow::MainWindow()  {
         debug_window->show();
     
     toolbox_window = new ToolboxWindow(this);
-    toolbox_window->setGeometry(100,100,250,400);
+    toolbox_window->setGeometry(25,25,250,400);
     toolbox_window->setMainWindow(this);
     toolbox_window->show();
     
@@ -293,7 +293,7 @@ MainWindow::MainWindow()  {
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
     help_menu->addAction(help_about);
     
-    setGeometry(375,100,640,480);
+    setGeometry(30+toolbox_window->width(),25,640,480);
     
     filter_cat = new QComboBox(this);
     filter_cat->setToolTip(tr("Filter Categories"));

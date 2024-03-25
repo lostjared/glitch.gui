@@ -4,7 +4,7 @@
 #include"version_info.hpp"
 // Debug Window constructor - (init)
 DebugWindow::DebugWindow(QWidget *parent) : QDialog(parent) {
-    setGeometry(10, 600, 1280, 320);
+    setGeometry(15, 460, 1280, 320);
     setFixedSize(1280, 320);
     setWindowFlag(Qt::Tool);
     setWindowTitle(tr("Debug Console"));
