@@ -105,6 +105,10 @@ PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
 
     connect(color_start_btn, SIGNAL(clicked()), this, SLOT(grab_color1()));
     connect(color_stop_btn, SIGNAL(clicked()), this, SLOT(grab_color2()));
+
+    show_debug = new QCheckBox(tr("SHow Debug on Startup"), this);
+    show_debug->setGeometry(15, 300, 200, 25);
+    show_debug->setChecked(settings.value("chk_dbg", true).toBool());
 }
 
 int PrefWindow::findIn(const std::string &n) {
@@ -180,6 +184,7 @@ void PrefWindow::setMainWindow(MainWindow *m) {
 
 void PrefWindow::pref_Save() {
     settings.setValue("chk_path", chk_path->isChecked());  
+    settings.setValue("chk_dbg", show_debug->isChecked());
     int filter_f = findIn("New_Low_Fractal");
     if(filter_f != -1) {
         Fractal *f = dynamic_cast<Fractal *>(new_filter_list[filter_f].filter);

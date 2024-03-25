@@ -60,7 +60,8 @@ MainWindow::MainWindow()  {
     pref_window->hide();  
     //build_lists(pref_window->custom_path_lbl->text().toStdString());
     debug_window = new DebugWindow(this);
-    debug_window->show();
+    if(settings.value("chk_dbg", true).toBool() == true)
+        debug_window->show();
     
     toolbox_window = new ToolboxWindow(this);
     toolbox_window->setGeometry(100,100,250,400);

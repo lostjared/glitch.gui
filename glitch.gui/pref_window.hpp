@@ -35,6 +35,7 @@ private:
     QLineEdit *frac_real, *frac_imag, *frac_zoom, *frac_iter, *frac_speed, *frac_max;
     QLabel *color_start, *color_stop;
     QPushButton *color_start_btn, *color_stop_btn;
+    QCheckBox *show_debug;
     int findIn(const std::string &s);
 };
 
