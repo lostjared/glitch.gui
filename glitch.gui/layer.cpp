@@ -1,4 +1,5 @@
 #include"layer.hpp"
+#include<QTextStream>
 
 bool checkThere(std::string src, const std::vector<std::string> &keys) {
     std::string s;
