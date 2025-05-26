@@ -44,8 +44,8 @@ template<typename T>
 class KnobT {
 public:
     KnobT() : value_{}, speed{}, min_{}, max_{} {}
-    KnobT(const KnobT<T> &type) : value_{type.value_}, speed{type.speed}, min_{type.min}, max_{type.max} {}
-    KnobT(KnobT<T> &&type) : value_{type.value_}, speed{type.speed}, min_{type.min}, max_{type.max} {}
+    KnobT(const KnobT<T> &type) : value_{type.value_}, speed{type.speed}, min_{type.min_}, max_{type.max_} {}
+    KnobT(KnobT<T> &&type) : value_{type.value_}, speed{type.speed}, min_{type.min_}, max_{type.max_} {}
     
     KnobT(T v, T s, T min_x, T max_x) {
         initvalues(v, s, min_x, max_x);
