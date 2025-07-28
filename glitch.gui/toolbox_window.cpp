@@ -10,7 +10,7 @@ ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     setWindowFlags(Qt::WindowType::Tool);
     save_snapshot = new QPushButton(tr("Save"), this);
     save_snapshot->setToolTip(tr("Save Snapshot Image"));
-
+    setWindowIcon(QIcon(":/images/icon.png"));
     save_snapshot->setGeometry(10, 10, 100, 25);
     connect(save_snapshot, SIGNAL(clicked()), this, SLOT(saveSnapshot()));
     
