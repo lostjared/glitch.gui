@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
     ~MainWindow();
+    void closeEvent(QCloseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void keyShiftUp();

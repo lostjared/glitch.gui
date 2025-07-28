@@ -50,6 +50,13 @@ MainWindow::~MainWindow() {
     release_filter_list();
     std::cout << "glitch-gui: Shutdown Successful... Exiting \n";
 }
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    QMainWindow::closeEvent(event);
+    QCoreApplication::instance()->quit();
+}
+
+
 #ifdef __APPLE__
 extern std::string current_path;
 #endif
