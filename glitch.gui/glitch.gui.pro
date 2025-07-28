@@ -8,8 +8,7 @@ INCLUDEPATH += .
 QT += widgets 
 QT += webenginewidgets
 CONFIG += c++17
-QMAKE_LFLAGS += -Wl,-rpath,/usr/local/lib -lstdc++fs
-
+QMAKE_LFLAGS += -Wl,-rpath,/usr/local/lib 
 
 
 # You can make your code fail to compile if you use deprecated APIs.
@@ -18,7 +17,7 @@ QMAKE_LFLAGS += -Wl,-rpath,/usr/local/lib -lstdc++fs
 # how to port your code away from it.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-LIBS += `pkg-config acidcam opencv4 --libs` 
+LIBS += `pkg-config acidcam opencv4 --libs` -lstdc++fs 
 QMAKE_CXXFLAGS += -std=c++17 -O3 `pkg-config acidcam opencv4 --cflags` -D_HAS_WEBVIEW_H_
 # Input
 RESOURCES += resources.qrc
