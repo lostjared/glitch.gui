@@ -7,9 +7,10 @@ TARGET = glitch.gui
 INCLUDEPATH += .
 QT += widgets 
 QT += webenginewidgets
-macx {
-      QMAKE_LFLAGS += -Wl,-rpath,/usr/local/lib
-}
+CONFIG += c++17
+QMAKE_LFLAGS += -Wl,-rpath,/usr/local/lib -lstdc++fs
+
+
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.

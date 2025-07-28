@@ -115,6 +115,7 @@ MainWindow::MainWindow()  {
 
     setFixedSize(640, 390);
     setWindowTitle(tr(APP_NAME));
+    menuBar()->setNativeMenuBar(false);
     file_menu = menuBar()->addMenu(tr("&File"));
     file_open = new QAction(tr("&Create New Art"), this);
     file_open->setShortcut(tr("Ctrl+N"));
