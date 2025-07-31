@@ -46,7 +46,7 @@ enter directory of glitch.gui
     make -j8
     ./glitch.gui
 
-Download for ARM64 Apple Silicon Sequoia  15.5+ [https://lostsidedead.biz/downlaod/glitch](https://lostsidedead.biz/download/glitch/)
+Download for ARM64 Apple Silicon Sequoia  15.5+ [https://lostsidedead.biz/download/glitch](https://lostsidedead.biz/download/glitch/)
 
 Example created with this software using source image from AiVision on Deep Dream Generator.
 
