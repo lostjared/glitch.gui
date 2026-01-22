@@ -6,104 +6,145 @@
 #include<QFileDialog>
 #include<QFile>
 #include<QMessageBox>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QGridLayout>
+#include<QScreen>
+#include<QApplication>
 #include<sstream>
 
 extern std::string current_path;
 
 RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
-    setGeometry(1200, 100, 460, 220);
-    setFixedSize(460, 220);
     setWindowTitle(tr("Record Options"));
     
-    QLabel *ff_lbl = new QLabel(tr("FFMpeg path:"), this);
-    ff_lbl->setGeometry(25, 25, 100, 25);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(12);
+    
+    QGridLayout *pathLayout = new QGridLayout();
+    pathLayout->setSpacing(8);
+    QLabel *ff_lbl = new QLabel(tr("FFMpeg path:"));
     ffmpeg_path = new QLineEdit(this);
     ffmpeg_path->setToolTip(tr("Set path for FFmpeg executable"));
+    ffmpeg_path->setMinimumWidth(200);
 #if defined(_WIN32)
     ffmpeg_path->setText("ffmpeg");
 #elif defined(__linux__)
     ffmpeg_path->setText("/usr/bin/ffmpeg");
 #elif defined(__APPLE__)
-    //std::string p = current_path;
-    //p += "ffmpeg";
-    //ffmpeg_path->setText(p.c_str());
     ffmpeg_path->setText("/usr/local/bin/ffmpeg");
 #endif
-
-    ffmpeg_path->setGeometry(25+100,25,225,25);
-
-    ffmpeg_man = new QCheckBox(tr("Set Path"), this);
-    ffmpeg_man->setGeometry(25+100+225+10, 25, 100, 25);
-
     ffmpeg_path->setEnabled(false);
-
+    ffmpeg_man = new QCheckBox(tr("Set Path"));
     connect(ffmpeg_man, SIGNAL(clicked()), this, SLOT(setPath()));
     
-    QLabel *ff_type = new QLabel(tr("Codec: "), this);
-    ff_type->setGeometry(25, 75, 50, 25);
+    pathLayout->addWidget(ff_lbl, 0, 0);
+    pathLayout->addWidget(ffmpeg_path, 0, 1);
+    pathLayout->addWidget(ffmpeg_man, 0, 2);
+    mainLayout->addLayout(pathLayout);
+    
+    QGridLayout *codecLayout = new QGridLayout();
+    codecLayout->setSpacing(8);
+    QLabel *ff_type = new QLabel(tr("Codec:"));
     ffmpeg_type = new QComboBox(this);
     ffmpeg_type->setToolTip(tr("Codec to use for encoding of video"));
-    ffmpeg_type->setGeometry(25+50, 75, 100, 25);
+    ffmpeg_type->setMinimumWidth(150);
     ffmpeg_type->addItem(tr("x264"));
     ffmpeg_type->addItem(tr("x265"));
+    ffmpeg_type->addItem(tr("H.264 NVENC"));
+    ffmpeg_type->addItem(tr("HEVC NVENC"));
+    ffmpeg_type->addItem(tr("H.264 VAAPI"));
+    ffmpeg_type->addItem(tr("HEVC VAAPI"));
     ffmpeg_type->addItem(tr("PNG"));
-    QLabel *lbl_crf = new QLabel(tr("CRF"), this);
-    lbl_crf->setGeometry(180, 75, 50, 25);
-
-    ffmpeg_crf = new QLineEdit(this);
-    ffmpeg_crf->setToolTip(tr("How much compression to use"));
-    ffmpeg_crf->setText("24");
-    ffmpeg_crf->setGeometry(180+50+5, 75, 100, 25);
-
-    settings_save = new QPushButton(tr("Save"), this);
-    settings_save->setToolTip(tr("Save Settings"));
-    settings_save->setGeometry(width()-125,height()-45, 100, 25);
-
-    stretch_video = new QCheckBox(tr("Stretch"), this);
-    stretch_video->setToolTip(tr("Do you wish to stretch this vieo"));
-    stretch_video->setGeometry(25,height()-45, 100, 25);
-
-    stretch_width = new QLineEdit(this);
-    stretch_width->setGeometry(125,height()-45,75,25);
-    stretch_width->setText("1280");
-    stretch_width->setToolTip(tr("Stretch Width"));
-    stretch_width->setEnabled(false);
-
-    stretch_height = new QLineEdit(this);
-    stretch_height->setGeometry(125+75+10,height()-45, 75,25);
-    stretch_height->setText("720");
-    stretch_height->setToolTip(tr("Stretch height"));
-    stretch_height->setEnabled(false);
-
-
-    connect(stretch_video, SIGNAL(clicked()), this, SLOT(stateChecked()));
-    connect(settings_save, SIGNAL(clicked()), this, SLOT(saveSettings()));
-
-    QLabel *ff_fps = new QLabel(tr("FPS: "), this);
-    ff_fps->setGeometry(25, 105, 50, 25);
-
+    connect(ffmpeg_type, SIGNAL(currentIndexChanged(int)), this, SLOT(onCodecChanged(int)));
+    
+    QLabel *lbl_crf = new QLabel(tr("Quality"));
+    ffmpeg_crf = new QSpinBox(this);
+    ffmpeg_crf->setToolTip(tr("Compression level (lower=better quality, higher=faster)"));
+    ffmpeg_crf->setValue(24);
+    ffmpeg_crf->setMinimum(0);
+    ffmpeg_crf->setMaximum(51);
+    ffmpeg_crf->setMinimumWidth(70);
+    
+    codecLayout->addWidget(ff_type, 0, 0);
+    codecLayout->addWidget(ffmpeg_type, 0, 1);
+    codecLayout->addWidget(lbl_crf, 0, 2);
+    codecLayout->addWidget(ffmpeg_crf, 0, 3);
+    mainLayout->addLayout(codecLayout);
+    
+    QGridLayout *fpsLayout = new QGridLayout();
+    fpsLayout->setSpacing(8);
+    QLabel *ff_fps = new QLabel(tr("FPS:"));
     ffmpeg_fps = new QLineEdit(this);
     ffmpeg_fps->setToolTip(tr("Frames Per Second"));
-    ffmpeg_fps->setGeometry(75, 105, 100, 25);
     ffmpeg_fps->setText(tr("30"));
-
-    ffmpeg_same = new QCheckBox(this);
-    ffmpeg_same->setGeometry(185,105,120,25);
-    ffmpeg_same->setText(tr("Same as Source"));
+    ffmpeg_fps->setMaximumWidth(100);
+    ffmpeg_fps->setEnabled(false);
+    
+    ffmpeg_same = new QCheckBox(tr("Same as Source"));
     ffmpeg_same->setToolTip(tr("Use same rate as input file"));
     ffmpeg_same->setChecked(true);
-    ffmpeg_fps->setEnabled(false);
-
     connect(ffmpeg_same, SIGNAL(clicked()), this, SLOT(chkStateChanged()));
-
-    ffmpeg_file = new QLabel(tr("Select File Path"), this);
-    ffmpeg_file->setGeometry(25,105+25+5, 300, 25);
-    ffmpeg_file_set = new QPushButton(tr("Select"), this);
-    ffmpeg_file_set->setToolTip(tr("Select Path"));
-    ffmpeg_file_set->setGeometry(25+310,105+25+5,100,25);
-
+    
+    fpsLayout->addWidget(ff_fps, 0, 0);
+    fpsLayout->addWidget(ffmpeg_fps, 0, 1);
+    fpsLayout->addWidget(ffmpeg_same, 0, 2);
+    fpsLayout->setColumnStretch(3, 1);
+    mainLayout->addLayout(fpsLayout);
+    
+    QGridLayout *stretchLayout = new QGridLayout();
+    stretchLayout->setSpacing(8);
+    stretch_video = new QCheckBox(tr("Stretch Video"));
+    stretch_video->setToolTip(tr("Do you wish to stretch this video"));
+    connect(stretch_video, SIGNAL(clicked()), this, SLOT(stateChecked()));
+    
+    stretch_width = new QLineEdit(this);
+    stretch_width->setText("1280");
+    stretch_width->setToolTip(tr("Stretch Width"));
+    stretch_width->setMaximumWidth(80);
+    stretch_width->setEnabled(false);
+    
+    stretch_height = new QLineEdit(this);
+    stretch_height->setText("720");
+    stretch_height->setToolTip(tr("Stretch Height"));
+    stretch_height->setMaximumWidth(80);
+    stretch_height->setEnabled(false);
+    
+    stretchLayout->addWidget(stretch_video, 0, 0);
+    stretchLayout->addWidget(stretch_width, 0, 1);
+    stretchLayout->addWidget(stretch_height, 0, 2);
+    stretchLayout->setColumnStretch(3, 1);
+    mainLayout->addLayout(stretchLayout);
+    
+    QHBoxLayout *fileLayout = new QHBoxLayout();
+    fileLayout->setSpacing(8);
+    ffmpeg_file = new QLabel(tr("Select File Path"));
+    ffmpeg_file_set = new QPushButton(tr("Select"));
+    ffmpeg_file_set->setToolTip(tr("Select Output Directory"));
+    ffmpeg_file_set->setMinimumWidth(100);
     connect(ffmpeg_file_set, SIGNAL(clicked()), this, SLOT(selectPath()));
-    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    
+    fileLayout->addWidget(ffmpeg_file);
+    fileLayout->addStretch();
+    fileLayout->addWidget(ffmpeg_file_set);
+    mainLayout->addLayout(fileLayout);
+    
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setSpacing(8);
+    buttonLayout->addStretch();
+    settings_save = new QPushButton(tr("Save"));
+    settings_save->setToolTip(tr("Save Settings"));
+    settings_save->setMinimumWidth(100);
+    connect(settings_save, SIGNAL(clicked()), this, SLOT(saveSettings()));
+    buttonLayout->addWidget(settings_save);
+    mainLayout->addLayout(buttonLayout);
+    
+    setLayout(mainLayout);
+    setMinimumWidth(550);
+    setMinimumHeight(320);
+    
+    centerOnScreen();
 }
 
 void RecordWindow::stateChecked() {
@@ -114,6 +155,14 @@ void RecordWindow::stateChecked() {
         stretch_width->setEnabled(false);
         stretch_height->setEnabled(false);
     }
+}
+
+void RecordWindow::centerOnScreen() {
+    QScreen *screen = QApplication::primaryScreen();
+    QRect screenGeometry = screen->geometry();
+    int x = (screenGeometry.width() - width()) / 2 + screenGeometry.x();
+    int y = (screenGeometry.height() - height()) / 2 + screenGeometry.y();
+    move(x, y);
 }
 
 bool RecordWindow::ready() {
@@ -135,7 +184,7 @@ void RecordWindow::setPath() {
 }
 
 void RecordWindow::saveSettings() {
-    int crf = ffmpeg_crf->text().toInt();
+    int crf = ffmpeg_crf->value();
     QFile f(ffmpeg_path->text());
 
     if(ffmpeg_man->isChecked()) {
@@ -144,12 +193,12 @@ void RecordWindow::saveSettings() {
         rec_info.ffmpeg_path = "ffmpeg";
     }
 
-    if(crf < 10 || crf > 40) {
+    if(crf < 0 || crf > 51) {
         QMessageBox msgbox;    
-        msgbox.setWindowTitle(tr("Error invalid CRF value"));
+        msgbox.setWindowTitle(tr("Error invalid quality value"));
         msgbox.setIcon(QMessageBox::Icon::Critical);
         msgbox.setWindowIcon(QIcon(":/images/icon.png"));
-        msgbox.setText(tr("Invalid CRF Value\n"));
+        msgbox.setText(tr("Invalid Quality Value (0-51)\n"));
         msgbox.exec();
         return; 
     }
@@ -174,7 +223,7 @@ void RecordWindow::saveSettings() {
         return;
     }
 
-    rec_info.crf = ffmpeg_crf->text().toStdString();
+    rec_info.crf = std::to_string(crf);
     rec_info.save_png = false;
 
     std::ostringstream stream;
@@ -189,6 +238,18 @@ void RecordWindow::saveSettings() {
             rec_info.codec = "libx265";
         break;
         case 2:
+            rec_info.codec = "h264_nvenc";
+        break;
+        case 3:
+            rec_info.codec = "hevc_nvenc";
+        break;
+        case 4:
+            rec_info.codec = "h264_vaapi";
+        break;
+        case 5:
+            rec_info.codec = "hevc_vaapi";
+        break;
+        case 6:
             rec_info.save_png = true;
             rec_info_set = true;
             if(stretch_video->isChecked()) {
@@ -203,7 +264,6 @@ void RecordWindow::saveSettings() {
                     rec_info.stretch_width = w;
                     rec_info.stretch_height = h;
                 } else { 
-                    // Error message
                     QMessageBox msgbox;    
                     msgbox.setWindowTitle(tr("Error invalid size"));
                     msgbox.setIcon(QMessageBox::Icon::Critical);
@@ -215,7 +275,6 @@ void RecordWindow::saveSettings() {
             } else {
                 rec_info.stretch = false;
             }
-            //main_window->enableRecord();
             hide();
             return;
         break;
@@ -240,7 +299,6 @@ void RecordWindow::saveSettings() {
             rec_info.stretch_width = w;
             rec_info.stretch_height = h;
         } else {
-             // Error message
              QMessageBox msgbox;    
              msgbox.setWindowTitle(tr("Error invalid size"));
              msgbox.setIcon(QMessageBox::Icon::Critical);
@@ -255,7 +313,6 @@ void RecordWindow::saveSettings() {
     }
 
     rec_info_set = true;
-    //main_window->enableRecord();
     main_window->debug_window->Log("gui: Updated record settings...\n");
     if(rec_info.stretch) {
         main_window->debug_window->Log("glitch: Video Stretch: Enabled...\n");
@@ -268,6 +325,14 @@ void RecordWindow::chkStateChanged() {
         ffmpeg_fps->setEnabled(false);
     } else {
         ffmpeg_fps->setEnabled(true);
+    }
+}
+
+void RecordWindow::onCodecChanged(int index) {
+    if(index == 6) {
+        ffmpeg_crf->setEnabled(false);
+    } else {
+        ffmpeg_crf->setEnabled(true);
     }
 }
 

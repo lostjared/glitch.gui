@@ -7,7 +7,8 @@
 #include<QComboBox>
 #include<QCheckBox>
 #include<QLabel>
-#include<QCheckBox>
+#include<QSpinBox>
+#include "ffmpeg_write.h"
 
 class MainWindow;
 
@@ -38,6 +39,7 @@ public:
     QString fps_same;
 
     bool ready();
+    void centerOnScreen();
 
 public slots:
     void saveSettings();
@@ -45,6 +47,7 @@ public slots:
     void selectPath();
     void setPath();
     void stateChecked();
+    void onCodecChanged(int index);
 
 private:
     MainWindow *main_window = nullptr;
@@ -53,9 +56,9 @@ private:
     QLineEdit *stretch_width, *stretch_height;
     QComboBox *ffmpeg_type;
     QPushButton *settings_save;
-    QLineEdit *ffmpeg_fps, *ffmpeg_crf;
- 
-     QLabel *ffmpeg_file;
+    QLineEdit *ffmpeg_fps;
+    QSpinBox *ffmpeg_crf;
+    QLabel *ffmpeg_file;
     QPushButton *ffmpeg_file_set;
     bool path_selected = false;
  };
