@@ -50,33 +50,47 @@ FILE *ffmpeg_open(const char *output, FFmpegCodec codec, const char *dst_res, co
     std::string tag;
     std::string pix_fmt = "yuv420p";
     std::string preset;
-    std::string crf_arg;
+    std::string quality_arg;
     
     if(codec == FFmpegCodec::LIBX265) {
         tag = "-tag:v hvc1";
         preset = "-preset fast";
-        crf_arg = std::string("-crf ") + crf;
+        quality_arg = std::string("-crf ") + crf;
     } else if(codec == FFmpegCodec::LIBX264) {
         preset = "-preset fast";
-        crf_arg = std::string("-crf ") + crf;
+        quality_arg = std::string("-crf ") + crf;
     } else if(codec == FFmpegCodec::H264_NVENC) {
-        preset = "-preset fast";
-        crf_arg = std::string("-crf ") + crf;
+        quality_arg = std::string("-cq ") + crf;
     } else if(codec == FFmpegCodec::HEVC_NVENC) {
-        preset = "-preset fast";
-        crf_arg = std::string("-crf ") + crf;
+        quality_arg = std::string("-cq ") + crf;
     } else if(codec == FFmpegCodec::H264_VAAPI) {
         pix_fmt = "vaapi";
-        crf_arg = std::string("-qp ") + crf;
+        quality_arg = std::string("-qp ") + crf;
     } else if(codec == FFmpegCodec::HEVC_VAAPI) {
         pix_fmt = "vaapi";
-        crf_arg = std::string("-qp ") + crf;
+        quality_arg = std::string("-qp ") + crf;
     }
     
     std::ostringstream stream;
     stream << ffmpeg_path << " -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps 
-           << " -i pipe: -vcodec " << codec_str << " -pix_fmt " << pix_fmt << " " 
-           << tag << " " << preset << " " << crf_arg << " \"" << output << "\"";
+           << " -i pipe: -c:v " << codec_str;
+    
+    if(!quality_arg.empty()) {
+        stream << " " << quality_arg;
+    }
+    if(!preset.empty()) {
+        stream << " " << preset;
+    }
+    if(!pix_fmt.empty() && pix_fmt != "yuv420p") {
+        stream << " -pix_fmt " << pix_fmt;
+    } else if(pix_fmt == "yuv420p") {
+        stream << " -pix_fmt yuv420p";
+    }
+    if(!tag.empty()) {
+        stream << " " << tag;
+    }
+    
+    stream << " \"" << output << "\"";
     
     std::cout << "glitch_gui: " << stream.str() << "\n";
     
