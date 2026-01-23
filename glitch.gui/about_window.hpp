@@ -5,10 +5,8 @@
 #include<QTextEdit>
 #include<QLabel>
 #include<QPushButton>
-//#define _HAS_WEBVIEW_H_
-#ifdef _HAS_WEBVIEW_H_
 #include <QtWebEngineWidgets>
-#endif
+
 class AboutWindow : public QDialog {
     Q_OBJECT
 public:
@@ -18,9 +16,7 @@ protected:
     QTextEdit *edit;
     QLabel *lbl;
     QPushButton *btn_ok;
-#ifdef _HAS_WEBVIEW_H_
     QWebEngineView *view;
-#endif
 };
 
 

@@ -120,7 +120,7 @@ MainWindow::MainWindow()  {
     about_window = new AboutWindow(this);
     about_window->hide();
 
-    setFixedSize(640, 390);
+    setFixedSize(655, 390);
     setWindowTitle(tr(APP_NAME));
     menuBar()->setNativeMenuBar(false);
     file_menu = menuBar()->addMenu(tr("&File"));
@@ -827,20 +827,7 @@ void MainWindow::setSearch() {
 }
 
 void MainWindow::helpAbout() {
-    QString text;
-    QTextStream stream(&text);
-    stream << "Version: " << APP_VERSION << "\n" << APP_YEAR << " LostSideDead Software\nProgrammed by " << AUTHOR_NAME << ".\nSoftware Testing by Boris D. S.\nhttps://lostsidedead.biz\nThis software is dedicated to everyone who has experienced mental illness.\n";
-    QMessageBox box;
-    box.setWindowTitle(tr(APP_NAME));
-    box.setText(text);
-    box.setWindowIcon(QIcon(":/images/icon.png"));
-    box.setIcon(QMessageBox::Icon::Information);
-#ifdef _HAS_WEBVIEW_H_
     about_window->show();
-#else
-       box.exec();
-#endif
-
 }
 
 void MainWindow::firstSet() {
