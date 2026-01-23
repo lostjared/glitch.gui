@@ -1,4 +1,5 @@
 #include<QApplication>
+#include<QFile>
 #include"main_window.hpp"
 #include"pref_window.hpp"
 #include"cat_vec.hpp"
@@ -54,6 +55,13 @@ int main(int argc, char **argv) {
     QString fname = settings.value("chk_filename").toString();
     build_lists(fname.toStdString());
     MainWindow main_window;
+    QFile styleFile(":/stylesheet.qss");
+    if (styleFile.open(QFile::ReadOnly)) {
+        QString style = QLatin1String(styleFile.readAll());
+        app.setStyle("Fusion");
+        app.setStyleSheet(style);
+        styleFile.close();
+    }
     main_window.show();
     app.exec();
     std::cout << "glitch-gui: Shutdown Successful...\n";

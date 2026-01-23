@@ -8,17 +8,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
-find_package(Qt6 COMPONENTS Core Gui Widgets OpenGL Network QUIET)
-if(NOT Qt6_FOUND)
-    find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network)
-    set(QT_VERSION_MAJOR 5)
-else()
-    set(QT_VERSION_MAJOR 6)
-endif()
-
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network WebEngineWidgets)
 
 find_package(OpenGL REQUIRED)
-
 
 find_package(PkgConfig REQUIRED)
 set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/local/lib/pkgconfig")
@@ -113,29 +105,17 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 )
 
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Widgets
-        Qt6::OpenGL
-        Qt6::Network
-        OpenGL::GL
-        ${ACIDCAM_LIBRARIES}
-        ${OPENCV4_LIBRARIES}
-    )
-else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets
-        Qt5::OpenGL
-        Qt5::Network
-        OpenGL::GL
-        ${ACIDCAM_LIBRARIES}
-        ${OPENCV4_LIBRARIES}
-    )
-endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::OpenGL
+    Qt6::Network
+    Qt6::WebEngineWidgets
+    OpenGL::GL
+    ${ACIDCAM_LIBRARIES}
+    ${OPENCV4_LIBRARIES}
+)
 
 
 install(TARGETS ${PROJECT_NAME}
