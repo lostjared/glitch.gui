@@ -26,6 +26,11 @@
 #include"layers_window.hpp"
 #include"about_window.hpp"
 #include<QCoreApplication>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QGridLayout>
+#include<QGroupBox>
+#include<QSplitter>
 
 cv::Mat QImage2Mat(QImage const& src) {
     cv::Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
@@ -66,14 +71,10 @@ MainWindow::MainWindow()  {
     pref_window->setMainWindow(this);
     pref_window->hide();  
     //build_lists(pref_window->custom_path_lbl->text().toStdString());
-    debug_window = new DebugWindow(this);
-    if(settings.value("chk_dbg", true).toBool() == true)
-        debug_window->show();
+    debug_window = new DebugWindow(nullptr);
     
-    toolbox_window = new ToolboxWindow(this);
-    toolbox_window->setGeometry(25,25,250,400);
+    toolbox_window = new ToolboxWindow(nullptr);
     toolbox_window->setMainWindow(this);
-    toolbox_window->show();
     
     display_window = new DisplayWindow(this);
     display_window->setMainWindow(this);
@@ -120,7 +121,8 @@ MainWindow::MainWindow()  {
     about_window = new AboutWindow(this);
     about_window->hide();
 
-    setFixedSize(655, 390);
+    setMinimumSize(700, 420);
+    resize(750, 450);
     setWindowTitle(tr(APP_NAME));
     menuBar()->setNativeMenuBar(false);
     file_menu = menuBar()->addMenu(tr("&File"));
@@ -301,11 +303,20 @@ MainWindow::MainWindow()  {
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
     help_menu->addAction(help_about);
     
-    setGeometry(30+toolbox_window->width(),25,640,480);
+    QWidget *centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    mainLayout->setContentsMargins(10, 10, 10, 10);
+    mainLayout->setSpacing(8);
+    
+    QHBoxLayout *topSection = new QHBoxLayout();
+    topSection->setSpacing(15);
+    
+    QVBoxLayout *leftColumn = new QVBoxLayout();
+    leftColumn->setSpacing(8);
     
     filter_cat = new QComboBox(this);
     filter_cat->setToolTip(tr("Filter Categories"));
-    filter_cat->setGeometry(15, 35, 300, 25);
     
     filter_cat->addItem(tr("In order"));
     filter_cat->addItem(tr("Sorted"));
@@ -318,71 +329,92 @@ MainWindow::MainWindow()  {
     filter_cat->addItem(tr("Playlist"));
     
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(catIndexChanged(int)));
+    leftColumn->addWidget(filter_cat);
     
     filter_list = new QComboBox(this);
     filter_list->setToolTip(tr("List of Filters"));
-    filter_list->setGeometry(15, 35+35, 300, 25);
     connect(filter_list, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     filter_list->setEnabled(true);
+    leftColumn->addWidget(filter_list);
+    
+    content_data = new QTextEdit(this);
+    content_data->setToolTip(tr("Current Information for Process"));
+    content_data->setReadOnly(true);
+    content_data->setText("Content-Data");
+    content_data->setStyleSheet("font-size: 13px;");
+    content_data->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    leftColumn->addWidget(content_data, 1);
+    
+    topSection->addLayout(leftColumn, 1);
+    
+    QVBoxLayout *rightColumn = new QVBoxLayout();
+    rightColumn->setSpacing(8);
+    
+    QHBoxLayout *searchRow = new QHBoxLayout();
+    searchRow->setSpacing(8);
+    filter_search = new QLineEdit(this);
+    filter_search->setToolTip(tr("Search for a filter"));
+    connect(filter_search, SIGNAL(returnPressed()), this, SLOT(searchFilter()));
+    filter_search_button = new QPushButton(tr("Search"), this);
+    filter_search_button->setToolTip(tr("Search for a Filter"));
+    filter_search_button->setMinimumWidth(70);
+    connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
+    searchRow->addWidget(filter_search);
+    searchRow->addWidget(filter_search_button);
+    rightColumn->addLayout(searchRow);
+    
+    filter_first = new QLabel(tr("First: None"), this);
+    rightColumn->addWidget(filter_first);
     
     filter_list_view = new QListWidget(this);
     filter_list_view->setToolTip(tr("Filter List View"));
-    filter_list_view->setGeometry(315+10,105,300,200); 
-    
+    filter_list_view->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(filter_list_view, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(listDoubleClicked(QListWidgetItem *)));
-
-    filter_search = new QLineEdit(this);
-    filter_search->setToolTip(tr("Search for a filter"));
-    filter_search->setGeometry(300+15+10, 35, 300-75, 30);
-    connect(filter_search, SIGNAL(returnPressed()), this, SLOT(searchFilter()));
+    rightColumn->addWidget(filter_list_view, 1);
     
-    filter_search_button = new QPushButton(tr("Search"), this);
-    filter_search_button->setToolTip(tr("Search for a Filter"));
-    filter_search_button->setGeometry(300+15+10+225+10, 35, 70, 30);
+    topSection->addLayout(rightColumn, 1);
+    mainLayout->addLayout(topSection, 1);
     
-    connect(filter_search_button, SIGNAL(clicked()), this, SLOT(searchFilter()));
+    QHBoxLayout *buttonRow = new QHBoxLayout();
+    buttonRow->setSpacing(8);
     
     filter_search_set = new QPushButton(tr("Select"), this);
     filter_search_set->setToolTip(tr("Set Current Filter"));
-    filter_search_set->setGeometry(15, 35+25+10+200+10+35, 70, 30);
-    
     connect(filter_search_set, SIGNAL(clicked()), this, SLOT(setSearch()));
+    buttonRow->addWidget(filter_search_set);
 
-    filter_first_set = new QPushButton(tr("&First"), this);
+    filter_first_set = new QPushButton(tr("First"), this);
     filter_first_set->setToolTip(tr("Set as First called Filter"));
-    filter_first_set->setGeometry(15+70+10, 35+25+10+200+10+35, 70, 30);
-    
     connect(filter_first_set, SIGNAL(clicked()), this, SLOT(firstSet()));
+    buttonRow->addWidget(filter_first_set);
     
-    filter_first_clear = new QPushButton(tr("&Clear"), this);
+    filter_first_clear = new QPushButton(tr("Clear"), this);
     filter_first_clear->setToolTip(tr("Clear first called Filter"));
-    filter_first_clear->setGeometry(15+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-    
     connect(filter_first_clear, SIGNAL(clicked()), this, SLOT(firstClear()));
-
-    filter_set_custom = new QPushButton(tr("Custom"), this);
-    filter_set_custom->setToolTip(tr("Set current select search item to Custom Filter"));
-    filter_set_custom->setGeometry(15+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-    
-    connect(filter_set_custom, SIGNAL(clicked()), this, SLOT(custom_Add()));
+    buttonRow->addWidget(filter_first_clear);
 
     filter_add_custom = new QPushButton(tr("Add"), this);
     filter_add_custom->setToolTip(tr("Add Current Select Filter to Custom Filter"));
-    filter_add_custom->setGeometry(15+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-    
     connect(filter_add_custom, SIGNAL(clicked()), this, SLOT(custom_filter_add()));
+    buttonRow->addWidget(filter_add_custom);
+
+    filter_set_custom = new QPushButton(tr("Custom"), this);
+    filter_set_custom->setToolTip(tr("Set current select search item to Custom Filter"));
+    connect(filter_set_custom, SIGNAL(clicked()), this, SLOT(custom_Add()));
+    buttonRow->addWidget(filter_set_custom);
     
     filter_release = new QPushButton(tr("Release"), this);
     filter_release->setToolTip(tr("Release Stored Frames"));
-    filter_release->setGeometry(15+70+10+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-
     connect(filter_release, SIGNAL(clicked()), this, SLOT(filterRelease()));
+    buttonRow->addWidget(filter_release);
 
     filter_btn_exit = new QPushButton(tr("Exit"), this);
     filter_btn_exit->setToolTip(tr("Exit the program"));
-    filter_btn_exit->setGeometry(15+70+10+70+10+70+10+70+10+70+10+70+10, 35+25+10+200+10+35, 70, 30);
-
     connect(filter_btn_exit, SIGNAL(clicked()), this, SLOT(quitProgram()));
+    buttonRow->addWidget(filter_btn_exit);
+    
+    buttonRow->addStretch();
+    mainLayout->addLayout(buttonRow);
 
     filter_list_view->setEnabled(true);
     filter_search->setEnabled(true);
@@ -392,15 +424,10 @@ MainWindow::MainWindow()  {
     filter_first_set->setEnabled(true);
     filter_first_clear->setEnabled(true);
     
-    filter_first = new QLabel(tr("First: None"), this);
-    filter_first->setGeometry(315+10, 35+25+10, 300, 30);
-
-    content_data = new QTextEdit(this);
-    content_data->setToolTip(tr("Current Information for Process"));
-    content_data->setGeometry(15, 35+25+10+35, 300, 200);
-    content_data->setReadOnly(true);
-    content_data->setText("Content-Data");
-    content_data->setStyleSheet("font-size: 13px;");
+    // Progress bar at bottom
+    bar_position = new QProgressBar(this);
+    bar_position->setEnabled(false);
+    mainLayout->addWidget(bar_position);
     
     init_filter_list();
     init_filters_local();
@@ -430,10 +457,18 @@ MainWindow::MainWindow()  {
     plug_out = "";
     ps << "gui: Loaded " << count_filters() << " total filter(s).\n";
     debug_window->Log(plug_out);
-    bar_position = new QProgressBar(this);
-    bar_position->setGeometry(10, 355, width()-20, 20);
-    bar_position->show();
-    bar_position->setEnabled(false);
+}
+
+void MainWindow::setWindowPositions() {
+    move(20, 20);
+    resize(500, 310);
+    debug_window->move(20, 400);
+    debug_window->resize(1000, 180);
+    toolbox_window->move(540, 20);
+    toolbox_window->resize(280, 310);
+    show();
+    debug_window->show();
+    toolbox_window->show();
 }
 
 void MainWindow::setMinMax(int min, int max) {

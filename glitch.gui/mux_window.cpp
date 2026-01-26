@@ -4,33 +4,62 @@
 #include"ffmpeg_write.h"
 #include<QMessageBox>
 #include"version_info.hpp"
+#include<QVBoxLayout>
+#include<QHBoxLayout>
 
 MuxWindow::MuxWindow(QWidget *parent) : QDialog(parent) {
-    setFixedSize(480, 160);
     setWindowIcon(QIcon(":/images/icon.png"));
     setWindowTitle("Copy Audio");
-    file_source = new QLabel("[ Source File ]", this);
-    file_source->setGeometry(25, 25, 300, 25);
-    file_copy = new QLabel("[ Audio to Copy ]", this);
-    file_copy->setGeometry(25, 60, 300, 25);
-    file_dest = new QLabel("[ Destination File ]", this);
-    file_dest->setGeometry(25, 60+25+5, 300, 25);
-
-    select_source = new QPushButton(tr("Select File"), this);
-    select_source->setGeometry(340,25,100,25);
-    select_copy = new QPushButton(tr("Select File"), this);
-    select_copy->setGeometry(340, 60, 100, 25);
-    select_dest = new QPushButton(tr("Select File"), this);
-    select_dest->setGeometry(340, 60+25+5,100,25);
-
-    mux_files = new QPushButton(tr("Mux Files"), this);
-    mux_files->setGeometry(340, 60+25+5+25+5, 100, 25);
-
-    connect(select_source, SIGNAL(clicked()), this, SLOT(select_Source()));
-    connect(select_copy, SIGNAL(clicked()), this, SLOT(select_Copy()));
-    connect(select_dest, SIGNAL(clicked()), this, SLOT(select_Dest()));
-    connect(mux_files, SIGNAL(clicked()), this, SLOT(mux_Files()));
+    setMinimumSize(450, 180);
     
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(10);
+    
+    QHBoxLayout *srcRow = new QHBoxLayout();
+    srcRow->setSpacing(8);
+    file_source = new QLabel("[ Source File ]", this);
+    file_source->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    select_source = new QPushButton(tr("Select File"), this);
+    select_source->setMinimumWidth(100);
+    connect(select_source, SIGNAL(clicked()), this, SLOT(select_Source()));
+    srcRow->addWidget(file_source);
+    srcRow->addWidget(select_source);
+    mainLayout->addLayout(srcRow);
+    
+    QHBoxLayout *copyRow = new QHBoxLayout();
+    copyRow->setSpacing(8);
+    file_copy = new QLabel("[ Audio to Copy ]", this);
+    file_copy->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    select_copy = new QPushButton(tr("Select File"), this);
+    select_copy->setMinimumWidth(100);
+    connect(select_copy, SIGNAL(clicked()), this, SLOT(select_Copy()));
+    copyRow->addWidget(file_copy);
+    copyRow->addWidget(select_copy);
+    mainLayout->addLayout(copyRow);
+    
+    QHBoxLayout *destRow = new QHBoxLayout();
+    destRow->setSpacing(8);
+    file_dest = new QLabel("[ Destination File ]", this);
+    file_dest->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    select_dest = new QPushButton(tr("Select File"), this);
+    select_dest->setMinimumWidth(100);
+    connect(select_dest, SIGNAL(clicked()), this, SLOT(select_Dest()));
+    destRow->addWidget(file_dest);
+    destRow->addWidget(select_dest);
+    mainLayout->addLayout(destRow);
+    
+    mainLayout->addStretch();
+    
+    QHBoxLayout *btnRow = new QHBoxLayout();
+    btnRow->addStretch();
+    mux_files = new QPushButton(tr("Mux Files"), this);
+    mux_files->setMinimumWidth(100);
+    connect(mux_files, SIGNAL(clicked()), this, SLOT(mux_Files()));
+    btnRow->addWidget(mux_files);
+    mainLayout->addLayout(btnRow);
+    
+    setLayout(mainLayout);
 }
 
 void MuxWindow::select_Source() {

@@ -45,6 +45,7 @@ public:
     void keyPressEvent(QKeyEvent *e) override;
     void keyShiftUp();
     void keyShiftDown();
+    void setWindowPositions();
     void startNewAnimation(const QString &filename, const QString &outdir, const QString &prefix, float fps);
     void loadCategory(int index);
     void disableUndo();
@@ -59,6 +60,7 @@ public:
     void setMinMax(int min, int max);
     void setImageDelay(int delay);
     void initPlaylist();
+    
     DebugWindow *debug_window;
     ToolboxWindow *toolbox_window;
     RecordWindow *record_window;

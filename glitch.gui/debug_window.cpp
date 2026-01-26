@@ -2,23 +2,31 @@
 #include<QIcon>
 #include<QTextStream>
 #include"version_info.hpp"
+#include<QVBoxLayout>
+
 // Debug Window constructor - (init)
 DebugWindow::DebugWindow(QWidget *parent) : QDialog(parent) {
-    setGeometry(15, 460, 1280, 320);
-    setFixedSize(1280, 320);
     setWindowFlag(Qt::Tool);
     setWindowTitle(tr("Debug Console"));
     setWindowIcon(QIcon(":/images/icon.png"));
+    setMinimumSize(600, 200);
+    resize(1000, 300);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(10, 10, 10, 10);
+    
     text_view = new QTextEdit(this);
-    text_view->setGeometry(10, 10, 1280-20, 320-20);
     text_view->setReadOnly(true);
     text_view->setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); font-size: 20px;");
+    mainLayout->addWidget(text_view);
+    
+    setLayout(mainLayout);
+    
     QString text;
     QTextStream stream(&text);
     stream << "gui: glitch.gui v" << APP_VERSION << " Loaded\n";
     stream << "gui: " << APP_YEAR << " LostSideDead Software\n";
     Log(text);
-    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 // clear the debug window

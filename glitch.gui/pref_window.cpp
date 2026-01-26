@@ -7,108 +7,145 @@
 #include"filters/layer_filter.hpp"
 #include<QFileDialog>
 #include<QColorDialog>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QGridLayout>
+#include<QGroupBox>
 
 PrefWindow::PrefWindow(QWidget *parent) : QDialog(parent)  {
-    setFixedSize(640, 480);
     setWindowTitle("Preferences");
-
-    chk_path = new QCheckBox(tr("Save Directory Paths"), this);
-    chk_path->setGeometry(25,25,200,25);
-
-    pref_save = new QPushButton(tr("Save"), this);
-    pref_save->setGeometry(25,height()-40,75,25);
-
-    pref_cancel = new QPushButton(tr("Cancel"), this);
-    pref_cancel->setGeometry(120, height()-40, 75, 25);
-
-    connect(pref_save, SIGNAL(clicked()), this, SLOT(pref_Save()));
-    connect(pref_cancel, SIGNAL(clicked()), this, SLOT(pref_Cancel()));
-
-    QLabel *title = new QLabel(tr("Save Filters: "), this);
-    title->setGeometry(25,60,100,25);
-
-    custom_path_lbl = new QLabel(tr("Custom Path"), this);
-    custom_path_lbl->setGeometry(125,60,200,25);
-
-    pref_custom = new QPushButton(tr("..."), this);
-    pref_custom->setGeometry(350, 60, 70, 25);
-
-    connect(pref_custom, SIGNAL(clicked()), this, SLOT(pref_setPath()));
+    setMinimumSize(550, 400);
     
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(12);
+    
+    chk_path = new QCheckBox(tr("Save Directory Paths"), this);
     chk_path->setChecked(settings.value("chk_path").toBool());
-
+    mainLayout->addWidget(chk_path);
+    
+    QHBoxLayout *pathRow = new QHBoxLayout();
+    pathRow->setSpacing(8);
+    QLabel *title = new QLabel(tr("Save Filters:"), this);
+    custom_path_lbl = new QLabel(tr("Custom Path"), this);
+    custom_path_lbl->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    pref_custom = new QPushButton(tr("..."), this);
+    pref_custom->setFixedWidth(50);
+    connect(pref_custom, SIGNAL(clicked()), this, SLOT(pref_setPath()));
+    pathRow->addWidget(title);
+    pathRow->addWidget(custom_path_lbl);
+    pathRow->addWidget(pref_custom);
+    mainLayout->addLayout(pathRow);
+    
     QString fname = settings.value("chk_filename").toString();
     if(fname != "") {
         custom_path_lbl->setText(fname);
         loaded = true;
     }
-    QLabel *lbl_1 = new QLabel(tr("Fractal Real: "), this);
-    lbl_1->setGeometry(25, 100, 100, 25);
+    
+    QGroupBox *fracGroup = new QGroupBox(tr("Fractal Settings"), this);
+    QGridLayout *fracLayout = new QGridLayout(fracGroup);
+    fracLayout->setSpacing(8);
+    
+    QLabel *lbl_1 = new QLabel(tr("Real:"), this);
     frac_real = new QLineEdit(this);
-    frac_real->setGeometry(125, 100, 100, 25);
-    QLabel *lbl_2 = new QLabel(tr("Fractal Imag: "), this);
-    lbl_2->setGeometry(250, 100, 100, 25);
-    frac_imag = new QLineEdit(this);
-    frac_imag->setGeometry(400, 100, 100, 25);
-    QLabel *lbl_3 =new QLabel(tr("Fractal Zoom: "), this);
-    lbl_3->setGeometry(25, 130, 100, 25);
-    frac_zoom = new QLineEdit(this);
-    frac_zoom->setGeometry(125, 130, 100, 25);
-    QLabel *lbl_4 = new QLabel(tr("Iterations: "), this);
-    lbl_4->setGeometry(250, 130, 100, 25);
-    frac_iter = new QLineEdit(this);
-    frac_iter->setGeometry(400, 130, 100,25);
-    QLabel *lbl_5 = new QLabel(tr("Zoom Speed"), this);
-    lbl_5->setGeometry(25, 160, 100, 25);
-    frac_speed = new QLineEdit(this);
-    frac_speed->setGeometry(125, 160, 100, 25);
-    QLabel *lbl_6 = new QLabel(tr("Max Zoom"), this);
-    lbl_6->setGeometry(250, 160, 100, 25);
-    frac_max = new QLineEdit(this);
-    frac_max->setGeometry(400, 160, 100, 25);
-
-
     frac_real->setText("-0.743643887032151");
     frac_real->setToolTip(tr("Center Real"));
+    
+    QLabel *lbl_2 = new QLabel(tr("Imag:"), this);
+    frac_imag = new QLineEdit(this);
     frac_imag->setText("0.142625924205330");
     frac_imag->setToolTip(tr("Center Imag:"));
+    
+    QLabel *lbl_3 = new QLabel(tr("Zoom:"), this);
+    frac_zoom = new QLineEdit(this);
     frac_zoom->setText("1");
     frac_zoom->setToolTip(tr("Fractal Zoom"));
+    
+    QLabel *lbl_4 = new QLabel(tr("Iterations:"), this);
+    frac_iter = new QLineEdit(this);
     frac_iter->setText("100");
     frac_iter->setToolTip(tr("Fractal Iterations"));
+    
+    QLabel *lbl_5 = new QLabel(tr("Zoom Speed:"), this);
+    frac_speed = new QLineEdit(this);
     frac_speed->setText("100");
     frac_speed->setToolTip(tr("Speed of Zoom for animation"));
+    
+    QLabel *lbl_6 = new QLabel(tr("Max Zoom:"), this);
+    frac_max = new QLineEdit(this);
     frac_max->setText("250000");
     frac_max->setToolTip(tr("Max depth of zoom"));
-   //cv::Scalar lowerGreen(35, 50, 50);
-   ///cv::Scalar upperGreen(85, 255, 255);
+    
+    fracLayout->addWidget(lbl_1, 0, 0);
+    fracLayout->addWidget(frac_real, 0, 1);
+    fracLayout->addWidget(lbl_2, 0, 2);
+    fracLayout->addWidget(frac_imag, 0, 3);
+    fracLayout->addWidget(lbl_3, 1, 0);
+    fracLayout->addWidget(frac_zoom, 1, 1);
+    fracLayout->addWidget(lbl_4, 1, 2);
+    fracLayout->addWidget(frac_iter, 1, 3);
+    fracLayout->addWidget(lbl_5, 2, 0);
+    fracLayout->addWidget(frac_speed, 2, 1);
+    fracLayout->addWidget(lbl_6, 2, 2);
+    fracLayout->addWidget(frac_max, 2, 3);
+    mainLayout->addWidget(fracGroup);
+    
+    QHBoxLayout *chromaRow = new QHBoxLayout();
+    chromaRow->setSpacing(8);
+    QLabel *tmp_lbl2 = new QLabel(tr("Chroma Key:"), this);
+    
     QColor color(50,50,35);
     QVariant variant = color;
     QString color_var = variant.toString();
-    QColor color2(255, 255, 85);
-    variant = color2;
-    QString color_var2 = variant.toString();   
     color_start = new QLabel(this);
-    color_start->setGeometry(25,250, 50, 25);
+    color_start->setFixedSize(50, 25);
     color_start->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
     color_start_btn = new QPushButton("...", this);
-    color_start_btn->setGeometry(80,250,25,25);
-    QLabel *tmp_lbl = new QLabel(tr(" to "), this);
-    tmp_lbl->setGeometry(110,250,25,25);
-    color_stop = new QLabel(this);
-    color_stop->setStyleSheet("QLabel { background-color: " + color_var2 + "; }");
-    color_stop->setGeometry(140,250,50,25);
-    color_stop_btn = new QPushButton("...", this);
-    color_stop_btn->setGeometry(140+50+5, 250, 25, 25);
-    QLabel *tmp_lbl2 = new QLabel(tr("Chroma Key: "), this);
-    tmp_lbl2->setGeometry(25, 215, 100, 25);
-
+    color_start_btn->setFixedWidth(30);
     connect(color_start_btn, SIGNAL(clicked()), this, SLOT(grab_color1()));
+    
+    QLabel *tmp_lbl = new QLabel(tr("to"), this);
+    
+    QColor color2(255, 255, 85);
+    variant = color2;
+    QString color_var2 = variant.toString();
+    color_stop = new QLabel(this);
+    color_stop->setFixedSize(50, 25);
+    color_stop->setStyleSheet("QLabel { background-color: " + color_var2 + "; }");
+    color_stop_btn = new QPushButton("...", this);
+    color_stop_btn->setFixedWidth(30);
     connect(color_stop_btn, SIGNAL(clicked()), this, SLOT(grab_color2()));
-
-    show_debug = new QCheckBox(tr("SHow Debug on Startup"), this);
-    show_debug->setGeometry(15, 300, 200, 25);
+    
+    chromaRow->addWidget(tmp_lbl2);
+    chromaRow->addWidget(color_start);
+    chromaRow->addWidget(color_start_btn);
+    chromaRow->addWidget(tmp_lbl);
+    chromaRow->addWidget(color_stop);
+    chromaRow->addWidget(color_stop_btn);
+    chromaRow->addStretch();
+    mainLayout->addLayout(chromaRow);
+    
+    show_debug = new QCheckBox(tr("Show Debug on Startup"), this);
     show_debug->setChecked(settings.value("chk_dbg", true).toBool());
+    mainLayout->addWidget(show_debug);
+    
+    mainLayout->addStretch();
+    
+    QHBoxLayout *btnRow = new QHBoxLayout();
+    btnRow->setSpacing(8);
+    pref_save = new QPushButton(tr("Save"), this);
+    pref_save->setMinimumWidth(75);
+    connect(pref_save, SIGNAL(clicked()), this, SLOT(pref_Save()));
+    pref_cancel = new QPushButton(tr("Cancel"), this);
+    pref_cancel->setMinimumWidth(75);
+    connect(pref_cancel, SIGNAL(clicked()), this, SLOT(pref_Cancel()));
+    btnRow->addWidget(pref_save);
+    btnRow->addWidget(pref_cancel);
+    btnRow->addStretch();
+    mainLayout->addLayout(btnRow);
+    
+    setLayout(mainLayout);
 }
 
 int PrefWindow::findIn(const std::string &n) {

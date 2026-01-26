@@ -4,14 +4,29 @@
 #include"main_window.hpp"
 #include"debug_window.hpp"
 #include"pref_window.hpp"
+#include<QVBoxLayout>
+#include<QHBoxLayout>
 
 CustomEditWindow::CustomEditWindow(QWidget *parent) : QDialog(parent) {
-    setFixedSize(320, 120);
+    setWindowTitle(tr("Edit Custom Filters"));
+    setMinimumSize(300, 100);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(10);
+    
     filter_names = new QComboBox(this);
-    filter_names->setGeometry(25, 30, 320-50, 30);
+    mainLayout->addWidget(filter_names);
+    
+    QHBoxLayout *btnRow = new QHBoxLayout();
     filter_rmv = new QPushButton(tr("Remove"), this);
-    filter_rmv->setGeometry(30, 30+30, 100, 25);
+    filter_rmv->setMinimumWidth(100);
     connect(filter_rmv, SIGNAL(clicked()), this, SLOT(removeCustom()));
+    btnRow->addWidget(filter_rmv);
+    btnRow->addStretch();
+    mainLayout->addLayout(btnRow);
+    
+    setLayout(mainLayout);
     updateFilterNames();
 }
     

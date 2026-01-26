@@ -5,38 +5,59 @@
 #include<QFileDialog>
 #include"ffmpeg_write.h"
 #include<QMessageBox>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
 
 RotateWindow::RotateWindow(QWidget *parent) : QDialog(parent) {
-    setGeometry(400, 100, 315, 135);
-    setFixedSize(315, 135);
     setWindowTitle(tr("Rotate Video"));
     setWindowIcon(QIcon(":/images/icon.png"));
-
+    setMinimumSize(350, 150);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(10);
+    
+    QHBoxLayout *srcRow = new QHBoxLayout();
+    srcRow->setSpacing(8);
     item_src = new QLabel(tr("File to Rotate"), this);
-    item_src->setGeometry(10,10,200, 25);
+    item_src->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     src_select = new QPushButton(tr("Select"), this);
-    src_select->setGeometry(10+200+10, 10, 75, 25);
-
-    item_out = new QLabel(tr("File Output"), this);
-    item_out->setGeometry(10,45,200,25);
-
-    item_select = new QPushButton(tr("Select"), this);
-    item_select->setGeometry(10+200+10, 45, 75, 25);
-
-    btn_rotate = new QPushButton(tr("Rotate"), this);
-    btn_rotate->setGeometry(10+200+10, 100, 75, 25);
-
+    src_select->setMinimumWidth(75);
     connect(src_select, SIGNAL(clicked()), this, SLOT(selectSrc()));
+    srcRow->addWidget(item_src);
+    srcRow->addWidget(src_select);
+    mainLayout->addLayout(srcRow);
+    
+    QHBoxLayout *outRow = new QHBoxLayout();
+    outRow->setSpacing(8);
+    item_out = new QLabel(tr("File Output"), this);
+    item_out->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    item_select = new QPushButton(tr("Select"), this);
+    item_select->setMinimumWidth(75);
     connect(item_select, SIGNAL(clicked()), this, SLOT(selectDst()));
-    connect(btn_rotate, SIGNAL(clicked()), this, SLOT(rotateVideo()));
-
+    outRow->addWidget(item_out);
+    outRow->addWidget(item_select);
+    mainLayout->addLayout(outRow);
+    
+    mainLayout->addStretch();
+    
+    QHBoxLayout *rotateRow = new QHBoxLayout();
+    rotateRow->setSpacing(8);
     deg_rotate = new QComboBox(this);
-    deg_rotate->setGeometry(10, 100, 100, 25);
-
+    deg_rotate->setMinimumWidth(100);
     deg_rotate->addItem("90");
     deg_rotate->addItem("-90");
     deg_rotate->addItem("180");
     deg_rotate->setCurrentIndex(0);
+    btn_rotate = new QPushButton(tr("Rotate"), this);
+    btn_rotate->setMinimumWidth(75);
+    connect(btn_rotate, SIGNAL(clicked()), this, SLOT(rotateVideo()));
+    rotateRow->addWidget(deg_rotate);
+    rotateRow->addStretch();
+    rotateRow->addWidget(btn_rotate);
+    mainLayout->addLayout(rotateRow);
+    
+    setLayout(mainLayout);
 }
 
 void RotateWindow::selectSrc() {

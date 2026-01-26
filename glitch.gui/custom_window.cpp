@@ -7,86 +7,94 @@
 #include"pref_window.hpp"
 #include<QMessageBox>
 #include<QFileDialog>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QLabel>
 
 
 CustomWindow::CustomWindow(QWidget *parent) : QDialog(parent) {
-    setFixedSize(640, 510);
+    setWindowTitle("Create Custom Filter");
+    setMinimumSize(550, 450);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(8);
+    
     filter_cat = new QComboBox(this);
-    filter_cat->setToolTip(tr("Filter CategorieS"));
-    filter_cat->setGeometry(15, 15, (640-15-15), 25);
+    filter_cat->setToolTip(tr("Filter Categories"));
+    mainLayout->addWidget(filter_cat);
+    
     filter = new QComboBox(this);
     filter->setToolTip(tr("List of Filters"));
-    filter->setGeometry(15, 15+25+5, (640-15-15), 25);
-
+    mainLayout->addWidget(filter);
+    
     filter_custom = new QListWidget(this);
     filter_custom->setToolTip(tr("List of Selected Filters"));
-    filter_custom->setGeometry(15, 15+25+5+25+5, (640-15-15), 300);
-
+    filter_custom->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    mainLayout->addWidget(filter_custom, 1);
+    
+    QHBoxLayout *btnRow1 = new QHBoxLayout();
+    btnRow1->setSpacing(8);
     btn_add = new QPushButton(tr("Add"), this);
     btn_add->setToolTip(tr("Add to List"));
-    btn_add->setGeometry(15, 15+25+5+25+5+300+5, 100, 25);
-
     connect(btn_add, SIGNAL(clicked()), this, SLOT(addFilter()));
-
     btn_rmv = new QPushButton(tr("Remove"), this);
     btn_rmv->setToolTip(tr("Remove from List"));
-
-    btn_rmv->setGeometry(15+100+5, 15+25+5+25+5+300+5, 100, 25);
-
     connect(btn_rmv, SIGNAL(clicked()), this, SLOT(rmvFilter()));
-
     btn_up = new QPushButton(tr("Move Up"), this);
     btn_up->setToolTip(tr("Move Selected Filter up in List"));
-    btn_up->setGeometry(15+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
-
     connect(btn_up, SIGNAL(clicked()), this, SLOT(move_Up()));
-
     btn_down = new QPushButton(tr("Move Down"), this);
     btn_down->setToolTip(tr("Move Select Filter Down in List"));
-    btn_down->setGeometry(15+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
-
     connect(btn_down, SIGNAL(clicked()), this, SLOT(move_Down()));
-
     btn_playlist = new QPushButton(tr("Save Playlist"), this);
     btn_playlist->setToolTip(tr("Save as Playlist"));
-    btn_playlist->setGeometry(15+100+5+100+5+100+5+100+5, 15+25+5+25+5+300+5, 100, 25);
-
     connect(btn_playlist, SIGNAL(clicked()), this, SLOT(setPlaylist()));
-
-    QLabel *f_name = new QLabel(tr("Name: "), this);
-    f_name->setGeometry(25, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
-
+    btnRow1->addWidget(btn_add);
+    btnRow1->addWidget(btn_rmv);
+    btnRow1->addWidget(btn_up);
+    btnRow1->addWidget(btn_down);
+    btnRow1->addStretch();
+    btnRow1->addWidget(btn_playlist);
+    mainLayout->addLayout(btnRow1);
+    
+    QHBoxLayout *nameRow = new QHBoxLayout();
+    nameRow->setSpacing(8);
+    QLabel *f_name = new QLabel(tr("Name:"), this);
     filter_name = new QLineEdit(this);
     filter_name->setToolTip(tr("Filter name"));
-    filter_name->setGeometry(50+25+5, 15+25+5+25+5+300+5+25+5+10+5, 200, 25);
-
-    btn_set = new QPushButton(tr("Set Filter"), this);
-    btn_set->setGeometry(640-125-5, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
-    btn_set->setToolTip(tr("Add as new Custom Filter"));
-
+    filter_name->setMinimumWidth(150);
     btn_update = new QPushButton(tr("Update"), this);
-    btn_update->setGeometry(640-225-15, 15+25+5+25+5+300+5+25+5+10+5, 100, 25);
     btn_update->setToolTip(tr("Update custom"));
-    
     connect(btn_update, SIGNAL(clicked()), this, SLOT(updateFilter()));
-
+    btn_set = new QPushButton(tr("Set Filter"), this);
+    btn_set->setToolTip(tr("Add as new Custom Filter"));
+    connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
+    nameRow->addWidget(f_name);
+    nameRow->addWidget(filter_name);
+    nameRow->addStretch();
+    nameRow->addWidget(btn_update);
+    nameRow->addWidget(btn_set);
+    mainLayout->addLayout(nameRow);
+    
+    QHBoxLayout *rgbRow = new QHBoxLayout();
+    rgbRow->setSpacing(12);
     chk_r = new QCheckBox(tr("Red"), this);
-    chk_r->setGeometry(15,15+25+5+25+5+300+5+25+5+10+5+25+20,50, 25);
-    //chk_r->setChecked(true);
     chk_r->setToolTip(tr("Restore Red Channel After Filter"));
     chk_g = new QCheckBox(tr("Green"), this);
-    chk_g->setGeometry(65,15+25+5+25+5+300+5+25+5+10+5+25+20,60, 25);
-    //chk_g->setChecked(true);
     chk_g->setToolTip(tr("Restore Green Channel After Filter"));
     chk_b = new QCheckBox(tr("Blue"), this);
-    chk_b->setGeometry(65+50+15,15+25+5+25+5+300+5+25+5+10+5+25+20,60,25);
     chk_b->setToolTip(tr("Restore Blue Channel After Filter"));
-    //chk_b->setChecked(true);
-    connect(btn_set, SIGNAL(clicked()), this, SLOT(setFilter()));
+    rgbRow->addWidget(chk_r);
+    rgbRow->addWidget(chk_g);
+    rgbRow->addWidget(chk_b);
+    rgbRow->addStretch();
+    mainLayout->addLayout(rgbRow);
+    
+    setLayout(mainLayout);
+    
     connect(filter_cat, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCategory(int)));
     connect(filter, SIGNAL(currentIndexChanged(int)), this, SLOT(changeCustom(int)));
-
-    setWindowTitle("Create Custom Filter");
 
     filter_cat->addItem(tr("In order"));
     filter_cat->addItem(tr("Sorted"));

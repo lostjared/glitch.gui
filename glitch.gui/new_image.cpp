@@ -7,59 +7,100 @@
 #include<QIcon>
 #include<QMessageBox>
 #include<QTextStream>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QGridLayout>
 
 NewImageWindow::NewImageWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Start new Animation");
     setWindowIcon(QIcon(":/images/icon.png"));
-    setFixedSize(320, 240);
+    setMinimumSize(400, 250);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(10);
+    
+    QHBoxLayout *fileLayout = new QHBoxLayout();
+    fileLayout->setSpacing(8);
     input_file = new QLabel(tr("Select File Location"), this);
-    input_file->setGeometry(10, 10, 240, 25);
+    input_file->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     input_file_select = new QPushButton("...", this);
     input_file_select->setToolTip(tr("Select File Location on Drive"));
-    input_file_select->setGeometry(260, 10, 50, 25);
+    input_file_select->setFixedWidth(50);
     connect(input_file_select, SIGNAL(clicked()), this, SLOT(openFile()));
+    fileLayout->addWidget(input_file);
+    fileLayout->addWidget(input_file_select);
+    mainLayout->addLayout(fileLayout);
+    
+    QHBoxLayout *outputLayout = new QHBoxLayout();
+    outputLayout->setSpacing(8);
     output_location = new QLabel(tr("Select Output Location"), this);
-    output_location->setGeometry(10, 35, 240, 25);
+    output_location->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     output_location_select = new QPushButton("...", this);
     output_location_select->setToolTip(tr("Select Output Location"));
-    output_location_select->setGeometry(260, 35, 50, 25);
+    output_location_select->setFixedWidth(50);
     connect(output_location_select, SIGNAL(clicked()), this, SLOT(selectDir()));
-    QLabel *cap = new QLabel(tr("FPS"), this);
-    cap->setGeometry(10, 75, 50, 25);
+    outputLayout->addWidget(output_location);
+    outputLayout->addWidget(output_location_select);
+    mainLayout->addLayout(outputLayout);
+    
+    QHBoxLayout *fpsLayout = new QHBoxLayout();
+    fpsLayout->setSpacing(8);
+    QLabel *cap = new QLabel(tr("FPS:"), this);
     video_fps = new QLineEdit("24", this);
     video_fps->setToolTip(tr("Video Frames Per Second"));
-    video_fps->setGeometry(65, 75, 100, 25);
-    video_start = new QPushButton(tr("Start"), this);
-    video_start->setToolTip(tr("Start Animation"));
-    video_start->setGeometry(320-100-10, 240-35, 100, 30);   
-    connect(video_start, SIGNAL(clicked()), this, SLOT(videoStart())); 
-    video_start->setEnabled(false);
-    filename_set = false;
-    outdir_set = false;
+    video_fps->setMaximumWidth(100);
+    fpsLayout->addWidget(cap);
+    fpsLayout->addWidget(video_fps);
+    fpsLayout->addStretch();
+    mainLayout->addLayout(fpsLayout);
+    
+    QHBoxLayout *prefixLayout = new QHBoxLayout();
+    prefixLayout->setSpacing(8);
     QLabel *prefix = new QLabel(tr("Filename Prefix:"), this);
-    prefix->setGeometry(10, 110, 100, 30);
     video_filename = new QLineEdit(this);
     video_filename->setText(tr("Glitch1"));
-    video_filename->setGeometry(110, 110, 195, 30);
+    video_filename->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    prefixLayout->addWidget(prefix);
+    prefixLayout->addWidget(video_filename);
+    mainLayout->addLayout(prefixLayout);
+    
     video_record = new QCheckBox(tr("Record on Start"), this);
     video_record->setToolTip(tr("Record on Start of video"));
-    video_record->setGeometry(10, 140, 150, 25);
     video_record->setChecked(Qt::Unchecked);
+    connect(video_record, SIGNAL(clicked()), this, SLOT(openRecordOptions()));
+    mainLayout->addWidget(video_record);
+    
+    QHBoxLayout *delayLayout = new QHBoxLayout();
+    delayLayout->setSpacing(8);
+    num_label = new QLabel("Image Delay: 1", this);
+    num_label->setMinimumWidth(100);
     video_image_delay = new QScrollBar(Qt::Horizontal, this);
     video_image_delay->setToolTip(tr("Slow speed of video in Image mode"));
-    num_label = new QLabel("Image Delay: 1", this);
-    num_label->setGeometry(10, 172, 100, 25);
-    video_image_delay->setGeometry(110, 170, 200, 25);
     video_image_delay->setMinimum(1);
     video_image_delay->setMaximum(10);
     video_image_delay->setValue(1);
-
     video_image_delay->setEnabled(false);
-
-    connect(video_record, SIGNAL(clicked()), this, SLOT(openRecordOptions()));
     connect(video_image_delay, SIGNAL(valueChanged(int)), this, SLOT(changedPos(int)));
-    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-
+    delayLayout->addWidget(num_label);
+    delayLayout->addWidget(video_image_delay);
+    mainLayout->addLayout(delayLayout);
+    
+    mainLayout->addStretch();
+    
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->addStretch();
+    video_start = new QPushButton(tr("Start"), this);
+    video_start->setToolTip(tr("Start Animation"));
+    video_start->setMinimumWidth(80);
+    video_start->setEnabled(false);
+    connect(video_start, SIGNAL(clicked()), this, SLOT(videoStart()));
+    buttonLayout->addWidget(video_start);
+    mainLayout->addLayout(buttonLayout);
+    
+    setLayout(mainLayout);
+    filename_set = false;
+    outdir_set = false;
 }
 
 void NewImageWindow::changedPos(int) {

@@ -141,8 +141,7 @@ RecordWindow::RecordWindow(QWidget *parent) : QDialog(parent) {
     mainLayout->addLayout(buttonLayout);
     
     setLayout(mainLayout);
-    setMinimumWidth(550);
-    setMinimumHeight(320);
+    setFixedSize(550, 320);
     
     centerOnScreen();
 }

@@ -4,69 +4,93 @@
 #include"main_window.hpp"
 #include"debug_window.hpp"
 #include<QColorDialog>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QGridLayout>
 
 ToolboxWindow::ToolboxWindow(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Toolbox");
     setWindowFlags(Qt::WindowType::Tool);
+    setWindowIcon(QIcon(":/images/icon.png"));
+    setMinimumSize(250, 220);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(10, 10, 10, 10);
+    mainLayout->setSpacing(8);
+    
+    QHBoxLayout *row1 = new QHBoxLayout();
+    row1->setSpacing(8);
     save_snapshot = new QPushButton(tr("Save"), this);
     save_snapshot->setToolTip(tr("Save Snapshot Image"));
-    setWindowIcon(QIcon(":/images/icon.png"));
-    save_snapshot->setGeometry(10, 10, 100, 25);
     connect(save_snapshot, SIGNAL(clicked()), this, SLOT(saveSnapshot()));
-    
     setsource_action = new QPushButton(tr("Source"), this);
     setsource_action->setToolTip(tr("Set current Image as Source image"));
-
-    setsource_action->setGeometry(120, 10, 100, 25);
     connect(setsource_action, SIGNAL(clicked()), this, SLOT(setSource()));
+    row1->addWidget(save_snapshot);
+    row1->addWidget(setsource_action);
+    mainLayout->addLayout(row1);
     
+    QHBoxLayout *row2 = new QHBoxLayout();
+    row2->setSpacing(8);
     stop_action = new QPushButton(tr("Stop"), this);
     stop_action->setToolTip(tr("Stop Animation"));
-    stop_action->setGeometry(10, 40, 100, 25);
     connect(stop_action, SIGNAL(clicked()), this, SLOT(stopAction()));
-    
     step_action = new QPushButton(tr("Step"), this);
     step_action->setToolTip(tr("Step forward one frame"));
-    step_action->setGeometry(120, 40, 100, 25);
     connect(step_action, SIGNAL(clicked()), this, SLOT(stepAction()));
+    row2->addWidget(stop_action);
+    row2->addWidget(step_action);
+    mainLayout->addLayout(row2);
     
+    QHBoxLayout *row3 = new QHBoxLayout();
+    row3->setSpacing(8);
     color_lbl = new QLabel(this);
-    color_lbl->setGeometry(10, 40+25+10, 75, 25);
+    color_lbl->setFixedSize(50, 25);
     QString color_var = "#000000";
     color_lbl->setStyleSheet("QLabel { background-color :" + color_var + " ; }");
+    sel_color = new QPushButton("...", this);
+    sel_color->setFixedWidth(30);
+    connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
     use_color = new QCheckBox(tr("Offset Color"), this);
     use_color->setToolTip(tr("Offset color values"));
-    use_color->setGeometry(120,40+25+10, 100, 25);
     use_color->setChecked(false);
+    connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
+    row3->addWidget(color_lbl);
+    row3->addWidget(sel_color);
+    row3->addWidget(use_color);
+    row3->addStretch();
+    mainLayout->addLayout(row3);
+    
+    QHBoxLayout *row4 = new QHBoxLayout();
+    row4->setSpacing(8);
     use_fade = new QCheckBox(tr("Fade"), this);
     use_fade->setToolTip(tr("Fade turn on?"));
-    use_fade->setGeometry(120,40+25+10+30, 100, 25);
     use_fade->setChecked(false);
-    sel_color = new QPushButton("...", this);
-    sel_color->setGeometry(10+75, 40+25+10, 25, 25);
-    connect(sel_color, SIGNAL(clicked()), this, SLOT(selectColor()));
-    connect(use_color, SIGNAL(toggled(bool)), this, SLOT(clickOffset(bool)));
     connect(use_fade, SIGNAL(toggled(bool)), this, SLOT(clickFade(bool)));
-
     show_disp = new QPushButton(tr("Show"), this);
     show_disp->setToolTip(tr("Show/Hide Display Window"));
-    show_disp->setGeometry(10,45+25+10+25,100,25);
     connect(show_disp, SIGNAL(clicked()), this, SLOT(showDisplay()));
-
+    row4->addWidget(use_fade);
+    row4->addWidget(show_disp);
+    mainLayout->addLayout(row4);
+    
+    QHBoxLayout *row5 = new QHBoxLayout();
+    row5->setSpacing(8);
     record_btn = new QPushButton(tr("Rec Settings"), this);
     record_btn->setToolTip(tr("Record Settings"));
-    record_btn->setGeometry(10, 45+25+10+25+25+5,100,25);
     connect(record_btn, SIGNAL(clicked()), this, SLOT(showRecord()));
-
     record_now = new QPushButton(tr("Record"), this);
     record_now->setToolTip(tr("Record Button"));
-    record_now->setGeometry(120, 45+25+10+25+25+5, 100, 25);
     connect(record_now, SIGNAL(clicked()), this, SLOT(recordNow()));
-
     record_now->setEnabled(false);
-
+    row5->addWidget(record_btn);
+    row5->addWidget(record_now);
+    mainLayout->addLayout(row5);
+    
+    mainLayout->addStretch();
+    setLayout(mainLayout);
+    
     disableButtons();
-    //setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 void ToolboxWindow::enableRecord() {

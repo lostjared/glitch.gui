@@ -3,29 +3,42 @@
 #include"display_window.hpp"
 #include<QTextStream>
 #include<iostream>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
 
 Control_Window::Control_Window(QWidget *parent) : QDialog(parent) {
-    setFixedSize(675, 100);
     setWindowTitle("Video Controls");
     setWindowIcon(QIcon(":/images/icon.png"));
+    setMinimumSize(500, 80);
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(15, 15, 15, 15);
+    mainLayout->setSpacing(10);
+    
+    QHBoxLayout *ctrlRow = new QHBoxLayout();
+    ctrlRow->setSpacing(10);
     
     ctrl_pos = new QScrollBar(Qt::Horizontal, this);
     ctrl_pos->setToolTip(tr("Duration within Video scrollbar"));
-    ctrl_pos->setGeometry(25, 25, 400, 25);
+    ctrl_pos->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     ctrl_pos->setEnabled(false);
-
     connect(ctrl_pos, SIGNAL(valueChanged(int)), this, SLOT(changedIndex(int)));
-
+    
     ctrl_txt = new QLabel("0/0", this);
-    ctrl_txt->setGeometry(445, 25, 100, 25);
-
+    ctrl_txt->setMinimumWidth(80);
+    
     ctrl_set = new QPushButton(tr("Set Pos"), this);
     ctrl_set->setToolTip(tr("Set location within video"));
-    ctrl_set->setGeometry(545, 25, 100, 25);
-
-    connect(ctrl_set, SIGNAL(clicked()), this, SLOT(setIndex()));
-
+    ctrl_set->setMinimumWidth(80);
     ctrl_set->setEnabled(false);
+    connect(ctrl_set, SIGNAL(clicked()), this, SLOT(setIndex()));
+    
+    ctrlRow->addWidget(ctrl_pos);
+    ctrlRow->addWidget(ctrl_txt);
+    ctrlRow->addWidget(ctrl_set);
+    mainLayout->addLayout(ctrlRow);
+    
+    setLayout(mainLayout);
 }
 
 

@@ -63,6 +63,7 @@ int main(int argc, char **argv) {
         styleFile.close();
     }
     main_window.show();
+    main_window.setWindowPositions();
     app.exec();
     std::cout << "glitch-gui: Shutdown Successful...\n";
    return 0;
