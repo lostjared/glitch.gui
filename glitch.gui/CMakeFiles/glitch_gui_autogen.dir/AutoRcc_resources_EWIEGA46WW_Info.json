@@ -1,0 +1,26 @@
+{
+	"BUILD_DIR" : "/home/jared/glitch.gui/glitch.gui/glitch_gui_autogen",
+	"CMAKE_BINARY_DIR" : "/home/jared/glitch.gui/glitch.gui",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/jared/glitch.gui/glitch.gui",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/jared/glitch.gui/glitch.gui",
+	"CMAKE_SOURCE_DIR" : "/home/jared/glitch.gui/glitch.gui",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/jared/glitch.gui/glitch.gui/glitch_gui_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/jared/glitch.gui/glitch.gui/stylesheet.qss",
+		"/home/jared/glitch.gui/glitch.gui/images/icon.png"
+	],
+	"LOCK_FILE" : "/home/jared/glitch.gui/glitch.gui/CMakeFiles/glitch_gui_autogen.dir/AutoRcc_resources_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt6/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/jared/glitch.gui/glitch.gui/CMakeFiles/glitch_gui_autogen.dir/AutoRcc_resources_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/jared/glitch.gui/glitch.gui/resources.qrc",
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

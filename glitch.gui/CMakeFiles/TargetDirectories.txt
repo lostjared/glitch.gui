@@ -1,0 +1,9 @@
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/glitch_gui.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/edit_cache.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/rebuild_cache.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/list_install_components.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/install.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/install/local.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/install/strip.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/glitch_gui_autogen_timestamp_deps.dir
+/home/jared/glitch.gui/glitch.gui/CMakeFiles/glitch_gui_autogen.dir

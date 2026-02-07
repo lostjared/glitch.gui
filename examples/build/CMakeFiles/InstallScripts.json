@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/jared/glitch.gui/examples/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
